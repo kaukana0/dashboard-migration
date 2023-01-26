@@ -1,0 +1,13 @@
+body>div>div {
+    outline-style: dashed;
+    outline-width: 1px;
+/*    overflow: hidden; */
+}
+
+body>div>div:nth-child(odd) {
+    background-color: aliceblue;
+}
+
+body>div>div:nth-child(even) {
+    background-color: antiquewhite;
+}

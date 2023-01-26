@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<!--
+https://ec.europa.eu/eurostat
+License: European Union Public Licence (EUPL v.1.1)
+CommitId: 
+Author: robert.gebhardt@ext.ec.europa.eu
+-->
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title translate>Migration Dashboard</title>
+
+	<script src="./redist/d3.v6.min.js"></script>
+
+	<link rel="stylesheet" href="redist/billboard-3.4.1/billboard.min.css">
+	<script src="./redist/billboard-3.4.1/billboard.min.js"></script>
+
+	<link rel="stylesheet" href="redist/fontawesome-free-6.1.1-web/css/all.min.css">
+
+	<link rel="stylesheet" href="css/debug.css">
+
+	<script src="./js/main.mjs" type="module"></script>
+	<script src="./components/chartCard/chartCard.mjs" type="module"></script>
+
+	<!--script type="application/json">{"utility": "cck", "url": "https://my.ec.europa.eu/cookie-policy_{lang}"}</script>
+	<script src="./js/analytics.js"></script>
+	<script src="https://ec.europa.eu/eurostat/cache/cdn/estat-analytics/js/estat-analytics.js" onerror="analytics_onError()" onload="analytics_onLoad()"></script-->
+
+		<style>
+			html,
+			body {
+				height: 100%;
+				width: 100%;
+				margin: 0;
+			}
+		</style>
+
+</head>
+
+<body>
+	
+	<div style="height:100%; display: flex; flex-flow: column;">
+
+		<!-- row 1: title, sharing, logo -->
+		<div id="firstRow" style="min-height: 60px;">
+			ROW1
+		</div>
+
+		<!-- row 2: country select, indicator buttons -->
+		<div style="height: 30px;">
+			ROW2
+		</div>
+
+		<!-- row 3: tiles and expanded tiles -->
+		<div id="cards" style="flex-grow: 1; display: flex; flex-wrap: wrap; justify-content: center;">
+		</div>
+
+		<!-- row 4: legal links -->
+		<div style="text-align: center;">
+			<p>
+				<a href="https://ec.europa.eu/info/cookies_en?lang=en&amp;lang=en"><span tabindex="0">Cookies</span></a>
+				|
+				<a href="https://ec.europa.eu/info/privacy-policy_en?lang=en&amp;lang=en"><span tabindex="0">Privacy policy</span></a>
+				|
+				<a href="https://ec.europa.eu/info/legal-notice_en?lang=en&amp;lang=en"><span tabindex="0">Legal notice</span></a>
+				|
+				<a href="sitemap.html?lang=en"><span tabindex="0">Sitemap</span></a>
+			</p>
+		</div>
+		
+	</div>
+
+	<!-- Non-Grid Elements -->
+
+	<div id="loadingIndicator" class="justify-content-center align-items-center fa-3x" style="position: fixed; left: 50%; top: 50%; z-index: 30;">
+		<i class="fas fa-spinner fa-spin"></i>
+	</div>
+
+	<div id="errorMessage" class="alert alert-danger text-center" style="position: fixed; top: 50%; width: 100%; font-size: 20px; display: none;">
+		Ups, something went wrong!<br>
+		Try again later or contact our
+		<a href="https://ec.europa.eu/eurostat/web/main/help/support">user support</a>
+	</div>
+
+</body>
+
+</html>
