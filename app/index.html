@@ -18,7 +18,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 
 	<script src="./redist/d3.v6.min.js"></script>
 
-	<link rel="stylesheet" href="redist/billboard-3.4.1/billboard.min.css">
+	<!--link rel="stylesheet" href="redist/billboard-3.4.1/billboard.min.css"-->
 	<script src="./redist/billboard-3.4.1/billboard.min.js"></script>
 
 	<link rel="stylesheet" href="redist/fontawesome-free-6.1.1-web/css/all.min.css">
@@ -47,18 +47,31 @@ Author: robert.gebhardt@ext.ec.europa.eu
 	
 	<div style="height:100%; display: flex; flex-flow: column;">
 
-		<!-- row 1: title, sharing, logo -->
-		<div id="firstRow" style="min-height: 60px;">
-			ROW1
+		<div style="min-height: 20px;">
+			"official website" declaration
 		</div>
 
-		<!-- row 2: country select, indicator buttons -->
-		<div style="height: 30px;">
-			ROW2
+		<div style="min-height: 50px;">
+			Logo
 		</div>
 
-		<!-- row 3: tiles and expanded tiles -->
-		<div id="cards" style="flex-grow: 1; display: flex; flex-wrap: wrap; justify-content: center;">
+		<div style="min-height: 100px;">
+			Title and Subtitle
+		</div>
+
+		<div id="blaa" style="min-height: 50px;">
+			Indicator card Filters
+		</div>
+
+		<!-- https://developer.mozilla.org/en-US/docs/Web/CSS/position#values -->
+		<div style="transform: scale(1); background-color: gold;">
+			<div id="selectCountryParentAnchor" style="height: 100px; background-color: wheat">
+				country selector + n indicator selectors
+				<div id="selectCountryAnchorInMainView"></div>
+				<dropdown-box id="selectCountry" imagePath="./components/dropdownBox/assets/countryFlagImages" multiselect maxSelections=7 displayKeys fractions=3 selectedText="countries selected"></dropdown-box>
+			</div>
+			<div id="cards" style="display: flex; flex-wrap: wrap; justify-content: center; background-color: aliceblue;">
+			</div>
 		</div>
 
 		<!-- row 4: legal links -->
@@ -78,9 +91,9 @@ Author: robert.gebhardt@ext.ec.europa.eu
 
 	<!-- Non-Grid Elements -->
 
-	<div id="loadingIndicator" class="justify-content-center align-items-center fa-3x" style="position: fixed; left: 50%; top: 50%; z-index: 30;">
+	<!--div id="loadingIndicator" class="justify-content-center align-items-center fa-3x" style="position: fixed; left: 50%; top: 50%; z-index: 30;">
 		<i class="fas fa-spinner fa-spin"></i>
-	</div>
+	</div-->
 
 	<div id="errorMessage" class="alert alert-danger text-center" style="position: fixed; top: 50%; width: 100%; font-size: 20px; display: none;">
 		Ups, something went wrong!<br>

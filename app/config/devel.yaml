@@ -1,0 +1,126 @@
+
+codeList:
+  native: &native
+    label: "native"
+    code: NAT
+  eu: &eu
+    label: "EU"
+    code: EU_27_2020_FOR
+  nonEu: &nonEu
+    label: "Non EU"
+    code: NEU_27_2020_FOR
+  men: &men
+    label: "Men"
+    code: "M"
+  women: &women
+    label: "Women"
+    code: "W"
+  total: &total
+    label: "Total"
+    code: "TOTAL"
+  15-74: &15-74
+    label: "15 to 74 years"
+    code: "!DOESNTEXIST!"
+  20-64: &20-64
+    label: "20 to 64 years"
+    code: "!DOESNTEXIST!"
+  15-29: &15-29
+    label: "15 to 29 years"
+    code: "!DOESNTEXIST!"
+  timefreq: &timefreq
+    label: "Time frequency Annual"
+    code: "A"
+  unit: &unit
+    label: "Unit"
+    code: "NR"
+  timeStart: &timeStart
+    label: "start time"
+    code: "2020"
+  timeEnd: &timeEnd
+    label: "end time"
+    code: "2022"
+
+
+globals:
+  baseURL: https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/
+  dimensions:
+    a: age
+    c:
+      - cbirth
+      - citizen
+    g: geo
+    s: sex
+    t: time
+    f: freq
+    u: unit
+
+
+# defaults are taken if omitted in the indicators section
+defaults:
+  dimensions:
+    ui:               # UI elements reflect user selction for these
+      perIndicator:
+        dropdown:
+          sex:
+          - *total
+          - *women
+          - *men
+          ageGroup:
+          - *15-74
+          - *20-64
+          - *15-29
+      global:
+        dropdown:
+          #ISO 3166-1 alpha2
+          geo: [EU,BE,FR,GE]
+        range:
+          time:    # "singles:" could have precedence before "range:" (singles is omitted as of now, todo on demand)
+            start: *timeStart
+            end: *timeEnd
+            singles: [1907, 1914, 1938]
+        cSelectors:   # c = country or citizen
+          - *native
+          - *eu
+          - *nonEu
+    fixed:          # no UI elements for these, yet relevant for API requests
+      timefreq:
+      - *timefreq
+      unit:
+      - *unit
+
+
+indicators:
+
+  - name: Migrant population share
+    category: Demography
+    isInOverview: true
+    articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migration_and_migrant_population_statistics
+    datasets:
+      - id: MIGR_POP1CTZ
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/d30004bd-976c-40fe-bc40-e9a33abf1fc4?lang=en
+      - id: MIGR_POP3CTB
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/fb8d22a0-054b-4423-a3f9-ec79ee84c87a?lang=en
+    dimensions:
+      ui:
+        perIndicator:
+          dropdown:
+            ageGroup:
+              - 0-15:
+                label: "0 to 15 years"
+                code: "!DOESNTEXIST!"
+              - *15-74
+              - *15-29
+              - *20-64
+              - 65 and more:
+                label: "over 65 years"
+                code: "!DOESNTEXIST!"
+
+  - name: Employment rate
+    category: Employment
+    isInOverview: true
+    articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_%E2%80%93_labour_market_indicators
+    datasets:
+      - id: LFSA_ERGAN
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/1a912262-da95-49ac-a154-44479a7dae31?lang=en
+      - id: LFSA_ERGACOB
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/d642741b-30e8-45d3-b160-2abb17d8a2c9?lang=en
