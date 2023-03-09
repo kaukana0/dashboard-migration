@@ -26,45 +26,19 @@ export default function create(cfg, selectCountry) {
 					document.getElementById(id).dispatchEvent(event)
 				}
 				document.getElementById("selectCountryAnchorInsideCard"+id).after(box)
-			}	
+				document.getElementById(id).addEventListener("expand", () => {
+					// move it from parent container into zoomed card
+					document.getElementById("selectCountryAnchorInsideCard"+id).after(selectCountry)
+				})
+				document.getElementById(id).addEventListener("contract", () => {
+					// move it out of the card into parent container
+					document.getElementById("selectCountryAnchorInMainView").after(selectCountry)
+				})
+			}
 		})
 
 		retVal.push(id)
 	}
 
 	return retVal
-}
-
-
-function bla2(id, merged) {
-	document.getElementById(id).addEventListener("click", (e)=>{
-		const card = document.getElementById(id)
-		if(card.toggleExpansion(document.getElementById("selectCountryParentAnchor"))) {
-			window.scrollTo(0,0)
-			// move it from parent container into zoomed card
-			document.getElementById("selectCountryAnchorInsideCard"+id).after(selectCountry)
-		} else {
-			// move it out of the zoomed card into parent container
-			document.getElementById("selectCountryAnchorInMainView").after(selectCountry)
-		}
-	})
-}
-
-function bla(id, merged) {
-	document.getElementById(id).addEventListener("click", (e)=>{
-		const card = document.getElementById(id)
-		card.expand(document.getElementById("selectCountryParentAnchor"))
-		window.scrollTo(0,0)
-		//moveCountryDropdown()
-	})
-}
-
-function moveCountryDropdown() {
-	if(card.toggleExpansion(document.getElementById("selectCountryParentAnchor"))) {
-		// move it from parent container into card
-		document.getElementById("selectCountryAnchorInsideCard"+id).after(selectCountry)
-	} else {
-		// move it out of the card into parent container
-		document.getElementById("selectCountryAnchorInMainView").after(selectCountry)
-	}
 }

@@ -1,5 +1,6 @@
 export function fillCountries(cfg) {
-	return document.getElementById("selectCountry").data = [getMapFromObject(cfg), []]
+	document.getElementById("selectCountry").data = [getMapFromObject(cfg), []]
+  return document.getElementById("selectCountry")
 }
 
 export function createDropdownBoxes(id, merged) {
