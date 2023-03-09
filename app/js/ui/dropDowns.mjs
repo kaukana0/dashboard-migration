@@ -1,44 +1,33 @@
-export default function create(cfg) {
-	//const d = new Map()
-	//d.set("EU27_2020", 'European Union')
-	//d.set("GR", 'Greek')
-	//d.set("UG", 'Uganda')
-	//console.log(document.querySelector("dropdown-box"))
-	//document.querySelector("dropdown-box").data = [d, ["GR"]]
-	//document.querySelector("dropdown-box").callback = () => console.log("HOWDY")
-	return document.getElementById("selectCountry")
+export function fillCountries(cfg) {
+	return document.getElementById("selectCountry").data = [getMapFromObject(cfg), []]
 }
-
 
 export function createDropdownBoxes(id, merged) {
-	// cSelectors, sex, age, varying
-	for(const d in merged.dimensions.ui.perIndicator.dropdown) {
-		document.getElementById("selectCountryAnchorInsideCard"+id).after( createDropdown(merged) )
-		console.log(merged.dimensions.ui.perIndicator.dropdown[d])
-	}
+  let retVal = []
+
+	// sex, age and more on demand per config
+  const o = merged.dimensions.ui.perIndicator.dropdown
+  console.log("part", o)
+
+  for(const [k,v] of Object.entries(o)) {
+    retVal.push(createDropdown(k,v))
+  }
+
+  return retVal
 }
 
+function getMapFromObject(obj) {
+  const retVal = new Map()
+  for(const e of obj) {
+    retVal.set(e.code, e.label)
+  }
+  return retVal
+}
 
-function createDropdown(cfg) {
+function createDropdown(k,v) {
 	const fragment = new DocumentFragment()
 	const dropdownBox = document.createElement('dropdown-box')
+  dropdownBox.data = [getMapFromObject(v), []]
 	fragment.appendChild(dropdownBox)
 	return fragment
 }
-
-
-function testLotsOfDropdowns() {
-  for(let i=0;i<120;i++) {
-    let el = document.createElement('dropdown-box')
-    el.setAttribute("selectedText", "Blabla")
-
-    const d = new Map()
-    for(let j=0;j<30;j++) {
-      d.set(j, 'European Union')
-    }
-    el.data = [d,[]]
-
-    document.body.append(el)
-  }
-}
-

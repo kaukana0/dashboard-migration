@@ -20,13 +20,13 @@ codeList:
     code: "TOTAL"
   15-74: &15-74
     label: "15 to 74 years"
-    code: "!DOESNTEXIST!"
+    code: "!DOESNTEXIST YET 1!"
   20-64: &20-64
     label: "20 to 64 years"
-    code: "!DOESNTEXIST!"
+    code: "!DOESNTEXIST YET 2!"
   15-29: &15-29
     label: "15 to 29 years"
-    code: "!DOESNTEXIST!"
+    code: "!DOESNTEXIST YET 3!"
   timefreq: &timefreq
     label: "Time frequency Annual"
     code: "A"
@@ -39,6 +39,11 @@ codeList:
   timeEnd: &timeEnd
     label: "end time"
     code: "2022"
+  countries: &countries
+    - label: "European Union"
+      code: "EU"
+    - label: "Bulgaria"
+      code: "BG"
 
 
 globals:
@@ -53,6 +58,11 @@ globals:
     t: time
     f: freq
     u: unit
+  ui:
+    dropdown:
+      #ISO 3166-1 alpha2
+      geo: *countries
+
 
 
 # defaults are taken if omitted in the indicators section
@@ -62,17 +72,14 @@ defaults:
       perIndicator:
         dropdown:
           sex:
-          - *total
-          - *women
-          - *men
+            - *total
+            - *women
+            - *men
           ageGroup:
-          - *15-74
-          - *20-64
-          - *15-29
+            - *15-74
+            - *20-64
+            - *15-29
       global:
-        dropdown:
-          #ISO 3166-1 alpha2
-          geo: [EU,BE,FR,GE]
         range:
           time:    # "singles:" could have precedence before "range:" (singles is omitted as of now, todo on demand)
             start: *timeStart
@@ -104,16 +111,17 @@ indicators:
       ui:
         perIndicator:
           dropdown:
+            sex:
+              - label: "one"
+                code: "two"
             ageGroup:
-              - 0-15:
-                label: "0 to 15 years"
-                code: "!DOESNTEXIST!"
+              - label: "0 to 15 years"
+                code: "!DOESNTEXIST YET 4!"
               - *15-74
               - *15-29
               - *20-64
-              - 65 and more:
-                label: "over 65 years"
-                code: "!DOESNTEXIST!"
+              - label: "over 65 years"
+                code: "!DOESNTEXIST YET 5!"
 
   - name: Employment rate
     category: Employment

@@ -17,6 +17,6 @@ export default function create(cfg) {
 		return retVal
 	}
 
-	console.log("main menu", getCategories(cfg))
+	//console.log("main menu", getCategories(cfg))
 
 }
