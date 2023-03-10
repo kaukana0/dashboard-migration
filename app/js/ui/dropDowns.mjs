@@ -3,15 +3,14 @@ export function fillCountries(cfg) {
   return document.getElementById("selectCountry")
 }
 
-export function createDropdownBoxes(id, merged) {
+// sex, age and more on demand per config
+export function createDropdownBoxes(cfg) {
   let retVal = []
 
-	// sex, age and more on demand per config
-  const o = merged.dimensions.ui.perIndicator.dropdown
-  console.log("part", o)
-
-  for(const [k,v] of Object.entries(o)) {
-    retVal.push(createDropdown(k,v))
+  for(const i in cfg) {
+    const k = Object.keys(cfg[i])[0]
+    const v = cfg[i][k]
+    retVal.push({dimId: k, frag: createDropdown(k,v)})
   }
 
   return retVal
@@ -29,6 +28,7 @@ function createDropdown(k,v) {
 	const fragment = new DocumentFragment()
 	const dropdownBox = document.createElement('dropdown-box')
   dropdownBox.data = [getMapFromObject(v), []]
+  dropdownBox.setAttribute("dimension", k)
 	fragment.appendChild(dropdownBox)
 	return fragment
 }

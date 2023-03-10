@@ -2,11 +2,9 @@ import * as Cache from "./cache.mjs"
 
 
 
-export default function handle() {
+export default function fetch(bla) {
 	//updateCards( fetchData( getFrags( getMetadataFromUIElements(), cfgObj ) ) )
-	console.log("handling")
-
-
+	console.log("fetch", bla)
 
 	const processingCfg = [
 		{

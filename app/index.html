@@ -60,15 +60,15 @@ Author: robert.gebhardt@ext.ec.europa.eu
 		</div>
 
 		<div id="blaa" style="min-height: 50px;">
-			Indicator card Filters
+			Menu
 		</div>
 
 		<!-- https://developer.mozilla.org/en-US/docs/Web/CSS/position#values -->
 		<div style="transform: scale(1); background-color: gold;">
-			<div id="selectCountryParentAnchor" style="height: 100px; background-color: wheat">
-				country selector + n indicator selectors
-				<div id="selectCountryAnchorInMainView"></div>
-				<dropdown-box id="selectCountry" imagePath="./components/dropdownBox/assets/countryFlagImages" multiselect maxSelections=7 displayKeys fractions=3 selectedText="countries selected"></dropdown-box>
+			<div id="anchorExpandedCard" style="height: 100px; background-color: wheat">
+				country selector
+				<div id="anchorSelectCountryOutsideOfCard"></div>
+				<dropdown-box id="selectCountry" dimension="geo" imagePath="./components/dropdownBox/assets/countryFlagImages" multiselect maxSelections=7 displayKeys fractions=3 selectedText="countries selected"></dropdown-box>
 			</div>
 			<div id="cards" style="display: flex; flex-wrap: wrap; justify-content: center; background-color: aliceblue;">
 			</div>

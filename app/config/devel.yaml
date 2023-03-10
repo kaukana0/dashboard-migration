@@ -71,11 +71,11 @@ defaults:
     ui:               # UI elements reflect user selction for these
       perIndicator:
         dropdown:
-          sex:
+          - sex:
             - *total
             - *women
             - *men
-          ageGroup:
+          - age:
             - *15-74
             - *20-64
             - *15-29
@@ -111,10 +111,7 @@ indicators:
       ui:
         perIndicator:
           dropdown:
-            sex:
-              - label: "one"
-                code: "two"
-            ageGroup:
+            - age:
               - label: "0 to 15 years"
                 code: "!DOESNTEXIST YET 4!"
               - *15-74
@@ -122,6 +119,9 @@ indicators:
               - *20-64
               - label: "over 65 years"
                 code: "!DOESNTEXIST YET 5!"
+            - sex:
+              - label: "one"
+                code: "two"
 
   - name: Employment rate
     category: Employment
