@@ -27,7 +27,7 @@ codeList:
   15-29: &15-29
     label: "15 to 29 years"
     code: "!DOESNTEXIST YET 3!"
-  timefreq: &timefreq
+  freq: &freq
     label: "Time frequency Annual"
     code: "A"
   unit: &unit
@@ -39,7 +39,7 @@ codeList:
   timeEnd: &timeEnd
     label: "end time"
     code: "2022"
-  countries: &countries
+  countries: &countries   #ISO 3166-1 alpha2
     - label: "European Union"
       code: "EU"
     - label: "Bulgaria"
@@ -48,52 +48,52 @@ codeList:
 
 globals:
   baseURL: https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/
-  dimensions:
-    a: age
-    c:
-      - cbirth
-      - citizen
-    g: geo
-    s: sex
-    t: time
-    f: freq
-    u: unit
   ui:
     dropdown:
       #ISO 3166-1 alpha2
       geo: *countries
-
-
-
-# defaults are taken if omitted in the indicators section
-defaults:
   dimensions:
-    ui:               # UI elements reflect user selction for these
-      perIndicator:
-        dropdown:
-          - sex:
-            - *total
-            - *women
-            - *men
-          - age:
-            - *15-74
-            - *20-64
-            - *15-29
-      global:
-        range:
-          time:    # "singles:" could have precedence before "range:" (singles is omitted as of now, todo on demand)
-            start: *timeStart
-            end: *timeEnd
-            singles: [1907, 1914, 1938]
-        cSelectors:   # c = country or citizen
-          - *native
-          - *eu
-          - *nonEu
-    fixed:          # no UI elements for these, yet relevant for API requests
-      timefreq:
-      - *timefreq
+    nonUi:          # no UI elements for these, yet relevant for API requests
+      freq:
+      - *freq
       unit:
       - *unit
+
+
+# defaults (which are for each indicator) are taken 
+# if omitted in the indicators section
+indicatorDefaults:
+  dimensions:
+    ui:               # UI elements reflect user selection for these
+      dropdown:
+        - sex:
+          - *total
+          - *women
+          - *men
+        - age:
+          - *15-74
+          - *20-64
+          - *15-29
+      range:
+        - time:
+          start: *timeStart
+          end: *timeEnd
+          # "singles:" could have precedence before start/end (to be implemented on demand)
+          singles: [1907, 1914, 1938]
+      combi:
+        - bySelect:
+          - cbirth:
+              entries:
+              - *native
+              - *eu
+              - *nonEu
+              datasetIndex: 0   # ref to indicators.datasets[]
+          - citizen:
+              entries:
+              - *native
+              - *eu
+              - *nonEu
+              datasetIndex: 1
 
 
 indicators:
@@ -109,19 +109,18 @@ indicators:
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/fb8d22a0-054b-4423-a3f9-ec79ee84c87a?lang=en
     dimensions:
       ui:
-        perIndicator:
-          dropdown:
-            - age:
-              - label: "0 to 15 years"
-                code: "!DOESNTEXIST YET 4!"
-              - *15-74
-              - *15-29
-              - *20-64
-              - label: "over 65 years"
-                code: "!DOESNTEXIST YET 5!"
-            - sex:
-              - label: "one"
-                code: "two"
+        dropdown:
+          - age:
+            - label: "0 to 15 years"
+              code: "!DOESNTEXIST YET 4!"
+            - *15-74
+            - *15-29
+            - *20-64
+            - label: "over 65 years"
+              code: "!DOESNTEXIST YET 5!"
+          - sex:
+            - label: "one"
+              code: "two"
 
   - name: Employment rate
     category: Employment
