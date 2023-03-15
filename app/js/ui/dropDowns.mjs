@@ -1,12 +1,13 @@
 const delim = "/"
 
-export function fillCountries(cfg) {
-	document.getElementById("selectCountry").data = [getMapFromObject(cfg), []]
-  return document.getElementById("selectCountry")
+export function fillCountries(id, cfg) {
+	document.getElementById(id).data = [getMapFromObject(cfg), []]
+  return document.getElementById(id)
 }
 
-// usually sex & age. more on demand per config.
 /*
+usually sex & age. more on demand per config.
+
 cfg expected to be similar to:
 [
   {
@@ -44,8 +45,7 @@ it's called "combi" because it's somehow two boxes in one.
 one group of the box-entries belongs to one dataset, the other to another.
 
 the keys of it's entries are a compound of this form:
-"CODE/DIMENSION/DATASETNAME"
-
+"CODE/DIMENSION/DATASETID"
 */
 export function createCombiBoxes(cfg, datasets) {
   let retVal = []

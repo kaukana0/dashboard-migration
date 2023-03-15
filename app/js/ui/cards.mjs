@@ -8,7 +8,7 @@ import * as Util from "../../components/util/util.mjs"
 import * as DropDowns from "./dropDowns.mjs"
 
 
-export function create(cfg, selectCallback) {
+export function create(containerId, cfg, selectCallback) {
 	let retVal = []
 
 	for(const i in cfg.indicators) {
@@ -16,7 +16,7 @@ export function create(cfg, selectCallback) {
 		console.log("cfg merged for indicator", merged.name, merged)
 		const id = "chartCard-"+merged.name.replaceAll(" ", "-")		// or a hash
 
-		document.getElementById("cards").innerHTML += MarkUpCode.getSlotFragment(id)
+		document.getElementById(containerId).innerHTML += MarkUpCode.getSlotFragment(id)
 
     requestAnimationFrame( () => {
 			const combi = DropDowns.createCombiBoxes(merged.dimensions.ui.combi, merged.datasets)
@@ -54,9 +54,8 @@ function insertAndHookUpBoxes(id, boxes, selectCallback) {
 	}
 }
 
-
 export function getCurrentSelections(cardId) {
-	let retVal = {cardId: cardId, boxes: [], combis: getCombis()}
+	let retVal = {cardId: cardId, boxes: []}
 	const boxes = document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ dropdown-box`)
 	for(const box of boxes) {
 		retVal.boxes.push({dimension: box.getAttribute("dimension"), selected: box.selected})
@@ -64,7 +63,9 @@ export function getCurrentSelections(cardId) {
 	return retVal
 }
 
-function getCombis() {
-	let retVal = [{dataset: "MIGR_POP1CTZ", dimension: "cbirth", selected: "TODO"}]
-	return retVal
+export function iterate(containerId, callback) {
+	const childs = document.getElementById(containerId).children
+	for(let i=0; i<childs.length; i++) {
+		callback(childs[i].getAttribute("id"))
+	}
 }
