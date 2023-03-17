@@ -4,8 +4,8 @@ Also the content for a slot which goes into the card.
 That content is selectboxes corresponding to YAMLCfg.dimensions.ui.dropdown
 */
 import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
-import * as Util from "../../components/util/util.mjs"
-import * as DropDowns from "./dropDowns.mjs"
+import * as DropDowns from "../dropDowns.mjs"
+import * as Util from "../../../../components/util/util.mjs"
 
 
 export function create(containerId, cfg, selectCallback) {
@@ -17,6 +17,7 @@ export function create(containerId, cfg, selectCallback) {
 		const id = "chartCard-"+merged.name.replaceAll(" ", "-")		// or a hash
 
 		document.getElementById(containerId).innerHTML += MarkUpCode.getSlotFragment(id)
+		setData(id)
 
     requestAnimationFrame( () => {
 			const combi = DropDowns.createCombiBoxes(merged.dimensions.ui.combi, merged.datasets)
@@ -68,4 +69,8 @@ export function iterate(containerId, callback) {
 	for(let i=0; i<childs.length; i++) {
 		callback(childs[i].getAttribute("id"))
 	}
+}
+
+export function setData(cardId, data) {
+	console.log(document.getElementById(cardId))
 }

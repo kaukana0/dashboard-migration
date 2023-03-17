@@ -1,4 +1,4 @@
-const delim = "/"
+import * as Url from "../../request/url.mjs"
 
 export function fillCountries(id, cfg) {
 	document.getElementById(id).data = [getMapFromObject(cfg), []]
@@ -57,7 +57,9 @@ export function createCombiBoxes(cfg, datasets) {
         const key = Object.keys(cfg[i][j][k])[0]    // dim
         const v = structuredClone( cfg[i][j][k][key].entries )        // [{label,code}]
         for(const l in v) {
-          v[l].code = v[l].code + delim + key + delim + datasets[k].id
+          // effectively making the key of the dataset a compound of 3 distinct informations.
+          // because in selectBox the key needs to be unique and this way we can keep the yaml simple.
+          v[l].code = Url.CompoundKey.join(v[l].code, key, datasets[k].id)
         }
         ll = ll.concat(v)
       }
