@@ -2,24 +2,25 @@ import * as Cache from "./cache.mjs"
 import { replaceEuInRawData } from "../../components/util/util.mjs"
 
 import { run } from "../../components/pipeline/pipeline.mjs"
-import { process as retrieveSourceData } from "./pipelineProcessors/sourceData.mjs"
+import { process as defineCountryColors } from "../../components/processorCountryColors/countryColors.mjs"
+import { process as extractTimeYearly } from "./pipelineProcessors/timeYearly.mjs"
+import { process as extractValues } from "./pipelineProcessors/values.mjs"
 
 
-export default function go(urls) {
-	console.log("fetching", urls)
-
+export default function go(urls, callback) {
 	const processingCfg = []
 
 	for(let i in urls) {
 		processingCfg.push(
 			{
-				input: urls[i],
+				//input: urls[i],
+				input: "./persistedData/example-request-answer.json",
 				cache: {
-					store: (data, id) => Cache.store(data, id),
+					store: (data) => Cache.store(urls[i], data),
 					restore: (id) => Cache.restore(id)
 				},
 				//processors: [retrieveSourceData, defineIndexColors, defineCountryOrder, defineCountryColors, extractCountries, renameCountries, extractIndicators, extractTimeMonthly]
-				processors: [retrieveSourceData]
+				processors: [defineCountryColors, extractTimeYearly, extractValues]
 			}
 		)
 	}
@@ -28,14 +29,9 @@ export default function go(urls) {
 	run(
 		processingCfg,
 		(data) => {
-			console.log(data)
 			if(data	&& Object.keys(data).length > 0 && Object.getPrototypeOf(data) === Object.prototype) {
 				try {
-					//const max = data.categories.time.length
-					//const left = 15*12
-					//slider.init(data, left, max, onSliderSelected.bind(this, data))
-					//updateChart()
-					//document.getElementById("timeRange").style.visibility="visible";
+					callback(data)
 				} catch(e) {
 					displayFailure(e)
 				}
@@ -75,7 +71,7 @@ ui.perI.single.dropdown.*
 ui.perI.single.range.*
 
 
-
+https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/LFSA_ERGACOB?geo=BG&c_birth=NAT&age=Y15-64&sex=T&freq=A&unit=PC&
 
 
 */

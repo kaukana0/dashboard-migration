@@ -16,3 +16,6 @@
 [submodule "app/components/util"]
 	path = app/components/util
 	url = https://github.com/kaukana0/util.git
+[submodule "app/components/processorCountries"]
+	path = app/components/processorCountries
+	url = https://github.com/kaukana0/processorCountries.git

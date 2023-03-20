@@ -17,16 +17,16 @@ codeList:
     code: "W"
   total: &total
     label: "Total"
-    code: "TOTAL"
+    code: "T"
   15-74: &15-74
     label: "15 to 74 years"
-    code: "Y15-19"              # correct one doesn't exist yet
+    code: "Y15-64"              # correct one doesn't exist yet
   20-64: &20-64
     label: "20 to 64 years"
     code: "Y20-24"              # correct one doesn't exist yet
   15-29: &15-29
     label: "15 to 29 years"
-    code: "Y15-64"              # correct one doesn't exist yet
+    code: "Y25-59"              # correct one doesn't exist yet
   freq: &freq
     label: "Time frequency Annual"
     code: "A"

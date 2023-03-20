@@ -13,11 +13,10 @@ export function create(containerId, cfg, selectCallback) {
 
 	for(const i in cfg.indicators) {
 		const merged = Util.mergeObjects(cfg.indicatorDefaults, cfg.indicators[i])
-		console.log("cfg merged for indicator", merged.name, merged)
+		//console.log("cfg merged for indicator", merged.name, merged)
 		const id = "chartCard-"+merged.name.replaceAll(" ", "-")		// or a hash
 
 		document.getElementById(containerId).innerHTML += MarkUpCode.getSlotFragment(id)
-		setData(id)
 
     requestAnimationFrame( () => {
 			const combi = DropDowns.createCombiBoxes(merged.dimensions.ui.combi, merged.datasets)
@@ -32,7 +31,6 @@ export function create(containerId, cfg, selectCallback) {
 	return retVal
 }
 
-
 function hookUpCardEvents(id) {
 	document.getElementById(id).addEventListener("expanding", () => {
 		// move it from parent container into zoomed card
@@ -44,12 +42,11 @@ function hookUpCardEvents(id) {
 	})
 }
 
-
 function insertAndHookUpBoxes(id, boxes, selectCallback) {
 	for(const box of boxes) {
 		box.docFrag.firstChild.callback = (e) => {
-			// relevant is here just in which box a selection happened, not what item was actually selected
-			selectCallback({cardId:id, dimId:box.dimId})
+			// assumtion: for a caller it's only relevant in which chart a selection happened, not the box or selected items
+			selectCallback(id)
 		}
 		document.getElementById("anchorSlotContentOfCard"+id).after(box.docFrag)
 	}
@@ -72,5 +69,5 @@ export function iterate(containerId, callback) {
 }
 
 export function setData(cardId, data) {
-	console.log(document.getElementById(cardId))
+	document.getElementById(cardId).setData(data)
 }

@@ -7,13 +7,13 @@ import Fetcher from "../request/fetcher.mjs"
 
 
 const containerId = "cards"
-
+let countrySelect
 
 export function createUIElements(cfg) {
-  console.log("cfg json from vanilla yaml", cfg)
+  //console.log("cfg json from vanilla yaml", cfg)
   MainMenu(cfg)
   //createRange()  // time
-  const countrySelect = DropDowns.fillCountries("selectCountry", cfg.globals.ui.dropdown.geo)
+  countrySelect = DropDowns.fillCountries("selectCountry", cfg.globals.ui.dropdown.geo)
   countrySelect.callback = onSelectForAllCards
   Cards.create(containerId, cfg, onSelectForOneCard)  // ∀ indicators
   Url.Frag.prepend(cfg.globals.baseURL)
@@ -25,16 +25,12 @@ export function createUIElements(cfg) {
 // so, update charts in all cards
 // (note: greendeal dashboard behaviour: zoom out => reset all except country)
 function onSelectForAllCards() {
-  const urls = []
-  Cards.iterate(containerId, (cardId) => { 
-    urls.push( Url.buildFrag(Cards.getCurrentSelections(cardId)) )
-   })
-   Fetcher(urls)
+  Cards.iterate(containerId, (cardId) => { onSelectForOneCard(cardId) })
 }
 
 // user changed some selection that is relevant for ONE card
-// which is all boxes except country and the slider.
+// which is all boxes except country.
 // so, update charts in one card
-function onSelectForOneCard(ev) {
-  Fetcher([ Url.buildFrag(Cards.getCurrentSelections(ev.cardId)) ])
+function onSelectForOneCard(cardId) {
+  Fetcher( [ Url.buildFrag(Cards.getCurrentSelections(cardId)) ], Cards.setData.bind(this, cardId) )
 }

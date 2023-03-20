@@ -1,10 +1,9 @@
 const cache = new Map()
 
-export function store(data, id) {
+export function store(id, data) {
   if(!cache.has(id)) {
-      console.log( `cache: caching id '${id}'.` )
+      //console.log( `cache: caching id '${id}'.` )
       cache[id]=data
-
     }
 }
 
