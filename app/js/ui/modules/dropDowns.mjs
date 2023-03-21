@@ -59,7 +59,7 @@ export function createCombiBoxes(cfg, datasets) {
         for(const l in v) {
           // effectively making the key of the dataset a compound of 3 distinct informations.
           // because in selectBox the key needs to be unique and this way we can keep the yaml simple.
-          v[l].code = Url.CompoundKey.join(v[l].code, key, datasets[k].id)
+          v[l].code = {code:v[l].code, dimension:key, dataset:datasets[k].id}
         }
         ll = ll.concat(v)
       }

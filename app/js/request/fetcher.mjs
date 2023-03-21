@@ -5,33 +5,36 @@ import { run } from "../../components/pipeline/pipeline.mjs"
 import { process as defineCountryColors } from "../../components/processorCountryColors/countryColors.mjs"
 import { process as extractTimeYearly } from "./pipelineProcessors/timeYearly.mjs"
 import { process as extractValues } from "./pipelineProcessors/values.mjs"
+import { process as createSeriesLabels } from "./pipelineProcessors/seriesLabels.mjs"
 
 
 export default function go(urls, callback) {
 	const processingCfg = []
 
 	for(let i in urls) {
+		console.log("fecth", urls[i])
 		processingCfg.push(
 			{
-				//input: urls[i],
-				input: "./persistedData/example-request-answer.json",
+				input: urls[i],
+				//input: "./persistedData/example-request-answer.json",
 				cache: {
 					store: (data) => Cache.store(urls[i], data),
 					restore: (id) => Cache.restore(id)
 				},
 				//processors: [retrieveSourceData, defineIndexColors, defineCountryOrder, defineCountryColors, extractCountries, renameCountries, extractIndicators, extractTimeMonthly]
-				processors: [defineCountryColors, extractTimeYearly, extractValues]
+				processors: [defineCountryColors, extractTimeYearly, extractValues, createSeriesLabels]
 			}
 		)
 	}
 
-
+	// todo: lock ui
 	run(
 		processingCfg,
 		(data) => {
 			if(data	&& Object.keys(data).length > 0 && Object.getPrototypeOf(data) === Object.prototype) {
 				try {
 					callback(data)
+					// todo: unlock ui
 				} catch(e) {
 					displayFailure(e)
 				}
