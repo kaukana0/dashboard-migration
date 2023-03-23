@@ -16,7 +16,7 @@ export function process(inputData, output) {
     byLabel = Object.keys(inputData.dimension.c_birth.category.index)[by]
     for(let geo=0; geo<geoMax; geo++) {
       geoLabel = Object.keys(inputData.dimension.geo.category.index)[geo]
-      const ll = [byLabel+geoLabel]
+      const ll = [byLabel+geoLabel]   // is unique. used nowhere.
       for(let time=0; time<timeMax; time++) {
         const i = MultiDim.getIndex(valence, [0,0,0,0,by,geo,time])
         if(typeof inputData.value[i] === 'undefined') {

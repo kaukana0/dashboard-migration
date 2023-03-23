@@ -1,5 +1,5 @@
 import Yaml from "../redist/js-yaml.mjs"
-import {createUIElements} from "./ui/ui.mjs"
+import {createUIElements} from "./view/ui.mjs"
 
 function init() {
   //disableEventHandler()

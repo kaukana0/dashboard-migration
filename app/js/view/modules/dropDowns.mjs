@@ -1,5 +1,3 @@
-import * as Url from "../../request/url.mjs"
-
 export function fillCountries(id, cfg) {
 	document.getElementById(id).data = [getMapFromObject(cfg), []]
   return document.getElementById(id)

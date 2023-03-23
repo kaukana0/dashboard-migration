@@ -12,17 +12,20 @@ export function create(containerId, cfg, selectCallback) {
 	let retVal = []
 
 	for(const i in cfg.indicators) {
-		const merged = Util.mergeObjects(cfg.indicatorDefaults, cfg.indicators[i])
-		//console.log("cfg merged for indicator", merged.name, merged)
+		const merged = Util.mergeObjects(cfg.indicatorBase, cfg.indicators[i])
+		//console.log("merged cfg for indicator", merged.name, merged)
 		const id = "chartCard-"+merged.name.replaceAll(" ", "-")		// or a hash
 
-		document.getElementById(containerId).innerHTML += MarkUpCode.getSlotFragment(id)
+		document.getElementById(containerId).innerHTML += MarkUpCode.getSlotFragment(id, merged.name)
 
     requestAnimationFrame( () => {
 			const combi = DropDowns.createCombiBoxes(merged.dimensions.ui.combi, merged.datasets)
 			const boxes = DropDowns.createDropdownBoxes(merged.dimensions.ui.dropdown)
 			insertAndHookUpBoxes(id, boxes.concat(combi), selectCallback)
 			hookUpCardEvents(id, boxes)
+			document.getElementById(id).setAttribute("subtitle", "")
+			document.getElementById(id).setAttribute("right1", "EU")
+			document.getElementById(id).setAttribute("right2", "2022")
 		})
 
 		retVal.push(id)

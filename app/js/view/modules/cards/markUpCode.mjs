@@ -1,6 +1,6 @@
-export function getSlotFragment(id) {
+export function getSlotFragment(id, title) {
   return `
-    <chart-card id="${id}" anchor="anchorExpandedCard"> 
+    <chart-card id="${id}" title="${title}" anchor="anchorExpandedCard">
       <div slot="slot1" style="height:50px; display:flex; justify-content: space-evenly; flex-grow:1;">
         <div id="anchorSlotContentOfCard${id}"></div>
       </div>

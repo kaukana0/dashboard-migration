@@ -19,3 +19,6 @@
 [submodule "app/components/processorCountries"]
 	path = app/components/processorCountries
 	url = https://github.com/kaukana0/processorCountries.git
+[submodule "app/components/multiDimAccess"]
+	path = app/components/multiDimAccess
+	url = https://github.com/kaukana0/multiDimAccess.git

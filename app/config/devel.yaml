@@ -59,9 +59,8 @@ globals:
       - *unit
 
 
-# defaults (which are for each indicator) are taken 
-# if omitted in the indicators section
-indicatorDefaults:
+# these are used as a base for each indicator in the indicators section
+indicatorBase:
   dimensions:
     ui:               # UI elements reflect user selection for these
       dropdown:
@@ -95,6 +94,7 @@ indicatorDefaults:
               datasetIndex: 1
 
 
+# each indicator can overwrite the properties it "inherited" (via merge) from indicatorBase
 indicators:
 
   - name: Migrant population share
@@ -119,6 +119,8 @@ indicators:
               code: "!DOESNTEXIST YET 5!"
           - sex:
             - label: "one"
+              code: "one"
+            - label: "two"
               code: "two"
 
   - name: Employment rate
