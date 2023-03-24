@@ -31,8 +31,8 @@ export default function go(urls, callback) {
 		console.log("fecth", urls[i])
 		processingCfg.push(
 			{
-				//input: urls[i],
-				input: "./persistedData/example-request-answer.json",
+				input: urls[i],
+				//input: "./persistedData/example-request-answer.json",
 				cache: {
 					store: (data) => Cache.store(urls[i], data),
 					restore: (id) => Cache.restore(id)

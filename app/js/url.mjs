@@ -28,22 +28,21 @@ export function buildFrag(boxes) {
     console.error("ui: No dataset retrieved from any of the selectBoxes.")
   }
 
-  return Frag.pre+dataset+"?"+retVal+Frag.post
+  return Affix.pre+dataset+"?"+retVal+Affix.post
 }
 
-
-export class Frag {
+// fragments which are appended/prepended to the assembled URL as a whole
+export class Affix {
   static pre=""
   static post=""
+  static pre_(str) { this.pre = str }
+  static post_(str) { this.post = str }  
+}
 
-  static append(str) { this.post = this.post + str }  
-  static prepend(str) { this.pre = str + this.pre }
-
-  static getUrlFrag(obj) {
-    let retVal = ""
-    for(const [k,v] of Object.entries(obj)) {
-      retVal += k+"="+v[0].code+delim
-    }
-    return retVal
+export function getUrlFrag(obj) {
+  let retVal = ""
+  for(const [k,v] of Object.entries(obj)) {
+    retVal += k+"="+v[0].code+delim
   }
+  return retVal
 }

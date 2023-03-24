@@ -31,7 +31,7 @@ codeList:
     label: "Time frequency Annual"
     code: "A"
   unit: &unit
-    label: "Unit"
+    label: ""
     code: "PC"
   timeStart: &timeStart
     label: "start time"
@@ -51,12 +51,6 @@ globals:
   ui:
     dropdown:
       geo: *countries
-  dimensions:
-    nonUi:          # no UI elements for these, yet relevant for API requests
-      freq:
-      - *freq
-      unit:
-      - *unit
 
 
 # these are used as a base for each indicator in the indicators section
@@ -76,7 +70,7 @@ indicatorBase:
         - time:
           start: *timeStart
           end: *timeEnd
-          # "singles:" could have precedence before start/end (to be implemented on demand)
+          # "singles:" could have precedence before start/end (not implemented)
           singles: [1907, 1914, 1938]
       combi:
         - bySelect:
@@ -92,6 +86,11 @@ indicatorBase:
               - *eu
               - *nonEu
               datasetIndex: 1
+    nonUi:          # request relevant dimensions not represented by an ui element
+      freq:
+      - *freq
+      unit:
+      - *unit
 
 
 # each indicator can overwrite the properties it "inherited" (via merge) from indicatorBase
@@ -110,18 +109,17 @@ indicators:
       ui:
         dropdown:
           - age:
+            - *15-74
             - label: "0 to 15 years"
               code: "!DOESNTEXIST YET 4!"
-            - *15-74
             - *15-29
             - *20-64
             - label: "over 65 years"
               code: "!DOESNTEXIST YET 5!"
-          - sex:
-            - label: "one"
-              code: "one"
-            - label: "two"
-              code: "two"
+      nonUi:
+        unit:
+        - label: "Number"
+          code: "NR"
 
   - name: Employment rate
     category: Employment
@@ -132,3 +130,10 @@ indicators:
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/d642741b-30e8-45d3-b160-2abb17d8a2c9?lang=en
       - id: LFSA_ERGAN
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/1a912262-da95-49ac-a154-44479a7dae31?lang=en
+    dimensions:
+      ui:
+        dropdown:
+          - sex:
+            - *total
+            - label: "two"
+              code: "two"

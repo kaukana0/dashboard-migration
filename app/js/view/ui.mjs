@@ -15,8 +15,7 @@ export function createUIElements(cfg) {
   countrySelect = DropDowns.fillCountries("selectCountry", cfg.globals.ui.dropdown.geo)
   countrySelect.callback = onSelectForAllCards
   Cards.create(containerId, cfg, onSelectForOneCard)  // ∀ indicators
-  Url.Frag.prepend(cfg.globals.baseURL)
-  Url.Frag.append(Url.Frag.getUrlFrag(cfg.globals.dimensions.nonUi))
+  Url.Affix.pre_(cfg.globals.baseURL)
 }
 
 // user changed some selection which affects ALL cards.
@@ -39,7 +38,13 @@ function onSelectForOneCard(cardId) {
 }
 
 function fetch(cardId) {
-  Fetcher( [ Url.buildFrag(Cards.getCurrentSelections(cardId)) ], Cards.setData.bind(this, cardId) )
+  // from the card's widgets
+  const selections = Cards.getCurrentSelections(cardId)
+  // from "global" country select
+  selections.boxes.push({dimension:"geo", selected: countrySelect.selected})
+  // non-ui url fragment
+  Url.Affix.post_( document.getElementById(cardId).getAttribute("urlfrag") )
+  Fetcher( [ Url.buildFrag(selections) ], Cards.setData.bind(this, cardId) )
 }
 
 function updateAttributes(cardId) {

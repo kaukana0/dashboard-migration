@@ -6,6 +6,7 @@ That content is selectboxes corresponding to YAMLCfg.dimensions.ui.dropdown
 import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
 import * as DropDowns from "../dropDowns.mjs"
 import * as Util from "../../../../components/util/util.mjs"
+import * as Url from "../../../url.mjs"
 
 
 export function create(containerId, cfg, selectCallback) {
@@ -16,7 +17,7 @@ export function create(containerId, cfg, selectCallback) {
 		//console.log("merged cfg for indicator", merged.name, merged)
 		const id = "chartCard-"+merged.name.replaceAll(" ", "-")		// or a hash
 
-		document.getElementById(containerId).innerHTML += MarkUpCode.getSlotFragment(id, merged.name)
+		document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi) )
 
     requestAnimationFrame( () => {
 			const combi = DropDowns.createCombiBoxes(merged.dimensions.ui.combi, merged.datasets)
@@ -59,7 +60,9 @@ export function getCurrentSelections(cardId) {
 	let retVal = {cardId: cardId, boxes: []}
 	const boxes = document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ dropdown-box`)
 	for(const box of boxes) {
-		retVal.boxes.push({dimension: box.getAttribute("dimension"), selected: box.selected})
+		if(box.hasAttribute("dimension")) {
+			retVal.boxes.push({dimension: box.getAttribute("dimension"), selected: box.selected})
+		}
 	}
 	return retVal
 }
