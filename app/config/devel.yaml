@@ -40,10 +40,76 @@ codeList:
     label: "end time"
     code: "2022"
   countries: &countries   #ISO 3166-1 alpha2
-    - label: "European Union"
-      code: "EU"
-    - label: "Bulgaria"
-      code: "BG"
+    - code: EU
+      label: European Union
+    - code: EU
+      label: EU
+    - code: EA
+      label: EA
+    - code: AT
+      label: Austria
+    - code: BE
+      label: Belgium
+    - code: BG
+      label: Bulgaria
+    - code: CH
+      label: Switzerland
+    - code: CY
+      label: Cyprus
+    - code: CZ
+      label: Czechia
+    - code: DE
+      label: Germany
+    - code: DK
+      label: Denmark
+    - code: EE
+      label: Estonia
+    - code: EL
+      label: Greece
+    - code: ES
+      label: Spain
+    - code: FI
+      label: Finland
+    - code: FR
+      label: France
+    - code: HR
+      label: Croatia
+    - code: HU
+      label: Hungary
+    - code: IE
+      label: Ireland
+    - code: IS
+      label: Iceland
+    - code: IT
+      label: Italy
+    - code: LI
+      label: Liechtenstein
+    - code: LT
+      label: Lithuania
+    - code: LU
+      label: Luxembourg
+    - code: LV
+      label: Latvia
+    - code: MT
+      label: Malta
+    - code: NL
+      label: Netherlands
+    - code: NO
+      label: Norway
+    - code: PL
+      label: Poland
+    - code: PT
+      label: Portugal
+    - code: RO
+      label: Romania
+    - code: SE
+      label: Sweden
+    - code: SI
+      label: Slovenia
+    - code: SK
+      label: Slovakia
+    - code: UK
+      label: United Kingdom
 
 
 globals:
@@ -137,3 +203,13 @@ indicators:
             - *total
             - label: "two"
               code: "two"
+
+  - name: Share of adults at risk of poverty or social exclusion
+    category: Social inclusion
+    isInOverview: true
+    articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_at_risk_of_poverty_and_social_exclusion
+    datasets:
+      - id: ILC_PEPS06N
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/7acca101-803d-44f2-85cd-834dbe582384?lang=en
+      - id: ILC_PEPS05N
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/e5355ba1-b4bf-4f2c-a5d6-4ca46cd88406?lang=en

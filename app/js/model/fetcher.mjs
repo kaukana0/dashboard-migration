@@ -22,13 +22,15 @@ import { process as defineCountryColors } from "../../components/processorCountr
 import { process as extractTimeYearly } from "./pipelineProcessors/timeYearly.mjs"
 import { process as extractValues } from "./pipelineProcessors/values.mjs"
 import { process as createSeriesLabels } from "./pipelineProcessors/seriesLabels.mjs"
-
+import { process as analyzeIncomingData } from "./pipelineProcessors/analyze.mjs"
 
 export default function go(urls, callback) {
 	const processingCfg = []
 
+	// note: all relevant processors can handle being called multiple times
+	// meaning, once per URL. they're cumulative, appending data (cols for the chart).
 	for(let i in urls) {
-		console.log("fecth", urls[i])
+		console.debug("fecth", urls[i])
 		processingCfg.push(
 			{
 				input: urls[i],
@@ -38,7 +40,7 @@ export default function go(urls, callback) {
 					restore: (id) => Cache.restore(id)
 				},
 				//processors: [retrieveSourceData, defineIndexColors, defineCountryOrder, defineCountryColors, extractCountries, renameCountries, extractIndicators, extractTimeMonthly]
-				processors: [defineCountryColors, extractTimeYearly, extractValues, createSeriesLabels]
+				processors: [defineCountryColors, extractTimeYearly, extractValues, createSeriesLabels, analyzeIncomingData]
 			}
 		)
 	}

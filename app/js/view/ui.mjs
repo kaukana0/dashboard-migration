@@ -9,18 +9,21 @@ import Fetcher from "../model/fetcher.mjs"
 const containerId = "cards"
 let countrySelect
 
-export function createUIElements(cfg) {
-  //console.log("cfg json from vanilla yaml", cfg)
+export function createUIElements(cfg, triggerInitialRequest) {
+  console.debug("cfg json from vanilla yaml", cfg)
   MainMenu(cfg)
   countrySelect = DropDowns.fillCountries("selectCountry", cfg.globals.ui.dropdown.geo)
   countrySelect.callback = onSelectForAllCards
   Cards.create(containerId, cfg, onSelectForOneCard)  // ∀ indicators
   Url.Affix.pre_(cfg.globals.baseURL)
+  if(triggerInitialRequest) {
+    requestAnimationFrame(()=>onSelectForAllCards())
+  }
 }
 
-// user changed some selection which affects ALL cards.
-// which is actually just the country box 
-// so, update charts in all cards
+// user changed some selection which affects ALL cards,
+// so update charts in all cards.
+// this actually can only be the country box.
 // (note: greendeal dashboard behaviour: zoom out => reset all selections except country)
 function onSelectForAllCards() {
   Cards.iterate(containerId, (cardId) => { 
@@ -38,13 +41,14 @@ function onSelectForOneCard(cardId) {
 }
 
 function fetch(cardId) {
+  console.debug("fetch for card", cardId)
   // from the card's widgets
   const selections = Cards.getCurrentSelections(cardId)
   // from "global" country select
-  selections.boxes.push({dimension:"geo", selected: countrySelect.selected})
+  selections.boxes.set("geo", countrySelect.selected)
   // non-ui url fragment
   Url.Affix.post_( document.getElementById(cardId).getAttribute("urlfrag") )
-  Fetcher( [ Url.buildFrag(selections) ], Cards.setData.bind(this, cardId) )
+  Fetcher( Url.buildFrag(selections), Cards.setData.bind(this, cardId) )
 }
 
 function updateAttributes(cardId) {

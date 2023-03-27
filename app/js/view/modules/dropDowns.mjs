@@ -55,6 +55,7 @@ export function createCombiBoxes(cfg, datasets) {
         const key = Object.keys(cfg[i][j][k])[0]    // dim
         const v = structuredClone( cfg[i][j][k][key].entries )        // [{label,code}]
         for(const l in v) {
+          // in contrast to the other dropdowns who have string keys, this has a object as key.
           // effectively making the key of the dataset a compound of 3 distinct informations.
           // because in selectBox the key needs to be unique and this way we can keep the yaml simple.
           v[l].code = {code:v[l].code, dimension:key, dataset:datasets[k].id}

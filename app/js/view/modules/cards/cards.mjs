@@ -57,11 +57,11 @@ function insertAndHookUpBoxes(id, boxes, selectCallback) {
 }
 
 export function getCurrentSelections(cardId) {
-	let retVal = {cardId: cardId, boxes: []}
+	let retVal = {cardId: cardId, boxes: new Map()}
 	const boxes = document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ dropdown-box`)
 	for(const box of boxes) {
 		if(box.hasAttribute("dimension")) {
-			retVal.boxes.push({dimension: box.getAttribute("dimension"), selected: box.selected})
+			retVal.boxes.set(box.getAttribute("dimension"), box.selected)
 		}
 	}
 	return retVal

@@ -1,5 +1,8 @@
+// cumulative
 export function process(inputData, output) {
-  output.seriesLabels = new Map()
+  if(!output.seriesLabels) {
+    output.seriesLabels = new Map()
+  }
 
   const byDim = inputData.id[4]   // "c_birth" or "citizen"
   const byMax = inputData.size[4]  // by c_birth or by citizen
