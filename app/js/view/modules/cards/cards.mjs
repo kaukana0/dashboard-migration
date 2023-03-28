@@ -17,19 +17,23 @@ export function create(containerId, cfg, selectCallback) {
 		//console.log("merged cfg for indicator", merged.name, merged)
 		const id = "chartCard-"+merged.name.replaceAll(" ", "-")		// or a hash
 
-		document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi) )
+		if(!merged.ignore) {
 
-    requestAnimationFrame( () => {
-			const combi = DropDowns.createCombiBoxes(merged.dimensions.ui.combi, merged.datasets)
-			const boxes = DropDowns.createDropdownBoxes(merged.dimensions.ui.dropdown)
-			insertAndHookUpBoxes(id, boxes.concat(combi), selectCallback)
-			hookUpCardEvents(id, boxes)
-			document.getElementById(id).setAttribute("subtitle", "")
-			document.getElementById(id).setAttribute("right1", "EU")
-			document.getElementById(id).setAttribute("right2", "2022")
-		})
+			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi) )
 
-		retVal.push(id)
+			requestAnimationFrame( () => {
+				const combi = DropDowns.createCombiBoxes(merged.dimensions.ui.combi, merged.datasets)
+				const boxes = DropDowns.createDropdownBoxes(merged.dimensions.ui.dropdown)
+				insertAndHookUpBoxes(id, boxes.concat(combi), selectCallback)
+				hookUpCardEvents(id, boxes)
+				document.getElementById(id).setAttribute("subtitle", "")
+				document.getElementById(id).setAttribute("right1", "EU")
+				document.getElementById(id).setAttribute("right2", "2022")
+			})
+
+			retVal.push(id)
+		}
+
 	}
 
 	return retVal

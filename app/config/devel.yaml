@@ -5,10 +5,10 @@ codeList:
     code: NAT
   eu: &eu
     label: "EU"
-    code: EU_27_2020_FOR
+    code: EU27_2020_FOR
   nonEu: &nonEu
     label: "Non EU"
-    code: NEU_27_2020_FOR
+    code: NEU27_2020_FOR
   men: &men
     label: "Men"
     code: "M"
@@ -20,13 +20,16 @@ codeList:
     code: "T"
   15-74: &15-74
     label: "15 to 74 years"
-    code: "Y15-64"              # correct one doesn't exist yet
+    code: "Y15-64"
   20-64: &20-64
     label: "20 to 64 years"
-    code: "Y20-24"              # correct one doesn't exist yet
+    code: "Y20-24"
   15-29: &15-29
     label: "15 to 29 years"
-    code: "Y25-59"              # correct one doesn't exist yet
+    code: "Y25-59"
+  18-54: &18-54
+    label: "18 to 54 years"
+    code: "Y18-54"
   freq: &freq
     label: "Time frequency Annual"
     code: "A"
@@ -110,6 +113,12 @@ codeList:
       label: Slovakia
     - code: UK
       label: United Kingdom
+  tenure1: &tenure1
+    label: "Owner"
+    code: "OWN"
+  tenure2: &tenure2
+    label: "Tenant"
+    code: "RENT"
 
 
 globals:
@@ -188,6 +197,7 @@ indicators:
           code: "NR"
 
   - name: Employment rate
+    ignore: true
     category: Employment
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_%E2%80%93_labour_market_indicators
@@ -205,6 +215,7 @@ indicators:
               code: "two"
 
   - name: Share of adults at risk of poverty or social exclusion
+    ignore: true
     category: Social inclusion
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_at_risk_of_poverty_and_social_exclusion
@@ -213,3 +224,22 @@ indicators:
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/7acca101-803d-44f2-85cd-834dbe582384?lang=en
       - id: ILC_PEPS05N
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/e5355ba1-b4bf-4f2c-a5d6-4ca46cd88406?lang=en
+
+  - name: Home ownership rate
+    ignore: true
+    category: Housing
+    isInOverview: true
+    articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_housing
+    datasets:
+      - id: ILC_LVPS16
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/9aa7ad1a-8350-47cd-a9e8-83c8e0c59e23?lang=en
+      - id: ILC_LVPS15
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/cf1f1df3-d356-451d-a0dc-9b38be4cd9c1?lang=en
+    dimensions:
+      ui:
+        dropdown:
+          - age:
+            - *18-54
+      nonUi:
+        tenure:
+        - *tenure1

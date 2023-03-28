@@ -14,21 +14,35 @@ export function process(inputData, output) {
   }
 
   const valence = MultiDim.calcOrdinalValence(inputData.size)
+  let byDim = "c_birth"
 
-  const byMax = inputData.size[4]  // "by" c_birth or citizen
-  const geoMax = inputData.size[5]
-  const timeMax = inputData.size[6]
+  let byIdx = getIndexOfDimension(inputData.id, "c_birth")
+  if(byIdx===-1) {
+    byIdx = getIndexOfDimension(inputData.id, "citizen")
+    byDim = "citizen"
+  }
+  const geoIdx = getIndexOfDimension(inputData.id, "geo")
+  const timeIdx = getIndexOfDimension(inputData.id, "time")
+
+  const byMax = inputData.size[byIdx]  // "by" c_birth or citizen
+  const geoMax = inputData.size[geoIdx]
+  const timeMax = inputData.size[timeIdx]
 
   let byLabel = ""
   let geoLabel = ""
-  
-  for(let by=0; by<byMax; by++) {
-    byLabel = Object.keys(inputData.dimension.c_birth.category.index)[by]
+
+    for(let by=0; by<byMax; by++) {
+    byLabel = Object.keys(inputData.dimension[byDim].category.index)[by]
     for(let geo=0; geo<geoMax; geo++) {
       geoLabel = Object.keys(inputData.dimension.geo.category.index)[geo]
       const ll = [byLabel+geoLabel]   // is unique. used by chart as key for tooltip label mapping to text.
       for(let time=0; time<timeMax; time++) {
-        const i = MultiDim.getIndex(valence, [0,0,0,0,by,geo,time])
+        let bla = new Array(inputData.size.length)
+        bla.fill(0)
+        bla[byIdx] = by
+        bla[geoIdx] = geo
+        bla[timeIdx] = time
+        const i = MultiDim.getIndex(valence, bla)
         if(typeof inputData.value[i] === 'undefined') {
           ll.push(null)
         } else {
@@ -39,4 +53,12 @@ export function process(inputData, output) {
     }
   }
 
+}
+
+
+function getIndexOfDimension(arr, dim) {
+  for(let i=0;i<arr.length;i++) {
+    if(arr[i]===dim) return i
+  }
+  return -1
 }
