@@ -8,15 +8,13 @@ geo								country selectBox
 sex								sex selectBox
 time							range slider
 freq, unit				yaml config file
-joker							selectBox
+additional dims		either from a selectBox or from yaml cfg file
 
 Almost all are per card, except countrySelectbox - it affects all cards.
 */
 import * as Cache from "./cache.mjs"
 
-
 import { replaceEuInRawData } from "../../components/util/util.mjs"
-
 import { run } from "../../components/pipeline/pipeline.mjs"
 import { process as defineCountryColors } from "../../components/processorCountryColors/countryColors.mjs"
 import { process as extractTimeYearly } from "./pipelineProcessors/timeYearly.mjs"
