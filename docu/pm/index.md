@@ -2,7 +2,7 @@
 
 The task is to create a website for Eurostat B.4, which presents an interactive overview for various Eurostat data.
 
-In ESTAT terminology, such an overview is called a "dashboard".
+In ESTAT B.4 terminology, such an overview is called a "dashboard".
 
 The data comes from a REST API from ESTAT.
 It's mainly time-series OLAP data with ~6 dimensions about so called "indicators".
@@ -10,15 +10,15 @@ It's mainly time-series OLAP data with ~6 dimensions about so called "indicators
 The REST endpoint is the only backend needed - the dashboard itself is purely front-end.
 
 There exist already several dashboards.
-However, they're technically not readily re-usable to fit the requirements of this particular one.
+However, they're architecturally not readily re-usable to fit the requirements of this particular one.
 
-In essence, it is supposed to be similar to the "green deal dashboard":
+In essence, this dashboard is supposed to be somewhat similar to the "green deal dashboard":
 https://ec.europa.eu/eurostat/cache/egd-statistics/
 
 The main differences lie in:
 - the look-and-feel: it should adhere to the new stylguide (2022/2023)
-- the logic of a certain dropdown-selectBox: it combines two indicators c_birth and citizen and allows only for certain combination of selections
-- the logic of the max lines shown (reagrding both, country select and c_birth/citizen select) - see also req600
+- the logic of a certain dropdown-selectBox: it combines two dimensions "c_birth" and "citizen" and allows only for certain combination of selections
+- the logic of the max number of lines shown in the line chart (reagrding both, country select and c_birth/citizen select) - see also req600
 - the country select box doesn't have "favourites" functionality and behaves differently
 
 For more technical details, please see also the "architecture decision records".

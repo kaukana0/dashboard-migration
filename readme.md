@@ -16,10 +16,4 @@ TBD
 
 # docu
 
-## components
-
-![components](./docu/components.svg)
-
-## sequence
-
-![components](./docu/sequence.svg)
+[Link](./docu/index.md)
