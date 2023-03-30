@@ -1,5 +1,5 @@
-import * as MA from "./metadataAccess.mjs"
-import {get as getKey} from "./key.mjs"
+import * as MA from "./common/metadataAccess.mjs"
+import {get as getKey} from "./common/key.mjs"
 
 // cumulative
 export function process(inputData, output) {

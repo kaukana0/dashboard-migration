@@ -1,6 +1,6 @@
 import * as MultiDim from "../../../components/multiDimAccess/multiDimAccess.mjs"
-import * as MA from "./metadataAccess.mjs"
-import {get as getKey} from "./key.mjs"
+import * as MA from "./common/metadataAccess.mjs"
+import {get as getKey} from "./common/key.mjs"
 
 /*
 adds something like this to output in a cumulative fashion (can be called more than once):
