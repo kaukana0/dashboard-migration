@@ -1,3 +1,5 @@
+import Zindex from "./zIndex.mjs"
+
 export function fillCountries(id, cfg) {
 	document.getElementById(id).data = [getMapFromObject(cfg), []]
   return document.getElementById(id)
@@ -85,6 +87,7 @@ function createDropdown(k, v, attribute) {
 	const dropdownBox = document.createElement('dropdown-box')
   dropdownBox.data = [getMapFromObject(v), []]
   dropdownBox.setAttribute("dimension", k)
+  dropdownBox.setAttribute("zindex", Zindex.dropdownBox)
   if(attribute) dropdownBox.setAttribute(attribute, null)
 	fragment.appendChild(dropdownBox)
 	return fragment

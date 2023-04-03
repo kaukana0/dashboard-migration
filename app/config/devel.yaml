@@ -133,8 +133,8 @@ indicatorBase:
   dimensions:
     ui:               # UI elements reflect user selection for these
       dropdown:
-        - sex:
-          - *total
+        - sex:        # in the REST request, this becomes the dimension
+          - *total    # and code becomes the code; label becomes dropdownbox item
           - *women
           - *men
         - age:
@@ -197,7 +197,6 @@ indicators:
           code: "NR"
 
   - name: Employment rate
-    ignore: true
     category: Employment
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_%E2%80%93_labour_market_indicators
@@ -215,7 +214,6 @@ indicators:
               code: "two"
 
   - name: Share of adults at risk of poverty or social exclusion
-    ignore: true
     category: Social inclusion
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_at_risk_of_poverty_and_social_exclusion
@@ -224,9 +222,13 @@ indicators:
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/7acca101-803d-44f2-85cd-834dbe582384?lang=en
       - id: ILC_PEPS05N
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/e5355ba1-b4bf-4f2c-a5d6-4ca46cd88406?lang=en
+    dimensions:
+      ui:
+        dropdown:
+          - age:
+            - *20-64
 
   - name: Home ownership rate
-    ignore: true
     category: Housing
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_housing

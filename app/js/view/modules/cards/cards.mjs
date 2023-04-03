@@ -7,6 +7,7 @@ import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
 import * as DropDowns from "../dropDowns.mjs"
 import * as Util from "../../../../components/util/util.mjs"
 import * as Url from "../../../url.mjs"
+import Zindex from "../zIndex.mjs"
 
 
 export function create(containerId, cfg, selectCallback) {
@@ -19,7 +20,7 @@ export function create(containerId, cfg, selectCallback) {
 
 		if(!merged.ignore) {
 
-			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi) )
+			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi),Zindex.cardRoot, Zindex.cardBack, Zindex.cardFront )
 
 			requestAnimationFrame( () => {
 				const combi = DropDowns.createCombiBoxes(merged.dimensions.ui.combi, merged.datasets)
@@ -43,10 +44,14 @@ function hookUpCardEvents(id) {
 	document.getElementById(id).addEventListener("expanding", () => {
 		// move it from parent container into zoomed card
 		document.getElementById("anchorSlotContentOfCard"+id).after(selectCountry)
+		document.body.style.overflowY="hidden"
+		window.scrollTo(0, 0);
 	})
 	document.getElementById(id).addEventListener("contracting", () => {
 		// move it out of the card into parent container
 		document.getElementById("anchorSelectCountryOutsideOfCard").after(selectCountry)
+		document.body.style.overflowY="scroll"
+		// todo: scroll back to previous pos
 	})
 }
 
@@ -78,6 +83,10 @@ export function iterate(containerId, callback) {
 	}
 }
 
-export function setData(cardId, data) {
-	document.getElementById(cardId).setData(data)
+export function setData1(cardId, data) {
+	document.getElementById(cardId).setData1(data)
+}
+
+export function setData2(cardId, data) {
+	document.getElementById(cardId).setData2(data)
 }
