@@ -48,7 +48,7 @@ function fetch(cardId) {
   selections.boxes.set("geo", countrySelect.selected)
   // non-ui url fragment
   Url.Affix.post_( document.getElementById(cardId).getAttribute("urlfrag") )
-  Fetcher( Url.buildFrag(selections), Cards.setData1.bind(this, cardId) )
+  Fetcher( Url.buildFrag(selections), Cards.setData.bind(this, cardId) )
 }
 
 function updateAttributes(cardId) {

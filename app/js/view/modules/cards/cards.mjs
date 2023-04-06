@@ -7,7 +7,6 @@ import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
 import * as DropDowns from "../dropDowns.mjs"
 import * as Util from "../../../../components/util/util.mjs"
 import * as Url from "../../../url.mjs"
-import Zindex from "../zIndex.mjs"
 
 
 export function create(containerId, cfg, selectCallback) {
@@ -20,7 +19,7 @@ export function create(containerId, cfg, selectCallback) {
 
 		if(!merged.ignore) {
 
-			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi),Zindex.cardRoot, Zindex.cardBack, Zindex.cardFront )
+			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi) )
 
 			requestAnimationFrame( () => {
 				const combi = DropDowns.createCombiBoxes(merged.dimensions.ui.combi, merged.datasets)
@@ -83,10 +82,7 @@ export function iterate(containerId, callback) {
 	}
 }
 
-export function setData1(cardId, data) {
-	document.getElementById(cardId).setData1(data)
-}
-
-export function setData2(cardId, data) {
-	document.getElementById(cardId).setData2(data)
+export function setData(cardId, data) {
+	document.getElementById(cardId).setData1(data.timeSeriesData, data.colorPalette, data.seriesLabels)
+	document.getElementById(cardId).setData2(data.countrySeriesData, data.colorPalette, data.seriesLabels)
 }

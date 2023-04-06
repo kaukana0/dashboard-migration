@@ -1,5 +1,5 @@
 // useful during development and configuring
-export function process(inputData, _) {
+export function process(inputData) {
   let txt = ""
   for(let i=0;i<inputData.size.length;i++) {
     if(inputData.size[i]===0) {

@@ -18,10 +18,22 @@ import { replaceEuInRawData } from "../../components/util/util.mjs"
 import { run } from "../../components/pipeline/pipeline.mjs"
 import { process as defineCountryColors } from "../../components/processorCountryColors/countryColors.mjs"
 import { process as extractTimeYearly } from "./pipelineProcessors/timeYearly.mjs"
-import { process as extractValues } from "./pipelineProcessors/values.mjs"
+import { process as extractTimeSeriesData } from "./pipelineProcessors/timeSeries.mjs"
+import { process as extractCountrySeriesData } from "./pipelineProcessors/countrySeries.mjs"
 import { process as createSeriesLabels } from "./pipelineProcessors/seriesLabels.mjs"
 import { process as analyzeIncomingData } from "./pipelineProcessors/analyze.mjs"
 
+/*
+called per card.
+
+this guy fetches more than each request actually wants.
+he does it by omitting geo and time, resulting in a response that includes all geo and all time available on server.
+
+the processors then do the job of extracting a subset which is in accordance to the urls given:
+the time-series filters out countries and time-range and the country-series takes only 1 year but all countries.
+
+the data of the "big request" (unfiltered) is being cached.
+*/
 export default function go(urls, callback) {
 	const processingCfg = []
 
@@ -31,14 +43,14 @@ export default function go(urls, callback) {
 		console.debug("fecth", urls[i])
 		processingCfg.push(
 			{
-				input: urls[i],
+				input: removeParams(urls[i]),
 				//input: "./persistedData/example-request-answer.json",
 				cache: {
 					store: (data) => Cache.store(urls[i], data),
 					restore: (id) => Cache.restore(id)
 				},
-				//processors: [retrieveSourceData, defineIndexColors, defineCountryOrder, defineCountryColors, extractCountries, renameCountries, extractIndicators, extractTimeMonthly]
-				processors: [defineCountryColors, extractTimeYearly, extractValues, createSeriesLabels, analyzeIncomingData]
+				processors: [defineCountryColors, extractTimeYearly, extractTimeSeriesData, extractCountrySeriesData, createSeriesLabels, analyzeIncomingData],
+				data: urls[i]
 			}
 		)
 	}
@@ -72,3 +84,7 @@ export default function go(urls, callback) {
 
 }
 
+
+function removeParams(url) {
+	return url
+}
