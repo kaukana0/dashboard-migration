@@ -18,27 +18,31 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   const valence = MultiDim.calcOrdinalValence(inputDataFromRequest.size)
 
   const [byDim, byIdx] = MA.getIndexOfByDimension(inputDataFromRequest.id)
-  const geoIdx = MA.getIndexOfDimension(inputDataFromRequest.id, "geo")
-  const timeIdx = MA.getIndexOfDimension(inputDataFromRequest.id, "time")
+  const geoDimIdx = inputDataFromRequest.id.findIndex(e=>e==="geo")
+  const timeDimIdx = inputDataFromRequest.id.findIndex(e=>e==="time")
 
-  const byMax = inputDataFromRequest.size[byIdx]  // "by" c_birth or citizen
-  const geoMax = inputDataFromRequest.size[geoIdx]
-  const timeMax = inputDataFromRequest.size[timeIdx]
+  const byDimMax = inputDataFromRequest.size[byIdx]  // "by" c_birth or citizen
+  const geoDimMax = inputDataFromRequest.size[geoDimIdx]
+  const timeDimMax = inputDataFromRequest.size[timeDimIdx]
 
   let byLabel = ""
   let geoLabel = ""
 
-  for(let by=0; by<byMax; by++) {
+  const selectedTime = getTime(inputDataFromCfg)    // TODO: filter by this
+  const selectedGeo = getGeo(inputDataFromCfg)
+
+  for(let by=0; by<byDimMax; by++) {
     byLabel = Object.keys(inputDataFromRequest.dimension[byDim].category.index)[by]
-    for(let geo=0; geo<geoMax; geo++) {
+    for(let geo=0; geo<geoDimMax; geo++) {
       geoLabel = Object.keys(inputDataFromRequest.dimension.geo.category.index)[geo]
+      if(!selectedGeo.find(e=>e===geoLabel)) continue   // filter what isn't selected (and therefore in full URL)
       const ll = [getKey(byLabel,geoLabel)]   // is unique. used by chart as key for tooltip label mapping to text.
-      for(let time=0; time<timeMax; time++) {
+      for(let time=0; time<timeDimMax; time++) {
         let bla = new Array(inputDataFromRequest.size.length)
         bla.fill(0)
         bla[byIdx] = by
-        bla[geoIdx] = geo
-        bla[timeIdx] = time
+        bla[geoDimIdx] = geo
+        bla[timeDimIdx] = time
         const i = MultiDim.getIndex(valence, bla)
         if(typeof inputDataFromRequest.value[i] === 'undefined') {
           ll.push(null)
@@ -50,4 +54,12 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
     }
   }
 
+}
+
+function getTime(url) {
+  return url.match( new RegExp("geo=([^&]+)", "g") )[0]
+}
+
+function getGeo(url) {
+  return url.match( new RegExp("geo=([^&]+)", "g") ).map(e=>e.replace("geo=",""))
 }

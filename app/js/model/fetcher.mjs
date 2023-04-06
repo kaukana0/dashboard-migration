@@ -26,11 +26,12 @@ import { process as analyzeIncomingData } from "./pipelineProcessors/analyze.mjs
 /*
 called per card.
 
-this guy fetches more than each request actually wants.
-he does it by omitting geo and time, resulting in a response that includes all geo and all time available on server.
+this guy potentially fetches more than a request actually wants.
+it's done by omitting geo and time, resulting in a response that includes all geo and all time available on server.
 
 the processors then do the job of extracting a subset which is in accordance to the urls given:
-the time-series filters out countries and time-range and the country-series takes only 1 year but all countries.
+the time-series processor filters out excessive countries and exc. time-range.
+and the country-series takes only 1 year but all countries.
 
 the data of the "big request" (unfiltered) is being cached.
 */
@@ -40,17 +41,21 @@ export default function go(urls, callback) {
 	// note: all relevant processors can handle being called multiple times
 	// meaning, once per URL. they're cumulative, appending data (cols for the chart).
 	for(let i in urls) {
-		console.debug("fecth", urls[i])
+		
+		const fullUrl = urls[i]
+		const strippedUrl = removeParams(fullUrl)		// more data
+		console.debug("fecth", fullUrl)
+
 		processingCfg.push(
 			{
-				input: removeParams(urls[i]),
+				input: strippedUrl,
 				//input: "./persistedData/example-request-answer.json",
 				cache: {
-					store: (data) => Cache.store(urls[i], data),
+					store: (data) => Cache.store(strippedUrl, data),
 					restore: (id) => Cache.restore(id)
 				},
 				processors: [defineCountryColors, extractTimeYearly, extractTimeSeriesData, extractCountrySeriesData, createSeriesLabels, analyzeIncomingData],
-				data: urls[i]
+				data: fullUrl
 			}
 		)
 	}
@@ -84,7 +89,7 @@ export default function go(urls, callback) {
 
 }
 
-
+// returns url w/o "geo=.*&" and w/o "time=.*&" params (& or EOL)
 function removeParams(url) {
-	return url
+	return url.replace(new RegExp("(time|geo)=[^&]*[^]", "g"), "")
 }
