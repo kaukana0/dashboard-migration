@@ -1,6 +1,7 @@
 import * as MultiDim from "../../../components/multiDimAccess/multiDimAccess.mjs"
 import * as MA from "./common/metadataAccess.mjs"
 import {get as getKey} from "./common/key.mjs"
+import * as Url from "../../url.mjs"
 
 /*
 adds something like this to output in a cumulative fashion (can be called more than once):
@@ -11,8 +12,9 @@ timeSeriesData: [
 ]
 */
 export function process(inputDataFromRequest, inputDataFromCfg, output) {
-  if(!output.timeSeriesData) {
-    output.timeSeriesData = [output.time]
+  if(!output.timeSeries) {
+    output.timeSeries = {}
+    output.timeSeries.data = [output.time]
   }
 
   const valence = MultiDim.calcOrdinalValence(inputDataFromRequest.size)
@@ -28,8 +30,8 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   let byLabel = ""
   let geoLabel = ""
 
-  const selectedTime = getTime(inputDataFromCfg)    // TODO: filter by this
-  const selectedGeo = getGeo(inputDataFromCfg)
+  const selectedTime = Url.getTime(inputDataFromCfg)    // TODO: filter by this
+  const selectedGeo = Url.getGeo(inputDataFromCfg)
 
   for(let by=0; by<byDimMax; by++) {
     byLabel = Object.keys(inputDataFromRequest.dimension[byDim].category.index)[by]
@@ -50,16 +52,8 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
           ll.push(inputDataFromRequest.value[i])
         }
       }
-      output.timeSeriesData.push(ll)
+      output.timeSeries.data.push(ll)
     }
   }
 
-}
-
-function getTime(url) {
-  return url.match( new RegExp("geo=([^&]+)", "g") )[0]
-}
-
-function getGeo(url) {
-  return url.match( new RegExp("geo=([^&]+)", "g") ).map(e=>e.replace("geo=",""))
 }

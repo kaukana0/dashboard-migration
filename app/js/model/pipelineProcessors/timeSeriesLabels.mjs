@@ -3,8 +3,8 @@ import {get as getKey} from "./common/key.mjs"
 
 // cumulative
 export function process(inputDataFromRequest, inputDataFromCfg, output) {
-  if(!output.seriesLabels) {
-    output.seriesLabels = new Map()
+  if(!output.timeSeries.labels) {
+    output.timeSeries.labels = new Map()
   }
 
   const [byDim, byIdx] = MA.getIndexOfByDimension(inputDataFromRequest.id)
@@ -17,7 +17,7 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
     for(let geo=0; geo<geoMax; geo++) {
       const xGeoCode = Object.keys(inputDataFromRequest.dimension.geo.category.index)[geo]
       const xGeoLabel = Object.values(inputDataFromRequest.dimension.geo.category.label)[geo]
-      output.seriesLabels.set(getKey(xByCode,xGeoCode), xGeoLabel+", "+xByLabel)
+      output.timeSeries.labels.set(getKey(xByCode,xGeoCode), xGeoLabel+", "+xByLabel)
     }
   }
 }

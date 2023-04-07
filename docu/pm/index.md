@@ -91,17 +91,23 @@ For more technical details, please see also the "architecture decision records".
 2. ~~decide for overall approach and general source-code structure~~ 1/23
 3. ~~decide how to configure what the app displays, datasources and possibly behaviour details~~ 1/23
 4. ~~decide data retrieval behaviour~~ 1/23
-5. implement first working prototype (as POC)
-  5.1. fetch data in accordance w/ selection and display multiple lines
-6. update components used to follow new style-guide: dropdownBox, chart
+5. ~~implement first working prototype (as POC)~~ 4/23
+  21. ~~fetch data in accordance w/ selection and display multiple lines~~ 4/23
+6. update components used to follow new style-guide and new functionality: dropdownBox, chart
+  18. map for tooltip header similar to series labels (to have eg "Austria" instead of "AT")
+  12. adapt chart legend and tooltip
+  20. by&country selectbox logic ("dynamic limit"; eg a "selectionPermitted" callback)
 7. implement main menu
 8. ~~implement card WebComponent~~ 2/23
 9. ~~implement line chart~~ 3/23
 10. implement combination chart
 11. ~~solve countryBox being used in 2 different places in DOM~~ 2/23
-12. adapt chart legend and tooltip
 13. implement time range slider in cards
 14. implement info link ("info about this indicator") in cards
 15. implement footer links
 16. ~~implement dropdown Boxes creation from config~~ 3/23
-17. config & value extraction: consider all differences in metadata regarding dimensions
+17. ~~config & value extraction: consider all differences in metadata regarding dimensions~~ 3/23
+19. compliant looks/styles
+22. reset card selections to default when going into overview
+23. lock UI selection when loading
+23. 

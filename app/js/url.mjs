@@ -1,13 +1,13 @@
 const delim = "&"
 
-// attention: this assumes, that exactly 1 "by-SelectBox" exists
+// attention: this assumes, that at least 1 "by-SelectBox" exists
 // because it contains the Dataset-id for the whole request.
-export function buildFrag(boxes) {
+export function buildFrag(selections) {
   let retVal = []
 
   let frag=""
   // first do all boxes except the by-selectBox
-  for(let [key, value] of boxes.boxes.entries()) {
+  for(let [key, value] of selections.boxes.entries()) {
     if(key!=="null") {
       //const valAsString = value.keys().next().value
       for(let [code, _] of value.entries()) {
@@ -17,7 +17,7 @@ export function buildFrag(boxes) {
   }
 
   // now the "by"-selectBox
-  let b = boxes.boxes.get("null")
+  let b = selections.boxes.get("null")
   if(b) {
     for(let [key, value] of b.entries()) {
       retVal.push( Affix.pre+key.dataset+"?"+key.dimension+"="+key.code+delim+frag+Affix.post )
@@ -33,8 +33,6 @@ export function buildFrag(boxes) {
 export class Affix {
   static pre=""
   static post=""
-  static pre_(str) { this.pre = str }
-  static post_(str) { this.post = str }  
 }
 
 export function getUrlFrag(obj) {
@@ -43,4 +41,16 @@ export function getUrlFrag(obj) {
     retVal += k+"="+v[0].code+delim
   }
   return retVal
+}
+
+// input example:
+//  https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/ILC_PEPS06N?c_birth=NAT&time=2021&age=Y20-24&sex=T&geo=EU&freq=A&unit=PC&time=2020
+// output would be "2021"
+export function getTime(url) { return getValues(url, "time") }
+
+// returns list of ["EU","AT",...]
+export function getGeo(url) { return getValues(url, "geo") }
+
+function getValues(url, param) {
+  return url.match( new RegExp(param+"=([^&]+)", "g") ).map(e=>e.replace(param+"=",""))
 }

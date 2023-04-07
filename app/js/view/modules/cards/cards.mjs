@@ -83,6 +83,6 @@ export function iterate(containerId, callback) {
 }
 
 export function setData(cardId, data) {
-	document.getElementById(cardId).setData1(data.timeSeriesData, data.colorPalette, data.seriesLabels)
-	document.getElementById(cardId).setData2(data.countrySeriesData, data.colorPalette, data.seriesLabels)
+	document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, data.timeSeries.labels)
+	document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
 }

@@ -15,7 +15,7 @@ export function createUIElements(cfg, triggerInitialRequest) {
   countrySelect = DropDowns.fillCountries("selectCountry", cfg.globals.ui.dropdown.geo)
   countrySelect.callback = onSelectForAllCards
   Cards.create(containerId, cfg, onSelectForOneCard)  // ∀ indicators
-  Url.Affix.pre_(cfg.globals.baseURL)
+  Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {
     requestAnimationFrame(()=>onSelectForAllCards())
   }
@@ -47,7 +47,8 @@ function fetch(cardId) {
   // from "global" country select
   selections.boxes.set("geo", countrySelect.selected)
   // non-ui url fragment
-  Url.Affix.post_( document.getElementById(cardId).getAttribute("urlfrag") )
+  Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
+  Url.Affix.post += "time=2019"  // TODO: take from UI element
   Fetcher( Url.buildFrag(selections), Cards.setData.bind(this, cardId) )
 }
 

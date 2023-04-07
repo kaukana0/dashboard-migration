@@ -19,8 +19,9 @@ import { run } from "../../components/pipeline/pipeline.mjs"
 import { process as defineCountryColors } from "../../components/processorCountryColors/countryColors.mjs"
 import { process as extractTimeYearly } from "./pipelineProcessors/timeYearly.mjs"
 import { process as extractTimeSeriesData } from "./pipelineProcessors/timeSeries.mjs"
+import { process as createTimeSeriesLabels } from "./pipelineProcessors/timeSeriesLabels.mjs"
 import { process as extractCountrySeriesData } from "./pipelineProcessors/countrySeries.mjs"
-import { process as createSeriesLabels } from "./pipelineProcessors/seriesLabels.mjs"
+import { process as createCountrySeriesLabels } from "./pipelineProcessors/countrySeriesLabels.mjs"
 import { process as analyzeIncomingData } from "./pipelineProcessors/analyze.mjs"
 
 /*
@@ -44,7 +45,7 @@ export default function go(urls, callback) {
 		
 		const fullUrl = urls[i]
 		const strippedUrl = removeParams(fullUrl)		// more data
-		console.debug("fecth", fullUrl)
+		//console.debug("fecth", fullUrl)
 
 		processingCfg.push(
 			{
@@ -54,7 +55,10 @@ export default function go(urls, callback) {
 					store: (data) => Cache.store(strippedUrl, data),
 					restore: (id) => Cache.restore(id)
 				},
-				processors: [defineCountryColors, extractTimeYearly, extractTimeSeriesData, extractCountrySeriesData, createSeriesLabels, analyzeIncomingData],
+				processors: [defineCountryColors, extractTimeYearly, 
+					extractTimeSeriesData, createTimeSeriesLabels, 
+					extractCountrySeriesData, createCountrySeriesLabels, 
+					analyzeIncomingData],
 				data: fullUrl
 			}
 		)

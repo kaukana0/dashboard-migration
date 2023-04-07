@@ -1,3 +1,7 @@
+import * as MultiDim from "../../../components/multiDimAccess/multiDimAccess.mjs"
+import * as MA from "./common/metadataAccess.mjs"
+import * as Url from "../../url.mjs"
+
 /*
 extracts data for all countries at a certain time.
 
@@ -9,23 +13,23 @@ countrySeriesData: [
   ["AT",0,230,50]
 ]
 */
-
-import * as MultiDim from "../../../components/multiDimAccess/multiDimAccess.mjs"
-
 export function process(inputDataFromRequest, inputDataFromCfg, output) {
-  if(!output.countrySeriesData) {
-    output.countrySeriesData = []
-    output.countrySeriesData.push( Object.keys(inputDataFromRequest.dimension.geo.category.index) )
+  if(!output.countrySeries) {
+    output.countrySeries = {}
+    output.countrySeries.data = []
+    output.countrySeries.data.push( Object.keys(inputDataFromRequest.dimension.geo.category.index) )
   }
 
   const valence = MultiDim.calcOrdinalValence(inputDataFromRequest.size)
   const geoDimIdx = inputDataFromRequest.id.findIndex(e=>e==="geo")
   const geoDimMax = inputDataFromRequest.size[geoDimIdx]
   const timeDimIdx = inputDataFromRequest.id.findIndex(e=>e==="time")
-  const time = getTime(inputDataFromRequest)
+  const time = Url.getTime(inputDataFromCfg)[0]
   const timeCodeIdx = inputDataFromRequest.dimension.time.category.index[time]
+  const [byDim] = MA.getIndexOfByDimension(inputDataFromRequest.id)
+  const xByCode = Object.keys(inputDataFromRequest.dimension[byDim].category.index)[0]
 
-  const ll = []
+  const ll = [xByCode]
   for(let geo=0; geo<geoDimMax; geo++) {
     let bla = new Array(inputDataFromRequest.size.length)
     bla.fill(0)
@@ -39,10 +43,5 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
     }
   }
 
-  output.countrySeriesData.push(ll)
-}
-
-//  https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/ILC_PEPS06N?c_birth=NAT&age=Y20-24&sex=T&geo=EU&freq=A&unit=PC&time=2020
-function getTime(url) {
-  return "2020"
+  output.countrySeries.data.push(ll)
 }
