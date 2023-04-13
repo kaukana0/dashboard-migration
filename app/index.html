@@ -27,6 +27,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 
 	<script src="./js/main.mjs" type="module"></script>
 	<script src="./components/chartCard/chartCard.mjs" type="module"></script>
+	<script src="./components/eclLikeMenu/menu.mjs" type="module"></script>
 
 	<!--script type="application/json">{"utility": "cck", "url": "https://my.ec.europa.eu/cookie-policy_{lang}"}</script>
 	<script src="./js/analytics.js"></script>
@@ -59,8 +60,8 @@ Author: robert.gebhardt@ext.ec.europa.eu
 			Title and Subtitle
 		</div>
 
-		<div id="blaa" style="min-height: 50px;">
-			Menu
+		<div style="min-height: 50px;">
+			<ecl-like-menu id="menu"></ecl-like-menu>
 		</div>
 
 		<!-- https://developer.mozilla.org/en-US/docs/Web/CSS/position#values -->
@@ -68,7 +69,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 			<div id="anchorExpandedCard" style="height: 100px; background-color: wheat">
 				country selector
 				<div id="anchorSelectCountryOutsideOfCard"></div>
-				<dropdown-box id="selectCountry" dimension="geo" imagePath="./components/dropdownBox/assets/countryFlagImages" multiselect maxSelections=7 displayKeys fractions=3 selectedText="countries selected" zindex="5"></dropdown-box>
+				<dropdown-box id="selectCountry" dimension="geo" multiselect maxSelections=7 selectedText="countries selected" zindex="5"></dropdown-box>
 			</div>
 			<div id="cards" style="display: flex; flex-wrap: wrap; justify-content: center; background-color: aliceblue;">
 			</div>
