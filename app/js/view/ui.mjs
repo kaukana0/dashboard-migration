@@ -1,7 +1,7 @@
 import "../../../components/dropdownBox/dropdownBox.mjs"
 import * as Cards from "./modules/cards/cards.mjs"
 import * as DropDowns from "./modules/dropDowns.mjs"
-import MainMenu from "./modules/mainMenu.mjs"
+import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../url.mjs"
 import Fetcher from "../model/fetcher.mjs"
 
@@ -11,10 +11,11 @@ let countrySelect
 
 export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
-  MainMenu(cfg)
+  const categories = MainMenu.getCategories(cfg)
+  MainMenu.create(onSelectMenu, categories)
   countrySelect = DropDowns.fillCountries("selectCountry", cfg.globals.ui.dropdown.geo)
   countrySelect.callback = onSelectForAllCards
-  Cards.create(containerId, cfg, onSelectForOneCard)  // ∀ indicators
+  Cards.create(containerId, cfg, categories, onSelectForOneCard)  // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {
     requestAnimationFrame(()=>onSelectForAllCards())
@@ -56,4 +57,13 @@ function updateAttributes(cardId) {
   document.getElementById(cardId).setAttribute("subtitle", "Number")
   document.getElementById(cardId).setAttribute("right1", Array.from(countrySelect.selected.keys()).join(" ") )
   document.getElementById(cardId).setAttribute("right2", "2023")
+}
+
+function onSelectMenu(id) {
+  const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(id)}]`)
+  if(card) {
+    Cards.expand(card)
+  } else {
+    Cards.filter(id)
+  }
 }

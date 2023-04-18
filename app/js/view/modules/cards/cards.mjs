@@ -8,14 +8,17 @@ import * as DropDowns from "../dropDowns.mjs"
 import * as Util from "../../../../components/util/util.mjs"
 import * as Url from "../../../url.mjs"
 
+let categories
 
-export function create(containerId, cfg, selectCallback) {
+export function create(containerId, cfg, _categories, selectCallback) {
 	let retVal = []
+
+	categories = _categories
 
 	for(const i in cfg.indicators) {
 		const merged = Util.mergeObjects(cfg.indicatorBase, cfg.indicators[i])
 		//console.log("merged cfg for indicator", merged.name, merged)
-		const id = "chartCard-"+merged.name.replaceAll(" ", "-")		// or a hash
+		const id = getIdFromName(merged.name)
 
 		if(!merged.ignore) {
 
@@ -37,6 +40,10 @@ export function create(containerId, cfg, selectCallback) {
 	}
 
 	return retVal
+}
+
+export function getIdFromName(name) {
+	return "chartCard-"+name.replaceAll(" ", "-")		// or a hash
 }
 
 function hookUpCardEvents(id) {
@@ -85,4 +92,29 @@ export function iterate(containerId, callback) {
 export function setData(cardId, data) {
 	document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, data.timeSeries.labels)
 	document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
+}
+
+export function expand(card) {
+	// TODO: contract
+	card.expand(document.getElementById("anchorSelectCountryOutsideOfCard"))
+}
+
+export function filter(category) {
+	const cards = categories.get(category).map( (e)=>getIdFromName(e) )
+	const elements = document.querySelectorAll("div [id=cards] chart-card")
+	let exists = false
+	for (var i = 0; i < elements.length; i++) {
+		if( cards.includes(elements[i].id) ) {
+			elements[i].style.display=""
+			exists = true
+		} else {
+			elements[i].style.display="none"
+		}
+	}
+	// show all
+	if(!exists) {
+		for (var i = 0; i < elements.length; i++) {
+			elements[i].style.display=""
+		}
+	}
 }
