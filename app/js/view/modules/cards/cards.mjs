@@ -4,7 +4,7 @@ Also the content for a slot which goes into the card.
 That content is selectboxes corresponding to YAMLCfg.dimensions.ui.dropdown
 */
 import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
-import * as DropDowns from "../dropDowns.mjs"
+import * as DropDowns from "../dropDowns/dropDowns.mjs"
 import * as Util from "../../../../components/util/util.mjs"
 import * as Url from "../../../url.mjs"
 
@@ -73,7 +73,9 @@ function insertAndHookUpBoxes(id, boxes, selectCallback) {
 
 export function getCurrentSelections(cardId) {
 	let retVal = {cardId: cardId, boxes: new Map()}
+	// NEWBOX
 	const boxes = document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ dropdown-box`)
+	//const boxes = document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ ecl-like-select`)
 	for(const box of boxes) {
 		if(box.hasAttribute("dimension")) {
 			retVal.boxes.set(box.getAttribute("dimension"), box.selected)

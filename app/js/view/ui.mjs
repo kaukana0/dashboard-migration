@@ -1,6 +1,7 @@
 import "../../../components/dropdownBox/dropdownBox.mjs"
+import "../../../components/eclLikeSelect/dropdownBox.mjs"
 import * as Cards from "./modules/cards/cards.mjs"
-import * as DropDowns from "./modules/dropDowns.mjs"
+import * as DropDowns from "./modules/dropDowns/dropDowns.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../url.mjs"
 import Fetcher from "../model/fetcher.mjs"

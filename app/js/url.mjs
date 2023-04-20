@@ -1,7 +1,7 @@
 const delim = "&"
 
 // attention: this assumes, that at least 1 "by-SelectBox" exists
-// because it contains the Dataset-id for the whole request.
+// and that it contains the Dataset-id for a request.
 export function buildFrag(selections) {
   let retVal = []
 
@@ -19,7 +19,9 @@ export function buildFrag(selections) {
   // now the "by"-selectBox
   let b = selections.boxes.get("null")
   if(b) {
-    for(let [key, value] of b.entries()) {
+    for(let [_key, _] of b.entries()) {
+      // NEWBOX
+      const key = _key //JSON.parse(_key.replaceAll("'","\""))
       retVal.push( Affix.pre+key.dataset+"?"+key.dimension+"="+key.code+delim+frag+Affix.post )
     }
   } else {

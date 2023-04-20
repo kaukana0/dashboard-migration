@@ -1,5 +1,4 @@
 export function create(onSelect, categories) {
-	document.getElementById("menu").onInited = () => ECL.autoInit()
 	document.getElementById("menu").onSelect = onSelect
 	document.getElementById("menu").data = categories
 }

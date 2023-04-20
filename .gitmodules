@@ -25,3 +25,6 @@
 [submodule "app/components/eclLikeMenu"]
 	path = app/components/eclLikeMenu
 	url = https://github.com/kaukana0/eclLikeMenu.git
+[submodule "app/components/eclLikeSelect"]
+	path = app/components/eclLikeSelect
+	url = https://github.com/kaukana0/eclLikeSelect.git
