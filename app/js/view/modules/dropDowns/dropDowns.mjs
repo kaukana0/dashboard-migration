@@ -31,7 +31,7 @@ export function createDropdownBoxes(cfg) {
   for(const i in cfg) {
     const k = Object.keys(cfg[i])[0]    // eg "age"
     const v = cfg[i][k]                 // [{label:.., code:..}]
-    retVal.push({dimId: k, docFrag: createDropdown(k,v)})
+    retVal.push({dimId: k, docFrag: createDropdown(k,v,false)})
   }
 
   return retVal
@@ -58,13 +58,11 @@ export function createCombiBoxes(cfg, datasets) {
           // in contrast to the other dropdowns which have string keys, this has a object as key.
           // effectively making the key of the dataset a compound of 3 distinct informations.
           // this way we can keep the yaml simple.
-          // NEWBOX
-          //v[l].code = JSON.stringify( {code:v[l].code, dimension:key, dataset:datasets[k].id}, null, null ).replaceAll("\"","'")
-          v[l].code = {code:v[l].code, dimension:key, dataset:datasets[k].id}
+          v[l].code = JSON.stringify( {code:v[l].code, dimension:key, dataset:datasets[k].id}, null, null ).replaceAll("\"","'")
         }
         ll = ll.concat(v)
       }
-      retVal.push({dimId: null, docFrag: createDropdown(null, ll, "multiselect")})
+      retVal.push({dimId: null, docFrag: createDropdown(null, ll, true)})
     }
   }
 
@@ -82,14 +80,16 @@ v:
     }
   ]
 }*/
-function createDropdown(k, v, attribute) {
+function createDropdown(k, v, isMultiselect) {
 	const fragment = new DocumentFragment()
- 	// NEWBOX
-	const dropdownBox = document.createElement('dropdown-box')
-	//const dropdownBox = document.createElement('ecl-like-select')
-  dropdownBox.data = [getMapFromObject(v), []]
+	const dropdownBox = document.createElement('ecl-like-select')
   dropdownBox.setAttribute("dimension", k)
-  if(attribute) dropdownBox.setAttribute(attribute, null)
+  if(isMultiselect) {
+    dropdownBox.setAttribute("multiselect",null)
+    dropdownBox.setAttribute("closeenabled",null)
+    dropdownBox.setAttribute("clearallenabled",null)
+  }
+  dropdownBox.data = [getMapFromObject(v), []]
 	fragment.appendChild(dropdownBox)
 	return fragment
 }

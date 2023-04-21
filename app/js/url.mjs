@@ -20,8 +20,7 @@ export function buildFrag(selections) {
   let b = selections.boxes.get("null")
   if(b) {
     for(let [_key, _] of b.entries()) {
-      // NEWBOX
-      const key = _key //JSON.parse(_key.replaceAll("'","\""))
+      const key = JSON.parse(_key.replaceAll("'","\""))
       retVal.push( Affix.pre+key.dataset+"?"+key.dimension+"="+key.code+delim+frag+Affix.post )
     }
   } else {

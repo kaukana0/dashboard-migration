@@ -63,7 +63,7 @@ function hookUpCardEvents(id) {
 
 function insertAndHookUpBoxes(id, boxes, selectCallback) {
 	for(const box of boxes) {
-		box.docFrag.firstChild.callback = (e) => {
+		box.docFrag.firstChild.onSelect = (e) => {
 			// assumtion: for a caller it's only relevant in which chart a selection happened, not the box or selected items
 			selectCallback(id)
 		}
@@ -73,9 +73,7 @@ function insertAndHookUpBoxes(id, boxes, selectCallback) {
 
 export function getCurrentSelections(cardId) {
 	let retVal = {cardId: cardId, boxes: new Map()}
-	// NEWBOX
-	const boxes = document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ dropdown-box`)
-	//const boxes = document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ ecl-like-select`)
+	const boxes = document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ ecl-like-select`)
 	for(const box of boxes) {
 		if(box.hasAttribute("dimension")) {
 			retVal.boxes.set(box.getAttribute("dimension"), box.selected)
