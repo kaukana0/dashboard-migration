@@ -7,7 +7,7 @@ export function buildFrag(selections) {
 
   let frag=""
   // first do all boxes except the by-selectBox
-  for(let [key, value] of selections.boxes.entries()) {
+  for(let [key, value] of selections.selections.entries()) {
     if(key!=="null") {
       //const valAsString = value.keys().next().value
       for(let [code, _] of value.entries()) {
@@ -17,7 +17,7 @@ export function buildFrag(selections) {
   }
 
   // now the "by"-selectBox
-  let b = selections.boxes.get("null")
+  let b = selections.selections.get("null")
   if(b) {
     for(let [_key, _] of b.entries()) {
       const key = JSON.parse(_key.replaceAll("'","\""))

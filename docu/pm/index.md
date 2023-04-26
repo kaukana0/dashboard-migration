@@ -97,10 +97,11 @@ For more technical details, please see also the "architecture decision records".
   18. map for tooltip header similar to series labels (to have eg "Austria" instead of "AT")
   12. adapt chart legend and tooltip
   20. by&country selectbox logic ("dynamic limit"; eg a "selectionPermitted" callback)
-7. implement main menu
+7. ~~implement main menu~~
 8. ~~implement card WebComponent~~ 2/23
 9. ~~implement line chart~~ 3/23
 10. implement combination chart
+  24. ~~find an idea about how to draw vertical lines in bar chart~~
 11. ~~solve countryBox being used in 2 different places in DOM~~ 2/23
 13. implement time range slider in cards
 14. implement info link ("info about this indicator") in cards
@@ -110,4 +111,3 @@ For more technical details, please see also the "architecture decision records".
 19. compliant looks/styles
 22. reset card selections to default when going into overview
 23. lock UI selection when loading
-23. 

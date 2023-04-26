@@ -157,9 +157,12 @@ indicatorBase:
               datasetIndex: 0   # ref to indicators.datasets[]
           - citizen:
               entries:
-              - *native
-              - *eu
-              - *nonEu
+              - label: "native "  # this is a hack. that whitespace makes it different from c_birth. the ECL select can't handle similar labels.
+                code: NAT
+              - label: "EU "
+                code: EU27_2020_FOR
+              - label: "Non EU "
+                code: NEU27_2020_FOR
               datasetIndex: 1
     nonUi:          # request relevant dimensions not represented by an ui element
       freq:
@@ -214,7 +217,7 @@ indicators:
               code: "two"
 
   - name: Share of adults at risk of poverty or social exclusion
-    category: Social inclusion
+    category: Housing
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_at_risk_of_poverty_and_social_exclusion
     datasets:

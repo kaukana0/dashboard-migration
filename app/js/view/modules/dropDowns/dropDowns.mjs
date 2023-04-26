@@ -1,5 +1,8 @@
-export function fillCountries(id, cfg) {
-	document.getElementById(id).data = [getMapFromObject(cfg), []]
+export function configCountries(id, cfg, callback) {
+  const box = document.getElementById(id)
+  box.onSelect = callback
+  box.selected = ["EU","IT"]
+	box.data = [getMapFromObject(cfg), []]
   return document.getElementById(id)
 }
 
@@ -56,7 +59,7 @@ export function createCombiBoxes(cfg, datasets) {
         const v = structuredClone( cfg[i][j][k][key].entries )        // [{label,code}]
         for(const l in v) {
           // in contrast to the other dropdowns which have string keys, this has a object as key.
-          // effectively making the key of the dataset a compound of 3 distinct informations.
+          // effectively making the key of the by-Select-entries a compound of 3 distinct informations.
           // this way we can keep the yaml simple.
           v[l].code = JSON.stringify( {code:v[l].code, dimension:key, dataset:datasets[k].id}, null, null ).replaceAll("\"","'")
         }
@@ -79,7 +82,9 @@ v:
       "code": "TOTAL"
     }
   ]
-}*/
+}
+note: only a card wants to know if a selection of a box changed - see cards.mjs::insertAndHookUpBoxes()
+*/
 function createDropdown(k, v, isMultiselect) {
 	const fragment = new DocumentFragment()
 	const dropdownBox = document.createElement('ecl-like-select')
@@ -88,8 +93,9 @@ function createDropdown(k, v, isMultiselect) {
     dropdownBox.setAttribute("multiselect",null)
     dropdownBox.setAttribute("closeenabled",null)
     dropdownBox.setAttribute("clearallenabled",null)
+    dropdownBox.selected = [v[0].code, v[1].code, v[2].code]
   }
-  dropdownBox.data = [getMapFromObject(v), []]
+  dropdownBox.data = [getMapFromObject(v), []]  //TODO: find good idea for groups - maybe backward compatible..
 	fragment.appendChild(dropdownBox)
 	return fragment
 }

@@ -14,8 +14,7 @@ export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
   const categories = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, categories)
-  countrySelect = DropDowns.fillCountries("selectCountry", cfg.globals.ui.dropdown.geo)
-  countrySelect.callback = onSelectForAllCards
+  countrySelect = DropDowns.configCountries("selectCountry", cfg.globals.ui.dropdown.geo, onSelectForAllCards)
   Cards.create(containerId, cfg, categories, onSelectForOneCard)  // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {
@@ -45,13 +44,13 @@ function onSelectForOneCard(cardId) {
 function fetch(cardId) {
   console.debug("fetch for card", cardId)
   // from the card's widgets
-  const selections = Cards.getCurrentSelections(cardId)
+  const boxes = Cards.getCurrentSelections(cardId)
   // from "global" country select
-  selections.boxes.set("geo", countrySelect.selected)
+  boxes.selections.set("geo", countrySelect.selected)
   // non-ui url fragment
   Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
   Url.Affix.post += "time=2019"  // TODO: take from UI element
-  Fetcher( Url.buildFrag(selections), Cards.setData.bind(this, cardId) )
+  Fetcher( Url.buildFrag(boxes), Cards.setData.bind(this, cardId) )
 }
 
 function updateAttributes(cardId) {
