@@ -33,6 +33,8 @@ Author: robert.gebhardt@ext.ec.europa.eu
 	<script src="./components/chartCard/chartCard.mjs" type="module"></script>
 	<script src="./components/eclLikeMenu/menu.mjs" type="module"></script>
 
+	<script src="./components/select/select.mjs" type="module"></script>
+
 	<!--script type="application/json">{"utility": "cck", "url": "https://my.ec.europa.eu/cookie-policy_{lang}"}</script>
 	<script src="./js/analytics.js"></script>
 	<script src="https://ec.europa.eu/eurostat/cache/cdn/estat-analytics/js/estat-analytics.js" onerror="analytics_onError()" onload="analytics_onLoad()"></script-->
@@ -49,7 +51,9 @@ Author: robert.gebhardt@ext.ec.europa.eu
 </head>
 
 <body>
-	
+
+	<ecl-like-select-x id="blablub" multiselect maxSelections=7 favoriteStar></ecl-like-select-x>
+
 	<div style="height:100%; display: flex; flex-flow: column;">
 
 		<div style="min-height: 20px;">

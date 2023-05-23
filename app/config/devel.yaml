@@ -1,14 +1,26 @@
 
 codeList:
-  native: &native
-    label: "native"
+
+  nativeB: &nativeB
+    label: "Native-born"
     code: NAT
-  eu: &eu
-    label: "EU"
+  euB: &euB
+    label: "Born in another EU country"
     code: EU27_2020_FOR
-  nonEu: &nonEu
-    label: "Non EU"
+  nonEuB: &nonEuB
+    label: "Born in a non-EU country"
     code: NEU27_2020_FOR
+
+  nativeC: &nativeC
+    label: "Nationals"
+    code: NAT
+  euC: &euC
+    label: "Citizens of another EU country"
+    code: EU27_2020_FOR
+  nonEuC: &nonEuC
+    label: "Citizens of a non-EU country"
+    code: NEU27_2020_FOR
+
   men: &men
     label: "Men"
     code: "M"
@@ -151,18 +163,15 @@ indicatorBase:
         - bySelect:
           - c_birth:
               entries:
-              - *native
-              - *eu
-              - *nonEu
+              - *nativeB
+              - *euB
+              - *nonEuB
               datasetIndex: 0   # ref to indicators.datasets[]
           - citizen:
               entries:
-              - label: "native "  # this is a hack. that whitespace makes it different from c_birth. the ECL select can't handle similar labels.
-                code: NAT
-              - label: "EU "
-                code: EU27_2020_FOR
-              - label: "Non EU "
-                code: NEU27_2020_FOR
+              - *nativeC
+              - *euC
+              - *nonEuC
               datasetIndex: 1
     nonUi:          # request relevant dimensions not represented by an ui element
       freq:
