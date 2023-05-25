@@ -26,8 +26,8 @@ export function create(containerId, cfg, _categories, selectCallback) {
 
 			requestAnimationFrame( () => {
 				const combi = DropDowns.createCombiBoxes(merged.dimensions.ui.combi, merged.datasets)
-				const boxes = DropDowns.createDropdownBoxes(merged.dimensions.ui.dropdown)
-				insertAndHookUpBoxes(id, boxes.concat(combi), selectCallback)
+				const boxes = DropDowns.createDropdownBoxes(merged.dimensions.ui.dropdown).concat(combi)
+				insertAndHookUpBoxes(id, boxes, selectCallback)
 				hookUpCardEvents(id, boxes)
 				document.getElementById(id).setAttribute("subtitle", "")
 				document.getElementById(id).setAttribute("right1", "EU")
@@ -49,13 +49,13 @@ export function getIdFromName(name) {
 function hookUpCardEvents(id) {
 	document.getElementById(id).addEventListener("expanding", () => {
 		// move it from parent container into zoomed card
-		document.getElementById("anchorSlotContentOfCard"+id).after(selectCountry)
+		document.getElementById("anchorSlotContentOfCard"+id).after("selectCountry")
 		document.body.style.overflowY="hidden"
 		window.scrollTo(0, 0);
 	})
 	document.getElementById(id).addEventListener("contracting", () => {
 		// move it out of the card into parent container
-		document.getElementById("anchorSelectCountryOutsideOfCard").after(selectCountry)
+		document.getElementById("anchorSelectCountryOutsideOfCard").after("selectCountry")
 		document.body.style.overflowY="scroll"
 		// todo: scroll back to previous pos
 	})
@@ -73,12 +73,17 @@ function insertAndHookUpBoxes(id, boxes, selectCallback) {
 
 export function getCurrentSelections(cardId) {
 	let retVal = {cardId: cardId, selections: new Map()}
-	const boxes = document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ ecl-like-select`)
-	for(const box of boxes) {
-		if(box.hasAttribute("dimension")) {
-			retVal.selections.set(box.getAttribute("dimension"), box.selected)
+	annoying( document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ ecl-like-select`) )
+	annoying( document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ ecl-like-select-x`) )
+
+	function annoying(boxes) {	// no wildcard for CSS elements and nodelist API is missing basic stuff like concat(). 
+		for(const box of boxes) {
+			if(box.hasAttribute("dimension")) {
+				retVal.selections.set(box.getAttribute("dimension"), box.selected)
+			}
 		}
 	}
+
 	return retVal
 }
 

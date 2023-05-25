@@ -1,3 +1,7 @@
+import * as Logic from "./logic.mjs"
+import * as MS from "./magicStrings.mjs"
+
+
 export function configCountries(id, cfg, callback) {
   const box = document.getElementById(id)
   box.onSelect = callback
@@ -34,7 +38,7 @@ export function createDropdownBoxes(cfg) {
   for(const i in cfg) {
     const k = Object.keys(cfg[i])[0]    // eg "age"
     const v = cfg[i][k]                 // [{label:.., code:..}]
-    retVal.push({dimId: k, docFrag: createDropdown(k,v,false)})
+    retVal.push({dimId: k, docFrag: createDropdown(k,v)})
   }
 
   return retVal
@@ -61,11 +65,19 @@ export function createCombiBoxes(cfg, datasets) {
           // in contrast to the other dropdowns which have string keys, this has a object as key.
           // effectively making the key of the by-Select-entries a compound of 3 distinct informations.
           // this way we can keep the yaml simple.
-          v[l].code = JSON.stringify( {code:v[l].code, dimension:key, dataset:datasets[k].id}, null, null ).replaceAll("\"","'")
+          v[l].code = JSON.stringify( {code:v[l].code, dimension:key, dataset:datasets[k].id}, null, null ).replaceAll("\"","'").replaceAll("\r","").replaceAll("\n","")
         }
         ll = ll.concat(v)
       }
-      retVal.push({dimId: null, docFrag: createDropdown(null, ll, true)})
+
+      // TODO: take from config!
+      const g = new Map()
+      g.set(MS.MS.BY_CITIZEN,{selectable:true, text:"By country of citizenship"})
+      g.set(MS.MS.BY_BIRTH, {selectable:true, text:"By country of birth"})
+
+      //const box = Logic.imposeConstraints( createDropdown(null, ll, true, g) )
+
+      retVal.push({dimId: null, docFrag: createDropdown(null, ll, true, g)})  //TODO: Not null, some magic string...
     }
   }
 
@@ -85,22 +97,21 @@ v:
 }
 note: only a card wants to know if a selection of a box changed - see cards.mjs::insertAndHookUpBoxes()
 */
-function createDropdown(k, v, isMultiselect) {
+function createDropdown(k, v, isMultiselect=false, groups=new Map()) {
 	const fragment = new DocumentFragment()
-	const dropdownBox = document.createElement('ecl-like-select')
+	const dropdownBox = document.createElement('ecl-like-select' + (isMultiselect?"-x":""))
   dropdownBox.setAttribute("dimension", k)
   if(isMultiselect) {
     dropdownBox.setAttribute("multiselect",null)
-    dropdownBox.setAttribute("closeenabled",null)
-    dropdownBox.setAttribute("clearallenabled",null)
-    dropdownBox.selected = [v[0].code, v[1].code, v[2].code]
+    //dropdownBox.selected = [v[0].code, v[1].code, v[2].code]
+    Logic.imposeConstraints(dropdownBox)
   }
-  dropdownBox.data = [getMapFromObject(v), []]  //TODO: find good idea for groups - maybe backward compatible..
+  dropdownBox.data = [getMapFromObject(v), groups]
 	fragment.appendChild(dropdownBox)
 	return fragment
 }
 
-
+// TODO: get rid of this by using Map in the first place
 function getMapFromObject(obj) {
   const retVal = new Map()
   for(const e of obj) {

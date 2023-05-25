@@ -18,54 +18,57 @@ when switching to vertical connectd dot plot display:
     by-select logic same as in line
     constraint logic like in line is disabled
 */
-function selectBoxesLogic() {
-  // bySelectLogic
-  // constraintLogic
-  // switchLogic (line <-> dot)
-}
 
-const grp_c = ["NAO","CEU","CNEU"]
-const grp_b = ["NAB","BEU","BNEU"]
+import * as MS from "./magicStrings.mjs"
 
 
-function beforeCurrentSelectionHappens(k,v) {
-  
-  const el = document.getElementById("blablub")
+const grp_c = [MS.MS.BY_CITIZEN,"EU27_2020_FOR","NEU27_2020_FOR"]
+const grp_b = [MS.MS.BY_BIRTH,"EU27_2020_FOR","NEU27_2020_FOR"]
 
-  function getIntersection(group, k) {
 
+function beforeCurrentSelectionHappens(domElement, k,v) {
+
+  // A = [], B = Map, return [] of members of B who's key is in A
+  function getIntersection(A, B) {
+    const retVal = []
+    for (let k of B.keys()) {
+      if (A.includes(k)) { retVal.push(k) }
+    }
+    return retVal
   }
 
   if(grp_c.includes(k)) {
-    const intersection = structuredClone(el.selected)
-    const kkk = intersection.keys()
-    for (let k2 of kkk) {
-      if (!grp_c.includes(k2)) { intersection.delete(k2) }
-    }
-    el.selected = intersection
-  }
-
-  if(grp_b.includes(k)) {
-    const intersection = structuredClone(el.selected)
-    const kkk = intersection.keys()
-    for (let k2 of kkk) {
-      if (!grp_b.includes(k2)) { intersection.delete(k2) }
-    }
-    el.selected = intersection
+    domElement.selected = getIntersection(grp_c, domElement.selected)
+  } else if(grp_b.includes(k)) {
+    domElement.selected = getIntersection(grp_b, domElement.selected)
   }
 
   return true
 }
 
-function afterCurrentSelectionHasHappened(k,v) {
+function afterCurrentSelectionHasHappened(domElement, k,v) {
   if(k=="By country of citizenship") {
-    document.getElementById("blablub").selected = grp_c
+    domElement.selected = grp_c
   }
   if(k=="By country of birth") {
-    document.getElementById("blablub").selected = grp_b
+    domElement.selected = grp_b
   }
 }
 
+export function imposeConstraints(el) {
+//  el.onSelect = beforeCurrentSelectionHappens.bind(this, el)
+
+el.onSelect = function(k,v) {
+  const tmp = el.onSelect
+  beforeCurrentSelectionHappens(k,v)
+  tmp(k,v)
+}
+
+  el.onSelected = afterCurrentSelectionHasHappened.bind(this, el)
+  return el
+}
+
+/*
 setTimeout( ()=>{
 
   const d = new Map()
@@ -89,3 +92,4 @@ setTimeout( ()=>{
   document.getElementById("blablub").onSelected = afterCurrentSelectionHasHappened
   document.getElementById("blablub").data = [d, g]
 },300 )
+*/

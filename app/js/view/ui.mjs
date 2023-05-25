@@ -29,7 +29,7 @@ export function createUIElements(cfg, triggerInitialRequest) {
 function onSelectForAllCards() {
   Cards.iterate(containerId, (cardId) => { 
     fetch(cardId)
-    updateAttributes(cardId)
+    updateCardAttributes(cardId)
   })
 }
 
@@ -38,7 +38,7 @@ function onSelectForAllCards() {
 // so, update charts in one card
 function onSelectForOneCard(cardId) {
   fetch(cardId) 
-  updateAttributes(cardId)
+  updateCardAttributes(cardId)
 }
 
 function fetch(cardId) {
@@ -53,7 +53,7 @@ function fetch(cardId) {
   Fetcher( Url.buildFrag(boxes), Cards.setData.bind(this, cardId) )
 }
 
-function updateAttributes(cardId) {
+function updateCardAttributes(cardId) {
   document.getElementById(cardId).setAttribute("subtitle", "Number")
   document.getElementById(cardId).setAttribute("right1", Array.from(countrySelect.selected.keys()).join(" ") )
   document.getElementById(cardId).setAttribute("right2", "2023")

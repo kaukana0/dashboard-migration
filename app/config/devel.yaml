@@ -1,6 +1,9 @@
 
 codeList:
 
+  byBirthGroupTitle: &byBirthGroupTitle
+    text: "By country of birth"
+
   nativeB: &nativeB
     label: "Native-born"
     code: NAT
@@ -10,6 +13,9 @@ codeList:
   nonEuB: &nonEuB
     label: "Born in a non-EU country"
     code: NEU27_2020_FOR
+
+  byCitizenGroupTitle: &byCitizenGroupTitle
+    text: "By country of citizenship"
 
   nativeC: &nativeC
     label: "Nationals"
@@ -162,12 +168,14 @@ indicatorBase:
       combi:
         - bySelect:
           - c_birth:
+              title: *byBirthGroupTitle
               entries:
               - *nativeB
               - *euB
               - *nonEuB
               datasetIndex: 0   # ref to indicators.datasets[]
           - citizen:
+              title: *byCitizenGroupTitle
               entries:
               - *nativeC
               - *euC
