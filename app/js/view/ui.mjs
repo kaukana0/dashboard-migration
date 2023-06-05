@@ -5,6 +5,7 @@ import * as DropDowns from "./modules/dropDowns/dropDowns.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../url.mjs"
 import Fetcher from "../model/fetcher.mjs"
+import * as BySelect from "./modules/dropDowns/bySelectDropDownbox.mjs"
 
 
 const containerId = "cards"
@@ -14,11 +15,11 @@ export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
   const categories = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, categories)
-  countrySelect = DropDowns.configCountries("selectCountry", cfg.globals.ui.dropdown.geo, onSelectForAllCards)
-  Cards.create(containerId, cfg, categories, onSelectForOneCard)  // ∀ indicators
+  countrySelect = DropDowns.configCountries("selectCountry", cfg.globals.ui.dropdown.geo, onSelectedForAllCards)
+  Cards.create(containerId, cfg, categories, onSelectedForOneCard)  // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {
-    requestAnimationFrame(()=>onSelectForAllCards())
+    requestAnimationFrame(()=>onSelectedForAllCards())
   }
 }
 
@@ -26,7 +27,7 @@ export function createUIElements(cfg, triggerInitialRequest) {
 // so update charts in all cards.
 // this actually can only be the country box.
 // (note: greendeal dashboard behaviour: zoom out => reset all selections except country)
-function onSelectForAllCards() {
+function onSelectedForAllCards() {
   Cards.iterate(containerId, (cardId) => { 
     fetch(cardId)
     updateCardAttributes(cardId)
@@ -36,7 +37,7 @@ function onSelectForAllCards() {
 // user changed some selection that is relevant for ONE card
 // which is all boxes except country.
 // so, update charts in one card
-function onSelectForOneCard(cardId) {
+function onSelectedForOneCard(cardId) {
   fetch(cardId) 
   updateCardAttributes(cardId)
 }
@@ -50,7 +51,7 @@ function fetch(cardId) {
   // non-ui url fragment
   Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
   Url.Affix.post += "time=2019"  // TODO: take from UI element
-  Fetcher( Url.buildFrag(boxes), Cards.setData.bind(this, cardId) )
+  Fetcher( Url.buildFrag(boxes,{"bySelect":BySelect.getFrag}), Cards.setData.bind(this, cardId) )
 }
 
 function updateCardAttributes(cardId) {

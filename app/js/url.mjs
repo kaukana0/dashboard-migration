@@ -1,8 +1,9 @@
 const delim = "&"
 
-// attention: this assumes, that at least 1 "by-SelectBox" exists
-// and that it contains the Dataset-id for a request.
-export function buildFrag(selections) {
+
+// via fragGetters you can make exceptions from the default fragment-building.
+// it's an object, who's key corresponds to a boxId/dimension and the value is a function.
+export function buildFrag(selections, fragGetters) {
   let retVal = []
 
   let frag=""
@@ -10,22 +11,18 @@ export function buildFrag(selections) {
   for(let [key, value] of selections.selections.entries()) {
     if(key!=="null") {
       //const valAsString = value.keys().next().value
-      for(let [code, _] of value.entries()) {
-        frag += key+"="+code+delim
+      if(fragGetters[key]) {
+        frag += fragGetters[key](value)
+      } else {
+        for(let [code, _] of value.entries()) {
+          frag += key+"="+code+delim
+        }
       }
+    } else {
+      console.warn("url: null key; is there maybe a selectBox w/o dimension attribute? value:", value)
     }
   }
-
-  // now the "by"-selectBox
-  let b = selections.selections.get("null")
-  if(b) {
-    for(let [_key, _] of b.entries()) {
-      const key = JSON.parse(_key.replaceAll("'","\""))
-      retVal.push( Affix.pre+key.dataset+"?"+key.dimension+"="+key.code+delim+frag+Affix.post )
-    }
-  } else {
-    console.error("url: selectBox for by-country/by-citizen missing, so no dataset could be determined either.")
-  }
+  retVal.push( Affix.pre + frag + Affix.post )  // TODO: the dataset before the "?"
 
   return retVal
 }

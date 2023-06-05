@@ -1,31 +1,30 @@
+# yaml schema for migration dashboard v0.2.0
 
 codeList:
 
-  byBirthGroupTitle: &byBirthGroupTitle
-    text: "By country of birth"
-
   nativeB: &nativeB
     label: "Native-born"
-    code: NAT
+    code: BNAT    #NAT
   euB: &euB
     label: "Born in another EU country"
-    code: EU27_2020_FOR
+    code: BEU     #EU27_2020_FOR
   nonEuB: &nonEuB
     label: "Born in a non-EU country"
-    code: NEU27_2020_FOR
-
-  byCitizenGroupTitle: &byCitizenGroupTitle
-    text: "By country of citizenship"
+    code: BNEU    #NEU27_2020_FOR
 
   nativeC: &nativeC
     label: "Nationals"
-    code: NAT
+    code: CNAT    #NAT
   euC: &euC
     label: "Citizens of another EU country"
-    code: EU27_2020_FOR
+    code: CEU     #EU27_2020_FOR
   nonEuC: &nonEuC
     label: "Citizens of a non-EU country"
-    code: NEU27_2020_FOR
+    code: CNEU    #NEU27_2020_FOR
+
+  bySelectGroupTitles: &bySelectGroupTitles
+    BNAT: By country of birth
+    CNAT: By country of citizenship
 
   men: &men
     label: "Men"
@@ -144,6 +143,8 @@ globals:
   ui:
     dropdown:
       geo: *countries
+  byBirthGroupTitle: "By country of birth"
+  byCitizenGroupTitle: "By country of citizenship"
 
 
 # these are used as a base for each indicator in the indicators section
@@ -152,36 +153,32 @@ indicatorBase:
     ui:               # UI elements reflect user selection for these
       dropdown:
         - sex:        # in the REST request, this becomes the dimension
-          - *total    # and code becomes the code; label becomes dropdownbox item
-          - *women
-          - *men
+            elements:
+              - *total    # and code becomes the code; label becomes dropdownbox item
+              - *women
+              - *men
         - age:
-          - *15-74
-          - *20-64
-          - *15-29
+            elements:
+              - *15-74
+              - *20-64
+              - *15-29
+        - bySelect:       # note! in the implementation, bySelect is treated differently than any other dropdown
+            elements:
+              - *nativeB
+              - *euB
+              - *nonEuB
+              - *nativeC
+              - *euC
+              - *nonEuC
+            groups:
+              *bySelectGroupTitles
       range:
         - time:
           start: *timeStart
           end: *timeEnd
           # "singles:" could have precedence before start/end (not implemented)
           singles: [1907, 1914, 1938]
-      combi:
-        - bySelect:
-          - c_birth:
-              title: *byBirthGroupTitle
-              entries:
-              - *nativeB
-              - *euB
-              - *nonEuB
-              datasetIndex: 0   # ref to indicators.datasets[]
-          - citizen:
-              title: *byCitizenGroupTitle
-              entries:
-              - *nativeC
-              - *euC
-              - *nonEuC
-              datasetIndex: 1
-    nonUi:          # request relevant dimensions not represented by an ui element
+    nonUi:          # dimensions which are request-relevant and not represented by an ui element
       freq:
       - *freq
       unit:
@@ -204,13 +201,14 @@ indicators:
       ui:
         dropdown:
           - age:
-            - *15-74
-            - label: "0 to 15 years"
-              code: "!DOESNTEXIST YET 4!"
-            - *15-29
-            - *20-64
-            - label: "over 65 years"
-              code: "!DOESNTEXIST YET 5!"
+              elements:
+                - *15-74
+                - label: "0 to 15 years"
+                  code: "!DOESNTEXIST YET 4!"
+                - *15-29
+                - *20-64
+                - label: "over 65 years"
+                  code: "!DOESNTEXIST YET 5!"
       nonUi:
         unit:
         - label: "Number"
@@ -229,9 +227,10 @@ indicators:
       ui:
         dropdown:
           - sex:
-            - *total
-            - label: "two"
-              code: "two"
+              elements:
+                - *total
+                - label: "two"
+                  code: "two"
 
   - name: Share of adults at risk of poverty or social exclusion
     category: Housing
@@ -246,7 +245,8 @@ indicators:
       ui:
         dropdown:
           - age:
-            - *20-64
+              elements:
+                - *20-64
 
   - name: Home ownership rate
     category: Housing
@@ -261,7 +261,8 @@ indicators:
       ui:
         dropdown:
           - age:
-            - *18-54
+              elements:
+                - *18-54
       nonUi:
         tenure:
         - *tenure1

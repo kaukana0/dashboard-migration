@@ -10,7 +10,7 @@ import * as Url from "../../../url.mjs"
 
 let categories
 
-export function create(containerId, cfg, _categories, selectCallback) {
+export function create(containerId, cfg, _categories, selectedCallback) {
 	let retVal = []
 
 	categories = _categories
@@ -25,9 +25,8 @@ export function create(containerId, cfg, _categories, selectCallback) {
 			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi) )
 
 			requestAnimationFrame( () => {
-				const combi = DropDowns.createCombiBoxes(merged.dimensions.ui.combi, merged.datasets)
-				const boxes = DropDowns.createDropdownBoxes(merged.dimensions.ui.dropdown).concat(combi)
-				insertAndHookUpBoxes(id, boxes, selectCallback)
+				const boxes = DropDowns.createDropdownBoxes(merged.dimensions.ui.dropdown)
+				insertAndHookUpBoxes(id, boxes, selectedCallback)
 				hookUpCardEvents(id, boxes)
 				document.getElementById(id).setAttribute("subtitle", "")
 				document.getElementById(id).setAttribute("right1", "EU")
@@ -49,24 +48,30 @@ export function getIdFromName(name) {
 function hookUpCardEvents(id) {
 	document.getElementById(id).addEventListener("expanding", () => {
 		// move it from parent container into zoomed card
-		document.getElementById("anchorSlotContentOfCard"+id).after("selectCountry")
+		document.getElementById("anchorSlotContentOfCard"+id).after(selectCountry)	// no getElById for selectCountry and it works anyway :-o
 		document.body.style.overflowY="hidden"
 		window.scrollTo(0, 0);
 	})
 	document.getElementById(id).addEventListener("contracting", () => {
 		// move it out of the card into parent container
-		document.getElementById("anchorSelectCountryOutsideOfCard").after("selectCountry")
+		document.getElementById("anchorSelectCountryOutsideOfCard").after(selectCountry)	// no getElById for selectCountry and it works anyway :-o
 		document.body.style.overflowY="scroll"
 		// todo: scroll back to previous pos
 	})
 }
 
-function insertAndHookUpBoxes(id, boxes, selectCallback) {
+function insertAndHookUpBoxes(id, boxes, selectedCallback) {
 	for(const box of boxes) {
-		box.docFrag.firstChild.onSelect = (e) => {
-			// assumption: for a caller it's only relevant in which chart a selection happened, not the box or selected items
-			selectCallback(id)
+
+		// add another callback
+		const tmp = box.docFrag.firstChild.onSelected
+		box.docFrag.firstChild.onSelected = function(k,v) {
+			tmp(k,v)
+			// assumption: a caller is not interested in one box's selection right here.
+			// why? because the caller can ask the card for all selections of all boxes at once.
+			selectedCallback(id)
 		}
+
 		document.getElementById("anchorSlotContentOfCard"+id).after(box.docFrag)
 	}
 }
