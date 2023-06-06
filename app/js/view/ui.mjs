@@ -1,11 +1,11 @@
 //import "../../../components/dropdownBox/dropdownBox.mjs"
 import "../../components/eclLikeSelect/dropdownBox.mjs"
 import * as Cards from "./modules/cards/cards.mjs"
-import * as DropDowns from "./modules/dropDowns/dropDowns.mjs"
+import * as Selects from "./modules/selects/selectBoxes.mjs"
+import * as BySelect from "./modules/selects/bySelectBox.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../url.mjs"
 import Fetcher from "../model/fetcher.mjs"
-import * as BySelect from "./modules/dropDowns/bySelectDropDownbox.mjs"
 
 
 const containerId = "cards"
@@ -15,7 +15,7 @@ export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
   const categories = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, categories)
-  countrySelect = DropDowns.configCountries("selectCountry", cfg.globals.ui.dropdown.geo, onSelectedForAllCards)
+  countrySelect = Selects.configCountries("selectCountry", cfg.globals.ui.dropdown.geo, onSelectedForAllCards)
   Cards.create(containerId, cfg, categories, onSelectedForOneCard)  // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {

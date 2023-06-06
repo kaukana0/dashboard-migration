@@ -4,7 +4,7 @@ Also the content for a slot which goes into the card.
 That content is selectboxes corresponding to YAMLCfg.dimensions.ui.dropdown
 */
 import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
-import * as DropDowns from "../dropDowns/dropDowns.mjs"
+import * as Selects from "../selects/selectBoxes.mjs"
 import * as Util from "../../../../components/util/util.mjs"
 import * as Url from "../../../url.mjs"
 
@@ -25,7 +25,7 @@ export function create(containerId, cfg, _categories, selectedCallback) {
 			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi) )
 
 			requestAnimationFrame( () => {
-				const boxes = DropDowns.createDropdownBoxes(merged.dimensions.ui.dropdown)
+				const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown)
 				insertAndHookUpBoxes(id, boxes, selectedCallback)
 				hookUpCardEvents(id, boxes)
 				document.getElementById(id).setAttribute("subtitle", "")
