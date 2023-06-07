@@ -45,13 +45,13 @@ function onSelectedForOneCard(cardId) {
 function fetch(cardId) {
   console.debug("fetch for card", cardId)
   // from the card's widgets
-  const boxes = Cards.getCurrentSelections(cardId)
+  const [boxes, dataset] = Cards.getCurrentSelections(cardId)
   // from "global" country select
   boxes.selections.set("geo", countrySelect.selected)
   // non-ui url fragment
   Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
   Url.Affix.post += "time=2019"  // TODO: take from UI element
-  Fetcher( Url.buildFrag(boxes,{"bySelect":BySelect.getFrag}), Cards.setData.bind(this, cardId) )
+  Fetcher( Url.buildFrag(boxes,dataset,{"bySelect":BySelect.getFrag}), Cards.setData.bind(this, cardId) )
 }
 
 function updateCardAttributes(cardId) {

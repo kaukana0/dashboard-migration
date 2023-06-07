@@ -1,4 +1,4 @@
-# yaml schema for migration dashboard v0.2.0
+# yaml schema for migration dashboard v0.3.0
 
 codeList:
 
@@ -193,9 +193,11 @@ indicators:
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migration_and_migrant_population_statistics
     datasets:
-      - id: MIGR_POP3CTB
+      birth:
+        id: MIGR_POP3CTB
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/fb8d22a0-054b-4423-a3f9-ec79ee84c87a?lang=en
-      - id: MIGR_POP1CTZ
+      country:
+        id: MIGR_POP1CTZ
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/d30004bd-976c-40fe-bc40-e9a33abf1fc4?lang=en
     dimensions:
       ui:
@@ -219,9 +221,11 @@ indicators:
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_%E2%80%93_labour_market_indicators
     datasets:
-      - id: LFSA_ERGACOB
+      birth:
+        id: LFSA_ERGACOB
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/d642741b-30e8-45d3-b160-2abb17d8a2c9?lang=en
-      - id: LFSA_ERGAN
+      country:
+        id: LFSA_ERGAN
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/1a912262-da95-49ac-a154-44479a7dae31?lang=en
     dimensions:
       ui:
@@ -237,9 +241,11 @@ indicators:
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_at_risk_of_poverty_and_social_exclusion
     datasets:
-      - id: ILC_PEPS06N
+      birth:
+        id: ILC_PEPS06N
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/7acca101-803d-44f2-85cd-834dbe582384?lang=en
-      - id: ILC_PEPS05N
+      country:
+        id: ILC_PEPS05N
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/e5355ba1-b4bf-4f2c-a5d6-4ca46cd88406?lang=en
     dimensions:
       ui:
@@ -253,9 +259,11 @@ indicators:
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_housing
     datasets:
-      - id: ILC_LVPS16
+      birth:
+        id: ILC_LVPS16
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/9aa7ad1a-8350-47cd-a9e8-83c8e0c59e23?lang=en
-      - id: ILC_LVPS15
+      country:
+        id: ILC_LVPS15
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/cf1f1df3-d356-451d-a0dc-9b38be4cd9c1?lang=en
     dimensions:
       ui:

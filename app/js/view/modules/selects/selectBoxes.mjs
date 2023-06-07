@@ -1,5 +1,4 @@
 import * as Logic from "./bySelectBox.mjs"
-import * as MS from "./magicStrings.mjs"
 
 
 export function configCountries(id, cfg, callback) {
@@ -11,14 +10,31 @@ export function configCountries(id, cfg, callback) {
 }
 
 //usually sex & age. possibility for more per config.
-export function createDropdownBoxes(cfg) {
+export function createDropdownBoxes(boxes, datasets) {
   let retVal = []
 
-  for(const i in cfg) {
-    const k = Object.keys(cfg[i])[0]    // eg "age"
-    const v = cfg[i][k]["elements"]                 // [{label:.., code:..}]
-    const isMultiselect = cfg[i][k]["groups"] ? true : false  // a bit of a short-cut cheat. if groups but not multiselect is needed, change yaml to support that - and inc. semver there accordingly
-    retVal.push({dimId: k, docFrag: createDropdown(k, v, isMultiselect, cfg[i][k]["groups"])})
+  for(const i in boxes) {
+    const attribs = new Map()
+    const boxName = Object.keys(boxes[i])[0]          // eg "age"
+    attribs.set("dimension", boxName)
+    const items = boxes[i][boxName]["elements"]           // [{label:.., code:..}]
+
+    // something "special" - put additional info in DOM element
+    if(boxName==="bySelect") {
+      if(datasets) {
+        attribs.set("dataset-cbirth", datasets["birth"]["id"])
+        attribs.set("dataset-country", datasets["country"]["id"])
+      } else {
+        console.warn("selectBoxes: datasets in yaml missing for:", boxName)
+      }
+    }
+
+    // a bit of a short-cut cheat. 
+    // if groups but not multiselect is needed, change yaml to support that - don't forget to inc. semver in the yaml
+    const isMultiselect = boxes[i][boxName]["groups"] ? true : false
+
+    retVal.push({dimId: boxName, docFrag: createDropdown(items, attribs, isMultiselect, boxes[i][boxName]["groups"])})
+
   }
 
   return retVal
@@ -37,18 +53,21 @@ v:
 }
 note: only a card wants to know if a selection of a box changed - see cards.mjs::insertAndHookUpBoxes()
 */
-function createDropdown(k, v, isMultiselect=false, groups={}) {
+function createDropdown(items, attribs, isMultiselect=false, groups={}) {
 	const fragment = new DocumentFragment()
+
 	const dropdownBox = document.createElement('ecl-like-select' + (isMultiselect?"-x":""))
-  dropdownBox.setAttribute("dimension", k)
+
+  attribs.forEach( (v,k) => dropdownBox.setAttribute(k,v) )
+
   if(isMultiselect) {   // TODO: it works for now but it's obviously not correct!
     dropdownBox.setAttribute("multiselect",null)
-    //dropdownBox.selected = [v[0].code, v[1].code, v[2].code]
     Logic.imposeConstraints(dropdownBox)
   }
 
-  dropdownBox.data = [getMapFromObject(v), getGroupsFromObject(groups)]
+  dropdownBox.data = [getMapFromObject(items), getGroupsFromObject(groups)]
 	fragment.appendChild(dropdownBox)
+
 	return fragment
 }
 

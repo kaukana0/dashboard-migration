@@ -1,13 +1,16 @@
+/*
+creating an URL and getting infos from an URL
+*/
+
 const delim = "&"
 
 
 // via fragGetters you can make exceptions from the default fragment-building.
 // it's an object, who's key corresponds to a boxId/dimension and the value is a function.
-export function buildFrag(selections, fragGetters) {
+export function buildFrag(selections, dataset, fragGetters) {
   let retVal = []
 
   let frag=""
-  // first do all boxes except the by-selectBox
   for(let [key, value] of selections.selections.entries()) {
     if(key!=="null") {
       //const valAsString = value.keys().next().value
@@ -22,7 +25,7 @@ export function buildFrag(selections, fragGetters) {
       console.warn("url: null key; is there maybe a selectBox w/o dimension attribute? value:", value)
     }
   }
-  retVal.push( Affix.pre + frag + Affix.post )  // TODO: the dataset before the "?"
+  retVal.push( Affix.pre + dataset + "?" + frag + Affix.post )
 
   return retVal
 }

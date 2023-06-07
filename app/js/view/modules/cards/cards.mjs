@@ -5,8 +5,9 @@ That content is selectboxes corresponding to YAMLCfg.dimensions.ui.dropdown
 */
 import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
 import * as Selects from "../selects/selectBoxes.mjs"
-import * as Util from "../../../../components/util/util.mjs"
+import * as BySelect from "../selects/bySelectBox.mjs"
 import * as Url from "../../../url.mjs"
+import * as Util from "../../../../components/util/util.mjs"
 
 let categories
 
@@ -25,7 +26,7 @@ export function create(containerId, cfg, _categories, selectedCallback) {
 			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi) )
 
 			requestAnimationFrame( () => {
-				const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown)
+				const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, merged.datasets)
 				insertAndHookUpBoxes(id, boxes, selectedCallback)
 				hookUpCardEvents(id, boxes)
 				document.getElementById(id).setAttribute("subtitle", "")
@@ -67,7 +68,7 @@ function insertAndHookUpBoxes(id, boxes, selectedCallback) {
 		const tmp = box.docFrag.firstChild.onSelected
 		box.docFrag.firstChild.onSelected = function(k,v) {
 			tmp(k,v)
-			// assumption: a caller is not interested in one box's selection right here.
+			// assumption: a caller is not interested in one box's selection right here, so omit passing on k,v.
 			// why? because the caller can ask the card for all selections of all boxes at once.
 			selectedCallback(id)
 		}
@@ -77,14 +78,19 @@ function insertAndHookUpBoxes(id, boxes, selectedCallback) {
 }
 
 export function getCurrentSelections(cardId) {
-	let retVal = {cardId: cardId, selections: new Map()}
+	let retVal = [{cardId: cardId, selections: new Map()}, ""]
+
 	annoying( document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ ecl-like-select`) )
 	annoying( document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ ecl-like-select-x`) )
 
 	function annoying(boxes) {	// no wildcard for CSS elements and nodelist API is missing basic stuff like concat(). 
 		for(const box of boxes) {
 			if(box.hasAttribute("dimension")) {
-				retVal.selections.set(box.getAttribute("dimension"), box.selected)
+				retVal[0].selections.set(box.getAttribute("dimension"), box.selected)
+				// this is the place to retrieve the dataset from the by-select
+				if(box.getAttribute("dimension") === "bySelect") {
+					retVal[1] = BySelect.getDataset(box)
+				}
 			}
 		}
 	}
