@@ -6,6 +6,7 @@ That content is selectboxes corresponding to YAMLCfg.dimensions.ui.dropdown
 import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
 import * as Selects from "../selects/selectBoxes.mjs"
 import * as BySelect from "../selects/bySelectBox.mjs"
+import {MS} from "../selects/magicStrings.mjs"
 import * as Url from "../../../url.mjs"
 import * as Util from "../../../../components/util/util.mjs"
 
@@ -88,7 +89,7 @@ export function getCurrentSelections(cardId) {
 			if(box.hasAttribute("dimension")) {
 				retVal[0].selections.set(box.getAttribute("dimension"), box.selected)
 				// this is the place to retrieve the dataset from the by-select
-				if(box.getAttribute("dimension") === "bySelect") {
+				if(box.getAttribute("dimension") === MS.BY_SELECT_ID) {
 					retVal[1] = BySelect.getDataset(box)
 				}
 			}

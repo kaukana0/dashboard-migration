@@ -2,6 +2,8 @@
 creating an URL and getting infos from an URL
 */
 
+import { DEFINITIONS } from "./view/modules/selects/bySelectBox.mjs"
+
 const delim = "&"
 
 
@@ -54,4 +56,13 @@ export function getGeo(url) { return getValues(url, "geo") }
 
 function getValues(url, param) {
   return url.match( new RegExp(param+"=([^&]+)", "g") ).map(e=>e.replace(param+"=",""))
+}
+
+export function getBySelectFrag(v) {
+  let retVal = ""
+  const merged = new Map([...DEFINITIONS.GRP_B, ...DEFINITIONS.GRP_C])
+  for(let [key] of v.entries()) {
+    retVal += DEFINITIONS.CODE_TO_DIM.get(key)+"="+merged.get(key)+delim
+  }
+  return retVal
 }

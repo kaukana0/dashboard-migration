@@ -3,10 +3,10 @@ import "../../components/eclLikeSelect/dropdownBox.mjs"
 import * as Cards from "./modules/cards/cards.mjs"
 import * as Selects from "./modules/selects/selectBoxes.mjs"
 import * as BySelect from "./modules/selects/bySelectBox.mjs"
+import {MS} from "./modules/selects/magicStrings.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../url.mjs"
 import Fetcher from "../model/fetcher.mjs"
-
 
 const containerId = "cards"
 let countrySelect
@@ -51,7 +51,8 @@ function fetch(cardId) {
   // non-ui url fragment
   Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
   Url.Affix.post += "time=2019"  // TODO: take from UI element
-  Fetcher( Url.buildFrag(boxes,dataset,{"bySelect":BySelect.getFrag}), Cards.setData.bind(this, cardId) )
+  const bla = {} ; bla[MS.BY_SELECT_ID] = Url.getBySelectFrag
+  Fetcher( Url.buildFrag(boxes,dataset,bla), Cards.setData.bind(this, cardId) )
 }
 
 function updateCardAttributes(cardId) {

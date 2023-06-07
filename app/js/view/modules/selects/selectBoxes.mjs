@@ -1,3 +1,4 @@
+import {MS} from "./magicStrings.mjs"
 import * as Logic from "./bySelectBox.mjs"
 
 
@@ -20,10 +21,10 @@ export function createDropdownBoxes(boxes, datasets) {
     const items = boxes[i][boxName]["elements"]           // [{label:.., code:..}]
 
     // something "special" - put additional info in DOM element
-    if(boxName==="bySelect") {
+    if(boxName===MS.BY_SELECT_ID) {
       if(datasets) {
-        attribs.set("dataset-cbirth", datasets["birth"]["id"])
-        attribs.set("dataset-country", datasets["country"]["id"])
+        attribs.set(MS.DS_ID_BIRTH, datasets["birth"]["id"])
+        attribs.set(MS.DS_ID_CITIZEN, datasets["citizen"]["id"])
       } else {
         console.warn("selectBoxes: datasets in yaml missing for:", boxName)
       }

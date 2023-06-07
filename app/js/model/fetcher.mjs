@@ -86,7 +86,7 @@ export default function go(urls, callback) {
 	)
 
 	function displayFailure(e) {
-		console.error(e)
+		//console.error(e)
 		//document.getElementById("loadingIndicator").style.display = "none"
 		//document.getElementById("errorMessage").style.display = "block"
 	}
