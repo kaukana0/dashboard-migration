@@ -50,6 +50,11 @@ For more technical details, please see also the "architecture decision records".
 
 # Requirements
 
+## general
+
+- req50: loading indicator (ECL like or from ECL)
+- req75: error display
+
 ## main menu
 
 - req100: ECL style main menu showing "categories" and indicators in each category as dropdown menu
@@ -122,7 +127,7 @@ For more technical details, please see also the "architecture decision records".
     - EU citizens (other than nationals)
     - Non EU citizens
 
-### export image
+## export image
 
 - req900: there should be a button that exports currently visible chart to png/jpeg image
 
@@ -164,6 +169,8 @@ For more technical details, please see also the "architecture decision records".
   - adapt chart legend
 - implement dot plot
   - ~~find an idea about how to draw vertical lines for a vertical connectd dot plot~~
+- loading indicator
 - lock UI selection when loading (potentially avoid out-of-sync situations...?)
 - export to image functionality
 - compliant looks/styles overall
+- error display

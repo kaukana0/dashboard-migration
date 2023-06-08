@@ -2,7 +2,7 @@
 creating an URL and getting infos from an URL
 */
 
-import { DEFINITIONS } from "./view/modules/selects/bySelectBox.mjs"
+import { DEFINITIONS } from "./view/modules/selects/bySelectConstraints.mjs"
 
 const delim = "&"
 

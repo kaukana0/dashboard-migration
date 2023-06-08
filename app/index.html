@@ -52,8 +52,6 @@ Author: robert.gebhardt@ext.ec.europa.eu
 
 <body>
 
-	<ecl-like-select-x id="blablub" multiselect maxSelections=7 favoriteStar></ecl-like-select-x>
-
 	<div style="height:100%; display: flex; flex-flow: column;">
 
 		<div style="min-height: 20px;">
@@ -76,8 +74,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 		<div style="transform: scale(1); background-color: white;">
 			<div id="anchorExpandedCard" style="height: 50px; background-color: white; margin:25px;">
 				<div id="anchorSelectCountryOutsideOfCard"></div>
-				<!--dropdown-box id="selectCountry" dimension="geo" multiselect maxSelections=7 selectedText="countries selected" zindex="5"></dropdown-box-->
-				<ecl-like-select id="selectCountry" dimension="geo" multiselect="1" closeenabled="1" clearallenabled="1"></ecl-like-select>
+				<ecl-like-select-x id="selectCountry" dimension="geo" multiselect="1" favoriteStar="1" style="width:250px;"></ecl-like-select-x>
 			</div>
 			<div id="cards" style="display: flex; flex-wrap: wrap; justify-content: center; background-color: aliceblue;">
 			</div>

@@ -1,8 +1,6 @@
-//import "../../../components/dropdownBox/dropdownBox.mjs"
-import "../../components/eclLikeSelect/dropdownBox.mjs"
 import * as Cards from "./modules/cards/cards.mjs"
 import * as Selects from "./modules/selects/selectBoxes.mjs"
-import * as BySelect from "./modules/selects/bySelectBox.mjs"
+import * as GeoSelectConstraint from "../view/modules/selects/geoSelectConstraints.mjs"
 import {MS} from "./modules/selects/magicStrings.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../url.mjs"
@@ -15,7 +13,11 @@ export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
   const categories = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, categories)
+
   countrySelect = Selects.configCountries("selectCountry", cfg.globals.ui.dropdown.geo, onSelectedForAllCards)
+  GeoSelectConstraint.setGeoSelect(countrySelect)
+  countrySelect.onSelect = GeoSelectConstraint.selectionAllowed
+
   Cards.create(containerId, cfg, categories, onSelectedForOneCard)  // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {

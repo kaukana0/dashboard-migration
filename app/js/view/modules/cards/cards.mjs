@@ -2,10 +2,25 @@
 This creates the cards.
 Also the content for a slot which goes into the card.
 That content is selectboxes corresponding to YAMLCfg.dimensions.ui.dropdown
+
+Expand/Collapse logic:
+
+- on collapse:
+	- country selects favourited entry
+	- bySelect selects the default (first three entries)
+	- line display is activated
+
+- on expand:
+	- calculate # of by-selects: 6 - # selected countries
+	- deselect countries if neccessary
+
 */
+
+
 import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
 import * as Selects from "../selects/selectBoxes.mjs"
-import * as BySelect from "../selects/bySelectBox.mjs"
+import * as BySelectConstraint from "../selects/bySelectConstraints.mjs"
+import * as GeoSelectConstraint from "../selects/geoSelectConstraints.mjs"
 import {MS} from "../selects/magicStrings.mjs"
 import * as Url from "../../../url.mjs"
 import * as Util from "../../../../components/util/util.mjs"
@@ -28,8 +43,9 @@ export function create(containerId, cfg, _categories, selectedCallback) {
 
 			requestAnimationFrame( () => {
 				const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, merged.datasets)
-				insertAndHookUpBoxes(id, boxes, selectedCallback)
-				hookUpCardEvents(id, boxes)
+				addBoxEventHandlers(id, boxes, selectedCallback)
+				insertBoxes(id, boxes)
+				addCardEventHandlers(id, boxes)
 				document.getElementById(id).setAttribute("subtitle", "")
 				document.getElementById(id).setAttribute("right1", "EU")
 				document.getElementById(id).setAttribute("right2", "2022")
@@ -47,34 +63,59 @@ export function getIdFromName(name) {
 	return "chartCard-"+name.replaceAll(" ", "-")		// or a hash
 }
 
-function hookUpCardEvents(id) {
+function addCardEventHandlers(id) {
+
 	document.getElementById(id).addEventListener("expanding", () => {
+		const el = document.getElementById("anchorSlotContentOfCard"+id)
+
+		GeoSelectConstraint.setBySelect(el.nextSibling)
+
 		// move it from parent container into zoomed card
-		document.getElementById("anchorSlotContentOfCard"+id).after(selectCountry)	// no getElById for selectCountry and it works anyway :-o
+		el.after(selectCountry)	// no getElById for selectCountry and it works anyway :-o
 		document.body.style.overflowY="hidden"
 		window.scrollTo(0, 0);
 	})
+
 	document.getElementById(id).addEventListener("contracting", () => {
+		GeoSelectConstraint.setBySelect(null)
 		// move it out of the card into parent container
 		document.getElementById("anchorSelectCountryOutsideOfCard").after(selectCountry)	// no getElById for selectCountry and it works anyway :-o
 		document.body.style.overflowY="scroll"
 		// todo: scroll back to previous pos
 	})
+
 }
 
-function insertAndHookUpBoxes(id, boxes, selectedCallback) {
+// note: by-select's counterpart - the geo box - is set and handeled somewhere else!
+function addBoxEventHandlers(id, boxes, selectedCallback) {
 	for(const box of boxes) {
 
-		// add another callback
-		const tmp = box.docFrag.firstChild.onSelected
-		box.docFrag.firstChild.onSelected = function(k,v) {
-			tmp(k,v)
+		const domEl = box.docFrag.firstChild
+
+		domEl.onSelect = function(k,v) {
+			if(box.dimId === MS.BY_SELECT_ID) {
+				BySelectConstraint.ensureCorrectInterGroupSelection(domEl,k,v)
+				return GeoSelectConstraint.selectionAllowed()
+			}
+			return true
+		}
+
+		domEl.onSelected = function(k,v) {
+			if(box.dimId === MS.BY_SELECT_ID) {
+				BySelectConstraint.tryToSelectWholeGroup(domEl,k,v)
+			}
+
 			// assumption: a caller is not interested in one box's selection right here, so omit passing on k,v.
 			// why? because the caller can ask the card for all selections of all boxes at once.
 			selectedCallback(id)
 		}
+	}
+}
 
-		document.getElementById("anchorSlotContentOfCard"+id).after(box.docFrag)
+function insertBoxes(id, boxes) {
+	for(const box of boxes) {
+		const el = document.getElementById("anchorSlotContentOfCard"+id)
+		el.after(box.docFrag)
 	}
 }
 
@@ -90,7 +131,7 @@ export function getCurrentSelections(cardId) {
 				retVal[0].selections.set(box.getAttribute("dimension"), box.selected)
 				// this is the place to retrieve the dataset from the by-select
 				if(box.getAttribute("dimension") === MS.BY_SELECT_ID) {
-					retVal[1] = BySelect.getDataset(box)
+					retVal[1] = BySelectConstraint.getDataset(box)
 				}
 			}
 		}
