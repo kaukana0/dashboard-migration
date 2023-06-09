@@ -4,9 +4,6 @@
 [submodule "app/components/processorCountryColors"]
 	path = app/components/processorCountryColors
 	url = https://github.com/kaukana0/processorCountryColors.git
-[submodule "app/components/dropdownBox"]
-	path = app/components/dropdownBox
-	url = https://github.com/kaukana0/dropdownBox.git
 [submodule "app/components/chartCard"]
 	path = app/components/chartCard
 	url = https://github.com/kaukana0/chartCard.git
@@ -25,6 +22,3 @@
 [submodule "app/components/eclLikeMenu"]
 	path = app/components/eclLikeMenu
 	url = https://github.com/kaukana0/eclLikeMenu.git
-[submodule "app/components/eclLikeSelect"]
-	path = app/components/eclLikeSelect
-	url = https://github.com/kaukana0/eclLikeSelect.git

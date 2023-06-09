@@ -20,7 +20,7 @@ Expand/Collapse logic:
 import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
 import * as Selects from "../selects/selectBoxes.mjs"
 import * as BySelectConstraint from "../selects/bySelectConstraints.mjs"
-import * as GeoSelectConstraint from "../selects/geoSelectConstraints.mjs"
+import * as CommonConstraints from "../selects/commonConstraints.mjs"
 import {MS} from "../selects/magicStrings.mjs"
 import * as Url from "../../../url.mjs"
 import * as Util from "../../../../components/util/util.mjs"
@@ -68,7 +68,7 @@ function addCardEventHandlers(id) {
 	document.getElementById(id).addEventListener("expanding", () => {
 		const el = document.getElementById("anchorSlotContentOfCard"+id)
 
-		GeoSelectConstraint.setBySelect(el.nextSibling)
+		CommonConstraints.setBySelect(el.nextSibling)
 
 		// move it from parent container into zoomed card
 		el.after(selectCountry)	// no getElById for selectCountry and it works anyway :-o
@@ -77,7 +77,7 @@ function addCardEventHandlers(id) {
 	})
 
 	document.getElementById(id).addEventListener("contracting", () => {
-		GeoSelectConstraint.setBySelect(null)
+		CommonConstraints.setBySelect(null)
 		// move it out of the card into parent container
 		document.getElementById("anchorSelectCountryOutsideOfCard").after(selectCountry)	// no getElById for selectCountry and it works anyway :-o
 		document.body.style.overflowY="scroll"
@@ -95,7 +95,7 @@ function addBoxEventHandlers(id, boxes, selectedCallback) {
 		domEl.onSelect = function(k,v) {
 			if(box.dimId === MS.BY_SELECT_ID) {
 				BySelectConstraint.ensureCorrectInterGroupSelection(domEl,k,v)
-				return GeoSelectConstraint.selectionAllowed()
+				return CommonConstraints.bySelectionAllowed( BySelectConstraint.howManyAreGoingToBeSelected(k) )
 			}
 			return true
 		}

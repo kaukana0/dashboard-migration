@@ -41,13 +41,13 @@ export const DEFINITIONS = {
 }
 
 
-
+// onSelect (before onSelect callback is invoked; possibility to supress that from happening)
 export function ensureCorrectInterGroupSelection(domElement, k,v) {
 
   // A = [], B = Map, return [] of members of B who's key is in A
   function getIntersection(A, B) {
-    if(!A) return
     const retVal = []
+    if(!A) return
     for (let k of B.keys()) {
       if (A.includes(k)) { retVal.push(k) }
     }
@@ -59,11 +59,20 @@ export function ensureCorrectInterGroupSelection(domElement, k,v) {
   return true
 }
 
+// onSelected (called after onSelect only if it returns true)
 export function tryToSelectWholeGroup(domElement, k,v) {
   if(k=="By country of citizenship") {
     domElement.selected = Array.from(grp_c.keys())
   } else if(k=="By country of birth") {
     domElement.selected = Array.from(grp_b.keys())
+  }
+}
+
+export function howManyAreGoingToBeSelected(k) {
+  if(k=="By country of citizenship" || k=="By country of birth") {
+    return 3
+  } else {
+    return 1
   }
 }
 

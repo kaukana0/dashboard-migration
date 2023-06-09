@@ -1,6 +1,6 @@
 import * as Cards from "./modules/cards/cards.mjs"
 import * as Selects from "./modules/selects/selectBoxes.mjs"
-import * as GeoSelectConstraint from "../view/modules/selects/geoSelectConstraints.mjs"
+import * as CommonConstraints from "../view/modules/selects/commonConstraints.mjs"
 import {MS} from "./modules/selects/magicStrings.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../url.mjs"
@@ -15,8 +15,8 @@ export function createUIElements(cfg, triggerInitialRequest) {
   MainMenu.create(onSelectMenu, categories)
 
   countrySelect = Selects.configCountries("selectCountry", cfg.globals.ui.dropdown.geo, onSelectedForAllCards)
-  GeoSelectConstraint.setGeoSelect(countrySelect)
-  countrySelect.onSelect = GeoSelectConstraint.selectionAllowed
+  CommonConstraints.setGeoSelect(countrySelect)
+  countrySelect.onSelect = CommonConstraints.geoSelectionAllowed
 
   Cards.create(containerId, cfg, categories, onSelectedForOneCard)  // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
