@@ -3,7 +3,7 @@ import {MS} from "./magicStrings.mjs"
 
 export function configCountries(id, cfg, callback) {
   const box = document.getElementById(id)
-  box.onSelect = callback
+  box.onSelected = callback
 	box.data = [getMapFromObject(cfg), new Map()]
   box.selected = ["EU","IT"]
   return document.getElementById(id)

@@ -28,24 +28,6 @@ let geoSelect
 export function setBySelect(el) {bySelect=el}
 export function setGeoSelect(el) {geoSelect=el}
 
-// this is used by both, geo and by bySelect boxes
-// it's called before a wanted selection is approved,
-// in order to allow or disallow the selection.
-// so this needs to know how many are wanted to be selected
-export function selectionAllowed(_numberOfBySelections) {
-  if(!bySelect) { console.error("geoSelectConstraint: no bySelect!"); return true; }
-  if(!geoSelect) { console.error("geoSelectConstraint: no geoSelect!"); return true; }
-
-
-  const numberOfGeoSelections = geoSelect.selected.size + (isNumber ? 0 : 1) // assumption: can only select/deselect 1 at a time
-  const numberOfBySelections = isNumber ? bySelect.selected.size+_numberOfBySelections : bySelect.selected.size
-
-  console.log(numberOfGeoSelections, numberOfBySelections)
-
-  return numberOfGeoSelections * numberOfBySelections <= 6
-}
-
-
 export function geoSelectionAllowed() {
   const numberOfGeoSelections = geoSelect.selected.size+1
   const numberOfBySelections = bySelect.selected.size
@@ -55,6 +37,5 @@ export function geoSelectionAllowed() {
 export function bySelectionAllowed(numberOfSelections) {
   const numberOfGeoSelections = geoSelect.selected.size
   const numberOfBySelections = numberOfSelections===1 ? bySelect.selected.size+1 : numberOfSelections
-  console.log("*",bySelect.selected.size,numberOfSelections)
   return numberOfGeoSelections * numberOfBySelections <= 6
 }
