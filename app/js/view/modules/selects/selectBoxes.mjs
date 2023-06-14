@@ -1,13 +1,8 @@
+// all the boxes for one card
+
 import {MS} from "./magicStrings.mjs"
+import {getMapFromObject} from "./util.mjs"
 
-
-export function configCountries(id, cfg, callback) {
-  const box = document.getElementById(id)
-  box.onSelected = callback
-	box.data = [getMapFromObject(cfg), new Map()]
-  box.selected = ["EU","IT"]
-  return document.getElementById(id)
-}
 
 //usually sex & age. possibility for more per config.
 export function createDropdownBoxes(boxes, datasets) {
@@ -17,14 +12,14 @@ export function createDropdownBoxes(boxes, datasets) {
     const attribs = new Map()
     const boxName = Object.keys(boxes[i])[0]          // eg "age"
     attribs.set("dimension", boxName)
-    const items = boxes[i][boxName]["elements"]           // [{label:.., code:..}]
+    const items = getMapFromObject(boxes[i][boxName]["elements"])           // [{label:.., code:..}]
 
     // something "special" - put additional info in DOM element
     if(boxName===MS.BY_SELECT_ID) {
       if(datasets) {
         attribs.set("multiselect", "1")
-        attribs.set(MS.DS_ID_BIRTH, datasets["birth"]["id"])
         attribs.set(MS.DS_ID_CITIZEN, datasets["citizen"]["id"])
+        attribs.set(MS.DS_ID_BIRTH, datasets["birth"]["id"])
       } else {
         console.warn("selectBoxes: datasets in yaml missing for:", boxName)
       }
@@ -61,20 +56,12 @@ function getDocFrag(items, attribs, isMultiselect=false, groups={}) {
   dropdownBox.style.width = "250px"
   attribs.forEach( (v,k) => dropdownBox.setAttribute(k,v) )
 
-  dropdownBox.data = [getMapFromObject(items), getGroupsFromObject(groups)]
+  dropdownBox.data = [items, getGroupsFromObject(groups)]
 
   fragment.appendChild(dropdownBox)
 	return fragment
 }
 
-// TODO: get rid of this by using Map in the first place
-function getMapFromObject(obj) {
-  const retVal = new Map()
-  for(const e of obj) {
-    retVal.set(e.code, e.label)
-  }
-  return retVal
-}
 
 function getGroupsFromObject(obj) {
   const retVal = new Map()

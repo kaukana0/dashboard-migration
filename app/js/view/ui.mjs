@@ -1,10 +1,14 @@
+/*
+create UI, handle prominent events, initiate data fetching and data forwarding
+*/
+
 import * as Cards from "./modules/cards/cards.mjs"
-import * as Selects from "./modules/selects/selectBoxes.mjs"
-import * as CommonConstraints from "../view/modules/selects/commonConstraints.mjs"
+import * as GeoSelect from "./modules/selects/geoSelect.mjs"
 import {MS} from "./modules/selects/magicStrings.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../url.mjs"
 import Fetcher from "../model/fetcher.mjs"
+import {getMapFromObject} from "./modules/selects/util.mjs"
 
 const containerId = "cards"
 let countrySelect
@@ -13,11 +17,7 @@ export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
   const categories = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, categories)
-
-  countrySelect = Selects.configCountries("selectCountry", cfg.globals.ui.dropdown.geo, onSelectedForAllCards)
-  CommonConstraints.setGeoSelect(countrySelect)
-  countrySelect.onSelect = CommonConstraints.geoSelectionAllowed
-
+  countrySelect = GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromObject(cfg.globals.ui.dropdown.geo), onSelectedForAllCards)
   Cards.create(containerId, cfg, categories, onSelectedForOneCard)  // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {

@@ -71,7 +71,7 @@ function addCardEventHandlers(id) {
 		CommonConstraints.setBySelect(el.nextSibling)
 
 		// move it from parent container into zoomed card
-		el.after(selectCountry)	// no getElById for selectCountry and it works anyway :-o
+		el.after(document.getElementById(MS.GEO_SELECT_DOM_ID))
 		document.body.style.overflowY="hidden"
 		window.scrollTo(0, 0);
 	})
@@ -79,7 +79,7 @@ function addCardEventHandlers(id) {
 	document.getElementById(id).addEventListener("contracting", () => {
 		CommonConstraints.setBySelect(null)
 		// move it out of the card into parent container
-		document.getElementById("anchorSelectCountryOutsideOfCard").after(selectCountry)	// no getElById for selectCountry and it works anyway :-o
+		document.getElementById("anchorSelectCountryOutsideOfCard").after(document.getElementById(MS.GEO_SELECT_DOM_ID))
 		document.body.style.overflowY="scroll"
 		// todo: scroll back to previous pos
 	})
