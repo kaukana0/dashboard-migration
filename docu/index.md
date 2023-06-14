@@ -7,6 +7,8 @@
 
 - [Overall Approach](./adr/adr01.md)
 - [Config and data retrieval](./adr/adr02.md)
+- [Main menu](./adr/adr04.md)
+- [Text above select](./adr/adr06.md)
 
 # Technical details
 

@@ -32,6 +32,7 @@ so 3., because smallest of all evil:
   - events: cards::addBoxEventHandlers if geo or by, onSelected()
     - but it sucks that geo is somewhere else, in ui::createUIElements
       - in general it sucks that geo is such a princess! can't it also go through addBoxEventHandlers(), like any other box?
+        - no, because it's not in a card and thus it doesn't make sense to treat it in cards.mjs::create()
   - access DOM elements: via getElementById
   - calculation in commonConstraints, because it's already there to handle both boxes (yet for another purpose)
 
