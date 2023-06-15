@@ -53,8 +53,13 @@ For more technical details, please see also the "architecture decision records".
 ## general
 
 - req25: make everything look and behave well on narrow screens (responsive)
+- req30: possibility to read data from excel/csv (OPTIONAL; IF DEMAND ARISES)
+- req40: possibility to do post-computations (calc %) (OPTIONAL; IF DEMAND ARISES)
 - req50: loading indicator (ECL like or from ECL)
 - req75: error display
+- req76: URL routing (e.g. topic=trade&indicator=GD_3&timePeriod=2012)
+- req77: share menu (email, fb, tw, linkedin)
+- req78: global info button
 - req80: comply overall with new style-guide (dropdowns, chart, font, etc.)
 - req90: comply with accessibility rules (tags, keyboard navigation)
 
@@ -73,7 +78,7 @@ For more technical details, please see also the "architecture decision records".
 - req250: the line chart shows a selection of countries and indicators, the dot plot shows all countries
 - req260: time-range slider on the bottom of the charts in expanded view
 - req261: must be individually configurable for each card
-- req270: info link in expanded card
+- req270: info link ("info about this indicator") in expanded cards
 
 ## chart
 
@@ -138,7 +143,3 @@ For more technical details, please see also the "architecture decision records".
 ## export image
 
 - req900: there should be a button that exports currently visible chart to png/jpeg image
-
-## cards
-
-- req1000: info link ("info about this indicator") in cards

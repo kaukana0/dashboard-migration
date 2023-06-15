@@ -3,7 +3,7 @@
 <!--
 https://ec.europa.eu/eurostat
 License: European Union Public Licence (EUPL v.1.1)
-CommitId: 
+CommitId: dadcd40
 Author: robert.gebhardt@ext.ec.europa.eu
 -->
 
@@ -27,13 +27,15 @@ Author: robert.gebhardt@ext.ec.europa.eu
 	<script src="./redist/ecl/ecl-eu.js"></script>
 	<link  href="./redist/ecl/ecl-eu.css" rel="stylesheet"/>
 
-	<link rel="stylesheet" href="css/debug.css">
+	<!--link rel="stylesheet" href="css/debug.css"-->
 
 	<script src="./js/main.mjs" type="module"></script>
 	<script src="./components/chartCard/chartCard.mjs" type="module"></script>
 	<script src="./components/eclLikeMenu/menu.mjs" type="module"></script>
 
 	<script src="./components/select/select.mjs" type="module"></script>
+
+	<script src="./components/eclLikeHeroBanner/heroBanner.mjs" type="module"></script>
 
 	<!--script type="application/json">{"utility": "cck", "url": "https://my.ec.europa.eu/cookie-policy_{lang}"}</script>
 	<script src="./js/analytics.js"></script>
@@ -45,6 +47,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 				height: 100%;
 				width: 100%;
 				margin: 0;
+				font-family: Arial,sans-serif;
 			}
 		</style>
 
@@ -54,30 +57,22 @@ Author: robert.gebhardt@ext.ec.europa.eu
 
 	<div style="height:100%; display: flex; flex-flow: column;">
 
-		<div style="min-height: 20px;">
+		<div style="min-height: 33px;">
 			"official website" declaration
 		</div>
 
-		<div style="min-height: 50px;">
-			Logo
-		</div>
-
-		<div style="min-height: 100px;">
-			Title and Subtitle
-		</div>
+		<ecl-like-hero-banner title="Migration integration dashboard"></ecl-like-hero-banner>
 
 		<div style="min-height: auto;">
 			<ecl-like-menu id="menu"></ecl-like-menu>
 		</div>
 
 		<!-- https://developer.mozilla.org/en-US/docs/Web/CSS/position#values -->
-		<div style="transform: scale(1); background-color: white;">
-			<div id="anchorExpandedCard" style="height: 50px; background-color: white; margin:25px;">
-				<div id="anchorSelectCountryOutsideOfCard"></div>
-				<ecl-like-select-x id="selectCountry" dimension="geo" multiselect="1" favoriteStar="1" style="width:250px;"></ecl-like-select-x>
-			</div>
-			<div id="cards" style="display: flex; flex-wrap: wrap; justify-content: center; background-color: aliceblue;">
-			</div>
+		<div style="transform: scale(1); background-color: white; display:block;">
+			<div id="anchorExpandedCard"></div>
+			<div id="anchorSelectCountryOutsideOfCard"></div>
+			<ecl-like-select-x id="selectCountry" dimension="geo" multiselect="1" favoriteStar="1" style="max-width:450px; margin-left:50px; margin-bottom:20px;"></ecl-like-select-x>
+			<div id="cards" style="display: flex; flex-wrap: wrap; justify-content: center; background-color: aliceblue;"></div>
 		</div>
 
 		<!-- row 4: legal links -->

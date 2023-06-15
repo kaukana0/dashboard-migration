@@ -5,5 +5,6 @@ export const MS = {
   DIM_BIRTH: "c_birth",
   BY_SELECT_ID: "bySelect",
   GEO_SELECT_ID: "geo",
-  GEO_SELECT_DOM_ID: "selectCountry"
+  GEO_SELECT_DOM_ID: "selectCountry",
+  CARD_CONTAINER_DOM_ID: "cards"
 }

@@ -143,8 +143,8 @@ globals:
   ui:
     dropdown:
       geo: *countries
-  byBirthGroupTitle: "By country of birth"
   byCitizenGroupTitle: "By country of citizenship"
+  byBirthGroupTitle: "By country of birth"
 
 
 # these are used as a base for each indicator in the indicators section
@@ -164,12 +164,12 @@ indicatorBase:
               - *15-29
         - bySelect:       # note! in the implementation, bySelect is treated differently than any other dropdown
             elements:
-              - *nativeB
-              - *euB
-              - *nonEuB
               - *nativeC
               - *euC
               - *nonEuC
+              - *nativeB
+              - *euB
+              - *nonEuB
             groups:
               *bySelectGroupTitles
       range:

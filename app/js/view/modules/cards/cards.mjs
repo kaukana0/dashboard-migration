@@ -152,8 +152,12 @@ export function setData(cardId, data) {
 	document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
 }
 
+export function contractAll() {
+	iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => document.getElementById(cardId).contract() )
+}
+
 export function expand(card) {
-	// TODO: contract
+	contractAll()
 	card.expand(document.getElementById("anchorSelectCountryOutsideOfCard"))
 }
 

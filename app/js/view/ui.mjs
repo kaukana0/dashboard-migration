@@ -10,15 +10,15 @@ import * as Url from "../url.mjs"
 import Fetcher from "../model/fetcher.mjs"
 import {getMapFromObject} from "./modules/selects/util.mjs"
 
-const containerId = "cards"
 let countrySelect
+let menuItems
 
 export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
-  const categories = MainMenu.getCategories(cfg)
-  MainMenu.create(onSelectMenu, categories)
+  menuItems = MainMenu.getCategories(cfg)
+  MainMenu.create(onSelectMenu, menuItems)
   countrySelect = GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromObject(cfg.globals.ui.dropdown.geo), onSelectedForAllCards)
-  Cards.create(containerId, cfg, categories, onSelectedForOneCard)  // ∀ indicators
+  Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, menuItems, onSelectedForOneCard)  // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {
     requestAnimationFrame(()=>onSelectedForAllCards())
@@ -30,7 +30,7 @@ export function createUIElements(cfg, triggerInitialRequest) {
 // this actually can only be the country box.
 // (note: greendeal dashboard behaviour: zoom out => reset all selections except country)
 function onSelectedForAllCards() {
-  Cards.iterate(containerId, (cardId) => { 
+  Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => { 
     fetch(cardId)
     updateCardAttributes(cardId)
   })
@@ -63,11 +63,16 @@ function updateCardAttributes(cardId) {
   document.getElementById(cardId).setAttribute("right2", "2023")
 }
 
-function onSelectMenu(id) {
-  const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(id)}]`)
-  if(card) {
+// menuItemId can be anything, menuItem or submenuItem
+function onSelectMenu(menuItemId) {
+  const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(menuItemId)}]`)
+  console.log(";",menuItemId,card)
+  if(card) {  // submenu item
+    // filter for the category it belongs to
+    Cards.filter(MainMenu.getSuperMenuItem(menuItemId, menuItems))
     Cards.expand(card)
-  } else {
-    Cards.filter(id)
+  } else {  // menu item
+    Cards.contractAll()
+    Cards.filter(menuItemId)
   }
 }

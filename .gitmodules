@@ -22,3 +22,6 @@
 [submodule "app/components/eclLikeMenu"]
 	path = app/components/eclLikeMenu
 	url = https://github.com/kaukana0/eclLikeMenu.git
+[submodule "app/components/eclLikeHeroBanner"]
+	path = app/components/eclLikeHeroBanner
+	url = https://github.com/kaukana0/eclLikeHeroBanner.git
