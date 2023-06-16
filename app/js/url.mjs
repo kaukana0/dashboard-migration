@@ -3,6 +3,7 @@ creating an URL and getting infos from an URL
 */
 
 import { DEFINITIONS } from "./view/modules/selects/bySelectConstraints.mjs"
+import {MS} from "./view/modules/selects/magicStrings.mjs"
 
 const delim = "&"
 
@@ -52,7 +53,7 @@ export function getUrlFrag(obj) {
 export function getTime(url) { return getValues(url, "time") }
 
 // returns list of ["EU","AT",...]
-export function getGeo(url) { return getValues(url, "geo") }
+export function getGeo(url) { return getValues(url, MS.GEO_SELECT_ID) }
 
 function getValues(url, param) {
   return url.match( new RegExp(param+"=([^&]+)", "g") ).map(e=>e.replace(param+"=",""))

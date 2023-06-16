@@ -39,7 +39,7 @@ export function create(containerId, cfg, _categories, selectedCallback) {
 
 		if(!merged.ignore) {
 
-			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi) )
+			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
 
 			requestAnimationFrame( () => {
 				const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, merged.datasets)
@@ -60,18 +60,21 @@ export function create(containerId, cfg, _categories, selectedCallback) {
 }
 
 export function getIdFromName(name) {
-	return "chartCard-"+name.replaceAll(" ", "-")		// or a hash
+	return MS.CARD_DOM_ID_PREFIX + name.replaceAll(" ", "-")		// or a hash
 }
 
 function addCardEventHandlers(id) {
 
 	document.getElementById(id).addEventListener("expanding", () => {
-		const el = document.getElementById("anchorSlotContentOfCard"+id)
+		const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
 
-		CommonConstraints.setBySelect(el.nextSibling)
+		// no need to do this, because defaults are set while filling the box!
+		//setDefaultSelections(anchorEl.parentNode)
 
-		// move it from parent container into zoomed card
-		el.after(document.getElementById(MS.GEO_SELECT_DOM_ID))
+		CommonConstraints.setBySelect(anchorEl.nextSibling)
+
+		// move geo select (countries) from parent container into zoomed card
+		anchorEl.after(document.getElementById(MS.GEO_SELECT_DOM_ID))
 		document.body.style.overflowY="hidden"
 		window.scrollTo(0, 0);
 	})
@@ -114,7 +117,7 @@ function addBoxEventHandlers(id, boxes, selectedCallback) {
 
 function insertBoxes(id, boxes) {
 	for(const box of boxes) {
-		const el = document.getElementById("anchorSlotContentOfCard"+id)
+		const el = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
 		el.after(box.docFrag)
 	}
 }
@@ -122,17 +125,13 @@ function insertBoxes(id, boxes) {
 export function getCurrentSelections(cardId) {
 	let retVal = [{cardId: cardId, selections: new Map()}, ""]
 
-	annoying( document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ ecl-like-select`) )
-	annoying( document.querySelectorAll(`#anchorSlotContentOfCard${cardId} ~ ecl-like-select-x`) )
-
-	function annoying(boxes) {	// no wildcard for CSS elements and nodelist API is missing basic stuff like concat(). 
-		for(const box of boxes) {
-			if(box.hasAttribute("dimension")) {
-				retVal[0].selections.set(box.getAttribute("dimension"), box.selected)
-				// this is the place to retrieve the dataset from the by-select
-				if(box.getAttribute("dimension") === MS.BY_SELECT_ID) {
-					retVal[1] = BySelectConstraint.getDataset(box)
-				}
+	const boxes = document.querySelectorAll(`#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} ~ ecl-like-select-x`)
+	for(let box of boxes) {
+		if(box.hasAttribute("dimension")) {
+			retVal[0].selections.set(box.getAttribute("dimension"), box.selected)
+			// this is the place to retrieve the dataset from the by-select
+			if(box.getAttribute("dimension") === MS.BY_SELECT_ID) {
+				retVal[1] = BySelectConstraint.getDataset(box)
 			}
 		}
 	}
@@ -154,6 +153,13 @@ export function setData(cardId, data) {
 
 export function contractAll() {
 	iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => document.getElementById(cardId).contract() )
+}
+
+function setDefaultSelections(node) {
+	const elements = node.querySelectorAll("ecl-like-select-x")
+	for (var i = 0; i < elements.length; i++) {
+		elements[i].selectDefaults()
+	}
 }
 
 export function expand(card) {

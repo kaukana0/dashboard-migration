@@ -15,12 +15,15 @@ codeList:
   nativeC: &nativeC
     label: "Nationals"
     code: CNAT    #NAT
+    selected: true
   euC: &euC
     label: "Citizens of another EU country"
     code: CEU     #EU27_2020_FOR
+    selected: true
   nonEuC: &nonEuC
     label: "Citizens of a non-EU country"
     code: CNEU    #NEU27_2020_FOR
+    selected: true
 
   bySelectGroupTitles: &bySelectGroupTitles
     CNAT: By country of citizenship

@@ -49,7 +49,7 @@ function fetch(cardId) {
   // from the card's widgets
   const [boxes, dataset] = Cards.getCurrentSelections(cardId)
   // from "global" country select
-  boxes.selections.set("geo", countrySelect.selected)
+  boxes.selections.set(MS.GEO_SELECT_ID, countrySelect.selected)
   // non-ui url fragment
   Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
   Url.Affix.post += "time=2019"  // TODO: take from UI element
