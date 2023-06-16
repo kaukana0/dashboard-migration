@@ -19,6 +19,7 @@ Expand/Collapse logic:
 
 import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
 import * as Selects from "../selects/selectBoxes.mjs"
+import * as GeoSelect from "../selects/geoSelect.mjs"
 import * as BySelectConstraint from "../selects/bySelectConstraints.mjs"
 import * as CommonConstraints from "../selects/commonConstraints.mjs"
 import {MS} from "../selects/magicStrings.mjs"
@@ -68,9 +69,6 @@ function addCardEventHandlers(id) {
 	document.getElementById(id).addEventListener("expanding", () => {
 		const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
 
-		// no need to do this, because defaults are set while filling the box!
-		//setDefaultSelections(anchorEl.parentNode)
-
 		CommonConstraints.setBySelect(anchorEl.nextSibling)
 
 		// move geo select (countries) from parent container into zoomed card
@@ -80,10 +78,18 @@ function addCardEventHandlers(id) {
 	})
 
 	document.getElementById(id).addEventListener("contracting", () => {
-		CommonConstraints.setBySelect(null)
 		// move it out of the card into parent container
 		document.getElementById("anchorSelectCountryOutsideOfCard").after(document.getElementById(MS.GEO_SELECT_DOM_ID))
 		document.body.style.overflowY="scroll"
+
+		// do this after moving geo out, because it's default selection is handeled differently (favStar)
+		const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
+		setDefaultSelections(anchorEl.parentNode)
+
+		CommonConstraints.setBySelect(null)
+
+		GeoSelect.selectFav()
+
 		// todo: scroll back to previous pos
 	})
 

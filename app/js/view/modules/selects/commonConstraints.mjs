@@ -1,4 +1,6 @@
 /*
+inter-box constraints for geo-select and by-Select
+
 in line display:
   by-select logic: when click any birth, citizenships get deselected and vice versa
   constraint logic (spanning 2 selectBoxes):
@@ -29,13 +31,19 @@ export function setBySelect(el) {bySelect=el}
 export function setGeoSelect(el) {geoSelect=el}
 
 export function geoSelectionAllowed() {
+  if(!bySelect || !geoSelect) {return true}
   const numberOfGeoSelections = geoSelect.selected.size+1
   const numberOfBySelections = bySelect.selected.size
   return numberOfGeoSelections * numberOfBySelections <= 6
 }
 
 export function bySelectionAllowed(numberOfSelections) {
+  if(!bySelect || !geoSelect) {return true}
   const numberOfGeoSelections = geoSelect.selected.size
   const numberOfBySelections = numberOfSelections===1 ? bySelect.selected.size+1 : numberOfSelections
   return numberOfGeoSelections * numberOfBySelections <= 6
 }
+
+export function getNumberOfSelectableForBySelect() {return 6}
+
+export function getNumberOfSelectableForGeoSelect() {return 6}

@@ -49,7 +49,7 @@ function fetch(cardId) {
   // from the card's widgets
   const [boxes, dataset] = Cards.getCurrentSelections(cardId)
   // from "global" country select
-  boxes.selections.set(MS.GEO_SELECT_ID, countrySelect.selected)
+  boxes.selections.set(MS.GEO_SELECT_ID, GeoSelect.getSelected())
   // non-ui url fragment
   Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
   Url.Affix.post += "time=2019"  // TODO: take from UI element
@@ -59,14 +59,13 @@ function fetch(cardId) {
 
 function updateCardAttributes(cardId) {
   document.getElementById(cardId).setAttribute("subtitle", "Number")
-  document.getElementById(cardId).setAttribute("right1", Array.from(countrySelect.selected.keys()).join(" ") )
+  document.getElementById(cardId).setAttribute("right1", Array.from(GeoSelect.getSelected().keys()).join(" ") )
   document.getElementById(cardId).setAttribute("right2", "2023")
 }
 
 // menuItemId can be anything, menuItem or submenuItem
 function onSelectMenu(menuItemId) {
   const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(menuItemId)}]`)
-  console.log(";",menuItemId,card)
   if(card) {  // submenu item
     // filter for the category it belongs to
     Cards.filter(MainMenu.getSuperMenuItem(menuItemId, menuItems))

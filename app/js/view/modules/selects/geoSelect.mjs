@@ -5,15 +5,36 @@
 */
 import * as CommonConstraints from "./commonConstraints.mjs"
 
-export function setup(id, cfg, callback) {
-  const box = document.getElementById(id)
+let id = ""
 
-  CommonConstraints.setGeoSelect(box)
+export function setup(_id, cfg, callback) {
+  id = _id
 
-  box.onSelect = CommonConstraints.geoSelectionAllowed
-  box.onSelected = callback
-  box.data = [cfg, new Map()]
-  box.selected = ["EU"]
+  const el = document.getElementById(_id)
 
-  return box
+  CommonConstraints.setGeoSelect(el)
+
+  el.onSelect = CommonConstraints.geoSelectionAllowed
+  el.onSelected = callback
+  el.data = [cfg, new Map()]    // TODO: groups
+  //el.selected = ["EU"]
+
+  return el
+}
+
+export function moveToFrontpage() {
+
+}
+
+export function moveIntoCard() {
+  
+}
+
+export function selectFav() {
+  const el = document.getElementById(id)
+  el.selected = [el.favoriteStar]
+}
+
+export function getSelected() {
+  return document.getElementById(id).selected
 }
