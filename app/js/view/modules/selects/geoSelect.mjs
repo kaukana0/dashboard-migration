@@ -21,6 +21,12 @@ export function setup(_id, cfg, callback) {
   el.data = [cfg, new Map()]    // TODO: groups
   //el.selected = ["EU"]
 
+  // this is tricky :-/
+  // it's multiselect in the card, single select (w/ multi optics) in the overview.
+  // initially, it's in the overview, so take this away here.
+  // but before this, it has had to be created and filled while being declared "multiselect".
+  el.removeAttribute("multiselect")
+
   return el
 }
 
