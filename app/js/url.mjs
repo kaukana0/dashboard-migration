@@ -56,7 +56,13 @@ export function getTime(url) { return getValues(url, "time") }
 export function getGeo(url) { return getValues(url, MS.GEO_SELECT_ID) }
 
 function getValues(url, param) {
-  return url.match( new RegExp(param+"=([^&]+)", "g") ).map(e=>e.replace(param+"=",""))
+  const match = url.match( new RegExp(param+"=([^&]+)", "g") )
+  if(match) {
+    return match.map(e=>e.replace(param+"=",""))
+  } else {
+    console.error("url: no values for:", param)
+    return []
+  }
 }
 
 export function getBySelectFrag(v) {

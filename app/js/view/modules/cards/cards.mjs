@@ -68,27 +68,25 @@ function addCardEventHandlers(id) {
 
 	document.getElementById(id).addEventListener("expanding", () => {
 		const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
-
 		CommonConstraints.setBySelect(anchorEl.nextSibling)
 
-		// move geo select (countries) from parent container into zoomed card
-		anchorEl.after(document.getElementById(MS.GEO_SELECT_DOM_ID))
+		GeoSelect.moveIntoCard(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
 		document.body.style.overflowY="hidden"
 		window.scrollTo(0, 0);
 	})
 
 	document.getElementById(id).addEventListener("contracting", () => {
-		// move it out of the card into parent container
-		document.getElementById("anchorSelectCountryOutsideOfCard").after(document.getElementById(MS.GEO_SELECT_DOM_ID))
+		GeoSelect.moveToMainArea()
 		document.body.style.overflowY="scroll"
 
-		// do this after moving geo out, because it's default selection is handeled differently (favStar)
+		// do this after moving geo-select out, because then it's not affected by
+		// setDefaultSelections call.
 		const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
 		setDefaultSelections(anchorEl.parentNode)
-
-		CommonConstraints.setBySelect(null)
-
+		// geo-select's default selection is handeled differently (favStar).
 		GeoSelect.selectFav()
+
+		CommonConstraints.setBySelect(null)			// effectively disable those constraints
 
 		// todo: scroll back to previous pos
 	})
@@ -155,6 +153,7 @@ export function iterate(containerId, callback) {
 export function setData(cardId, data) {
 	document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, data.timeSeries.labels)
 	document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
+	document.getElementById(cardId).stopIndicateLoading()
 }
 
 export function contractAll() {

@@ -25,7 +25,7 @@ export function createDropdownBoxes(cfg, datasets) {
     // something "special" here - add additional info to DOM element
     if(boxName===MS.BY_SELECT_ID) {
       if(datasets) {
-        attribs.set("multiselect", "1")
+        attribs.set("multiselect", "true")
         attribs.set(MS.DS_ID_CITIZEN, datasets["citizen"]["id"])
         attribs.set(MS.DS_ID_BIRTH, datasets["birth"]["id"])
       } else {

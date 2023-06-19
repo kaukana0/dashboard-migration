@@ -5,7 +5,7 @@ The task is to create a website for Eurostat B.4, which presents an interactive 
 In ESTAT B.4 terminology, such an overview is called a "dashboard".
 
 The data comes from a REST API from ESTAT.
-It's mainly time-series OLAP data with ~6 dimensions about so called "indicators".
+It's mainly time-series OLAP data with ~6 dimensions about several indicators.
 
 The REST endpoint is the only backend needed - the dashboard itself is purely front-end.
 
@@ -16,7 +16,7 @@ In essence, regarding the look and feel, this dashboard is supposed to be somewh
 https://ec.europa.eu/eurostat/cache/dashboard/globalisation
 
 The main differences lie in:
-- the look-and-feel: it should adhere to the new stylguide (2022/2023)
+- more dimensions to choose from (and therefore significantly more "combinations"; about 3000)
 - the logic of a certain dropdown-selectBox: it combines two dimensions "c_birth" and "citizen" and allows only for certain combination of selections
 - the logic of the max number of lines shown in the line chart (reagrding both, country select and c_birth/citizen select) - see also req750 and req350
 - the country's select box's "favourite star" functionality behaves differently (req580)
