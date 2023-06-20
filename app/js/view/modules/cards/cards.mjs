@@ -19,7 +19,6 @@ Expand/Collapse logic:
 
 import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
 import * as Selects from "../selects/selectBoxes.mjs"
-import * as GeoSelect from "../selects/geoSelect.mjs"
 import * as BySelectConstraint from "../selects/bySelectConstraints.mjs"
 import * as CommonConstraints from "../selects/commonConstraints.mjs"
 import {MS} from "../selects/magicStrings.mjs"
@@ -28,7 +27,7 @@ import * as Util from "../../../../components/util/util.mjs"
 
 let categories
 
-export function create(containerId, cfg, _categories, selectedCallback) {
+export function create(containerId, cfg, _categories, selectedCallback, expandCallback, contractCallback) {
 	let retVal = []
 
 	categories = _categories
@@ -46,7 +45,8 @@ export function create(containerId, cfg, _categories, selectedCallback) {
 				const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, merged.datasets)
 				addBoxEventHandlers(id, boxes, selectedCallback)
 				insertBoxes(id, boxes)
-				addCardEventHandlers(id, boxes)
+				document.getElementById(id).addEventListener("expanding", () => { expandCallback(id) })
+				document.getElementById(id).addEventListener("contracting", () => { contractCallback(id) })
 				document.getElementById(id).setAttribute("subtitle", "")
 				document.getElementById(id).setAttribute("right1", "EU")
 				document.getElementById(id).setAttribute("right2", "2022")
@@ -62,35 +62,6 @@ export function create(containerId, cfg, _categories, selectedCallback) {
 
 export function getIdFromName(name) {
 	return MS.CARD_DOM_ID_PREFIX + name.replaceAll(" ", "-")		// or a hash
-}
-
-function addCardEventHandlers(id) {
-
-	document.getElementById(id).addEventListener("expanding", () => {
-		const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
-		CommonConstraints.setBySelect(anchorEl.nextSibling)
-
-		GeoSelect.moveIntoCard(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
-		document.body.style.overflowY="hidden"
-		window.scrollTo(0, 0);
-	})
-
-	document.getElementById(id).addEventListener("contracting", () => {
-		GeoSelect.moveToMainArea()
-		document.body.style.overflowY="scroll"
-
-		// do this after moving geo-select out, because then it's not affected by
-		// setDefaultSelections call.
-		const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
-		setDefaultSelections(anchorEl.parentNode)
-		// geo-select's default selection is handeled differently (favStar).
-		GeoSelect.selectFav()
-
-		CommonConstraints.setBySelect(null)			// effectively disable those constraints
-
-		// todo: scroll back to previous pos
-	})
-
 }
 
 // note: by-select's counterpart - the geo box - is set and handeled somewhere else!
@@ -151,18 +122,20 @@ export function iterate(containerId, callback) {
 }
 
 export function setData(cardId, data) {
-	document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, data.timeSeries.labels)
-	document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
-	document.getElementById(cardId).stopIndicateLoading()
+	setTimeout(()=> {
+		document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, data.timeSeries.labels)
+		document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
+		document.getElementById(cardId).stopIndicateLoading()
+	} , 150)	// TODO: use billboardjs' onresize() !
 }
 
 export function contractAll() {
 	iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => document.getElementById(cardId).contract() )
 }
 
-function setDefaultSelections(node) {
+export function setDefaultSelections(node) {
 	const elements = node.querySelectorAll("ecl-like-select-x")
-	for (var i = 0; i < elements.length; i++) {
+	for (let i = 0; i < elements.length; i++) {
 		elements[i].selectDefaults()
 	}
 }

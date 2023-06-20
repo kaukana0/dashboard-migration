@@ -9,6 +9,8 @@ import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../url.mjs"
 import Fetcher from "../model/fetcher.mjs"
 import {getMapFromObject} from "./modules/selects/util.mjs"
+import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
+
 
 let countrySelect
 let menuItems
@@ -18,7 +20,7 @@ export function createUIElements(cfg, triggerInitialRequest) {
   menuItems = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, menuItems)
   countrySelect = GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromObject(cfg.globals.ui.dropdown.geo), onSelectedForAllCards)
-  Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, menuItems, onSelectedForOneCard)  // ∀ indicators
+  Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, menuItems, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {
     requestAnimationFrame(()=>onSelectedForAllCards())
@@ -75,4 +77,31 @@ function onSelectMenu(menuItemId) {
     Cards.contractAll()
     Cards.filter(menuItemId)
   }
+}
+
+function onCardExpand(id) {
+  const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
+  CommonConstraints.setBySelect(anchorEl.nextSibling)
+
+  GeoSelect.moveIntoCard(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
+  document.body.style.overflowY="hidden"
+  window.scrollTo(0, 0);
+}
+
+function onCardContract(id) {
+  GeoSelect.moveToMainArea()
+  document.body.style.overflowY="scroll"
+
+  // do this after moving geo-select out, because then it's not affected by
+  // setDefaultSelections call.
+  const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
+  Cards.setDefaultSelections(anchorEl.parentNode)
+  // geo-select's default selection is handeled differently (favStar).
+  GeoSelect.selectFav()
+
+  CommonConstraints.setBySelect(null)			// effectively disable those constraints
+
+  onSelectedForAllCards()
+
+  // todo: scroll back to previous pos
 }

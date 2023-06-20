@@ -13,8 +13,8 @@ export const MS = {
   GEO_SELECT_DOM_ID: "selectCountry",
 
   CARD_CONTAINER_DOM_ID: "cards",
-  CARD_SLOT_ANCHOR_DOM_ID: "anchorSlotContentOfCard",   // it's the row of selectboxes in a card
+  CARD_SLOT_ANCHOR_DOM_ID: "anchorSlotContentOf-",   // it's the row of selectboxes in a card
   MAIN_AREA_ANCHOR_DOM_ID: "anchorSelectCountryOutsideOfCard",  // above the card-area
   DEFAULT_SELECTED_ATTR: "defaultSelected",
-  CARD_DOM_ID_PREFIX: "chartCard-"
+  CARD_DOM_ID_PREFIX: "ChartCard-"
 }

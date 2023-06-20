@@ -23,8 +23,8 @@ export function setup(_id, cfg, callback) {
 
   // this is tricky :-/
   // it's multiselect in the card, single select (w/ multi optics) in the overview.
-  // initially, it's in the overview, so take this away here.
-  // but before this, it has had to be created and filled while being declared "multiselect".
+  // initially, it should be single in the overview, so take the attrib away here.
+  // but before taking it away, it has had to be created and filled while being declared "multiselect" !
   el.removeAttribute("multiselect")
 
   return el
