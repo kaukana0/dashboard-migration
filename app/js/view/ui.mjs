@@ -19,7 +19,7 @@ export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
   menuItems = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, menuItems)
-  countrySelect = GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromObject(cfg.globals.ui.dropdown.geo), onSelectedForAllCards)
+  countrySelect = GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromObject(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onSelectedForAllCards)
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, menuItems, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {
@@ -61,7 +61,6 @@ function fetch(cardId) {
 }
 
 function updateCardAttributes(cardId) {
-  document.getElementById(cardId).setAttribute("subtitle", "Number")
   document.getElementById(cardId).setAttribute("right1", Array.from(GeoSelect.getSelected().keys()).join(" ") )
   document.getElementById(cardId).setAttribute("right2", "2023")
 }

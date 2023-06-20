@@ -47,7 +47,9 @@ export function create(containerId, cfg, _categories, selectedCallback, expandCa
 				insertBoxes(id, boxes)
 				document.getElementById(id).addEventListener("expanding", () => { expandCallback(id) })
 				document.getElementById(id).addEventListener("contracting", () => { contractCallback(id) })
-				document.getElementById(id).setAttribute("subtitle", "")
+
+				document.getElementById(id).setAttribute("subtitle", merged.dimensions.nonUi.unit[0].label)
+				document.getElementById(id).setAttribute("yLabel", merged.dimensions.nonUi.unit[0].label)
 				document.getElementById(id).setAttribute("right1", "EU")
 				document.getElementById(id).setAttribute("right2", "2022")
 			})

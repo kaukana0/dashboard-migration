@@ -9,7 +9,7 @@ import {MS} from "./magicStrings.mjs"
 
 let id = ""
 
-export function setup(_id, cfg, callback) {
+export function setup(_id, cfg, _groups, callback) {
   id = _id
 
   const el = document.getElementById(_id)
@@ -18,8 +18,11 @@ export function setup(_id, cfg, callback) {
 
   el.onSelect = CommonConstraints.geoSelectionAllowed
   el.onSelected = callback
-  el.data = [cfg, new Map()]    // TODO: groups
-  //el.selected = ["EU"]
+  const groups = new Map()
+  _groups.forEach((item) => {
+    groups.set(item, {})
+  })
+  el.data = [cfg, groups]
 
   // this is tricky :-/
   // it's multiselect in the card, single select (w/ multi optics) in the overview.
