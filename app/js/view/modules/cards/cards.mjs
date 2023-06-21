@@ -70,7 +70,7 @@ export function getIdFromName(name) {
 function addBoxEventHandlers(id, boxes, selectedCallback) {
 	for(const box of boxes) {
 
-		const domEl = box.docFrag.firstChild
+		const domEl = box.docFrag.firstChild.childNodes[1]
 
 		domEl.onSelect = function(k,v) {
 			if(box.dimId === MS.BY_SELECT_ID) {
@@ -102,7 +102,9 @@ function insertBoxes(id, boxes) {
 export function getCurrentSelections(cardId) {
 	let retVal = [{cardId: cardId, selections: new Map()}, ""]
 
-	const boxes = document.querySelectorAll(`#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} ~ ecl-like-select-x`)
+	const selector = `#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} ~ div ecl-like-select-x`
+	const boxes = document.querySelectorAll(selector)
+	if(boxes.length===0) { console.warn("cards: no boxes for selector", selector) }
 	for(let box of boxes) {
 		if(box.hasAttribute("dimension")) {
 			retVal[0].selections.set(box.getAttribute("dimension"), box.selected)
@@ -128,7 +130,7 @@ export function setData(cardId, data) {
 		document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, data.timeSeries.labels)
 		document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
 		document.getElementById(cardId).stopIndicateLoading()
-	} , 150)	// TODO: use billboardjs' onresize() !
+	} , 250)	// TODO: use billboardjs' onresize() !
 }
 
 export function contractAll() {

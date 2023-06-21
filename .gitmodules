@@ -25,3 +25,6 @@
 [submodule "app/components/eclLikeHeroBanner"]
 	path = app/components/eclLikeHeroBanner
 	url = https://github.com/kaukana0/eclLikeHeroBanner.git
+[submodule "app/components/buttonX"]
+	path = app/components/buttonX
+	url = https://github.com/kaukana0/buttonX.git

@@ -7,10 +7,11 @@ export const MS = {
   DIM_CITIZEN: "citizen",
   DIM_BIRTH: "c_birth",
 
-  BY_SELECT_ID: "bySelect",
+  BY_SELECT_ID: "Country of citizenship/birth",
 
   GEO_SELECT_ID: "geo",
   GEO_SELECT_DOM_ID: "selectCountry",
+  GEO_SELECT_CONTAINER_DOM_ID: "selectCountryContainer",
 
   CARD_CONTAINER_DOM_ID: "cards",
   CARD_SLOT_ANCHOR_DOM_ID: "anchorSlotContentOf-",   // it's the row of selectboxes in a card

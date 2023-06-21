@@ -34,12 +34,12 @@ export function setup(_id, cfg, _groups, callback) {
 }
 
 export function moveToMainArea() {
-  document.getElementById(MS.MAIN_AREA_ANCHOR_DOM_ID).after(document.getElementById(MS.GEO_SELECT_DOM_ID))
+  document.getElementById(MS.MAIN_AREA_ANCHOR_DOM_ID).after(document.getElementById(MS.GEO_SELECT_CONTAINER_DOM_ID))
   document.getElementById(MS.GEO_SELECT_DOM_ID).setAttribute("multiselect", "false")
 }
 
 export function moveIntoCard(id) {
-  document.getElementById(id).after(document.getElementById(MS.GEO_SELECT_DOM_ID))
+  document.getElementById(id).after(document.getElementById(MS.GEO_SELECT_CONTAINER_DOM_ID))
   document.getElementById(MS.GEO_SELECT_DOM_ID).setAttribute("multiselect", "true")
 }
 

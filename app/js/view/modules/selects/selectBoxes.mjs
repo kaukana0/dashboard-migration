@@ -20,12 +20,13 @@ export function createDropdownBoxes(cfg, datasets) {
 
     attribs.set("dimension", boxName)
     attribs.set("id", Math.floor(Math.random() * 10000))  // doesnt matter which, this is only needed to make it dismissable
-    attribs.set("style", "width:250px;")
+    attribs.set("style", "width:200px; margin-left:10px; margin-right:10px;")
 
     // something "special" here - add additional info to DOM element
     if(boxName===MS.BY_SELECT_ID) {
       if(datasets) {
         attribs.set("multiselect", "true")
+        attribs.set("style", "width:300px;")
         attribs.set(MS.DS_ID_CITIZEN, datasets["citizen"]["id"])
         attribs.set(MS.DS_ID_BIRTH, datasets["birth"]["id"])
       } else {
@@ -54,17 +55,26 @@ v:
   ]
 }
 see also cards.mjs::insertAndHookUpBoxes()
+note: the structure is assumed in multiple locations: i.e. addBoxEventHandlers, onCardExpand  TODO: find elegant solution for this
 */
 function getDocFrag(items, attribs, isMultiselect=false, groups={}, defaultSelections=[]) {
 	const fragment = new DocumentFragment()
+
 	const dropdownBox = document.createElement('ecl-like-select-x')
-
   attribs.forEach( (v,k) => dropdownBox.setAttribute(k,v) )
-
   dropdownBox.defaultSelections = defaultSelections
   dropdownBox.data = [items, getGroupsFromObject(groups)]
 
-  fragment.appendChild(dropdownBox)
+  const div = document.createElement('div')
+
+  const labelLeft = document.createElement('a')
+  labelLeft.innerHTML = attribs.get("dimension")
+  labelLeft.classList.add("boxLabelLeft")
+
+  div.appendChild(labelLeft)
+  div.appendChild(dropdownBox)
+
+  fragment.appendChild(div)
 	return fragment
 }
 

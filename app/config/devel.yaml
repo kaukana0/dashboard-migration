@@ -148,17 +148,19 @@ indicatorBase:
   dimensions:
     ui:               # UI elements reflect user selection for these
       dropdown:
-        - sex:        # in the REST request, this becomes the dimension
+        - Sex:        # in the REST request, this becomes the dimension
             elements:
               - *total    # and code becomes the code; label becomes dropdownbox item
               - *women
               - *men
-        - age:
+        - Age:
             elements:
               - *15-74
               - *20-64
               - *15-29
-        - bySelect:       # note! in the implementation, bySelect is treated differently than any other dropdown
+          # note 1: in the implementation, bySelect is treated differently than any other dropdown
+          # note 2: must correspond w/ magicStrings.mjs
+        - Country of citizenship/birth:
             elements:
               - *nativeC
               - *euC
@@ -198,7 +200,7 @@ indicators:
     dimensions:
       ui:
         dropdown:
-          - age:
+          - Age:
               elements:
                 - *15-74
                 - label: "0 to 15 years"
@@ -226,7 +228,7 @@ indicators:
     dimensions:
       ui:
         dropdown:
-          - sex:
+          - Sex:
               elements:
                 - *total
                 - label: "two"
@@ -246,7 +248,7 @@ indicators:
     dimensions:
       ui:
         dropdown:
-          - age:
+          - Age:
               elements:
                 - *20-64
 
@@ -264,9 +266,9 @@ indicators:
     dimensions:
       ui:
         dropdown:
-          - age:
+          - Age:
               elements:
                 - *18-54
-          - tenure:
+          - Tenure:
               elements:
                 - *tenure1

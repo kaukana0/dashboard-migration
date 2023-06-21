@@ -80,7 +80,7 @@ function onSelectMenu(menuItemId) {
 
 function onCardExpand(id) {
   const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
-  CommonConstraints.setBySelect(anchorEl.nextSibling)
+  CommonConstraints.setBySelect(anchorEl.nextSibling.childNodes[1])
 
   GeoSelect.moveIntoCard(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
   document.body.style.overflowY="hidden"

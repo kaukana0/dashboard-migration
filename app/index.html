@@ -49,6 +49,10 @@ Author: robert.gebhardt@ext.ec.europa.eu
 				margin: 0;
 				font-family: Arial,sans-serif;
 			}
+
+			.boxLabelLeft {
+				font-weight: 800;
+			}
 		</style>
 
 </head>
@@ -69,7 +73,10 @@ Author: robert.gebhardt@ext.ec.europa.eu
 		<div style="transform: scale(1); display:block;">
 			<div id="anchorExpandedCard"></div>
 			<div id="anchorSelectCountryOutsideOfCard"></div>
-			<ecl-like-select-x id="selectCountry" dimension="geo" multiselect="1" favoriteStar="1" style="width:250px; margin-left:50px; margin-bottom:20px;"></ecl-like-select-x>
+			<div id="selectCountryContainer">
+				<a class="boxLabelLeft">Country</a>
+				<ecl-like-select-x id="selectCountry" dimension="geo" multiselect="1" favoriteStar="1" style="width:250px; margin-right:10px; margin-bottom:20px;"></ecl-like-select-x>
+			</div>
 			<div id="cards" style="display: flex; flex-wrap: wrap; justify-content: center;"></div>
 		</div>
 
