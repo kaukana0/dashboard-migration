@@ -20,7 +20,7 @@ export function createDropdownBoxes(cfg, datasets) {
 
     attribs.set("dimension", boxName)
     attribs.set("id", Math.floor(Math.random() * 10000))  // doesnt matter which, this is only needed to make it dismissable
-    attribs.set("style", "width:200px; margin-left:10px; margin-right:10px;")
+    attribs.set("style", "width:200px;")
 
     // something "special" here - add additional info to DOM element
     if(boxName===MS.BY_SELECT_ID) {
@@ -64,6 +64,8 @@ function getDocFrag(items, attribs, isMultiselect=false, groups={}, defaultSelec
   attribs.forEach( (v,k) => dropdownBox.setAttribute(k,v) )
   dropdownBox.defaultSelections = defaultSelections
   dropdownBox.data = [items, getGroupsFromObject(groups)]
+  dropdownBox.style.whiteSpace = "nowrap"
+  dropdownBox.style.textOverflow = "ellipsis"
 
   const div = document.createElement('div')
 

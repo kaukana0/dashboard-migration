@@ -51,8 +51,12 @@ Author: robert.gebhardt@ext.ec.europa.eu
 			}
 
 			.boxLabelLeft {
-				font-weight: 800;
+				display:block;
+				padding-left: 5px;
+				margin-bottom: 5px;
+				font-weight: 600;
 			}
+
 		</style>
 
 </head>
@@ -71,12 +75,16 @@ Author: robert.gebhardt@ext.ec.europa.eu
 
 		<!-- https://developer.mozilla.org/en-US/docs/Web/CSS/position#values -->
 		<div style="transform: scale(1); display:block;">
+
 			<div id="anchorExpandedCard"></div>
-			<div id="anchorSelectCountryOutsideOfCard"></div>
-			<div id="selectCountryContainer">
-				<a class="boxLabelLeft">Country</a>
-				<ecl-like-select-x id="selectCountry" dimension="geo" multiselect="1" favoriteStar="1" style="width:250px; margin-right:10px; margin-bottom:20px;"></ecl-like-select-x>
+			<div style="margin-left: 40px; margin-top:10px; height:80px;">
+				<div id="anchorSelectCountryOutsideOfCard"></div>
+				<div id="selectCountryContainer" style="width:250px;">
+					<a class="boxLabelLeft">Country</a>
+					<ecl-like-select-x id="selectCountry" dimension="geo" multiselect="1" favoriteStar="1" style="width:250px; margin-right:10px; margin-bottom:20px;"></ecl-like-select-x>
+				</div>
 			</div>
+
 			<div id="cards" style="display: flex; flex-wrap: wrap; justify-content: center;"></div>
 		</div>
 

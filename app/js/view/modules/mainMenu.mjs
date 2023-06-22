@@ -10,10 +10,12 @@ export function getCategories(cfg) {
 	retVal.set("Overview",[])
 	for(const i in cfg.indicators) {
 		const merged = {...cfg.defaults, ...cfg.indicators[i]}
-		if(!retVal.has(merged.category)) {
-			retVal.set(merged.category,[merged.name])
-		} else {
-			retVal.get(merged.category).push(merged.name)
+		if(!merged.ignore) {
+			if(!retVal.has(merged.category)) {
+				retVal.set(merged.category,[merged.name])
+			} else {
+				retVal.get(merged.category).push(merged.name)
+			}
 		}
 	}
 	return retVal

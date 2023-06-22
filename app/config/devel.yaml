@@ -187,6 +187,7 @@ indicatorBase:
 indicators:
 
   - name: Migrant population share
+    ignore: true
     category: Demography
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migration_and_migrant_population_statistics
@@ -235,6 +236,7 @@ indicators:
                   code: "two"
 
   - name: Share of adults at risk of poverty or social exclusion
+    ignore: true
     category: Housing
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_at_risk_of_poverty_and_social_exclusion
