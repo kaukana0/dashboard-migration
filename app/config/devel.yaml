@@ -38,6 +38,9 @@ codeList:
   total: &total
     label: "Total"
     code: "T"
+  18-24: &18-24
+    label: "18 to 24 years"
+    code: "Y18-24"
   15-74: &15-74
     label: "15 to 74 years"
     code: "Y15-64"
@@ -50,6 +53,15 @@ codeList:
   18-54: &18-54
     label: "18 to 54 years"
     code: "Y18-54"
+  16-44: &16-44
+    label: "16 to 44 years"
+    code: "Y16-44"
+  45-64: &45-64
+    label: "45 to 64 years"
+    code: "Y45-64"
+  65-over: &65-over
+    label: "65 and years or over"
+    code: "Y_GE65"
   freq: &freq
     label: "Time frequency Annual"
     code: "A"
@@ -215,6 +227,8 @@ indicators:
         - label: "in [Thousends] of Something"
           code: "NR"
 
+##########################################################
+
   - name: Employment rate
     category: Employment
     isInOverview: true
@@ -226,18 +240,99 @@ indicators:
       birth:
         id: LFSA_ERGACOB
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/d642741b-30e8-45d3-b160-2abb17d8a2c9?lang=en
+
+  - name: Activity rate
+    category: Employment
+    ignore: true
+
+  - name: Unemployment rate
+    category: Employment
+    ignore: true
+
+  - name: Long-term unemployment
+    category: Employment
+    ignore: true
+
+  - name: Over-qualification rate
+    category: Employment
+    ignore: true
+
+  - name: Share of self-employed in total employment
+    category: Employment
+    ignore: true
+
+  - name: Share of self-employed in total employment
+    category: Employment
+    ignore: true
+
+  - name: Share of employees with contract of limited duration in the total number of employees
+    category: Employment
+    ignore: true
+
+  - name: Labour market slack
+    category: Employment
+    ignore: true
+
+  - name: Newly employed
+    category: Employment
+    ignore: true
+
+##########################################################
+
+  - name: Highest educational attainment
+    category: Education
+    datasets:
+      citizen:
+        id: EDAT_LFS_9911
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/72d853fc-1d1a-4ae0-8ee0-0a6a3320bbfe?lang=en
+      birth:
+        id: EDAT_LFS_9912
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/9695b868-8edc-4f3a-82ff-4dbbf69e27d3?lang=en
+
+  - name: Share of 30-34-year-olds with tertiary educational attainment
+    category: Education
+    ignore: true
+    datasets:
+      citizen:
+        id: EDAT_LFS_9911__custom_4568481
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/1ed97120-e2d0-4500-b93d-84f97f2962ce?lang=en
+      birth:
+        id: EDAT_LFS_9912__custom_4568588
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/b4398174-ba0c-417e-a393-4343e9e50c3d?lang=en
+
+  - name: Share of 18-24-year-olds leaving education and training early
+    category: Education
+    datasets:
+      citizen:
+        id: EDAT_LFSE_01
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/3360a61f-9a96-4241-9477-b0998be03f06?lang=en
+      birth:
+        id: EDAT_LFSE_02
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/605f367f-f9a2-49f8-9144-02d196ceddca?lang=en
     dimensions:
       ui:
         dropdown:
-          - Sex:
+          - Age:
               elements:
-                - *total
-                - label: "two"
-                  code: "two"
+                - *18-24
+
+  - name: Participation rate in lifelong learning
+    category: Education
+    ignore: true
+
+  - name: Young people neither in employment nor in education and training (NEET rate)
+    category: Education
+    ignore: true
+
+  - name: Share of people with skills in the main host country language before migrating
+    category: Education
+    ignore: true
+
+##########################################################
 
   - name: Share of adults at risk of poverty or social exclusion
     ignore: true
-    category: Housing
+    category: Social inclusion
     isInOverview: true
     articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_at_risk_of_poverty_and_social_exclusion
     datasets:
@@ -253,6 +348,32 @@ indicators:
           - Age:
               elements:
                 - *20-64
+
+  - name: At-risk-of-poverty rate
+    category: Social inclusion
+    ignore: true
+
+  - name: Median net income
+    category: Social inclusion
+    ignore: true
+
+  - name: Child poverty rate (At-risk-of poverty rate for children)
+    category: Social inclusion
+    ignore: true
+
+  - name: Share of adults living in households with very low work intensity
+    category: Social inclusion
+    ignore: true
+
+  - name: Material and social deprivation rate
+    category: Social inclusion
+    ignore: true
+
+  - name: In-work at-risk-of-poverty rate (persistent poverty risk)
+    category: Social inclusion
+    ignore: true
+
+##########################################################
 
   - name: Home ownership rate
     category: Housing
@@ -274,3 +395,67 @@ indicators:
           - Tenure:
               elements:
                 - *tenure1
+
+  - name: Housing cost overburden rate
+    category: Housing
+    ignore: true
+
+  - name: Overcrowding rate
+    category: Housing
+    ignore: true
+
+##########################################################
+
+  - name: Share of people perceiving their health status as good or bad
+    category: Health
+    datasets:
+      citizen:
+        id: HLTH_SILC_24
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/31210a4f-cdeb-4a2a-8422-6e63007b00d2?lang=en
+      birth:
+        id: HLTH_SILC_23
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/81376051-e9b1-413f-bbbf-d64cd00dfd73?lang=en
+    dimensions:
+      ui:
+        dropdown:
+          - lev_perc:
+              text: "Level of perception"
+              elements:
+                - label: Very bad or bad
+                  code: B_VB
+                - label: Fair
+                  code: FAIR
+                - label: Very good and good
+                  code: VG_G
+          - Age:
+              elements:
+              - *16-44
+              - *45-64
+              - *65-over
+
+
+  - name: Share of people with self-reported unmet need for medical care
+    category: Health
+    ignore: true
+
+  - name: Share of people with self-reported unmet needs for dental examination
+    category: Health
+    ignore: true
+
+  - name: She of people having a long-standing illness or health problem
+    category: Health
+    ignore: true
+
+  - name: Self-perceived long-standing limitations in usual activities due to health problem
+    category: Health
+    ignore: true
+
+##########################################################
+
+  - name: Naturalisation rate
+    category: Active citizenship
+    ignore: true
+
+  - name: Share of third country nationals holding long-term residence permits
+    category: Active citizenship
+    ignore: true
