@@ -126,11 +126,9 @@ export function iterate(containerId, callback) {
 }
 
 export function setData(cardId, data) {
-	setTimeout(()=> {
-		document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, data.timeSeries.labels)
-		document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
-		document.getElementById(cardId).stopIndicateLoading()
-	} , 250)	// TODO: use billboardjs' onresize() !
+	document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, data.timeSeries.labels)
+	document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
+	document.getElementById(cardId).stopIndicateLoading()
 }
 
 export function contractAll() {
