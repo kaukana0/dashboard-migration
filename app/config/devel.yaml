@@ -1,33 +1,39 @@
-# yaml schema for migration dashboard v0.3.0
+# yaml schema v0.3.0 - for migration dashboard 
 
 codeList:
 
   nativeB: &nativeB
     label: "Native-born"
-    code: BNAT    #NAT
+    code: c_birthNAT        # this is for the selectbox entry key, which has to be unique
+    originalCode: NAT       # this is in the dataset
   euB: &euB
     label: "Born in another EU country"
-    code: BEU     #EU27_2020_FOR
+    code: c_birthEU_FOR
+    originalCode: EU27_2020_FOR
   nonEuB: &nonEuB
     label: "Born in a non-EU country"
-    code: BNEU    #NEU27_2020_FOR
+    code: c_birthNEU_FOR 
+    originalCode: NEU27_2020_FOR
 
   nativeC: &nativeC
     label: "Nationals"
-    code: CNAT    #NAT
+    code: citizenNAT
+    originalCode: NAT       # it's the same as in nativeB but has to be a unique key in the selectbox, that's why an artificial code (not existing in dataset) is introduced
     selected: true
   euC: &euC
     label: "Citizens of another EU country"
-    code: CEU     #EU27_2020_FOR
+    code: citizenEU_FOR
+    originalCode: EU27_2020_FOR
     selected: true
   nonEuC: &nonEuC
     label: "Citizens of a non-EU country"
-    code: CNEU    #NEU27_2020_FOR
+    code: citizenNEU_FOR
+    originalCode: NEU27_2020_FOR
     selected: true
 
   bySelectGroupTitles: &bySelectGroupTitles
-    CNAT: By country of citizenship
-    BNAT: By country of birth
+    c_birthNEU_FOR: By country of birth
+    citizenNEU_FOR: By country of citizenship
 
   men: &men
     label: "Men"
@@ -174,12 +180,12 @@ indicatorBase:
           # note 2: must correspond w/ magicStrings.mjs
         - Country of citizenship/birth:
             elements:
-              - *nativeC
-              - *euC
               - *nonEuC
-              - *nativeB
-              - *euB
+              - *euC
+              - *nativeC
               - *nonEuB
+              - *euB
+              - *nativeB
             groups:
               *bySelectGroupTitles
       range:

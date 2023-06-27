@@ -1,5 +1,7 @@
 // any DOM id's in here have to match the html (in case there's a corresponding element there)
 
+// TODO: move file or split it up
+
 export const MS = {
   DS_ID_CITIZEN : "dataset-citizen",
   DS_ID_BIRTH :   "dataset-birth",

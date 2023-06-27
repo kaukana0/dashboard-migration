@@ -4,38 +4,28 @@ not regarding inter-box constraints.
 */
 
 import {MS} from "./magicStrings.mjs"
-
-
-const grp_c = new Map()   // TODO: take these from yaml codelist ?
-grp_c.set("CNAT","NAT")
-grp_c.set("CEU","EU27_2020_FOR")
-grp_c.set("CNEU","NEU27_2020_FOR")
-
-const grp_b = new Map()
-grp_b.set("BNAT","NAT")
-grp_b.set("BEU","EU27_2020_FOR")
-grp_b.set("BNEU","NEU27_2020_FOR")
+import * as TM from "../../../model/pipelineProcessors/common/textMappings.mjs"
 
 const code2DsId = new Map()
-code2DsId.set("CNAT", MS.DS_ID_CITIZEN)
-code2DsId.set("CEU",  MS.DS_ID_CITIZEN)
-code2DsId.set("CNEU", MS.DS_ID_CITIZEN)
-code2DsId.set("BNAT", MS.DS_ID_BIRTH)
-code2DsId.set("BEU",  MS.DS_ID_BIRTH)
-code2DsId.set("BNEU", MS.DS_ID_BIRTH)
+code2DsId.set("citizenNAT", MS.DS_ID_CITIZEN)
+code2DsId.set("citizenEU_FOR",  MS.DS_ID_CITIZEN)
+code2DsId.set("citizenNEU_FOR", MS.DS_ID_CITIZEN)
+code2DsId.set("c_birthNAT", MS.DS_ID_BIRTH)
+code2DsId.set("c_birthEU_FOR",  MS.DS_ID_BIRTH)
+code2DsId.set("c_birthNEU_FOR", MS.DS_ID_BIRTH)
 
 const code2Dim = new Map()
-code2Dim.set("CNAT", MS.DIM_CITIZEN)
-code2Dim.set("CEU",  MS.DIM_CITIZEN)
-code2Dim.set("CNEU", MS.DIM_CITIZEN)
-code2Dim.set("BNAT", MS.DIM_BIRTH)
-code2Dim.set("BEU",  MS.DIM_BIRTH)
-code2Dim.set("BNEU", MS.DIM_BIRTH)
+code2Dim.set("citizenNAT", MS.DIM_CITIZEN)
+code2Dim.set("citizenEU_FOR",  MS.DIM_CITIZEN)
+code2Dim.set("citizenNEU_FOR", MS.DIM_CITIZEN)
+code2Dim.set("c_birthNAT", MS.DIM_BIRTH)
+code2Dim.set("c_birthEU_FOR",  MS.DIM_BIRTH)
+code2Dim.set("c_birthNEU_FOR", MS.DIM_BIRTH)
 
 
 export const DEFINITIONS = {
-  GRP_C : grp_c,
-  GRP_B : grp_b,
+  GRP_C : TM.grp_c,
+  GRP_B : TM.grp_b,
   CODE_TO_DSID : code2DsId,
   CODE_TO_DIM : code2Dim
 }
@@ -62,9 +52,9 @@ export function ensureCorrectInterGroupSelection(domElement, k,v) {
 // onSelected (called after onSelect only if it returns true)
 export function tryToSelectWholeGroup(domElement, k,v) {
   if(k=="By country of citizenship") {
-    domElement.selected = Array.from(grp_c.keys())
+    domElement.selected = Array.from(TM.grp_c.keys())
   } else if(k=="By country of birth") {
-    domElement.selected = Array.from(grp_b.keys())
+    domElement.selected = Array.from(TM.grp_b.keys())
   }
 }
 
@@ -81,8 +71,8 @@ export function getDataset(DOMel) {
 }
 
 function getGroupByKey(k) {
-  const ckeys = Array.from(grp_c.keys())
-  const bkeys = Array.from(grp_b.keys())
+  const ckeys = Array.from(TM.grp_c.keys())
+  const bkeys = Array.from(TM.grp_b.keys())
   if(ckeys.includes(k)) {
     return ckeys
   } else if(bkeys.includes(k)) {

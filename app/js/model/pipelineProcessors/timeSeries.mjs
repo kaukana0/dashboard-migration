@@ -1,6 +1,5 @@
 import * as MultiDim from "../../../components/multiDimAccess/multiDimAccess.mjs"
-import * as MA from "./common/metadataAccess.mjs"
-import {get as getKey} from "./common/key.mjs"
+import * as TM from "./common/textMappings.mjs"
 import * as Url from "../../url.mjs"
 
 /*
@@ -19,7 +18,7 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
 
   const valence = MultiDim.calcOrdinalValence(inputDataFromRequest.size)
 
-  const [byDim, byIdx] = MA.getIndexOfByDimension(inputDataFromRequest.id)
+  const [byDim, byIdx] = TM.getIndexOfByDimension(inputDataFromRequest.id)
   const geoDimIdx = inputDataFromRequest.id.findIndex(e=>e==="geo")
   const timeDimIdx = inputDataFromRequest.id.findIndex(e=>e==="time")
 
@@ -38,7 +37,7 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
     for(let geo=0; geo<geoDimMax; geo++) {
       geoLabel = Object.keys(inputDataFromRequest.dimension.geo.category.index)[geo]
       if(!selectedGeo.find(e=>e===geoLabel)) continue   // filter what isn't selected (and therefore in full URL)
-      const ll = [getKey(byLabel,geoLabel)]   // is unique. used by chart as key for tooltip label mapping to text.
+      const ll = [TM.getByLabelShort(byDim, byLabel)+", "+geoLabel]   // is unique. used by chart as key for tooltip label mapping to text.
       for(let time=0; time<timeDimMax; time++) {
         let bla = new Array(inputDataFromRequest.size.length)
         bla.fill(0)

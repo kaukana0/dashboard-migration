@@ -20,12 +20,3 @@ export function getCategories(cfg) {
 	}
 	return retVal
 }
-
-
-export function getSuperMenuItem(itemId, menuItems) {
-	var retVal = "Overview"
-	menuItems.forEach((v,k) => {
-		if(v.includes(itemId)) {retVal=k}
-	})
-	return retVal
-}

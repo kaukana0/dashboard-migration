@@ -66,11 +66,11 @@ function updateCardAttributes(cardId) {
 }
 
 // menuItemId can be anything, menuItem or submenuItem
-function onSelectMenu(menuItemId) {
+function onSelectMenu(menuItemId, parentItemId) {
   const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(menuItemId)}]`)
   if(card) {  // submenu item
     // filter for the category it belongs to
-    Cards.filter(MainMenu.getSuperMenuItem(menuItemId, menuItems))
+    Cards.filter(parentItemId)
     Cards.expand(card)
   } else {  // menu item
     Cards.contractAll()

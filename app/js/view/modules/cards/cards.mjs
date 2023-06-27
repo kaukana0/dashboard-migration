@@ -24,6 +24,7 @@ import * as CommonConstraints from "../selects/commonConstraints.mjs"
 import {MS} from "../selects/magicStrings.mjs"
 import * as Url from "../../../url.mjs"
 import * as Util from "../../../../components/util/util.mjs"
+import * as ChartTooltip from "./tooltip.mjs"
 
 let categories
 
@@ -52,6 +53,9 @@ export function create(containerId, cfg, _categories, selectedCallback, expandCa
 				document.getElementById(id).setAttribute("yLabel", merged.dimensions.nonUi.unit[0].label)
 				document.getElementById(id).setAttribute("right1", "EU")
 				document.getElementById(id).setAttribute("right2", "2022")
+				document.getElementById(id).tooltipFn1 = ChartTooltip.tooltipFn
+				document.getElementById(id).tooltipFn2 = ChartTooltip.tooltipFn
+				document.getElementById(id).tooltipCSS = ChartTooltip.tooltipCSS()
 			})
 
 			retVal.push(id)

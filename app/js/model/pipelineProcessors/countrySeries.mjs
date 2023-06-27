@@ -1,5 +1,5 @@
 import * as MultiDim from "../../../components/multiDimAccess/multiDimAccess.mjs"
-import * as MA from "./common/metadataAccess.mjs"
+import * as TM from "./common/textMappings.mjs"
 import * as Url from "../../url.mjs"
 
 /*
@@ -26,7 +26,7 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   const timeDimIdx = inputDataFromRequest.id.findIndex(e=>e==="time")
   const time = Url.getTime(inputDataFromCfg)[0]
   const timeCodeIdx = inputDataFromRequest.dimension.time.category.index[time]
-  const [byDim, byIdx] = MA.getIndexOfByDimension(inputDataFromRequest.id)
+  const [byDim, byIdx] = TM.getIndexOfByDimension(inputDataFromRequest.id)
 
   const blax = Object.keys(inputDataFromRequest.dimension[byDim].category.index)
   for(let by=0; by<blax.length; by++) {
