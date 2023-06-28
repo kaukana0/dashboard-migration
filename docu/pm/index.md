@@ -26,6 +26,10 @@ For more technical details, please see also the "architecture decision records".
 
 # mock ups
 
+Note:
+
+The mockup should give a guidance about the look of the dashboard, yet the dashboard should have the look and feel of the "Globalisation Dashboard". When there is a difference between the mock-up and the Globalisation Dashboard, the visual look of latter is to be preferred.
+
 ## overview
 
 ![](mockup-overview.png)
@@ -44,8 +48,53 @@ For more technical details, please see also the "architecture decision records".
 
 ## tooltip
 
-![](tooltip1.png)
-![](tooltip2.png)
+currently (28.6.2023), there are 3 different versions in the mockup.
+
+
+1. tooltip overview
+
+![](tooltip-overview.png)
+
+
+2. tooltip line
+
+![](tooltip-line.png)
+
+3. tooltip dot
+
+![](tooltip-dot.png)
+
+
+### definitions
+
+Since there are multiple variants in the mockup (line, dot, overview), the following table defines, which tooltip is displayed in which situation.
+Two new tooltips are proposed - see below.
+
+The following table refers to expanded view.
+
+    #countries  #cit/birth    tooltip
+    selected    selected      displayed
+
+    1           1             tooltip dot           (w/ percent after the value)
+    >1          1             tooltip proposal1     (grouped by cit/birth)
+    1           3             tooltip dot
+    2           3             tooltip proposal2     (grouped by country, countries spelled out)
+    *           2             [selection not possible]
+    >2          3             [selection not possible]
+
+
+Note:
+- all tooltips will have the unit sign right after the value (no space), just like "tooltip proposal1".
+- all countries are written in long form ("European Union", not "EU")
+
+
+#### tooltip proposal1
+
+![](tooltip-proposal1.png)
+
+#### tooltip proposal2 (multi country, multi cit/birth)
+
+![](tooltip-proposal2.jpg)
 
 
 # Requirements
