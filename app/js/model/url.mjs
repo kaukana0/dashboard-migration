@@ -1,9 +1,10 @@
 /*
-creating an URL and getting infos from an URL
+creating an URL and getting infos from an URL.
 */
 
-import { DEFINITIONS } from "./view/modules/selects/bySelectConstraints.mjs"
-import {MS} from "./view/modules/selects/magicStrings.mjs"
+import {DEFINITIONS as GROUPS} from "./common/groupDefinition.mjs"
+import {DEFINITIONS as CM} from "./common/codeMappings.mjs"
+import {MS} from "../common/magicStrings.mjs"
 
 const delim = "&"
 
@@ -67,9 +68,9 @@ function getValues(url, param) {
 
 export function getBySelectFrag(v) {
   let retVal = ""
-  const merged = new Map([...DEFINITIONS.GRP_B, ...DEFINITIONS.GRP_C])
+  const merged = new Map([...GROUPS.GRP_B, ...GROUPS.GRP_C])
   for(let [key] of v.entries()) {
-    retVal += DEFINITIONS.CODE_TO_DIM.get(key)+"="+merged.get(key)+delim
+    retVal += CM.CODE_TO_DIM.get(key)+"="+merged.get(key)+delim
   }
   return retVal
 }

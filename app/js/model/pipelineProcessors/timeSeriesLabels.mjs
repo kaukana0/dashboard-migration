@@ -1,4 +1,4 @@
-import * as TM from "./common/textMappings.mjs"
+import * as TM from "../common/textMappings.mjs"
 
 // cumulative
 export function process(inputDataFromRequest, inputDataFromCfg, output) {

@@ -4,7 +4,7 @@
  - it's declared in the html and not created via JS.
 */
 import * as CommonConstraints from "./commonConstraints.mjs"
-import {MS} from "./magicStrings.mjs"
+import {MS} from "../../../common/magicStrings.mjs"
 
 
 let id = ""

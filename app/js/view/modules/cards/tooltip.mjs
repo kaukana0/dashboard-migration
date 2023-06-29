@@ -1,7 +1,40 @@
-// this project specific tooltip replaces the default one which comes with the chart WebComponent
+// this project specific tooltips replace the default one which comes with the chart WebComponent
+
+export function tooltipFn2(context) {
+	console.debug("tooltip: using project specific tooltip")
+
+  return {
+		show: true,
+		// this takes care of disappearing when clicking inside the chart.
+		// disappearing by clicking anywhere else is up to the user of this component.
+		doNotHide: false,
+		order: (a, b) => a.value>b.value?-1:1,
+
+		contents: function(d, defaultTitleFormat, defaultValueFormat, color) {
+			let retVal = ""
+
+			const headText = context.categories?context.categories[d[0].x]:""
+			const head = `<div class="t-head">${headText}</div>`
+			retVal += head
+
+			const contentStart = `<div style="display: grid; grid-template-columns: 5fr 1fr;">`
+			retVal += contentStart
+
+			d.forEach(o=>{
+					const val = Number(o.value).toFixed(1) + (context.suffixText?context.suffixText:"")
+					retVal += `<div class="t-b-cl t-text-entry"><span class="colorIcon" style="background-color:${color(o)};"></span>${context.seriesLabels.get(o.id)}</div>
+										 <div class="t-b-cr t-text-val">${val}</div>`
+				})
+
+			return retVal + "</div>"
+		}
+	}	
+}
+
+
 
 export function tooltipFn(context) {
-	console.debug("tooltip: using project specific one")
+	console.debug("tooltip: using project specific tooltip")
 
   return {
 		show: true,
@@ -43,7 +76,6 @@ function getGroups(d) {
 	d.forEach(e=>{
 		const country = e.name.substr(-2)
 		const by = e.name.substr(0,e.name.length-4)
-		//console.log(country, by)
 		const o = {text:by,val:e.value}
 		if(groups.has(country)) {
 			groups.get(country).push(o)
@@ -51,7 +83,6 @@ function getGroups(d) {
 			groups.set(country,[o])
 		}
 	})
-	//console.log(d, groups)
 	return groups
 }
 

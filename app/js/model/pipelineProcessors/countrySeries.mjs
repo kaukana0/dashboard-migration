@@ -1,6 +1,6 @@
 import * as MultiDim from "../../../components/multiDimAccess/multiDimAccess.mjs"
-import * as TM from "./common/textMappings.mjs"
-import * as Url from "../../url.mjs"
+import * as TM from "../common/textMappings.mjs"
+import * as Url from "../url.mjs"
 
 /*
 extracts data for all countries at a certain time.

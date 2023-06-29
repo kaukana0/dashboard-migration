@@ -1,23 +1,20 @@
-import * as TM from "./common/textMappings.mjs"
+import * as TM from "../common/textMappings.mjs"
+import {MS} from "../../common/magicStrings.mjs"
 
-// TODO
+
 export function process(inputDataFromRequest, inputDataFromCfg, output) {
   if(!output.countrySeries.labels) {
-    const bla = TM.getIndexOfByDimension(inputDataFromRequest.id)[0] === "c_birth" ? TM.grp_c : TM.grp_b
     output.countrySeries.labels = new Map()
   }
-/*
+
   if(TM.getIndexOfByDimension(inputDataFromRequest.id)[0] === "c_birth") {
-    output.countrySeries.labels.set("NAT, EU", "Native born")
-    output.countrySeries.labels.set("EU_FOR, EU", "Born in EU")
-    output.countrySeries.labels.set("NEU_FOR, EU", "Non EU born")
+    output.countrySeries.labels.set("NAT", MS.TXT_BY_LBL_SHORT_BNAT)
+    output.countrySeries.labels.set("EU_FOR", MS.TXT_BY_LBL_SHORT_BEU)
+    output.countrySeries.labels.set("NEU_FOR", MS.TXT_BY_LBL_SHORT_BNEU)
   } else {
-    output.countrySeries.labels.set("NAT, EU", "Nationals")
-    output.countrySeries.labels.set("EU_FOR, EU", "EU citizens")
-    output.countrySeries.labels.set("NEU_FOR, EU", "Non EU citizens")
+    output.countrySeries.labels.set("NAT", MS.TXT_BY_LBL_SHORT_CNAT)
+    output.countrySeries.labels.set("EU_FOR", MS.TXT_BY_LBL_SHORT_CEU)
+    output.countrySeries.labels.set("NEU_FOR", MS.TXT_BY_LBL_SHORT_CNEU)
   }
-*/
-  //const dim = TM.getIndexOfByDimension(inputDataFromRequest.id)[0]
-  //output.countrySeries.labels.set()
 
 }

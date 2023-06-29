@@ -21,8 +21,8 @@ import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
 import * as Selects from "../selects/selectBoxes.mjs"
 import * as BySelectConstraint from "../selects/bySelectConstraints.mjs"
 import * as CommonConstraints from "../selects/commonConstraints.mjs"
-import {MS} from "../selects/magicStrings.mjs"
-import * as Url from "../../../url.mjs"
+import {MS} from "../../../common/magicStrings.mjs"
+import * as Url from "../../../model/url.mjs"
 import * as Util from "../../../../components/util/util.mjs"
 import * as ChartTooltip from "./tooltip.mjs"
 
@@ -35,35 +35,38 @@ export function create(containerId, cfg, _categories, selectedCallback, expandCa
 
 	for(const i in cfg.indicators) {
 		const merged = Util.mergeObjects(cfg.indicatorBase, cfg.indicators[i])
-		//console.log("merged cfg for indicator", merged.name, merged)
 		const id = getIdFromName(merged.name)
+		//console.log("merged cfg for indicator", merged.name, merged, id)
 
 		if(!merged.ignore) {
-
 			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
-
 			requestAnimationFrame( () => {
 				const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, merged.datasets)
 				addBoxEventHandlers(id, boxes, selectedCallback)
 				insertBoxes(id, boxes)
-				document.getElementById(id).addEventListener("expanding", () => { expandCallback(id) })
-				document.getElementById(id).addEventListener("contracting", () => { contractCallback(id) })
-
-				document.getElementById(id).setAttribute("subtitle", merged.dimensions.nonUi.unit[0].label)
-				document.getElementById(id).setAttribute("yLabel", merged.dimensions.nonUi.unit[0].label)
-				document.getElementById(id).setAttribute("right1", "EU")
-				document.getElementById(id).setAttribute("right2", "2022")
-				document.getElementById(id).tooltipFn1 = ChartTooltip.tooltipFn
-				document.getElementById(id).tooltipFn2 = ChartTooltip.tooltipFn
-				document.getElementById(id).tooltipCSS = ChartTooltip.tooltipCSS()
+				setupCard(id, merged, expandCallback, contractCallback)
 			})
-
 			retVal.push(id)
 		}
-
 	}
 
 	return retVal
+}
+
+function setupCard(id, merged, expandCallback, contractCallback) {
+	const card = document.getElementById(id)
+	card.addEventListener("expanding", () => { expandCallback(id) })
+	card.addEventListener("contracting", () => { contractCallback(id) })
+	card.setAttribute("subtitle", merged.dimensions.nonUi.unit[0].label)
+	card.setAttribute("yLabel", merged.dimensions.nonUi.unit[0].label)
+	card.setAttribute("right1", "EU")
+	card.setAttribute("right2", "2022")
+	card.setAttribute("srcLinkC", merged.datasets.citizen.source)
+	card.setAttribute("srcLinkB", merged.datasets.birth.source)
+	card.setAttribute("articleLink", merged.articleLink)
+	card.tooltipFn1 = ChartTooltip.tooltipFn
+	card.tooltipFn2 = ChartTooltip.tooltipFn2
+	card.tooltipCSS = ChartTooltip.tooltipCSS()
 }
 
 export function getIdFromName(name) {

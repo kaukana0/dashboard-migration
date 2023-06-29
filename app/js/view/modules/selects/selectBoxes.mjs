@@ -1,6 +1,6 @@
 // all the boxes for one card
 
-import {MS} from "./magicStrings.mjs"
+import {MS} from "../../../common/magicStrings.mjs"
 import {getMapFromObject} from "./util.mjs"
 
 

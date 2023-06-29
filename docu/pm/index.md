@@ -75,12 +75,12 @@ The following table refers to expanded view.
     #countries  #cit/birth    tooltip
     selected    selected      displayed
 
-    1           1             tooltip dot           (w/ percent after the value)
+    1           1             tooltip dot           (w/ percent after the value and only 1 by cit/birth line, not 3)
     >1          1             tooltip proposal1     (grouped by cit/birth)
     1           3             tooltip dot
     2           3             tooltip proposal2     (grouped by country, countries spelled out)
-    *           2             [selection not possible]
     >2          3             [selection not possible]
+    *           2             [selection not possible]
 
 
 Note:
@@ -132,6 +132,7 @@ Note:
 ## chart
 
 - req300: chart tooltip: User can see data for the trend line when mouse overing, year in header, see screenshot
+  - for details, see section "tooltip" above
 - req325: number of decimals configurable per chart
 - req350: max line selection logic in expanded card's line chart:
   - In the expanded view, users should have the possibility of selecting two countries more for comparison purposes in the trend line. Max display two countries – 6 lines shown.

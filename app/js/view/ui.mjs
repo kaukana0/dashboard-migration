@@ -4,9 +4,9 @@ create UI, handle prominent events, initiate data fetching and data forwarding
 
 import * as Cards from "./modules/cards/cards.mjs"
 import * as GeoSelect from "./modules/selects/geoSelect.mjs"
-import {MS} from "./modules/selects/magicStrings.mjs"
+import {MS} from "../common/magicStrings.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
-import * as Url from "../url.mjs"
+import * as Url from "../model/url.mjs"
 import Fetcher from "../model/fetcher.mjs"
 import {getMapFromObject} from "./modules/selects/util.mjs"
 import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
@@ -84,12 +84,14 @@ function onCardExpand(id) {
 
   GeoSelect.moveIntoCard(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
   document.body.style.overflowY="hidden"
+  document.body.style.overflowX="hidden"
   window.scrollTo(0, 0);
 }
 
 function onCardContract(id) {
   GeoSelect.moveToMainArea()
-  document.body.style.overflowY="scroll"
+  document.body.style.overflowY="auto"
+  document.body.style.overflowX="auto"
 
   // do this after moving geo-select out, because then it's not affected by
   // setDefaultSelections call.
