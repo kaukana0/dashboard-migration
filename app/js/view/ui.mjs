@@ -86,6 +86,8 @@ function onCardExpand(id) {
   document.body.style.overflowY="hidden"
   document.body.style.overflowX="hidden"
   window.scrollTo(0, 0);
+
+  document.getElementById("timeRange"+id).style.display="inline"
 }
 
 function onCardContract(id) {
@@ -103,6 +105,8 @@ function onCardContract(id) {
   CommonConstraints.setBySelect(null)			// effectively disable those constraints
 
   onSelectedForAllCards()
+
+  document.getElementById("timeRange"+id).style.display="none"
 
   // todo: scroll back to previous pos
 }

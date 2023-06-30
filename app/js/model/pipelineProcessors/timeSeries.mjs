@@ -9,36 +9,40 @@ timeSeriesData: [
   [EU,1,2,3],
   [LT,1,2,3]
 ]
+
+the URL has all the info about the exact UI selections.
+however, there may be more data available - ie the request might have had some params stripped
+so we gotta filter them here
 */
 export function process(inputDataFromRequest, inputDataFromCfg, output) {
-  if(!output.timeSeries) {
-    output.timeSeries = {}
-    output.timeSeries.data = [output.time]
-  }
+  const selectedTime = parseInt(Url.getTime(inputDataFromCfg)[0])    // [from,to]  we only need "from"
+  const selectedGeo = Url.getGeo(inputDataFromCfg)
 
-  const valence = MultiDim.calcOrdinalValence(inputDataFromRequest.size)
+  output.timeSeries = {}
+  output.timeSeries.data = [output.time.filter(e=>parseInt(e)>=selectedTime)]
 
+  
   const [byDim, byIdx] = TM.getIndexOfByDimension(inputDataFromRequest.id)
   const geoDimIdx = inputDataFromRequest.id.findIndex(e=>e==="geo")
   const timeDimIdx = inputDataFromRequest.id.findIndex(e=>e==="time")
-
+  
   const byDimMax = inputDataFromRequest.size[byIdx]  // "by" c_birth or citizen
   const geoDimMax = inputDataFromRequest.size[geoDimIdx]
   const timeDimMax = inputDataFromRequest.size[timeDimIdx]
+  
+  const valence = MultiDim.calcOrdinalValence(inputDataFromRequest.size)
 
   let byLabel = ""
   let geoLabel = ""
-
-  const selectedTime = Url.getTime(inputDataFromCfg)    // TODO: filter by this
-  const selectedGeo = Url.getGeo(inputDataFromCfg)
 
   for(let by=0; by<byDimMax; by++) {
     byLabel = Object.keys(inputDataFromRequest.dimension[byDim].category.index)[by]
     for(let geo=0; geo<geoDimMax; geo++) {
       geoLabel = Object.keys(inputDataFromRequest.dimension.geo.category.index)[geo]
-      if(!selectedGeo.find(e=>e===geoLabel)) continue   // filter what isn't selected (and therefore in full URL)
+      if(!selectedGeo.find(e=>e===geoLabel)) continue   // filter what isn't selected
       const ll = [TM.getByLabelShort(byDim, byLabel)+", "+geoLabel]   // is unique. used by chart as key for tooltip label mapping to text.
       for(let time=0; time<timeDimMax; time++) {
+        if(output.time[time]<selectedTime) continue  // filter anything earlier
         let bla = new Array(inputDataFromRequest.size.length)
         bla.fill(0)
         bla[byIdx] = by

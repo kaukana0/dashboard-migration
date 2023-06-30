@@ -25,6 +25,8 @@ import {MS} from "../../../common/magicStrings.mjs"
 import * as Url from "../../../model/url.mjs"
 import * as Util from "../../../../components/util/util.mjs"
 import * as ChartTooltip from "./tooltip.mjs"
+import "../../../../components/range/range.mjs"							// the WebComponent
+import * as Range from "./range.mjs"
 
 let categories
 
@@ -44,7 +46,7 @@ export function create(containerId, cfg, _categories, selectedCallback, expandCa
 				const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, merged.datasets)
 				addBoxEventHandlers(id, boxes, selectedCallback)
 				insertBoxes(id, boxes)
-				setupCard(id, merged, expandCallback, contractCallback)
+				setupCard(id, merged, expandCallback, contractCallback, selectedCallback)
 			})
 			retVal.push(id)
 		}
@@ -53,7 +55,7 @@ export function create(containerId, cfg, _categories, selectedCallback, expandCa
 	return retVal
 }
 
-function setupCard(id, merged, expandCallback, contractCallback) {
+function setupCard(id, merged, expandCallback, contractCallback, selectedCallback) {
 	const card = document.getElementById(id)
 	card.addEventListener("expanding", () => { expandCallback(id) })
 	card.addEventListener("contracting", () => { contractCallback(id) })
@@ -67,6 +69,8 @@ function setupCard(id, merged, expandCallback, contractCallback) {
 	card.tooltipFn1 = ChartTooltip.tooltipFn
 	card.tooltipFn2 = ChartTooltip.tooltipFn2
 	card.tooltipCSS = ChartTooltip.tooltipCSS()
+	const el = document.getElementById("timeRange"+id)
+	Range.init(el,2015,2023, () => selectedCallback(id) )		//TODO
 }
 
 export function getIdFromName(name) {
@@ -109,9 +113,13 @@ function insertBoxes(id, boxes) {
 export function getCurrentSelections(cardId) {
 	let retVal = [{cardId: cardId, selections: new Map()}, ""]
 
-	const selector = `#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} ~ div ecl-like-select-x`
-	const boxes = document.querySelectorAll(selector)
-	if(boxes.length===0) { console.warn("cards: no boxes for selector", selector) }
+	// mimic select's api
+	const range = document.getElementById(cardId).querySelector("range-slider")
+	retVal[0].selections.set("time", Range.getSelection(range))
+
+	const boxSelector = `#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} ~ div ecl-like-select-x`
+	const boxes = document.querySelectorAll(boxSelector)
+	if(boxes.length===0) { console.warn("cards: no boxes for selector", boxSelector) }
 	for(let box of boxes) {
 		if(box.hasAttribute("dimension")) {
 			retVal[0].selections.set(box.getAttribute("dimension"), box.selected)
@@ -152,6 +160,7 @@ export function setDefaultSelections(node) {
 export function expand(card) {
 	contractAll()
 	card.expand(document.getElementById("anchorSelectCountryOutsideOfCard"))
+	document.getElementById("timeRange"+card.getAttribute("id")).style.display="inline"
 }
 
 export function filter(category) {

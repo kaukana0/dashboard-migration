@@ -28,3 +28,6 @@
 [submodule "app/components/buttonX"]
 	path = app/components/buttonX
 	url = https://github.com/kaukana0/buttonX.git
+[submodule "app/components/range"]
+	path = app/components/range
+	url = https://github.com/kaukana0/range.git
