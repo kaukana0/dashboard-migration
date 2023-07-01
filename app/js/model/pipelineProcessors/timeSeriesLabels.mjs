@@ -17,7 +17,7 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
       const xGeoCode = Object.keys(inputDataFromRequest.dimension.geo.category.index)[geo]
       const xGeoLabel = Object.values(inputDataFromRequest.dimension.geo.category.label)[geo]
       // TODO: map xGeoLabel and xByLabel to something sensible (for the tooltip)
-      output.timeSeries.labels.set( TM.getByLabelShort(byDim, xByCode)+", "+xGeoCode, xGeoLabel+", "+TM.getByLabel(byDim, xByCode,  xByLabel) )
+      output.timeSeries.labels.set( TM.getByLabelShort(byDim, xByCode)+", "+xGeoCode, xGeoLabel+", "+TM.getByLabelShort(byDim, xByCode,  xByLabel) )
     }
   }
 }

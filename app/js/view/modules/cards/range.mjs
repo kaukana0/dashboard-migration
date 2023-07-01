@@ -2,15 +2,22 @@
 // because they're put into a card via slot mechanism.
 // that's why we need to manage all the ranges externally.
 
-export function init(el, min, max, onSelect) {
-	el.setAttribute("min", min)
-	el.setAttribute("max", max)
-	el.setAttribute("valuel", min)
-	el.setAttribute("valuer", max)
+export function setCallbacks(el, onSelect) {
 	el.addEventListener('dragging', (e) => {
-    el.setAttribute("textl", e.detail.startIdx)
+		el.setAttribute("textl", e.detail.startIdx)
 	})
 	el.addEventListener('selected', onSelect)
+}
+
+export function setMinMax(el,min,max) {
+	if(!el.hasAttribute("isinited")) {
+		el.setAttribute("min", min)
+		el.setAttribute("max", max)
+		el.setAttribute("valuel", min)
+		el.setAttribute("textl", min)
+		el.setAttribute("valuer", max)
+		el.setAttribute("isinited","true")
+	}
 }
 
 export function getSelection(el) {

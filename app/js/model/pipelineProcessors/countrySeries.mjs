@@ -16,13 +16,11 @@ countrySeriesData: [
 export function process(inputDataFromRequest, inputDataFromCfg, output) {
   if(!output.countrySeries) {
     output.countrySeries = {}
-    output.countrySeries.data = []
-    output.countrySeries.data.push( Object.keys(inputDataFromRequest.dimension.geo.category.index) )
+    output.countrySeries.data = [[]]
   }
 
   const valence = MultiDim.calcOrdinalValence(inputDataFromRequest.size)
   const geoDimIdx = inputDataFromRequest.id.findIndex(e=>e==="geo")
-  const geoDimMax = inputDataFromRequest.size[geoDimIdx]
   const timeDimIdx = inputDataFromRequest.id.findIndex(e=>e==="time")
   const time = Url.getTime(inputDataFromCfg)[0]
   const timeCodeIdx = inputDataFromRequest.dimension.time.category.index[time]
@@ -32,19 +30,27 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   for(let by=0; by<blax.length; by++) {
     const xByCode = Object.keys(inputDataFromRequest.dimension[byDim].category.index)[by]
     const ll = [xByCode]
-    for(let geo=0; geo<geoDimMax; geo++) {
+
+    // the order of countries comes from a processor which was run before this processor
+    output.countryOrder.forEach( country => {
       let bla = new Array(inputDataFromRequest.size.length)
-      bla.fill(0)
-      bla[byIdx] = by
-      bla[geoDimIdx] = geo
-      bla[timeDimIdx] = timeCodeIdx
-      const i = MultiDim.getIndex(valence, bla)
-      if(typeof inputDataFromRequest.value[i] === 'undefined') {
-        ll.push(null)
-      } else {
-        ll.push(inputDataFromRequest.value[i])
+      const idxGeo = inputDataFromRequest.dimension.geo.category.index[country]
+      if(typeof idxGeo !== 'undefined') {
+        output.countrySeries.data[0].push(country)
+
+        bla.fill(0)
+        bla[byIdx] = by
+        bla[geoDimIdx] = idxGeo
+        bla[timeDimIdx] = timeCodeIdx
+        const i = MultiDim.getIndex(valence, bla)
+        if(typeof inputDataFromRequest.value[i] === 'undefined') {
+          ll.push(null)
+        } else {
+          ll.push(inputDataFromRequest.value[i])
+        }
       }
-    }
+    })
+
     output.countrySeries.data.push(ll)
   }
 

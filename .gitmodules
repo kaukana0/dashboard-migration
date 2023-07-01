@@ -31,3 +31,6 @@
 [submodule "app/components/range"]
 	path = app/components/range
 	url = https://github.com/kaukana0/range.git
+[submodule "app/components/processorCountryOrder"]
+	path = app/components/processorCountryOrder
+	url = https://github.com/kaukana0/processorCountryOrder.git

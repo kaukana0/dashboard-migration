@@ -36,5 +36,5 @@ export function getByLabel(byDim, code, _default = "") {
 }
 
 export function getByLabelShort(byDim, code, _default = "") {
-  return shortLabels.has(byDim+code) ? labels.get(byDim+code) : _default
+  return shortLabels.has(byDim+code) ? shortLabels.get(byDim+code) : _default
 }

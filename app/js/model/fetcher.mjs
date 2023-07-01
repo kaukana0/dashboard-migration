@@ -16,6 +16,7 @@ import * as Cache from "./cache.mjs"
 
 import { replaceEuInRawData } from "../../components/util/util.mjs"
 import { run } from "../../components/pipeline/pipeline.mjs"
+import { process as defineCountriesOrder } from "../../components/processorCountryOrder/countryOrder.mjs"
 import { process as defineCountryColors } from "../../components/processorCountryColors/countryColors.mjs"
 import { process as extractTimeYearly } from "./pipelineProcessors/timeYearly.mjs"
 import { process as extractTimeSeriesData } from "./pipelineProcessors/timeSeries.mjs"
@@ -39,8 +40,9 @@ the data of the "big request" (unfiltered) is being cached.
 export default function go(urls, callback) {
 	const processingCfg = []
 
-	// note: all relevant processors can handle being called multiple times
+	// note: some processors can handle being called multiple times
 	// meaning, once per URL. they're cumulative, appending data (cols for the chart).
+	// others don't work that way.
 	for(let i in urls) {
 		
 		const fullUrl = urls[i]
@@ -51,13 +53,14 @@ export default function go(urls, callback) {
 			{
 				input: strippedUrl,
 				//input: "./persistedData/example-request-answer.json",
+				//input: "./persistedData/ausbel.json",
 				cache: {
 					store: (data) => Cache.store(strippedUrl, data),
 					restore: (id) => Cache.restore(id)
 				},
-				processors: [defineCountryColors, extractTimeYearly, 
-					extractTimeSeriesData, createTimeSeriesLabels, 
-					extractCountrySeriesData, createCountrySeriesLabels, 
+				processors: [defineCountryColors, extractTimeYearly,
+					extractTimeSeriesData, createTimeSeriesLabels,
+					defineCountriesOrder, extractCountrySeriesData, createCountrySeriesLabels,
 					analyzeIncomingData],
 				data: fullUrl
 			}

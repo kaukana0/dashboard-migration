@@ -80,6 +80,8 @@ codeList:
   timeEnd: &timeEnd
     label: "end time"
     code: "2022"
+  # this determines the contents and order of UI elements, except for the chart.
+  # the country order for that is determined through processorCountryOrder.
   countries: &countries   #ISO 3166-1 alpha2
     - code: EU
       label: European Union
@@ -295,7 +297,8 @@ indicators:
         id: EDAT_LFS_9912
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/9695b868-8edc-4f3a-82ff-4dbbf69e27d3?lang=en
 
-  - name: Share of 30-34-year-olds with tertiary educational attainment
+  - name: Tertiary educational attainment
+    fullName: Share of 30-34-year-olds with tertiary educational attainment
     category: Education
     ignore: true
     datasets:
@@ -306,7 +309,8 @@ indicators:
         id: EDAT_LFS_9912__custom_4568588
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/b4398174-ba0c-417e-a393-4343e9e50c3d?lang=en
 
-  - name: Share of 18-24-year-olds leaving education and training early
+  - name: Leaving education early
+    fullName: Share of 18-24-year-olds leaving education and training early
     category: Education
     datasets:
       citizen:
@@ -412,7 +416,8 @@ indicators:
 
 ##########################################################
 
-  - name: Share of people perceiving their health status as good or bad
+  - name: Health status perception
+    fullName: Share of people perceiving their health status as good or bad
     category: Health
     datasets:
       citizen:

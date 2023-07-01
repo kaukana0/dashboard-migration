@@ -1,17 +1,20 @@
 /**
 This creates the cards.
-Also the content for a slot which goes into the card.
-That content is selectboxes corresponding to YAMLCfg.dimensions.ui.dropdown
+Also the slot contents which go into a card.
+That content is:
+- selectboxes corresponding to YAMLCfg.dimensions.ui.dropdown
+- time range slider
+- links (cookies etc.)
 
 Expand/Collapse logic:
 
 - on collapse:
 	- country selects favourited entry
-	- bySelect selects the default (first three entries)
-	- line display is activated
+	- bySelect selects the default (eg first three entries)
+	- switch to line display
 
 - on expand:
-	- calculate # of by-selects: 6 - # selected countries
+	- calculate # of by-selects
 	- deselect countries if neccessary
 
 */
@@ -24,7 +27,9 @@ import * as CommonConstraints from "../selects/commonConstraints.mjs"
 import {MS} from "../../../common/magicStrings.mjs"
 import * as Url from "../../../model/url.mjs"
 import * as Util from "../../../../components/util/util.mjs"
-import * as ChartTooltip from "./tooltip.mjs"
+import * as TooltipLine from "./tooltips/tooltipLineChart.mjs"
+import * as TooltipDot from "./tooltips/tooltipDotChart.mjs"
+import * as TooltipCommon from "./tooltips/common.mjs"
 import "../../../../components/range/range.mjs"							// the WebComponent
 import * as Range from "./range.mjs"
 
@@ -66,11 +71,13 @@ function setupCard(id, merged, expandCallback, contractCallback, selectedCallbac
 	card.setAttribute("srcLinkC", merged.datasets.citizen.source)
 	card.setAttribute("srcLinkB", merged.datasets.birth.source)
 	card.setAttribute("articleLink", merged.articleLink)
-	card.tooltipFn1 = ChartTooltip.tooltipFn
-	card.tooltipFn2 = ChartTooltip.tooltipFn2
-	card.tooltipCSS = ChartTooltip.tooltipCSS()
-	const el = document.getElementById("timeRange"+id)
-	Range.init(el,2015,2023, () => selectedCallback(id) )		//TODO
+	card.tooltipFn1 = TooltipLine.tooltipFn
+	card.tooltipFn2 = TooltipDot.tooltipFn
+	card.tooltipCSS = TooltipCommon.CSS()
+	Range.setCallbacks(document.getElementById("timeRange"+id), () => {
+		TooltipDot.setHeader( document.getElementById("timeRange"+id).valuel )
+		selectedCallback(id)
+	})
 }
 
 export function getIdFromName(name) {
@@ -141,6 +148,7 @@ export function iterate(containerId, callback) {
 }
 
 export function setData(cardId, data) {
+	Range.setMinMax(document.getElementById("timeRange"+cardId), data.time[0], data.time[data.time.length-1])
 	document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, data.timeSeries.labels)
 	document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
 	document.getElementById(cardId).stopIndicateLoading()
