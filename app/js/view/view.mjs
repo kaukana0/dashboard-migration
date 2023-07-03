@@ -11,19 +11,25 @@ import Fetcher from "../model/fetcher.mjs"
 import {getMapFromObject} from "./modules/selects/util.mjs"
 import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
 
-
-let countrySelect
-let menuItems
+let currentlyExpandedId = null
 
 export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
-  menuItems = MainMenu.getCategories(cfg)
+  const menuItems = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, menuItems)
-  countrySelect = GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromObject(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onSelectedForAllCards)
+  GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromObject(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, menuItems, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {
     requestAnimationFrame(()=>onSelectedForAllCards())
+  }
+}
+
+function onGeoSelection() {
+  if(currentlyExpandedId) {
+    onSelectedForOneCard(currentlyExpandedId)
+  } else {
+    onSelectedForAllCards()
   }
 }
 
@@ -42,8 +48,9 @@ function onSelectedForAllCards() {
 // which is all boxes except country.
 // so, update charts in one card
 function onSelectedForOneCard(cardId) {
-  fetch(cardId) 
+  const bySel = fetch(cardId) 
   updateCardAttributes(cardId)
+  Cards.setTooltipStyle(GeoSelect.getSelected().size, bySel.size)
 }
 
 function fetch(cardId) {
@@ -58,6 +65,7 @@ function fetch(cardId) {
   Url.Affix.post += "time=2019"  // TODO: take from UI element
   const bla = {} ; bla[MS.BY_SELECT_ID] = Url.getBySelectFrag
   Fetcher( Url.buildFrag(boxes,dataset,bla), Cards.setData.bind(this, cardId) )
+  return boxes.selections.get(MS.BY_SELECT_ID)
 }
 
 function updateCardAttributes(cardId) {
@@ -79,6 +87,7 @@ function onSelectMenu(menuItemId, parentItemId) {
 }
 
 function onCardExpand(id) {
+  currentlyExpandedId = id
   const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
   CommonConstraints.setBySelect(anchorEl.nextSibling.childNodes[1])
 
@@ -91,6 +100,8 @@ function onCardExpand(id) {
 }
 
 function onCardContract(id) {
+  currentlyExpandedId = null
+
   GeoSelect.moveToMainArea()
   document.body.style.overflowY="auto"
   document.body.style.overflowX="auto"

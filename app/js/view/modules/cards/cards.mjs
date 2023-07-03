@@ -70,7 +70,7 @@ function setupCard(id, merged, expandCallback, contractCallback, selectedCallbac
 	card.setAttribute("right2", "2022")
 	card.setAttribute("srcLinkC", merged.datasets.citizen.source)
 	card.setAttribute("srcLinkB", merged.datasets.birth.source)
-	card.setAttribute("articleLink", merged.articleLink)
+	card.setAttribute("articleLink", merged.articleLink.url)
 	card.tooltipFn1 = TooltipLine.tooltipFn
 	card.tooltipFn2 = TooltipDot.tooltipFn
 	card.tooltipCSS = TooltipCommon.CSS()
@@ -189,4 +189,9 @@ export function filter(category) {
 			elements[i].style.display=""
 		}
 	}
+}
+
+export function setTooltipStyle(numberOfCountriesSelected, numberOfBySelected) {
+	const cond = numberOfCountriesSelected > 1 && numberOfBySelected === 1
+	TooltipLine.setGroupByCountry(!cond)
 }

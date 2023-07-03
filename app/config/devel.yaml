@@ -1,4 +1,4 @@
-# yaml schema v0.3.0 - for migration dashboard 
+# yaml schema v0.4.0 - for migration dashboard 
 
 codeList:
 
@@ -154,6 +154,24 @@ codeList:
     code: "RENT"
 
 
+articleLinks:
+  demography: &articleLinkDemography
+    url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migration_and_migrant_population_statistics
+  employment: &articleLinkEmployment
+    url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_%E2%80%93_labour_market_indicators
+  # demography + employment = deployment ?
+  education: &articleLinkEducation
+    url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_education
+  si: &articleLinkSocialInclusion
+    url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_at_risk_of_poverty_and_social_exclusion
+  housing: &articleLinkHousing
+    url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_housing
+  health: &articleLinkHealth
+    url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_health
+  as: &articleLinkActiveCitizenship
+    url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_active_citizenship
+
+
 globals:
   baseURL: https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/
   ui:
@@ -194,8 +212,6 @@ indicatorBase:
         - time:
           start: *timeStart
           end: *timeEnd
-          # "singles:" could have precedence before start/end (not implemented)
-          singles: [1907, 1914, 1938]
     nonUi:          # dimensions which are request-relevant and not represented by an ui element
       freq:
       - *freq
@@ -210,7 +226,7 @@ indicators:
     ignore: true
     category: Demography
     isInOverview: true
-    articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migration_and_migrant_population_statistics
+    articleLink: *articleLinkDemography
     datasets:
       citizen:
         id: MIGR_POP1CTZ
@@ -240,7 +256,7 @@ indicators:
   - name: Employment rate
     category: Employment
     isInOverview: true
-    articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_%E2%80%93_labour_market_indicators
+    articleLink: *articleLinkEmployment
     datasets:
       citizen:
         id: LFSA_ERGAN
@@ -252,43 +268,53 @@ indicators:
   - name: Activity rate
     category: Employment
     ignore: true
+    articleLink: *articleLinkEmployment
 
   - name: Unemployment rate
     category: Employment
     ignore: true
+    articleLink: *articleLinkEmployment
 
   - name: Long-term unemployment
     category: Employment
     ignore: true
+    articleLink: *articleLinkEmployment
 
   - name: Over-qualification rate
     category: Employment
     ignore: true
+    articleLink: *articleLinkEmployment
 
   - name: Share of self-employed in total employment
     category: Employment
     ignore: true
+    articleLink: *articleLinkEmployment
 
   - name: Share of self-employed in total employment
     category: Employment
     ignore: true
+    articleLink: *articleLinkEmployment
 
   - name: Share of employees with contract of limited duration in the total number of employees
     category: Employment
     ignore: true
+    articleLink: *articleLinkEmployment
 
   - name: Labour market slack
     category: Employment
     ignore: true
+    articleLink: *articleLinkEmployment
 
   - name: Newly employed
     category: Employment
     ignore: true
+    articleLink: *articleLinkEmployment
 
 ##########################################################
 
   - name: Highest educational attainment
     category: Education
+    articleLink: *articleLinkEducation
     datasets:
       citizen:
         id: EDAT_LFS_9911
@@ -301,6 +327,7 @@ indicators:
     fullName: Share of 30-34-year-olds with tertiary educational attainment
     category: Education
     ignore: true
+    articleLink: *articleLinkEducation
     datasets:
       citizen:
         id: EDAT_LFS_9911__custom_4568481
@@ -312,6 +339,7 @@ indicators:
   - name: Leaving education early
     fullName: Share of 18-24-year-olds leaving education and training early
     category: Education
+    articleLink: *articleLinkEducation
     datasets:
       citizen:
         id: EDAT_LFSE_01
@@ -329,14 +357,18 @@ indicators:
   - name: Participation rate in lifelong learning
     category: Education
     ignore: true
+    articleLink: *articleLinkEducation
 
   - name: Young people neither in employment nor in education and training (NEET rate)
     category: Education
     ignore: true
+    articleLink:
+      url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_socioeconomic_situation_of_young_people
 
   - name: Share of people with skills in the main host country language before migrating
     category: Education
     ignore: true
+    articleLink: *articleLinkEducation
 
 ##########################################################
 
@@ -344,7 +376,7 @@ indicators:
     ignore: true
     category: Social inclusion
     isInOverview: true
-    articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_at_risk_of_poverty_and_social_exclusion
+    articleLink: *articleLinkSocialInclusion
     datasets:
       citizen:
         id: ILC_PEPS05N
@@ -362,33 +394,39 @@ indicators:
   - name: At-risk-of-poverty rate
     category: Social inclusion
     ignore: true
+    articleLink: *articleLinkSocialInclusion
 
   - name: Median net income
     category: Social inclusion
     ignore: true
+    articleLink: *articleLinkSocialInclusion
 
   - name: Child poverty rate (At-risk-of poverty rate for children)
     category: Social inclusion
     ignore: true
+    articleLink: *articleLinkSocialInclusion
 
   - name: Share of adults living in households with very low work intensity
     category: Social inclusion
     ignore: true
+    articleLink: *articleLinkSocialInclusion
 
   - name: Material and social deprivation rate
     category: Social inclusion
     ignore: true
+    articleLink: *articleLinkSocialInclusion
 
   - name: In-work at-risk-of-poverty rate (persistent poverty risk)
     category: Social inclusion
     ignore: true
+    articleLink: *articleLinkSocialInclusion
 
 ##########################################################
 
   - name: Home ownership rate
     category: Housing
     isInOverview: true
-    articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_housing
+    articleLink: *articleLinkHousing
     datasets:
       citizen:
         id: ILC_LVPS15
@@ -409,16 +447,19 @@ indicators:
   - name: Housing cost overburden rate
     category: Housing
     ignore: true
+    articleLink: *articleLinkHousing
 
   - name: Overcrowding rate
     category: Housing
     ignore: true
+    articleLink: *articleLinkHousing
 
 ##########################################################
 
   - name: Health status perception
     fullName: Share of people perceiving their health status as good or bad
     category: Health
+    articleLink: *articleLinkHealth
     datasets:
       citizen:
         id: HLTH_SILC_24
@@ -448,25 +489,31 @@ indicators:
   - name: Share of people with self-reported unmet need for medical care
     category: Health
     ignore: true
+    articleLink: *articleLinkHealth
 
   - name: Share of people with self-reported unmet needs for dental examination
     category: Health
     ignore: true
+    articleLink: *articleLinkHealth
 
   - name: She of people having a long-standing illness or health problem
     category: Health
     ignore: true
+    articleLink: *articleLinkHealth
 
   - name: Self-perceived long-standing limitations in usual activities due to health problem
     category: Health
     ignore: true
+    articleLink: *articleLinkHealth
 
 ##########################################################
 
   - name: Naturalisation rate
     category: Active citizenship
     ignore: true
+    articleLink: *articleLinkActiveCitizenship
 
   - name: Share of third country nationals holding long-term residence permits
     category: Active citizenship
     ignore: true
+    articleLink: *articleLinkActiveCitizenship

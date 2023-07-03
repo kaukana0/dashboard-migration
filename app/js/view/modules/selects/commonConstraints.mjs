@@ -30,6 +30,7 @@ let geoSelect
 export function setBySelect(el) {bySelect=el}
 export function setGeoSelect(el) {geoSelect=el}
 
+// onSelect
 export function geoSelectionAllowed() {
   if(!bySelect || !geoSelect) {return true}
   const numberOfGeoSelections = geoSelect.selected.size+1
@@ -37,6 +38,7 @@ export function geoSelectionAllowed() {
   return numberOfGeoSelections * numberOfBySelections <= 6
 }
 
+// onSelect
 export function bySelectionAllowed(numberOfSelections) {
   if(!bySelect || !geoSelect) {return true}
   const numberOfGeoSelections = geoSelect.selected.size

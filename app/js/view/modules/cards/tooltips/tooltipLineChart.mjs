@@ -1,46 +1,22 @@
-/* this tooltip
+/*
+this tooltip
 - is project specific
-- is for the line chart
 - replaces the default one which comes with the chart WebComponent
+- is for the line chart
+- switches between both possible linechart tooltips: GC (groupy by country) and GB (group by "by")
 */
 
-import * as Common from "./common.mjs"
+import byC from "./tooltipLineChartGC.mjs"
+import byB from "./tooltipLineChartGB.mjs"
+
+let byCountry = true
+
+export function setGroupByCountry(trueOrFalse) { byCountry = trueOrFalse }
 
 export function tooltipFn(context) {
   return {
 		contents: function(d, defaultTitleFormat, defaultValueFormat, color) {
-			const headText = context.categories?context.categories[d[0].x]:""
-			let retVal = Common.pre(headText)
-
-			const groups = getGroups(d)
-			let i = 0
-			for (const [key, val] of groups.entries()) {
-				retVal += `<div class="t-b-cl t-text-group-header">${key}</div>
-									 <div class="t-b-cr"></div>`
-				val.forEach(o=>{
-					const val = Number(o.val).toFixed(1) + (context.suffixText?context.suffixText:"")
-					retVal += `<div class="t-b-cl t-text-entry"><span class="colorIcon" style="background-color:${color(d[i++])};"></span>${o.text}</div>
-										 <div class="t-b-cr t-text-val">${val}</div>`
-				})
-			}
-
-			return retVal + "</div>"
-		}
-	}	
+      return byCountry ? byC(context,d,defaultTitleFormat, defaultValueFormat, color) : byB(context,d,defaultTitleFormat, defaultValueFormat, color)
+    }
+  }
 }
-
-function getGroups(d) {
-	const groups = new Map()	// by country
-	d.forEach(e=>{
-		const country = e.name.substr(-2)
-		const by = e.name.substr(0,e.name.length-4)
-		const o = {text:by,val:e.value}
-		if(groups.has(country)) {
-			groups.get(country).push(o)
-		} else {
-			groups.set(country,[o])
-		}
-	})
-	return groups
-}
-
