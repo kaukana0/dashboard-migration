@@ -20,13 +20,13 @@ export function createDropdownBoxes(cfg, datasets) {
 
     attribs.set("dimension", boxName)
     attribs.set("id", Math.floor(Math.random() * 10000))  // doesnt matter which, this is only needed to make it dismissable
-    attribs.set("style", "width:200px;")
+    attribs.set("style", "width:200px; margin-right: 20px;")
 
     // something "special" here - add additional info to DOM element
     if(boxName===MS.BY_SELECT_ID) {
       if(datasets) {
         attribs.set("multiselect", "true")
-        attribs.set("style", "width:300px;")
+        attribs.set("style", "width:360px; margin-right: 20px;")
         attribs.set(MS.DS_ID_CITIZEN, datasets["citizen"]["id"])
         attribs.set(MS.DS_ID_BIRTH, datasets["birth"]["id"])
       } else {

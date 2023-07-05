@@ -21,3 +21,5 @@ alternatives:
 3, because 1 is too much work (when narrow it becomes a hamburger menu w/ totally different usability) and 2 is messing up the code.
 
 ## Consequences
+
+In retrospect: the menu doesn't lend itself to be used in an SPA - i.e. is not changeable during runtime. This means that implementing highlighting selected items is of not exactly justifiable effort.

@@ -31,6 +31,11 @@ export const MS = {
   TXT_BY_LBL_CNEU: "Citizens of a non-EU country",
   TXT_BY_LBL_BNAT: "Native-born",
   TXT_BY_LBL_BEU: "Born in another EU country",
-  TXT_BY_LBL_BNEU: "Born in a non-EU country"
+  TXT_BY_LBL_BNEU: "Born in a non-EU country",
+
+  TXT_GRP_C: "By country of citizenship",   //must be similar to yaml. TODO: take from there
+  TXT_GRP_B: "By country of birth",
+
+  TXT_NOT_AVAILABLE: "N/A"
 
 }

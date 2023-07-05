@@ -51,3 +51,7 @@ export function selectFav() {
 export function getSelected() {
   return document.getElementById(id).selected
 }
+
+export function getFavoriteStar() {
+  return document.getElementById(id).favoriteStar
+}

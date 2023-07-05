@@ -1,10 +1,10 @@
-# 1. Config and data retrieval
+# 2. Config and data retrieval
 
 Date: 2023-03
 
 ## Status
 
-WIP
+Accepted
 
 ## Context
 

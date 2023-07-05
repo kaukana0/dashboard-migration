@@ -1,26 +1,9 @@
 /*
-inter-box constraints for geo-select and by-Select
 
-in line display:
-  by-select logic: when click any birth, citizenships get deselected and vice versa
-  constraint logic (spanning 2 selectBoxes):
-    when =1 by-selector, all countries are selectable
-    when >1 by-selector, make sure #by-selections * #country-selections < 7
-    always let users know how many are STILL (not how many are MAX) "selectable" in both select boxes
-      let them know by a little annotation above the box' right corner
+this implements the constraint logic - interdependend between both, geo and by-select boxes.
 
-when switching to vertically connected dot plot (VCDP) display:
-  country-select: 
-    it gets disabled
-    all get automatically selected
-    "selectable" info is hidden
-  by-select: 
-    "selectable" info is hidden
-    by-select logic same as in line
-    constraint logic like in line is disabled
+for an overview of the constraints, see selection-logic-overview.ods
 
-when switching back to line:
-  - ...
 */
 
 let bySelect
@@ -31,21 +14,20 @@ export function setBySelect(el) {bySelect=el}
 export function setGeoSelect(el) {geoSelect=el}
 
 // onSelect
-export function geoSelectionAllowed() {
+export function geoSelectionAllowed(k,v) {
   if(!bySelect || !geoSelect) {return true}
-  const numberOfGeoSelections = geoSelect.selected.size+1
-  const numberOfBySelections = bySelect.selected.size
-  return numberOfGeoSelections * numberOfBySelections <= 6
+  const isDeselection = Array.from( geoSelect.selected.keys() ).includes(k)
+  if(isDeselection) {
+    return true
+  } else {
+    const numberOfGeoSelections = geoSelect.selected.size+1
+    const numberOfBySelections = bySelect.selected.size
+    return numberOfGeoSelections * numberOfBySelections <= 6
+  }
 }
 
 // onSelect
 export function bySelectionAllowed(numberOfSelections) {
-  if(!bySelect || !geoSelect) {return true}
-  const numberOfGeoSelections = geoSelect.selected.size
-  const numberOfBySelections = numberOfSelections===1 ? bySelect.selected.size+1 : numberOfSelections
-  return numberOfGeoSelections * numberOfBySelections <= 6
+  if(!bySelect || !geoSelect || numberOfSelections===1) {return true}
+  return geoSelect.selected.size * numberOfSelections <= 6
 }
-
-export function getNumberOfSelectableForBySelect() {return 6}
-
-export function getNumberOfSelectableForGeoSelect() {return 6}

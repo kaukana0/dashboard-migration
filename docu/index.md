@@ -12,6 +12,10 @@
 
 # Technical details
 
+## the big idea
+
+[the big idea](./technical/theBigIdea.md)
+
 ## components
 
 ![components](./technical/components.svg)

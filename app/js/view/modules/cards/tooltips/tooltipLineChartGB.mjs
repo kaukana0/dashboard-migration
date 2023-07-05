@@ -12,9 +12,8 @@ export default function tooltip(context, d, defaultTitleFormat, defaultValueForm
 		retVal += `<div class="t-b-cl t-text-group-header">${key}</div>
 								<div class="t-b-cr"></div>`
 		val.forEach(o=>{
-			const val = Number(o.val).toFixed(1) + (context.suffixText?context.suffixText:"")
 			retVal += `<div class="t-b-cl t-text-entry"><span class="colorIcon" style="background-color:${color(d[i++])};"></span>${o.text}</div>
-									<div class="t-b-cr t-text-val">${val}</div>`
+									<div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText)}</div>`
 		})
 	}
 
@@ -26,7 +25,7 @@ function getGroups(d) {
 	d.forEach(e=>{
 		const country = e.name.substr(-2)
 		const by = e.name.substr(0,e.name.length-4)
-		const o = {text:country,val:e.value}
+		const o = {text:country,value:e.value}
 		if(groups.has(by)) {
 			groups.get(by).push(o)
 		} else {

@@ -1,3 +1,6 @@
+import {MS} from "../../../common/magicStrings.mjs"
+
+
 export function pre(headerText) {
   let retVal = ""
 
@@ -75,4 +78,12 @@ border-radius: 5px;
 
 </style>
 `
+}
+
+export function getValText(val, suffix) {
+	if(val===null) {
+		return MS.TXT_NOT_AVAILABLE
+	} else {
+		return Number(val).toFixed(1) + (suffix?suffix:"")
+	}
 }

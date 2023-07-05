@@ -4,7 +4,7 @@ Date: 2023-06
 
 ## Status
 
-WIP
+Accepted
 
 ## Context
 

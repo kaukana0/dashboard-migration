@@ -84,7 +84,7 @@ export function getIdFromName(name) {
 	return MS.CARD_DOM_ID_PREFIX + name.replaceAll(" ", "-")		// or a hash
 }
 
-// note: by-select's counterpart - the geo box - is set and handeled somewhere else!
+// note: by-select's counterpart (in terms of constraints) - the geo box - is set and handeled somewhere else!
 function addBoxEventHandlers(id, boxes, selectedCallback) {
 	for(const box of boxes) {
 
@@ -92,7 +92,6 @@ function addBoxEventHandlers(id, boxes, selectedCallback) {
 
 		domEl.onSelect = function(k,v) {
 			if(box.dimId === MS.BY_SELECT_ID) {
-				BySelectConstraint.ensureCorrectInterGroupSelection(domEl,k,v)
 				return CommonConstraints.bySelectionAllowed( BySelectConstraint.howManyAreGoingToBeSelected(k) )
 			}
 			return true
@@ -100,7 +99,9 @@ function addBoxEventHandlers(id, boxes, selectedCallback) {
 
 		domEl.onSelected = function(k,v) {
 			if(box.dimId === MS.BY_SELECT_ID) {
-				BySelectConstraint.tryToSelectWholeGroup(domEl,k,v)
+				if(!BySelectConstraint.tryToSelectWholeGroup(domEl,k,v)) {
+					domEl.selected = [k]
+				}
 			}
 
 			// assumption: a caller is not interested in one box's selection right here, so omit passing on k,v.
@@ -148,7 +149,7 @@ export function iterate(containerId, callback) {
 }
 
 export function setData(cardId, data) {
-	Range.setMinMax(document.getElementById("timeRange"+cardId), data.time[0], data.time[data.time.length-1])
+	Range.setMinMax(document.getElementById("timeRange"+cardId), Number(data.time[0]), Number(data.time[data.time.length-1]))
 	document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, data.timeSeries.labels)
 	document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
 	document.getElementById(cardId).stopIndicateLoading()
@@ -163,6 +164,7 @@ export function setDefaultSelections(node) {
 	for (let i = 0; i < elements.length; i++) {
 		elements[i].selectDefaults()
 	}
+	//TODO: range
 }
 
 export function expand(card) {

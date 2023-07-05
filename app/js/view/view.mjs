@@ -11,13 +11,16 @@ import Fetcher from "../model/fetcher.mjs"
 import {getMapFromObject} from "./modules/selects/util.mjs"
 import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
 
+// both used to decide when to update one instead of all cards
 let currentlyExpandedId = null
+let currentFavoriteStar = ""
 
 export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
   const menuItems = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, menuItems)
   GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromObject(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
+  currentFavoriteStar = GeoSelect.getFavoriteStar()
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, menuItems, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {
@@ -97,10 +100,11 @@ function onCardExpand(id) {
   window.scrollTo(0, 0);
 
   document.getElementById("timeRange"+id).style.display="inline"
+
+  currentFavoriteStar = GeoSelect.getFavoriteStar()
 }
 
 function onCardContract(id) {
-  currentlyExpandedId = null
 
   GeoSelect.moveToMainArea()
   document.body.style.overflowY="auto"
@@ -115,9 +119,15 @@ function onCardContract(id) {
 
   CommonConstraints.setBySelect(null)			// effectively disable those constraints
 
-  onSelectedForAllCards()
+  if(GeoSelect.getFavoriteStar() === currentFavoriteStar) {
+    onSelectedForOneCard(id)
+  } else {
+    onSelectedForAllCards()
+  }
 
   document.getElementById("timeRange"+id).style.display="none"
 
   // todo: scroll back to previous pos
+
+  currentlyExpandedId = null
 }

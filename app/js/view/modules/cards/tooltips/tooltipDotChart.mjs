@@ -14,9 +14,8 @@ export function tooltipFn(context) {
 			let retVal = Common.pre(headerText)
 			
 			d.forEach(o=>{
-					const val = Number(o.value).toFixed(1) + (context.suffixText?context.suffixText:"")
 					retVal += `<div class="t-b-cl t-text-entry"><span class="colorIcon" style="background-color:${color(o)};"></span>${context.seriesLabels.get(o.id)}</div>
-										 <div class="t-b-cr t-text-val">${val}</div>`
+										 <div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText)}</div>`
 				})
 
 			return retVal + "</div>"
