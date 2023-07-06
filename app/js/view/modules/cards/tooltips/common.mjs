@@ -70,6 +70,7 @@ padding: 4px;
 .t-text-val {
 text-align:right;
 padding-right:5px;
+padding-top:4px;
 }
 
 #chart1 > div > table > tbody td.name > span {

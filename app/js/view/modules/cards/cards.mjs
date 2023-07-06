@@ -6,17 +6,10 @@ That content is:
 - time range slider
 - links (cookies etc.)
 
-Expand/Collapse logic:
-
-- on collapse:
-	- country selects favourited entry
-	- bySelect selects the default (eg first three entries)
-	- switch to line display
-
-- on expand:
-	- calculate # of by-selects
-	- deselect countries if neccessary
-
+on collapse:
+- country selects favourited entry
+- bySelect selects the default (eg first three entries)
+- switch to line display
 */
 
 
@@ -27,13 +20,18 @@ import * as CommonConstraints from "../selects/commonConstraints.mjs"
 import {MS} from "../../../common/magicStrings.mjs"
 import * as Url from "../../../model/url.mjs"
 import * as Util from "../../../../components/util/util.mjs"
+import * as UtilSelect from "../selects/util.mjs"
 import * as TooltipLine from "./tooltips/tooltipLineChart.mjs"
 import * as TooltipDot from "./tooltips/tooltipDotChart.mjs"
 import * as TooltipCommon from "./tooltips/common.mjs"
 import "../../../../components/range/range.mjs"							// the WebComponent
 import * as Range from "./range.mjs"
 
+
 let categories
+let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't come from processors/data but from config
+// the more you know: Griechenland verwendet in europäischen Publikationen nicht den ISO 3166 Schlüssel GR für die Länderkennung, sondern die eigene Abkürzung EL von "Hellas".
+
 
 export function create(containerId, cfg, _categories, selectedCallback, expandCallback, contractCallback) {
 	let retVal = []
@@ -56,6 +54,8 @@ export function create(containerId, cfg, _categories, selectedCallback, expandCa
 			retVal.push(id)
 		}
 	}
+
+	countryNamesFull = UtilSelect.getMapFromObject(cfg.codeList.countries)
 
 	return retVal
 }
@@ -150,8 +150,8 @@ export function iterate(containerId, callback) {
 
 export function setData(cardId, data) {
 	Range.setMinMax(document.getElementById("timeRange"+cardId), Number(data.time[0]), Number(data.time[data.time.length-1]))
-	document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, data.timeSeries.labels)
-	document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, data.countrySeries.labels)
+	document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, countryNamesFull)
+	document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, countryNamesFull)
 	document.getElementById(cardId).stopIndicateLoading()
 }
 

@@ -9,7 +9,7 @@ export default function tooltip(context, d, defaultTitleFormat, defaultValueForm
 	const groups = getGroups(d)
 	let i = 0
 	for (const [key, val] of groups.entries()) {
-		retVal += `<div class="t-b-cl t-text-group-header">${key}</div>
+		retVal += `<div class="t-b-cl t-text-group-header">${context.seriesLabels.get(key)}</div>
 								<div class="t-b-cr"></div>`
 		val.forEach(o=>{
 			retVal += 
