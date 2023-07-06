@@ -40,7 +40,8 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
     for(let geo=0; geo<geoDimMax; geo++) {
       geoLabel = Object.keys(inputDataFromRequest.dimension.geo.category.index)[geo]
       if(!selectedGeo.find(e=>e===geoLabel)) continue   // filter what isn't selected
-      const ll = [TM.getByLabelShort(byDim, byLabel)+", "+geoLabel]   // is unique. used by chart as key for tooltip label mapping to text.
+      // combi of by/country is a unique compound key. used as display text by chart tooltip
+      const ll = [TM.getByLabel(byDim, byLabel)+", "+geoLabel] 
       for(let time=0; time<timeDimMax; time++) {
         if(output.time[time]<selectedTime) continue  // filter anything earlier
         let bla = new Array(inputDataFromRequest.size.length)

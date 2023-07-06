@@ -20,9 +20,8 @@ import { process as defineCountriesOrder } from "../../components/processorCount
 import { process as defineCountryColors } from "../../components/processorCountryColors/countryColors.mjs"
 import { process as extractTimeYearly } from "./pipelineProcessors/timeYearly.mjs"
 import { process as extractTimeSeriesData } from "./pipelineProcessors/timeSeries.mjs"
-import { process as createTimeSeriesLabels } from "./pipelineProcessors/timeSeriesLabels.mjs"
 import { process as extractCountrySeriesData } from "./pipelineProcessors/countrySeries.mjs"
-import { process as createCountrySeriesLabels } from "./pipelineProcessors/countrySeriesLabels.mjs"
+// this can be pretty helpful for debugging/investigation purposes
 import { process as analyzeIncomingData } from "./pipelineProcessors/analyze.mjs"
 
 /*
@@ -58,10 +57,8 @@ export default function go(urls, callback) {
 					store: (data) => Cache.store(strippedUrl, data),
 					restore: (id) => Cache.restore(id)
 				},
-				processors: [defineCountryColors, extractTimeYearly,
-					extractTimeSeriesData, createTimeSeriesLabels,
-					defineCountriesOrder, extractCountrySeriesData, createCountrySeriesLabels,
-					analyzeIncomingData],
+				processors: [defineCountryColors, extractTimeYearly, extractTimeSeriesData,
+					defineCountriesOrder, extractCountrySeriesData,	analyzeIncomingData],
 				data: fullUrl
 			}
 		)

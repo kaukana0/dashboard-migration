@@ -12,8 +12,12 @@ export default function tooltip(context, d, defaultTitleFormat, defaultValueForm
 		retVal += `<div class="t-b-cl t-text-group-header">${key}</div>
 								<div class="t-b-cr"></div>`
 		val.forEach(o=>{
-			retVal += `<div class="t-b-cl t-text-entry"><span class="colorIcon" style="background-color:${color(d[i++])};"></span>${o.text}</div>
-									<div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText)}</div>`
+			retVal += 
+			`<div class="t-b-cl t-text-entry">
+				<span class="colorIcon" style="background-color:${color(d[i++])};"></span>
+				${o.text}
+			</div>
+			<div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText)}</div>`
 		})
 	}
 

@@ -29,7 +29,7 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   const blax = Object.keys(inputDataFromRequest.dimension[byDim].category.index)
   for(let by=0; by<blax.length; by++) {
     const xByCode = Object.keys(inputDataFromRequest.dimension[byDim].category.index)[by]
-    const ll = [xByCode]
+    const ll = [TM.getByLabel(byDim, xByCode)]    // used as display text by chart tooltip
 
     // the order of countries comes from a processor which was run before this processor
     output.countryOrder.forEach( country => {

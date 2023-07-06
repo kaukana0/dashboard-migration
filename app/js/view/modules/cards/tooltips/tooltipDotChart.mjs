@@ -14,8 +14,13 @@ export function tooltipFn(context) {
 			let retVal = Common.pre(headerText)
 			
 			d.forEach(o=>{
-					retVal += `<div class="t-b-cl t-text-entry"><span class="colorIcon" style="background-color:${color(o)};"></span>${context.seriesLabels.get(o.id)}</div>
-										 <div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText)}</div>`
+					retVal += 
+					`<div class="t-b-cl t-text-entry">
+						<span class="colorIcon" style="background-color:${color(o)};"></span>
+						${o.name}
+					</div>
+					<div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText)}
+					</div>`
 				})
 
 			return retVal + "</div>"
