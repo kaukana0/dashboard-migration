@@ -7,14 +7,13 @@ export default function tooltip(context, d, defaultTitleFormat, defaultValueForm
 	let retVal = Common.pre(headText)
 
 	const groups = getGroups(d)
-	let i = 0
 	for (const [key, val] of groups.entries()) {
 		retVal += `<div class="t-b-cl t-text-group-header">${context.seriesLabels.get(key)}</div>
 								<div class="t-b-cr"></div>`
 		val.forEach(o=>{
 			retVal += 
 			`<div class="t-b-cl t-text-entry">
-				<span class="colorIcon" style="background-color:${color(d[i++])};"></span>
+				<span class="colorIcon" style="background-color:${color(d[o.index])};"></span>
 				${o.text}
 			</div>
 			<div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText)}</div>`
@@ -26,10 +25,11 @@ export default function tooltip(context, d, defaultTitleFormat, defaultValueForm
 
 function getGroups(d) {
 	const groups = new Map()	// by country
+	let i = 0
 	d.forEach(e=>{
 		const country = e.name.substr(-2)
 		const by = e.name.substr(0,e.name.length-4)
-		const o = {text:by,value:e.value}
+		const o = {text:by,value:e.value,index:i++}		// need the original index for d access later
 		if(groups.has(country)) {
 			groups.get(country).push(o)
 		} else {

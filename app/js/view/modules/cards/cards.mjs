@@ -41,7 +41,7 @@ export function create(containerId, cfg, _categories, selectedCallback, expandCa
 	for(const i in cfg.indicators) {
 		const merged = Util.mergeObjects(cfg.indicatorBase, cfg.indicators[i])
 		const id = getIdFromName(merged.name)
-		//console.log("merged cfg for indicator", merged.name, merged, id)
+		console.debug("merged cfg for indicator", merged.name, merged, id)
 
 		if(!merged.ignore) {
 			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
@@ -50,6 +50,7 @@ export function create(containerId, cfg, _categories, selectedCallback, expandCa
 				addBoxEventHandlers(id, boxes, selectedCallback)
 				insertBoxes(id, boxes)
 				setupCard(id, merged, expandCallback, contractCallback, selectedCallback)
+				setupRange(id, merged.dimensions.ui.range[0], selectedCallback)
 			})
 			retVal.push(id)
 		}
@@ -60,7 +61,7 @@ export function create(containerId, cfg, _categories, selectedCallback, expandCa
 	return retVal
 }
 
-function setupCard(id, merged, expandCallback, contractCallback, selectedCallback) {
+function setupCard(id, merged, expandCallback, contractCallback) {
 	const card = document.getElementById(id)
 	card.addEventListener("expanding", () => { expandCallback(id) })
 	card.addEventListener("contracting", () => { contractCallback(id) })
@@ -74,10 +75,14 @@ function setupCard(id, merged, expandCallback, contractCallback, selectedCallbac
 	card.tooltipFn1 = TooltipLine.tooltipFn
 	card.tooltipFn2 = TooltipDot.tooltipFn
 	card.tooltipCSS = TooltipCommon.CSS()
-	Range.setCallbacks(document.getElementById("timeRange"+id), () => {
+}
+
+function setupRange(id, values, selectedCallback) {
+	Range.setCallbacks(id, () => {
 		TooltipDot.setHeader( document.getElementById("timeRange"+id).valuel )
 		selectedCallback(id)
 	})
+	Range.setValuesFromConfig(id, values.start, values.end, values.current)
 }
 
 export function getIdFromName(name) {
@@ -148,11 +153,63 @@ export function iterate(containerId, callback) {
 	}
 }
 
-export function setData(cardId, data) {
-	Range.setMinMax(document.getElementById("timeRange"+cardId), Number(data.time[0]), Number(data.time[data.time.length-1]))
-	document.getElementById(cardId).setData1(data.timeSeries.data,    data.colorPalette, countryNamesFull)
-	document.getElementById(cardId).setData2(data.countrySeries.data, data.colorPalette, countryNamesFull)
+export function setData(cardId, geoSelections, data) {
+	Range.setMinMax(cardId, Number(data.time[0]), Number(data.time[data.time.length-1]))
+	document.getElementById(cardId).setData1(data.timeSeries.data,    countryNamesFull, data.colorPalette, getColors(true,  geoSelections) )
+	document.getElementById(cardId).setData2(data.countrySeries.data, countryNamesFull, data.colorPalette, getColors(false, geoSelections) )
 	document.getElementById(cardId).stopIndicateLoading()
+}
+
+/* #geoSelections applicable for line chart:
+	>2 = assign color from palette by selection (one color after another), indepenent of country
+	2 = the same 2 (3-)sets of colors, the first set for the 1st selected contry, 2nd for the 2nd selected
+	1 = assign 1 3-set of colors
+
+	in any case, EU always gets the same 3-set of colors.
+
+	returns object, key=by+country val=color
+*/
+function getColors(forLineChart, geoSelections) {
+	const retVal = {}
+
+	const colorsEU = { dark:"#0e47cb", mid:"#082b7a", light:"#388ae2" }
+	const colorsSet1 = { dark:"#734221", mid:"#c66914", light:"#dfb18b" }
+	const colorsSet2 = { dark:"#005500", mid:"#008800", light:"#00BB00" }
+
+	if(forLineChart) {
+		const geoKey = geoSelections.keys().next().value
+		if(geoSelections.size===1) {
+			retVal[MS.TXT_BY_LBL_CNAT+", "+geoKey] = colorsSet1.dark
+			retVal[MS.TXT_BY_LBL_CEU+", "+geoKey] = colorsSet1.mid
+			retVal[MS.TXT_BY_LBL_CNEU+", "+geoKey] = colorsSet1.light
+		} else {
+			if(geoSelections.size===2) {
+				const geoKey2 = Array.from(geoSelections.keys())[1]
+				retVal[MS.TXT_BY_LBL_CNAT+", "+geoKey] = colorsSet2.dark
+				retVal[MS.TXT_BY_LBL_CEU+", "+geoKey] = colorsSet2.mid
+				retVal[MS.TXT_BY_LBL_CNEU+", "+geoKey] = colorsSet2.light
+
+				retVal[MS.TXT_BY_LBL_CNAT+", "+geoKey2] = colorsSet1.dark
+				retVal[MS.TXT_BY_LBL_CEU+", "+geoKey2] = colorsSet1.mid
+				retVal[MS.TXT_BY_LBL_CNEU+", "+geoKey2] = colorsSet1.light
+			} else {
+				// no operation; meaning no fixed colors, meaning default dynamic color assignment mechanism (from chart WebCompoment)
+			}
+		}
+		retVal[MS.TXT_BY_LBL_CNAT+", EU"] = colorsEU.dark
+		retVal[MS.TXT_BY_LBL_CEU+", EU"] = colorsEU.mid
+		retVal[MS.TXT_BY_LBL_CNEU+", EU"] = colorsEU.light
+	} else {
+		// TODO: EU different
+		retVal[MS.TXT_BY_LBL_CNAT] = colorsSet1.dark
+		retVal[MS.TXT_BY_LBL_CEU] =  colorsSet1.mid
+		retVal[MS.TXT_BY_LBL_CNEU] = colorsSet1.light
+
+		retVal[MS.TXT_BY_LBL_BNAT] = colorsSet1.dark
+		retVal[MS.TXT_BY_LBL_BEU] = colorsSet1.mid
+		retVal[MS.TXT_BY_LBL_BNEU] = colorsSet1.light
+	}
+	return retVal
 }
 
 export function contractAll() {
@@ -164,13 +221,12 @@ export function setDefaultSelections(node) {
 	for (let i = 0; i < elements.length; i++) {
 		elements[i].selectDefaults()
 	}
-	//TODO: range
+	//TODO: Range
 }
 
 export function expand(card) {
 	contractAll()
 	card.expand(document.getElementById("anchorSelectCountryOutsideOfCard"))
-	document.getElementById("timeRange"+card.getAttribute("id")).style.display="inline"
 }
 
 export function filter(category) {

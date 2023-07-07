@@ -3,12 +3,13 @@
 export function getCardFragment(id, title, urlFrag, anchorElDomId) {
   return `
     <chart-card id="${id}" header="${title}" urlFrag="${urlFrag}" anchor="anchorExpandedCard">
+
       <div slot="slotTop" style="height:50px; display:flex;">
         <div id="${anchorElDomId}${id}"></div>
       </div>
 
       <div slot="slotBottom">
-        <range-slider single id="timeRange${id}" thumbWidthInPixel="130" style="width: 100%; display: none;"></range-slider>
+        <range-slider single id="timeRange${id}" thumbWidthInPixel="130" style="width: 100%;"></range-slider>
       </div>
 
       <div slot="slotBottomLeft">

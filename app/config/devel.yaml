@@ -1,4 +1,4 @@
-# yaml schema v0.4.0 - for migration dashboard 
+# yaml schema v0.5.0 - for migration dashboard 
 
 codeList:
 
@@ -74,12 +74,6 @@ codeList:
   unit: &unit
     label: "% of Something"
     code: "PC"
-  timeStart: &timeStart
-    label: "start time"
-    code: "2020"
-  timeEnd: &timeEnd
-    label: "end time"
-    code: "2022"
   # this determines the contents and order of UI elements, except for the chart.
   # the country order for that is determined through processorCountryOrder.
   countries: &countries   #ISO 3166-1 alpha2
@@ -159,7 +153,6 @@ articleLinks:
     url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migration_and_migrant_population_statistics
   employment: &articleLinkEmployment
     url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_%E2%80%93_labour_market_indicators
-  # demography + employment = deployment ?
   education: &articleLinkEducation
     url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_education
   si: &articleLinkSocialInclusion
@@ -208,11 +201,12 @@ indicatorBase:
               - *nativeB
             groups:
               *bySelectGroupTitles
-      range:
+      range:              # start/end from requested data may override this
         - time:
-          start: *timeStart
-          end: *timeEnd
-    nonUi:          # dimensions which are request-relevant and not represented by an ui element
+          start: 2010
+          end: 0          # if end is null then current year + current is calculated (current has to be negative)
+          current: -10
+    nonUi:                # dimensions which are request-relevant and not represented by an ui element
       freq:
       - *freq
       unit:
@@ -264,6 +258,14 @@ indicators:
       birth:
         id: LFSA_ERGACOB
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/d642741b-30e8-45d3-b160-2abb17d8a2c9?lang=en
+    dimensions:
+      ui:
+        range:
+          - time:
+            start: 2017
+            end: 2022
+            current: 2018
+
 
   - name: Activity rate
     category: Employment

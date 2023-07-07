@@ -23,7 +23,7 @@ export function createUIElements(cfg, triggerInitialRequest) {
   currentFavoriteStar = GeoSelect.getFavoriteStar()
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, menuItems, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
-  if(triggerInitialRequest) {
+  if(triggerInitialRequest) {   // TODO: not everything at once. start w/ what is in user's view, do the other stuff in the background quietly/slowly one by one
     requestAnimationFrame(()=>onSelectedForAllCards())
   }
 }
@@ -67,7 +67,7 @@ function fetch(cardId) {
   Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
   Url.Affix.post += "time=2019"  // TODO: take from UI element
   const bla = {} ; bla[MS.BY_SELECT_ID] = Url.getBySelectFrag
-  Fetcher( Url.buildFrag(boxes,dataset,bla), Cards.setData.bind(this, cardId) )
+  Fetcher( Url.buildFrag(boxes,dataset,bla), Cards.setData.bind(this, cardId, GeoSelect.getSelected()) )
   return boxes.selections.get(MS.BY_SELECT_ID)
 }
 
@@ -99,8 +99,6 @@ function onCardExpand(id) {
   document.body.style.overflowX="hidden"
   window.scrollTo(0, 0);
 
-  document.getElementById("timeRange"+id).style.display="inline"
-
   currentFavoriteStar = GeoSelect.getFavoriteStar()
 }
 
@@ -125,9 +123,9 @@ function onCardContract(id) {
     onSelectedForAllCards()
   }
 
-  document.getElementById("timeRange"+id).style.display="none"
-
   // todo: scroll back to previous pos
+
+  //Range.reset(id)
 
   currentlyExpandedId = null
 }

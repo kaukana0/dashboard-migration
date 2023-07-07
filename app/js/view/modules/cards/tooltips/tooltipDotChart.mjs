@@ -13,7 +13,7 @@ export function tooltipFn(context) {
 		contents: function(d, defaultTitleFormat, defaultValueFormat, color) {
 			let retVal = Common.pre(headerText)
 
-			//  :-o
+			//  access map via index  (⊙_☉)
 			retVal += `<div class="t-b-cl t-text-group-header">
 				${ context.seriesLabels.get( Array.from(context.seriesLabels.keys())[ d[0].index ] ) }
 			</div>
