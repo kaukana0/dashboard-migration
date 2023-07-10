@@ -15,6 +15,7 @@ export function setValuesFromConfig(cardId, _min, _max, _current) {
 	const el = document.getElementById("timeRange"+cardId)
 	const max = _max>0 ? _max : new Date().getFullYear()
 	const current = _current > 0 ? _current : max + _current
+	el.setAttribute("mingap", 0)
 	el.setAttribute("min", _min)
 	el.setAttribute("max", max)
 	el.setAttribute("valuer", max)
