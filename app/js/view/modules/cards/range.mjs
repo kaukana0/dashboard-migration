@@ -1,6 +1,5 @@
 // the ranges are somehow not part of a chartCard component
 // because they're put into a card via slot mechanism.
-// that's why we need to manage all the ranges externally.
 
 
 
@@ -21,6 +20,7 @@ export function setValuesFromConfig(cardId, _min, _max, _current) {
 	el.setAttribute("valuer", max)
 	el.setAttribute("valuel", current)
 	el.setAttribute("textl", current)
+	el.setAttribute("defaultValue", current)
 }
 
 export function setMinMax(cardId, min, max) {
@@ -41,6 +41,8 @@ export function setMinMax(cardId, min, max) {
 		if( el.getAttribute("valuel")<setMin ) {el.setAttribute("valuel", setMin)}
 		if( el.getAttribute("valuel")>setMax ) {el.setAttribute("valuel", setMax)}
 
+		el.setAttribute("defaultValue", el.getAttribute("valuel"))
+
 		el.setAttribute("isinited","trü")
 	}
 }
@@ -55,7 +57,7 @@ export function reset(cardId) {
 	const el = document.getElementById("timeRange"+cardId)
 	const max = el.getAttribute("max")
 	const min = el.getAttribute("min")
-	const left = (max-10) > min ? (max-10) : min
-	el.setAttribute("valuel", left)
-	el.setAttribute("textl", left)
+	const defaultValue = el.getAttribute("defaultValue")
+	el.setAttribute("valuel", defaultValue)
+	el.setAttribute("textl", defaultValue)
 }

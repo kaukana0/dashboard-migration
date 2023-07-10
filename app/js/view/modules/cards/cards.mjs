@@ -168,6 +168,8 @@ export function setData(cardId, geoSelections, data) {
 	in any case, EU always gets the same 3-set of colors.
 
 	returns object, key=by+country val=color
+
+	TODO: surely this can be written a whole lot nicer, yes!?
 */
 function getColors(forLineChart, geoSelections) {
 	const retVal = {}
@@ -182,16 +184,26 @@ function getColors(forLineChart, geoSelections) {
 			retVal[MS.TXT_BY_LBL_CNAT+", "+geoKey] = colorsSet1.dark
 			retVal[MS.TXT_BY_LBL_CEU+", "+geoKey] = colorsSet1.mid
 			retVal[MS.TXT_BY_LBL_CNEU+", "+geoKey] = colorsSet1.light
+
+			retVal[MS.TXT_BY_LBL_BNAT+", "+geoKey] = colorsSet1.dark
+			retVal[MS.TXT_BY_LBL_BEU+", "+geoKey] = colorsSet1.mid
+			retVal[MS.TXT_BY_LBL_BNEU+", "+geoKey] = colorsSet1.light
 		} else {
 			if(geoSelections.size===2) {
 				const geoKey2 = Array.from(geoSelections.keys())[1]
 				retVal[MS.TXT_BY_LBL_CNAT+", "+geoKey] = colorsSet2.dark
 				retVal[MS.TXT_BY_LBL_CEU+", "+geoKey] = colorsSet2.mid
 				retVal[MS.TXT_BY_LBL_CNEU+", "+geoKey] = colorsSet2.light
+				retVal[MS.TXT_BY_LBL_BNAT+", "+geoKey] = colorsSet2.dark
+				retVal[MS.TXT_BY_LBL_BEU+", "+geoKey] = colorsSet2.mid
+				retVal[MS.TXT_BY_LBL_BNEU+", "+geoKey] = colorsSet2.light
 
 				retVal[MS.TXT_BY_LBL_CNAT+", "+geoKey2] = colorsSet1.dark
 				retVal[MS.TXT_BY_LBL_CEU+", "+geoKey2] = colorsSet1.mid
 				retVal[MS.TXT_BY_LBL_CNEU+", "+geoKey2] = colorsSet1.light
+				retVal[MS.TXT_BY_LBL_BNAT+", "+geoKey2] = colorsSet1.dark
+				retVal[MS.TXT_BY_LBL_BEU+", "+geoKey2] = colorsSet1.mid
+				retVal[MS.TXT_BY_LBL_BNEU+", "+geoKey2] = colorsSet1.light
 			} else {
 				// no operation; meaning no fixed colors, meaning default dynamic color assignment mechanism (from chart WebCompoment)
 			}
@@ -199,6 +211,10 @@ function getColors(forLineChart, geoSelections) {
 		retVal[MS.TXT_BY_LBL_CNAT+", EU"] = colorsEU.dark
 		retVal[MS.TXT_BY_LBL_CEU+", EU"] = colorsEU.mid
 		retVal[MS.TXT_BY_LBL_CNEU+", EU"] = colorsEU.light
+
+		retVal[MS.TXT_BY_LBL_BNAT+", EU"] = colorsEU.dark
+		retVal[MS.TXT_BY_LBL_BEU+", EU"] = colorsEU.mid
+		retVal[MS.TXT_BY_LBL_BNEU+", EU"] = colorsEU.light
 	} else {
 		// TODO: EU different
 		retVal[MS.TXT_BY_LBL_CNAT] = colorsSet1.dark

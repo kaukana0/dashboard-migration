@@ -4,6 +4,7 @@ create UI, handle prominent events, initiate data fetching and data forwarding
 
 import * as Cards from "./modules/cards/cards.mjs"
 import * as GeoSelect from "./modules/selects/geoSelect.mjs"
+import * as Range from "./modules/cards/range.mjs"
 import {MS} from "../common/magicStrings.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../model/url.mjs"
@@ -97,9 +98,14 @@ function onCardExpand(id) {
   GeoSelect.moveIntoCard(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
   document.body.style.overflowY="hidden"
   document.body.style.overflowX="hidden"
-  window.scrollTo(0, 0);
+  window.scrollTo(0, 0)
 
   currentFavoriteStar = GeoSelect.getFavoriteStar()
+
+  // this is done here not because of resetting to original value,
+  // but to let range WebComponent calculate and display the correct slider position
+  // note: setting pos during display:none has no effect
+  Range.reset(id)
 }
 
 function onCardContract(id) {
@@ -107,6 +113,8 @@ function onCardContract(id) {
   GeoSelect.moveToMainArea()
   document.body.style.overflowY="auto"
   document.body.style.overflowX="auto"
+
+  Range.reset(id)
 
   // do this after moving geo-select out, because then it's not affected by
   // setDefaultSelections call.
@@ -124,8 +132,6 @@ function onCardContract(id) {
   }
 
   // todo: scroll back to previous pos
-
-  //Range.reset(id)
 
   currentlyExpandedId = null
 }
