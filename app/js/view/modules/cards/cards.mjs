@@ -33,7 +33,7 @@ let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't 
 // the more you know: Griechenland verwendet in europäischen Publikationen nicht den ISO 3166 Schlüssel GR für die Länderkennung, sondern die eigene Abkürzung EL von "Hellas".
 
 
-export function create(containerId, cfg, _categories, selectedCallback, expandCallback, contractCallback) {
+export function create(containerId, cfg, _categories, selectedCallback, onCardExpand, onCardContract) {
 	let retVal = []
 
 	categories = _categories
@@ -49,7 +49,7 @@ export function create(containerId, cfg, _categories, selectedCallback, expandCa
 				const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, merged.datasets)
 				addBoxEventHandlers(id, boxes, selectedCallback)
 				insertBoxes(id, boxes)
-				setupCard(id, merged, expandCallback, contractCallback, selectedCallback)
+				setupCard(id, merged, onCardExpand, onCardContract, selectedCallback)
 				setupRange(id, merged.dimensions.ui.range[0], selectedCallback)
 			})
 			retVal.push(id)
@@ -61,10 +61,10 @@ export function create(containerId, cfg, _categories, selectedCallback, expandCa
 	return retVal
 }
 
-function setupCard(id, merged, expandCallback, contractCallback) {
+function setupCard(id, merged, onCardExpand, onCardContract) {
 	const card = document.getElementById(id)
-	card.addEventListener("expanding", () => { expandCallback(id) })
-	card.addEventListener("contracting", () => { contractCallback(id) })
+	card.addEventListener("expanding", () => { onCardExpand(id) })
+	card.addEventListener("contracting", () => { onCardContract(id) })
 	card.setAttribute("subtitle", merged.dimensions.nonUi.unit[0].label)
 	card.setAttribute("yLabel", merged.dimensions.nonUi.unit[0].label)
 	card.setAttribute("right1", "EU")
@@ -146,6 +146,7 @@ export function getCurrentSelections(cardId) {
 	return retVal
 }
 
+// TODO: order by current visibility (the cards in viewport before others)
 export function iterate(containerId, callback) {
 	const childs = document.getElementById(containerId).children
 	for(let i=0; i<childs.length; i++) {
@@ -237,7 +238,6 @@ export function setDefaultSelections(node) {
 	for (let i = 0; i < elements.length; i++) {
 		elements[i].selectDefaults()
 	}
-	//TODO: Range
 }
 
 export function expand(card) {

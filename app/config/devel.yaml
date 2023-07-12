@@ -205,7 +205,7 @@ indicatorBase:
         - time:
           start: 2010
           end: 0          # if end is null then current year + current is calculated (current has to be negative)
-          current: -6
+          current: -10
     nonUi:                # dimensions which are request-relevant and not represented by an ui element
       freq:
       - *freq
