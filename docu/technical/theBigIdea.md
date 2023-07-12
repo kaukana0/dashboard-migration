@@ -17,3 +17,24 @@
 - The raw data received from the back-end is cached - the key being the stripped URL.
 
 - The processors in the pipeline are aware of the full URL to be able to pick out from "too much data" only that subset which reflects what was actually selected by the user.
+
+
+# Notes
+
+
+## On page open
+
+- main.mjs -> view.mjs::createUIElements()
+- view.mjs -> cards.mjs::create()
+- cards.mjs creates N chartCards and their respective slot content (boxes defined in yaml config)
+- trigger initial loading of all data via onSelectedForAllCards()
+- when data arrives: setData1 and setData2 for the two charts for each card
+
+## chart svg
+
+billboard.js' svg element has to be resized "manually" on two occasions:
+
+- when setting data
+  - setData() -> onLoaded billboard.js callback -> resize()
+- when expanding/contracting
+  - expand/contract -> resize() -> onResized billboard.js callback -> event dispatch

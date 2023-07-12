@@ -1,4 +1,4 @@
-# 9. Chart colors
+# 10. Chart colors
 
 Date: 2023-07
 
