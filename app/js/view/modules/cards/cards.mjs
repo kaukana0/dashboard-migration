@@ -83,6 +83,7 @@ function setupRange(id, values, selectedCallback) {
 		selectedCallback(id)
 	})
 	Range.setValuesFromConfig(id, values.start, values.end, values.current)
+	TooltipDot.setHeader( document.getElementById("timeRange"+id).valuel )
 }
 
 export function getIdFromName(name) {
@@ -182,49 +183,49 @@ function getColors(forLineChart, geoSelections) {
 	if(forLineChart) {
 		const geoKey = geoSelections.keys().next().value
 		if(geoSelections.size===1) {
-			retVal[MS.TXT_BY_LBL_CNAT+", "+geoKey] = colorsSet1.dark
-			retVal[MS.TXT_BY_LBL_CEU+", "+geoKey] = colorsSet1.mid
-			retVal[MS.TXT_BY_LBL_CNEU+", "+geoKey] = colorsSet1.light
+			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_CNAT] = colorsSet1.dark
+			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_CEU] = colorsSet1.mid
+			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_CNEU] = colorsSet1.light
 
-			retVal[MS.TXT_BY_LBL_BNAT+", "+geoKey] = colorsSet1.dark
-			retVal[MS.TXT_BY_LBL_BEU+", "+geoKey] = colorsSet1.mid
-			retVal[MS.TXT_BY_LBL_BNEU+", "+geoKey] = colorsSet1.light
+			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_BNAT] = colorsSet1.dark
+			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_BEU] = colorsSet1.mid
+			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_BNEU] = colorsSet1.light
 		} else {
 			if(geoSelections.size===2) {
+				retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_CNAT] = colorsSet2.dark
+				retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_CEU] = colorsSet2.mid
+				retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_CNEU] = colorsSet2.light
+				retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_BNAT] = colorsSet2.dark
+				retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_BEU] = colorsSet2.mid
+				retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_BNEU] = colorsSet2.light
+				
 				const geoKey2 = Array.from(geoSelections.keys())[1]
-				retVal[MS.TXT_BY_LBL_CNAT+", "+geoKey] = colorsSet2.dark
-				retVal[MS.TXT_BY_LBL_CEU+", "+geoKey] = colorsSet2.mid
-				retVal[MS.TXT_BY_LBL_CNEU+", "+geoKey] = colorsSet2.light
-				retVal[MS.TXT_BY_LBL_BNAT+", "+geoKey] = colorsSet2.dark
-				retVal[MS.TXT_BY_LBL_BEU+", "+geoKey] = colorsSet2.mid
-				retVal[MS.TXT_BY_LBL_BNEU+", "+geoKey] = colorsSet2.light
-
-				retVal[MS.TXT_BY_LBL_CNAT+", "+geoKey2] = colorsSet1.dark
-				retVal[MS.TXT_BY_LBL_CEU+", "+geoKey2] = colorsSet1.mid
-				retVal[MS.TXT_BY_LBL_CNEU+", "+geoKey2] = colorsSet1.light
-				retVal[MS.TXT_BY_LBL_BNAT+", "+geoKey2] = colorsSet1.dark
-				retVal[MS.TXT_BY_LBL_BEU+", "+geoKey2] = colorsSet1.mid
-				retVal[MS.TXT_BY_LBL_BNEU+", "+geoKey2] = colorsSet1.light
+				retVal[geoKey2+", "+MS.TXT_BY_LBL_SHORT_CNAT] = colorsSet1.dark
+				retVal[geoKey2+", "+MS.TXT_BY_LBL_SHORT_CEU] = colorsSet1.mid
+				retVal[geoKey2+", "+MS.TXT_BY_LBL_SHORT_CNEU] = colorsSet1.light
+				retVal[geoKey2+", "+MS.TXT_BY_LBL_SHORT_BNAT] = colorsSet1.dark
+				retVal[geoKey2+", "+MS.TXT_BY_LBL_SHORT_BEU] = colorsSet1.mid
+				retVal[geoKey2+", "+MS.TXT_BY_LBL_SHORT_BNEU] = colorsSet1.light
 			} else {
 				// no operation; meaning no fixed colors, meaning default dynamic color assignment mechanism (from chart WebCompoment)
 			}
 		}
-		retVal[MS.TXT_BY_LBL_CNAT+", EU"] = colorsEU.dark
-		retVal[MS.TXT_BY_LBL_CEU+", EU"] = colorsEU.mid
-		retVal[MS.TXT_BY_LBL_CNEU+", EU"] = colorsEU.light
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CNAT] = colorsEU.dark
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CEU] = colorsEU.mid
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CNEU] = colorsEU.light
 
-		retVal[MS.TXT_BY_LBL_BNAT+", EU"] = colorsEU.dark
-		retVal[MS.TXT_BY_LBL_BEU+", EU"] = colorsEU.mid
-		retVal[MS.TXT_BY_LBL_BNEU+", EU"] = colorsEU.light
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BNAT] = colorsEU.dark
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BEU] = colorsEU.mid
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BNEU] = colorsEU.light
 	} else {
 		// TODO: EU different
-		retVal[MS.TXT_BY_LBL_CNAT] = colorsSet1.dark
-		retVal[MS.TXT_BY_LBL_CEU] =  colorsSet1.mid
-		retVal[MS.TXT_BY_LBL_CNEU] = colorsSet1.light
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CNAT] = colorsSet1.dark
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CEU] =  colorsSet1.mid
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CNEU] = colorsSet1.light
 
-		retVal[MS.TXT_BY_LBL_BNAT] = colorsSet1.dark
-		retVal[MS.TXT_BY_LBL_BEU] = colorsSet1.mid
-		retVal[MS.TXT_BY_LBL_BNEU] = colorsSet1.light
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BNAT] = colorsSet1.dark
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BEU] = colorsSet1.mid
+		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BNEU] = colorsSet1.light
 	}
 	return retVal
 }
