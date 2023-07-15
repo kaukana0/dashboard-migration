@@ -55,3 +55,7 @@ export function getSelected() {
 export function getFavoriteStar() {
   return document.getElementById(id).favoriteStar
 }
+
+export function isEUSelected() {
+  return document.getElementById(id).selected.keys().next().value === "EU"
+}

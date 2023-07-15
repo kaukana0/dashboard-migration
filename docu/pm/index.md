@@ -97,6 +97,13 @@ Note:
 ![](tooltip-proposal2.jpg)
 
 
+## color sets
+
+Depending on the number of countries selected, these color sets are assigned to: NON-EU Citizens, EU-Citizens, Nationals/Native born.
+
+![](color-sets.png)
+
+
 # Requirements
 
 ## general

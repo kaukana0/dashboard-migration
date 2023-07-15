@@ -75,6 +75,7 @@ function setupCard(id, merged, onCardExpand, onCardContract) {
 	card.tooltipFn1 = TooltipLine.tooltipFn
 	card.tooltipFn2 = TooltipDot.tooltipFn
 	card.tooltipCSS = TooltipCommon.CSS()
+	card.setLegendTexts([MS.TXT_BY_LBL_CNEU, MS.TXT_BY_LBL_CEU, MS.TXT_BY_LBL_CNAT])
 }
 
 function setupRange(id, values, selectedCallback) {
@@ -157,9 +158,17 @@ export function iterate(containerId, callback) {
 
 export function setData(cardId, geoSelections, data) {
 	Range.setMinMax(cardId, Number(data.time[0]), Number(data.time[data.time.length-1]))
-	document.getElementById(cardId).setData1(data.timeSeries.data,    countryNamesFull, data.colorPalette, getColors(true,  geoSelections) )
-	document.getElementById(cardId).setData2(data.countrySeries.data, countryNamesFull, data.colorPalette, getColors(false, geoSelections) )
+	document.getElementById(cardId).setData1(data.timeSeries.data,    countryNamesFull, data.colorPalette, getColorSet(true,  geoSelections) )
+	document.getElementById(cardId).setData2(data.countrySeries.data, countryNamesFull, data.colorPalette, getColorSet(false, geoSelections) )
 	document.getElementById(cardId).stopIndicateLoading()
+}
+
+export function getColorSetDefinitions() {
+	return {
+		EU: { dark:"#082b7a", mid:"#0e47cb ", light:"#388ae2" },
+		SET1: { dark:"#734221", mid:"#c66914", light:"#dfb18b" },
+		SET2: { dark:"#005500", mid:"#008800", light:"#00BB00" }
+	}
 }
 
 /* #geoSelections applicable for line chart:
@@ -173,14 +182,16 @@ export function setData(cardId, geoSelections, data) {
 
 	TODO: surely this can be written a whole lot nicer, yes!?
 */
-function getColors(forLineChart, geoSelections) {
+function getColorSet(forLineChart, geoSelections) {
 	const retVal = {}
 
-	const colorsEU = { dark:"#0e47cb", mid:"#082b7a", light:"#388ae2" }
-	const colorsSet1 = { dark:"#734221", mid:"#c66914", light:"#dfb18b" }
-	const colorsSet2 = { dark:"#005500", mid:"#008800", light:"#00BB00" }
+	const c = getColorSetDefinitions()
+	const colorsEU = c.EU
+	const colorsSet1 = c.SET1
+	const colorsSet2 = c.SET2
 
 	if(forLineChart) {
+
 		const geoKey = geoSelections.keys().next().value
 		if(geoSelections.size===1) {
 			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_CNAT] = colorsSet1.dark
@@ -217,15 +228,18 @@ function getColors(forLineChart, geoSelections) {
 		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BNAT] = colorsEU.dark
 		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BEU] = colorsEU.mid
 		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BNEU] = colorsEU.light
-	} else {
-		// TODO: EU different
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CNAT] = colorsSet1.dark
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CEU] =  colorsSet1.mid
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CNEU] = colorsSet1.light
 
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BNAT] = colorsSet1.dark
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BEU] = colorsSet1.mid
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BNEU] = colorsSet1.light
+	} else {		// fixed colors for dot plot
+		
+		retVal[MS.TXT_BY_LBL_CNAT] = colorsSet1.dark
+		retVal[MS.TXT_BY_LBL_CEU] =  colorsSet1.mid
+		retVal[MS.TXT_BY_LBL_CNEU] = colorsSet1.light
+		
+		retVal[MS.TXT_BY_LBL_BNAT] = colorsSet1.dark
+		retVal[MS.TXT_BY_LBL_BEU] = colorsSet1.mid
+		retVal[MS.TXT_BY_LBL_BNEU] = colorsSet1.light
+
+		// TODO: EU different
 	}
 	return retVal
 }

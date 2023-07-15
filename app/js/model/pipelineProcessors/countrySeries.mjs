@@ -8,10 +8,15 @@ extracts data for all countries at a certain time.
 adds something like this to output in a cumulative fashion (can be called more than once):
 countrySeriesData: [
   ["EU", "BE", "AT"]
-  ["NAT",1,2,3],
-  ["EU_...",1,2,3],
-  ["NON_EU_..",0,230,50]
+  ["NAT",1,2,3],            *
+  ["EU_...",1,2,3],         *
+  ["NON_EU_..",0,230,50]    *
 ]
+
+The order of the * marked arrays determines the order of items 
+in chart tooltips and legend.
+That's why there is an effort made here to already extract the data
+in a given order instead of sorting it after extraction.
 */
 export function process(inputDataFromRequest, inputDataFromCfg, output) {
   if(!output.countrySeries) {
@@ -26,32 +31,37 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   const timeCodeIdx = inputDataFromRequest.dimension.time.category.index[time]
   const [byDim, byIdx] = TM.getIndexOfByDimension(inputDataFromRequest.id)
 
-  const blax = Object.keys(inputDataFromRequest.dimension[byDim].category.index)
-  for(let by=0; by<blax.length; by++) {
-    const xByCode = Object.keys(inputDataFromRequest.dimension[byDim].category.index)[by]
-    const ll = [TM.getByLabel(byDim, xByCode)]    // used as display text by chart tooltip
-
-    // the order of countries comes from a processor which was run before this processor
-    output.countryOrder.forEach( country => {
-      let bla = new Array(inputDataFromRequest.size.length)
-      const idxGeo = inputDataFromRequest.dimension.geo.category.index[country]
-      if(typeof idxGeo !== 'undefined') {
-        output.countrySeries.data[0].push(country)
-
-        bla.fill(0)
-        bla[byIdx] = by
-        bla[geoDimIdx] = idxGeo
-        bla[timeDimIdx] = timeCodeIdx
-        const i = MultiDim.getIndex(valence, bla)
-        if(typeof inputDataFromRequest.value[i] === 'undefined') {
-          ll.push(null)
-        } else {
-          ll.push(inputDataFromRequest.value[i])
+  output.byOrder.forEach( (orderedBy) => {
+    const by = inputDataFromRequest.dimension[byDim].category.index[orderedBy]
+    // possibly not in data
+    if(typeof(by) !== "undefined") {
+      const xByCode = Object.keys(inputDataFromRequest.dimension[byDim].category.index)[by]
+      const ll = [TM.getByLabel(byDim, xByCode)]    // used as display text by chart tooltip
+  
+      // the order of countries comes from a processor which was run before this processor
+      output.countryOrder.forEach( country => {
+        let bla = new Array(inputDataFromRequest.size.length)
+        const idxGeo = inputDataFromRequest.dimension.geo.category.index[country]
+        if(typeof idxGeo !== 'undefined') {
+          //output.countrySeries.data[0].push( inputDataFromRequest.dimension.geo.category.label[country] )
+          output.countrySeries.data[0].push( country )
+  
+          bla.fill(0)
+          bla[byIdx] = by
+          bla[geoDimIdx] = idxGeo
+          bla[timeDimIdx] = timeCodeIdx
+          const i = MultiDim.getIndex(valence, bla)
+          if(typeof inputDataFromRequest.value[i] === 'undefined') {
+            ll.push(null)
+          } else {
+            ll.push(inputDataFromRequest.value[i])
+          }
         }
-      }
-    })
+      })
+  
+      output.countrySeries.data.push(ll)
+    }
 
-    output.countrySeries.data.push(ll)
-  }
+  })
 
 }

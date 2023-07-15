@@ -21,6 +21,7 @@ import { process as defineCountryColors } from "../../components/processorCountr
 import { process as extractTimeYearly } from "./pipelineProcessors/timeYearly.mjs"
 import { process as extractTimeSeriesData } from "./pipelineProcessors/timeSeries.mjs"
 import { process as extractCountrySeriesData } from "./pipelineProcessors/countrySeries.mjs"
+import { process as defineByOrder } from "./pipelineProcessors/byOrder.mjs"
 // this can be pretty helpful for debugging/investigation purposes
 import { process as analyzeIncomingData } from "./pipelineProcessors/analyze.mjs"
 
@@ -57,7 +58,7 @@ export default function go(urls, callback) {
 					store: (data) => Cache.store(strippedUrl, data),
 					restore: (id) => Cache.restore(id)
 				},
-				processors: [defineCountryColors, extractTimeYearly, extractTimeSeriesData,
+				processors: [defineCountryColors, defineByOrder, extractTimeYearly, extractTimeSeriesData,
 					defineCountriesOrder, extractCountrySeriesData,	analyzeIncomingData],
 				data: fullUrl
 			}

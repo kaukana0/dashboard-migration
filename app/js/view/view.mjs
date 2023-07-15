@@ -25,9 +25,10 @@ export function createUIElements(cfg, triggerInitialRequest) {
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, menuItems, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {   // TODO: not everything at once. start w/ what is in user's view, do the other stuff in the background quietly/slowly one by one
-    requestAnimationFrame(()=>
+    requestAnimationFrame(()=> {
       setTimeout(()=>onSelectedForAllCards(), 200)
-    )
+      setCardLegends(true)
+    })
   }
 }
 
@@ -37,6 +38,17 @@ function onGeoSelection() {
   } else {
     onSelectedForAllCards()
   }
+  setCardLegends(GeoSelect.isEUSelected())
+}
+
+function setCardLegends(isEU) {
+  const c = Cards.getColorSetDefinitions()
+  const eu = [c.EU.light, c.EU.mid, c.EU.dark]
+  const other = [c.SET1.light, c.SET1.mid, c.SET1.dark]
+
+  Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => {
+    document.getElementById(cardId).setLegendDotColors(isEU?eu:other)
+  })
 }
 
 // user changed some selection which affects ALL cards,
@@ -133,6 +145,8 @@ function onCardContract(id) {
     onSelectedForAllCards()
   }
 
+  setCardLegends(GeoSelect.isEUSelected())
+  
   // todo: scroll back to previous pos
 
   currentlyExpandedId = null
