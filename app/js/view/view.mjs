@@ -57,8 +57,8 @@ function setCardLegends(isEU) {
 // (note: greendeal dashboard behaviour: zoom out => reset all selections except country)
 function onSelectedForAllCards() {
   Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => { 
-    fetch(cardId)
-    updateCardAttributes(cardId)
+    const boxes = fetch(cardId)
+    updateCardAttributes(cardId, boxes)
   })
 }
 
@@ -66,9 +66,25 @@ function onSelectedForAllCards() {
 // which is all boxes except country.
 // so, update charts in one card
 function onSelectedForOneCard(cardId) {
-  const bySel = fetch(cardId) 
-  updateCardAttributes(cardId)
-  Cards.setTooltipStyle(GeoSelect.getSelected().size, bySel.size)
+  const boxes = fetch(cardId)
+  updateCardAttributes(cardId, boxes)
+  Cards.setTooltipStyle(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
+}
+
+function getSelectionTexts(boxes) {
+  let retVal = ""
+  let isFirst = true
+  for(let [key, value] of boxes.selections.entries()) {
+    // TODO: yaml / magic strings
+    if(["time","geo","Country of citizenship/birth"].includes(key)) {continue}
+    if(isFirst) {
+      isFirst = false
+    } else {
+      retVal += " | "
+    }
+    retVal += Array.from(value.values())
+  }
+  return retVal
 }
 
 function fetch(cardId) {
@@ -80,15 +96,15 @@ function fetch(cardId) {
   boxes.selections.set(MS.GEO_SELECT_ID, GeoSelect.getSelected())
   // non-ui url fragment
   Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
-  Url.Affix.post += "time=2019"  // TODO: take from UI element
   const bla = {} ; bla[MS.BY_SELECT_ID] = Url.getBySelectFrag
   Fetcher( Url.buildFrag(boxes,dataset,bla), Cards.setData.bind(this, cardId, GeoSelect.getSelected()) )
-  return boxes.selections.get(MS.BY_SELECT_ID)
+  return boxes
 }
 
-function updateCardAttributes(cardId) {
+function updateCardAttributes(cardId, boxes) {
   document.getElementById(cardId).setAttribute("right1", Array.from(GeoSelect.getSelected().keys()).join(" ") )
   document.getElementById(cardId).setAttribute("right2", "2023")
+  Cards.setSubtitle(cardId, getSelectionTexts(boxes))
 }
 
 // menuItemId can be anything, menuItem or submenuItem
@@ -139,11 +155,7 @@ function onCardContract(id) {
 
   CommonConstraints.setBySelect(null)			// effectively disable those constraints
 
-  if(GeoSelect.getFavoriteStar() === currentFavoriteStar) {
-    onSelectedForOneCard(id)
-  } else {
-    onSelectedForAllCards()
-  }
+  onSelectedForAllCards()
 
   setCardLegends(GeoSelect.isEUSelected())
   
