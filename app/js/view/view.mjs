@@ -24,9 +24,12 @@ export function createUIElements(cfg, triggerInitialRequest) {
   currentFavoriteStar = GeoSelect.getFavoriteStar()
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, menuItems, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
-  if(triggerInitialRequest) {   // TODO: not everything at once. start w/ what is in user's view, do the other stuff in the background quietly/slowly one by one
+  if(triggerInitialRequest) {   // TODO: not everything at once. start w/ what is in user's view, do the other stuff in the background quietly/slowly one by one (intersection observer)
     requestAnimationFrame(()=> {
-      setTimeout(()=>onSelectedForAllCards(), 200)
+      setTimeout(()=>{
+        onSelectedForAllCards()
+        Cards.filter("Overview")
+      }, 200)
       setCardLegends(true)
     })
   }

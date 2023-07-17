@@ -30,8 +30,7 @@ import * as Range from "./range.mjs"
 
 let categories
 let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't come from processors/data but from config
-// the more you know: Griechenland verwendet in europäischen Publikationen nicht den ISO 3166 Schlüssel GR für die Länderkennung, sondern die eigene Abkürzung EL von "Hellas".
-
+let overviewCardIds = []
 
 export function create(containerId, cfg, _categories, selectedCallback, onCardExpand, onCardContract) {
 	let retVal = []
@@ -41,7 +40,7 @@ export function create(containerId, cfg, _categories, selectedCallback, onCardEx
 	for(const i in cfg.indicators) {
 		const merged = Util.mergeObjects(cfg.indicatorBase, cfg.indicators[i])
 		const id = getIdFromName(merged.name)
-		console.debug("merged cfg for indicator", merged.name, merged, id)
+		console.debug("cards: merged cfg for indicator", merged.name, merged, id)
 
 		if(!merged.ignore) {
 			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
@@ -52,11 +51,16 @@ export function create(containerId, cfg, _categories, selectedCallback, onCardEx
 				setupCard(id, merged, onCardExpand, onCardContract, selectedCallback)
 				setupRange(id, merged.dimensions.ui.range[0], selectedCallback)
 			})
+			if(merged.isInOverview && merged.isInOverview===true) { overviewCardIds.push(id) }
 			retVal.push(id)
 		}
 	}
 
 	countryNamesFull = UtilSelect.getMapFromObject(cfg.codeList.countries)
+
+	if(overviewCardIds.length===0) {
+		console.warn("cards: no 'isInOverview' is defined in yaml, so there's no card in the overview")
+	}
 
 	return retVal
 }
@@ -158,8 +162,17 @@ export function iterate(containerId, callback) {
 
 export function setData(cardId, geoSelections, data) {
 	Range.setMinMax(cardId, Number(data.time[0]), Number(data.time[data.time.length-1]))
-	document.getElementById(cardId).setData1(data.timeSeries.data,    countryNamesFull, data.colorPalette, getColorSet(true,  geoSelections) )
-	document.getElementById(cardId).setData2(data.countrySeries.data, countryNamesFull, data.colorPalette, getColorSet(false, geoSelections) )
+
+	document.getElementById(cardId).setData1({
+		cols: data.timeSeries.data,	countryNamesFull:countryNamesFull,
+		palette:data.colorPalette, fixColors:getColorSet(true,  geoSelections)
+	})
+
+	document.getElementById(cardId).setData2({
+		cols: data.countrySeries.data,	countryNamesFull:countryNamesFull,
+		palette:data.colorPalette, fixColors:getColorSet(false,  geoSelections)
+	})
+
 	document.getElementById(cardId).stopIndicateLoading()
 }
 
@@ -261,23 +274,25 @@ export function expand(card) {
 }
 
 export function filter(category) {
-	const cards = categories.get(category).map( (e)=>getIdFromName(e) )
+	const cardsOfCategory = categories.get(category).map( (e)=>getIdFromName(e) )
 	const elements = document.querySelectorAll("div [id=cards] chart-card")
-	let exists = false
-	for (var i = 0; i < elements.length; i++) {
-		if( cards.includes(elements[i].id) ) {
-			elements[i].style.display=""
-			exists = true
-		} else {
-			elements[i].style.display="none"
-		}
-	}
-	// show all
-	if(!exists) {
+
+	if(cardsOfCategory.length>0) {
 		for (var i = 0; i < elements.length; i++) {
-			elements[i].style.display=""
+			if( cardsOfCategory.includes(elements[i].id) ) {
+				elements[i].isVisible=true
+			} else {
+				elements[i].isVisible=false
+			}
+		}
+	} else {
+		// "Overview" category doesn't exist, therefore can't have any cards.
+		// show all which are supposed to be in overview
+		for (var i = 0; i < elements.length; i++) {
+			elements[i].isVisible = overviewCardIds.includes(elements[i].getAttribute("id"))
 		}
 	}
+
 }
 
 export function setTooltipStyle(numberOfCountriesSelected, numberOfBySelected) {
