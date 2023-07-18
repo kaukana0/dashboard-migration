@@ -6,6 +6,7 @@ export const MS = {
 
   DIM_CITIZEN: "citizen",
   DIM_BIRTH: "c_birth",
+  DIM_INDIC: "indic_mg",    // an alternative to citizen, used only by "Active citizenship" cards
 
   BY_SELECT_ID: "Country of citizenship/birth",
 
@@ -36,6 +37,8 @@ export const MS = {
   TXT_GRP_C: "By country of citizenship",   //must be similar to yaml. TODO: take from there
   TXT_GRP_B: "By country of birth",
 
-  TXT_NOT_AVAILABLE: "N/A"
+  TXT_NOT_AVAILABLE: "N/A",
+
+  TXT_OVERVIEW: "Home"      // ui text changed late in development process, so the word "overview" is found all over the place and it means the same as "Home"
 
 }

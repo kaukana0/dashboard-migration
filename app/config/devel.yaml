@@ -1,4 +1,4 @@
-# yaml schema v0.5.0 - for migration dashboard 
+# yaml schema v0.6.0 - for migration dashboard 
 
 codeList:
 
@@ -50,9 +50,6 @@ codeList:
   0-17: &0-17
     label: "17 years and below"
     code: "Y0-17"
-  18-24: &18-24
-    label: "18 to 24 years"
-    code: "Y18-24"
   15-24: &15-24
     label: "15 to 24 years"
     code: "Y15-24"
@@ -76,9 +73,15 @@ codeList:
   15-over: &15-over
     label: "15 years and over"
     code: "Y_GE15"
+  16-over: &16-over
+    label: "16 years and below"
+    code: "Y_GE16"
   16-29: &16-29
     label: "16 to 29 years"
     code: "Y_16-29"
+  18-24: &18-24
+    label: "18 to 24 years"
+    code: "Y18-24"
   18-29: &18-29
     label: "18 to 29 years"
     code: "Y_18-29"
@@ -268,8 +271,7 @@ indicatorBase:
 # each indicator can overwrite the properties it "inherited" (via merge) from indicatorBase
 indicators:
 
-  - name: Migrant population share
-    ignore: true   # no data? TODO 
+  - name: Migrant population share    # no data? TODO 
     category: Demography
     isInOverview: true
     articleLink: *articleLinkDemography
@@ -326,7 +328,7 @@ indicators:
         id: LFSA_ARGAN
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/315c3cec-f90a-4937-8d99-539c819165c7?lang=en
       birth:
-        id: LFSA_ARGACOB__custom_4567803
+        id: LFSA_ARGACOB  #__custom_4567803 TODO
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/2fb73dd3-85d4-4d3a-ba87-0134f789781c?lang=en
 
   - name: Unemployment rate
@@ -386,7 +388,7 @@ indicators:
         id: LFSA_EPPGAN
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/041fefa6-8aed-4bb0-82a5-37a4d7deff2c?lang=en
       birth:
-        id: LFSA_EPPGACOB__custom_4568116
+        id: LFSA_EPPGACOB   # TODO __custom_4568116
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/b228dfaf-8068-40b2-920f-90473770f1e5?lang=en
 
   - name: Share of employees with contract of limited duration in the total number of employees
@@ -397,7 +399,7 @@ indicators:
         id: LFSA_ETPGAN
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/04c19a0f-a1b3-4b30-b526-99f87dae6269?lang=en
       birth:
-        id: LFSA_ETPGACOB__custom_4568028
+        id: LFSA_ETPGACOB   # TODO __custom_4568028
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/3d3e89dd-d7d2-4d8c-acdd-4d1c167c6875?lang=en
 
   - name: Labour market slack
@@ -434,7 +436,7 @@ indicators:
         id: LFSA_ENEWASN
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/76894644-7b53-4af0-b322-d1769ada25d4?lang=en
       birth:
-        id: LFSA_ENEWASC__custom_4568245
+        id: LFSA_ENEWASC   # TODO __custom_4568245
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/c344c8f1-6bb3-4aa4-bab9-ab289a36e63e?lang=en
     dimensions:
       ui:
@@ -560,7 +562,7 @@ indicators:
     articleLink: *articleLinkEducation
     datasets:
       citizen:
-        id: LFSO_21LANG01   # dummy TODO: check ramifications
+        id: LFSO_21LANG01   # dummy
         source: null
       birth:
         id: LFSO_21LANG01
@@ -573,7 +575,7 @@ indicators:
                 - *15-74s
                 - *15-29
                 - *20-64
-          - Country of citizenship/birth:
+          - Country of citizenship/birth:   # TODO: check ramifications
               elements:
                 - *nonEuB
                 - *euB
@@ -692,7 +694,7 @@ indicators:
         id: ILC_LVHL15N
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/12393227-d44b-486b-b494-224a912b85a8?lang=en
       birth:
-        id: ILC_LVHL16N__custom_4572826
+        id: ILC_LVHL16N  # TODO __custom_4572826
         source: https://ec.europa.eu/eurostat/databrowser/bookmark/8cd9f52f-c732-4e88-baee-496000c184c9?lang=en
     dimensions:
       ui:
@@ -756,7 +758,6 @@ indicators:
 ##########################################################
 
   - name: Home ownership rate
-#    ignore: true
     category: Housing
     isInOverview: true
     articleLink: *articleLinkHousing
@@ -771,28 +772,69 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
-                - *18-54
-          - Tenure:
-              elements:
-                - *tenure1
+              ignore: true
+          - Sex:
+              ignore: true
+      nonUi:
+        Age:
+          - *18-over
+        Sex:
+          - *total
+        Tenure:
+          - *tenure1
 
   - name: Housing cost overburden rate
     category: Housing
-    ignore: true
     articleLink: *articleLinkHousing
+    datasets:
+      citizen:
+        id: ILC_LVHO25
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/b0305aa0-53e7-445c-abe2-601fa33de3d8?lang=en
+      birth:
+        id: ILC_LVHO26
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/b872ac81-5aeb-4da7-b52a-44ba54ddb69a?lang=en
+    dimensions:
+      ui:
+        dropdown:
+          - Age:
+              ignore: true
+          - Sex:
+              ignore: true
+      nonUi:
+        Age:
+          - *18-over
+        Sex:
+          - *total
 
   - name: Overcrowding rate
     category: Housing
-    ignore: true
     articleLink: *articleLinkHousing
+    datasets:
+      citizen:
+        id: ILC_LVHO15
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/1df3b41e-3658-4059-9dda-de6187dd7bb5?lang=en
+      birth:
+        id: ILC_LVHO16
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/8e06437d-ce21-4ad1-a929-1eeb170fa35b?lang=en
+    dimensions:
+      ui:
+        dropdown:
+          - Age:
+              ignore: true
+          - Sex:
+              ignore: true
+      nonUi:
+        Age:
+          - *18-over
+        Sex:
+          - *total
 
 ##########################################################
 
   - name: Health status perception
-#    ignore: true
     fullName: Share of people perceiving their health status as good or bad
     category: Health
+    isInOverview: true
     articleLink: *articleLinkHealth
     datasets:
       citizen:
@@ -805,7 +847,7 @@ indicators:
       ui:
         dropdown:
           - lev_perc:
-              text: "Level of perception"
+              text: "Level of perception"   # TODO: implement using this instead of "lev_perc"
               elements:
                 - label: Very bad or bad
                   code: B_VB
@@ -815,39 +857,172 @@ indicators:
                   code: VG_G
           - Age:
               elements:
-              - *16-44
-              - *45-64
-              - *65-over
-
+                - *16-over
+                - *16-44
+                - *45-64
+                - *65-over
 
   - name: Share of people with self-reported unmet need for medical care
     category: Health
-    ignore: true
     articleLink: *articleLinkHealth
+    datasets:
+      citizen:
+        id: HLTH_SILC_30
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/35e3a5cd-23c7-4b30-9d78-d11f0640c7d4?lang=en
+      birth:
+        id: HLTH_SILC_29
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/d4386ffc-6550-436d-8146-56b372d5290d?lang=en
+    dimensions:
+      ui:
+        dropdown:
+          - Age:
+              elements:
+                - *16-over
+                - *16-44
+                - *45-64
+                - *65-over
+      nonUi:
+        Reason:
+          - label: Too expensive
+            code: TOOEXP
 
   - name: Share of people with self-reported unmet needs for dental examination
     category: Health
-    ignore: true
     articleLink: *articleLinkHealth
+    datasets:
+      citizen:
+        id: HLTH_SILC_32
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/35e3a5cd-23c7-4b30-9d78-d11f0640c7d4?lang=en
+      birth:
+        id: HLTH_SILC_31
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/d4386ffc-6550-436d-8146-56b372d5290d?lang=en
+    dimensions:
+      ui:
+        dropdown:
+          - Age:
+              elements:
+                - *16-over
+                - *16-44
+                - *45-64
+                - *65-over
+      nonUi:
+        Reason:
+          - label: No unmet needs to declare
+            code: NO_UNMET    # TODO: theres no "All unmet". mistake in excel?
 
-  - name: She of people having a long-standing illness or health problem
+  - name: Share of people having a long-standing illness or health problem
     category: Health
-    ignore: true
     articleLink: *articleLinkHealth
+    datasets:
+      citizen:
+        id: HLTH_SILC_26
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/35e3a5cd-23c7-4b30-9d78-d11f0640c7d4?lang=en
+      birth:
+        id: HLTH_SILC_25
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/e89e0200-85fd-4f8f-b9de-a4577c534cc4?lang=en
+    dimensions:
+      ui:
+        dropdown:
+          - Age:
+              elements:
+                - *16-over
+                - *16-44
+                - *45-64
+                - *65-over
+          - Sex:
+              ignore: true
+      nonUi:
+        Sex:
+          - *total
 
   - name: Self-perceived long-standing limitations in usual activities due to health problem
     category: Health
-    ignore: true
     articleLink: *articleLinkHealth
+    datasets:
+      citizen:
+        id: HLTH_SILC_28
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/35e3a5cd-23c7-4b30-9d78-d11f0640c7d4?lang=en
+      birth:
+        id: HLTH_SILC_27
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/e89e0200-85fd-4f8f-b9de-a4577c534cc4?lang=en
+    dimensions:
+      ui:
+        dropdown:
+          - Age:
+              elements:
+                - *16-over
+                - *16-44
+                - *45-64
+                - *65-over
+          - Sex:
+              ignore: true
+      nonUi:
+        Sex:
+          - *total
+        lev_limit:
+          - label: Some
+            code: SOME
 
 ##########################################################
 
   - name: Naturalisation rate
     category: Active citizenship
-    ignore: true
+    isInOverview: true
     articleLink: *articleLinkActiveCitizenship
+    datasets:
+      citizen:
+        id: MIGR_ACQS
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/91e29ffb-4b88-48fe-94ed-14fc1f332109?lang=en
+      birth:
+        id: MIGR_ACQS   # dummy
+        source: null
+    dimensions:
+      ui:
+        dropdown:
+          - Country of citizenship/birth:   # TODO check ramifications
+              elements:
+                - originalCode: NEU_P_HHAB
+                  code: indicNEU_FOR
+                  label: Share of non-EU citizens who have acquired citizenship
+                - originalCode: EU_P_HHAB
+                  code: indicEU_FOR
+                  label: Share of EU citizens who have acquired citizenship
+                - originalCode: FOR_P_HHAB
+                  code: indicNAT
+                  label: Share of foreign citizens who have acquired citizenship
+              groups:
+                *bySelectGroupTitles
+          - Age:
+              ignore: true
+          - Sex:
+              ignore: true
+      nonUi:
+        Sex:
+          - *total
 
   - name: Share of third country nationals holding long-term residence permits
     category: Active citizenship
-    ignore: true
+    isInOverview: true
     articleLink: *articleLinkActiveCitizenship
+    datasets:
+      citizen:
+        id: MIGR_RESSHARE
+        source: https://ec.europa.eu/eurostat/databrowser/bookmark/7142bcff-071a-48cf-8bd6-1db0fb2b8309?lang=en
+      birth:
+        id: MIGR_RESSHARE   # dummy
+        source: null
+    dimensions:
+      ui:
+        dropdown:
+          - Country of citizenship/birth:   # TODO check ramifications
+              elements:
+                - originalCode: TOTAL
+                  code: citizenNEU_FOR
+                  label: Share of non-EU citizens who have acquired citizenship
+          - Age:
+              ignore: true
+          - Sex:
+              ignore: true
+      nonUi:
+        leg_fram:
+          - code: TOTAL

@@ -13,7 +13,7 @@ export function getCardFragment(id, title, urlFrag, anchorElDomId) {
       </div>
 
       <div slot="slotBottomLeft">
-        <div style="text-align: left; padding-left: 30px;">
+        <div style="font-size: 16px; color: #0E47CB; text-align: left; padding-left: 30px;">
           <p>
             <a href="https://ec.europa.eu/info/cookies_en?lang=en&amp;lang=en"><span tabindex="0">Cookies</span></a>
             |

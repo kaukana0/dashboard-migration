@@ -28,7 +28,7 @@ export function createUIElements(cfg, triggerInitialRequest) {
     requestAnimationFrame(()=> {
       setTimeout(()=>{
         onSelectedForAllCards()
-        Cards.filter("Overview")
+        Cards.filter(MS.TXT_OVERVIEW)
       }, 200)
       setCardLegends(true)
     })

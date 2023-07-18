@@ -1,3 +1,6 @@
+import {MS} from "../../common/magicStrings.mjs"
+
+
 export function create(onSelect, categories) {
 	document.getElementById("menu").onSelect = onSelect
 	document.getElementById("menu").data = categories
@@ -7,7 +10,7 @@ export function create(onSelect, categories) {
 // returns map, key=category name, value=[indicator names]
 export function getCategories(cfg) {
 	const retVal = new Map()
-	retVal.set("Overview",[])
+	retVal.set(MS.TXT_OVERVIEW,[])
 	for(const i in cfg.indicators) {
 		const merged = {...cfg.defaults, ...cfg.indicators[i]}
 		if(!merged.ignore) {
