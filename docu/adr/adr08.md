@@ -19,8 +19,11 @@ alternatives:
 
 ## Decision
 
-1, because estimation of modification effort is low
+1, because estimation of modification effort is low.
+
+Also, the slider will be put into the chartCard via slot mechanism, because it is equivalent to select-boxes (which also go in via slot) in that aspect that it's settings are determining the data which is being requested (cache aside).
 
 ## Consequences
 
-Regression, style has to be adapted a little bit.
+- Regression; style has to be adapted a little bit.
+- management of slider is not part of chartCard but application specific, resulting in higher slider-code fragmentation.

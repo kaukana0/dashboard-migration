@@ -9,7 +9,7 @@ That content is:
 on collapse:
 - country selects favourited entry
 - bySelect selects the default (eg first three entries)
-- switch to line display
+- switch to line display (1st chart)
 */
 
 
@@ -43,6 +43,7 @@ export function create(containerId, cfg, _categories, selectedCallback, onCardEx
 		console.debug("cards: merged cfg for indicator", merged.name, merged, id)
 
 		if(!merged.ignore) {
+			if(merged["obiWan"]) {document.getElementById(containerId).innerHTML = ""}
 			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
 			requestAnimationFrame( () => {
 				const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, merged.datasets)
@@ -53,6 +54,7 @@ export function create(containerId, cfg, _categories, selectedCallback, onCardEx
 			})
 			if(merged.isInOverview && merged.isInOverview===true) { overviewCardIds.push(id) }
 			retVal.push(id)
+			if(merged["obiWan"]) {break}
 		}
 	}
 
@@ -69,12 +71,10 @@ function setupCard(id, merged, onCardExpand, onCardContract) {
 	const card = document.getElementById(id)
 	card.addEventListener("expanding", () => { onCardExpand(id) })
 	card.addEventListener("contracting", () => { onCardContract(id) })
-	card.setAttribute("subtitle", merged.dimensions.nonUi.unit[0].label)
+	card.addEventListener("chartSwitched", (e) => { Range.reset(id, e.to==2, true) })
 	card.setAttribute("yLabel", merged.dimensions.nonUi.unit[0].label)
-	card.setAttribute("right1", "EU")
-	card.setAttribute("right2", "2022")
-	card.setAttribute("srcLinkC", merged.datasets.citizen.source)
-	card.setAttribute("srcLinkB", merged.datasets.birth.source)
+	card.setAttribute("srcLink1", merged.datasets.citizen.source)
+	card.setAttribute("srcLink2", merged.datasets.birth.source)
 	card.setAttribute("articleLink", merged.articleLink.url)
 	card.tooltipFn1 = TooltipLine.tooltipFn
 	card.tooltipFn2 = TooltipDot.tooltipFn
@@ -132,7 +132,7 @@ function insertBoxes(id, boxes) {
 export function getCurrentSelections(cardId) {
 	let retVal = [{cardId: cardId, selections: new Map()}, ""]
 
-	// mimic select's api
+	// mimic (adapt to) select's api
 	const range = document.getElementById(cardId).querySelector("range-slider")
 	retVal[0].selections.set("time", Range.getSelection(range))
 

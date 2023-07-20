@@ -68,6 +68,7 @@ function getDocFrag(items, attribs, isMultiselect=false, groups={}, defaultSelec
   dropdownBox.data = [items, getGroupsFromObject(groups)]
   dropdownBox.style.whiteSpace = "nowrap"
   dropdownBox.style.textOverflow = "ellipsis"
+  dropdownBox.textForMultiselect = "Items selected"
 
   const div = document.createElement('div')
 

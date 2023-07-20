@@ -1,6 +1,7 @@
-// the ranges are somehow not part of a chartCard component
+// the ranges are not part of a chartCard component
 // because they're put into a card via slot mechanism.
-
+// so they are managed here.
+// see also adr08.mdr
 
 
 export function setCallbacks(cardId, onSelect) {
@@ -54,11 +55,11 @@ export function getSelection(el) {
 	return retVal
 }
 
-export function reset(cardId) {
+export function reset(cardId, toMax=false, fireSelected=false) {
 	const el = document.getElementById("timeRange"+cardId)
 	const max = el.getAttribute("max")
-	const min = el.getAttribute("min")
 	const defaultValue = el.getAttribute("defaultValue")
-	el.setAttribute("valuel", defaultValue)
-	el.setAttribute("textl", defaultValue)
+	el.setAttribute("valuel", toMax?max:defaultValue)
+	el.setAttribute("textl",  toMax?max:defaultValue)
+	if(fireSelected) {el.fireSelected()}
 }

@@ -127,7 +127,7 @@ codeList:
     label: "Time frequency Annual"
     code: "A"
   unit: &unit
-    label: "% of Something"
+    label: "Percent [%]"
     code: "PC"
   # this determines the contents and order of UI elements, except for the chart.
   # the country order for that is determined through processorCountryOrder.
