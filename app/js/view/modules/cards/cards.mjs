@@ -41,20 +41,26 @@ export function create(containerId, cfg, _categories, selectedCallback, onCardEx
 		const merged = Util.mergeObjects(cfg.indicatorBase, cfg.indicators[i])
 		const id = getIdFromName(merged.name)
 		console.debug("cards: merged cfg for indicator", merged.name, merged, id)
+		const parser = new DOMParser()
 
 		if(!merged.ignore) {
 			if(merged["obiWan"]) {document.getElementById(containerId).innerHTML = ""}
-			document.getElementById(containerId).innerHTML += MarkUpCode.getCardFragment( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
-			requestAnimationFrame( () => {
-				const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, merged.datasets)
-				addBoxEventHandlers(id, boxes, selectedCallback)
-				insertBoxes(id, boxes)
-				setupCard(id, merged, onCardExpand, onCardContract, selectedCallback)
-				setupRange(id, merged.dimensions.ui.range[0], selectedCallback)
-			})
+
+			const html = MarkUpCode.getCardHtmlString( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
+			const doc = parser.parseFromString(html, "text/html")
+			document.getElementById(containerId).appendChild( doc.body.firstElementChild )
+
+			const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, merged.datasets)
+			addBoxEventHandlers(id, boxes, selectedCallback)
+			insertBoxes(id, boxes)
+			setupCard(id, merged, onCardExpand, onCardContract, selectedCallback)
+			setupRange(id, merged.dimensions.ui.range[0], selectedCallback)
+
 			if(merged.isInOverview && merged.isInOverview===true) { overviewCardIds.push(id) }
+
 			retVal.push(id)
-			if(merged["obiWan"]) {break}
+
+			if(merged["obiWan"]) {break}	// only one card
 		}
 	}
 

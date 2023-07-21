@@ -16,22 +16,19 @@ import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
 let currentlyExpandedId = null
 let currentFavoriteStar = ""
 
+
 export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
-  const menuItems = MainMenu.getCategories(cfg)
-  MainMenu.create(onSelectMenu, menuItems)
+  const categories = MainMenu.getCategories(cfg)
+  MainMenu.create(onSelectMenu, categories)
   GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromObject(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
   currentFavoriteStar = GeoSelect.getFavoriteStar()
-  Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, menuItems, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
+  Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, categories, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {   // TODO: not everything at once. start w/ what is in user's view, do the other stuff in the background quietly/slowly one by one (intersection observer)
-    requestAnimationFrame(()=> {
-      setTimeout(()=>{
-        onSelectedForAllCards()
-        Cards.filter(MS.TXT_OVERVIEW)
-      }, 200)
-      setCardLegends(true)
-    })
+    onSelectedForAllCards()
+    Cards.filter(MS.TXT_OVERVIEW)
+    setCardLegends(true)
   }
 }
 
