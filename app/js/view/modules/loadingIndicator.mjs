@@ -8,10 +8,17 @@ function getHtmlTemplate(source) {
 
 export function show() {
   document.getElementById("anchorExpandedCard").insertBefore( getHtmlTemplate(css()+html()), null )
+
+  // try to avoid FOUC
+  var elements = document.querySelectorAll(".showAfterLoad")
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].style.visibility = "visible";
+  }
 }
 
 export function hide() {
-  document.getElementById("mainLoader").remove()
+  document.getElementById("mainLoader").classList.add("fadeOut")
+  setTimeout(()=>document.getElementById("mainLoader").remove(), 2000)
 }
 
 function html() {
@@ -19,7 +26,7 @@ function html() {
 <div id="mainLoader" class="loader">
   <div id="genericProgressBar" style="position:absolute;transform: translateY(-50%);left:2%;font-size:12px;">
     <div id="circleProgressContainer">
-        <div id="circularProgress">
+        <div id="circularProgress" class="pulse2">
 
             <div class="ecl-spinner ecl-spinner--primary ecl-spinner--medium ecl-spinner--centered ecl-spinner--visible">
               <svg class="ecl-spinner__loader" viewBox="25 25 50 50">
@@ -45,18 +52,24 @@ function css() {
     bottom: 0;
     left: 0;
     background: linear-gradient(
-      150deg,
       rgba(7, 139, 187, 1) 35%,
-      rgba(27, 84, 137, 1) 100%
+      rgba(27, 84, 137, 0.9) 60%,
+      rgba(0,0,0, 0) 100%
     );
     z-index: 200;
     display: block;
+  }
+
+  .fadeOut {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
   }
   
   #mainLoader {
     position: fixed;
     width: 100vw;
-    height: 100vh;
+    height: 150vh;
     left: 0%;
     top: 0%;
     margin-top: 30px;
@@ -73,24 +86,13 @@ function css() {
     display: none;
   }
   
-  .loader-chart {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(255, 255, 255, 0.5);
-    z-index: 999999;
-    display: none;
-    justify-content: center;
-  }  
   #genericProgressBar {
     display: block;
     width: 100%;
     text-align: center;
   }
   #circleProgressContainer {
-    top: 0;
+    top: 10px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -102,16 +104,24 @@ function css() {
   #circularProgress {
     position: relative;
     text-align: center;
-    width: 110px;
-    height: 110px;
+    width: 120px;
+    height: 120px;
     border-radius: 100%;
-    background: #fff;
-/*
-    background-image: linear-gradient(91deg, transparent 50%, #fff 50%),
-      linear-gradient(90deg, #fff 50%, transparent 50%);
-    transition: transform 0.3s ease-in;
-*/
+    background: #ffffff;
+  }
+
+
+  .pulse2 {
+    animation: pulse2 0.8s ease-out infinite;
   }
   
-  </style>
+  @keyframes pulse2 {
+    50% {
+      box-shadow: 0 0 0 0.3em rgba(255, 255, 255, 0.75);
+    }
+    100% {
+      box-shadow: 0 0 0 1em rgba(255, 255, 255, 0);
+    }
+  }
+    </style>
 `}

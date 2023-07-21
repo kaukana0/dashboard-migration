@@ -61,6 +61,7 @@ mv ./js/view/modules/cards/tooltips/tooltipLineChartGB.mjs    ./js/view/modules/
 mv ./js/view/modules/cards/tooltips/tooltipLineChart.mjs    ./js/view/modules/cards/tooltips/tooltipLineChart.js
 mv ./js/view/modules/cards/tooltips/labelMapping.mjs    ./js/view/modules/cards/tooltips/labelMapping.js
 mv ./js/view/modules/mainMenu.mjs    ./js/view/modules/mainMenu.js
+mv ./js/view/modules/loadingIndicator.mjs    ./js/view/modules/loadingIndicator.js
 mv ./js/view/modules/selects/selectBoxes.mjs    ./js/view/modules/selects/selectBoxes.js
 mv ./js/view/modules/selects/bySelectConstraints.mjs    ./js/view/modules/selects/bySelectConstraints.js
 mv ./js/view/modules/selects/geoSelect.mjs    ./js/view/modules/selects/geoSelect.js
