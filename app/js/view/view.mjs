@@ -136,6 +136,8 @@ function onCardExpand(id) {
   // but to let range WebComponent calculate and display the correct slider position
   // note: setting pos during display:none has no effect
   Range.reset(id)
+
+  document.getElementById("countrySelectLabel").textContent = "Country"
 }
 
 function onCardContract(id) {
@@ -162,4 +164,6 @@ function onCardContract(id) {
   // todo: scroll back to previous pos
 
   currentlyExpandedId = null
+
+  document.getElementById("countrySelectLabel").textContent = ""
 }
