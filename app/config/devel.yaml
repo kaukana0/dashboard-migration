@@ -127,7 +127,7 @@ codeList:
     label: "Time frequency Annual"
     code: "A"
   unit: &unit
-    label: "Percent [%]"
+    label: "%"
     code: "PC"
   # this determines the contents and order of UI elements, except for the chart.
   # the country order for that is determined through processorCountryOrder.
@@ -195,10 +195,10 @@ codeList:
     - code: CH
       label: Switzerland
   countryGroups: [AT, IS]
-  tenure1: &tenure1
+  tenureOwn: &tenureOwn
     label: "Owner"
     code: "OWN"
-  tenure2: &tenure2
+  tenureRent: &tenureRent
     label: "Tenant"
     code: "RENT"
 
@@ -234,16 +234,16 @@ indicatorBase:
   dimensions:
     ui:               # UI elements reflect user selection for these
       dropdown:
-        - Sex:        # in the REST request, this becomes the dimension
-            elements:
-              - *total    # and code becomes the code; label becomes dropdownbox item
-              - *women
-              - *men
         - Age:
             elements:
               - *15-74
               - *20-64s
               - *15-29
+        - Sex:        # in the REST request, this becomes the dimension
+            elements:
+              - *total    # and code becomes the code; label becomes dropdownbox item
+              - *women
+              - *men
           # note 1: in the implementation, bySelect is treated differently than any other dropdown
           # note 2: must correspond w/ magicStrings.mjs
         - Country of citizenship/birth:
@@ -271,17 +271,19 @@ indicatorBase:
 # each indicator can overwrite the properties it "inherited" (via merge) from indicatorBase
 indicators:
 
-  - name: Migrant population share    # no data? TODO 
+  - name: Migrant population share
+    id: MD_1
+    ignore: true
     category: Demography
     isInOverview: true
     articleLink: *articleLinkDemography
     datasets:
       citizen:
-        id: MIGR_POP1CTZ
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/d30004bd-976c-40fe-bc40-e9a33abf1fc4?lang=en
+        id: 
+        source: 
       birth:
-        id: MIGR_POP3CTB
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/fb8d22a0-054b-4423-a3f9-ec79ee84c87a?lang=en
+        id: 
+        source: 
     dimensions:
       ui:
         dropdown:
@@ -293,134 +295,173 @@ indicators:
                 - *15-29
                 - *20-64
                 - *65-over
-      nonUi:
-        unit:
-        - label: "in [Thousends] of Something"
-          code: "NR"
+
+  - name: Median age
+    id: MD_2
+    ignore: true
+    category: Demography
+    isInOverview: true
+    articleLink: *articleLinkDemography
+    datasets:
+      citizen:
+        id: 
+        source: 
+      birth:
+        id: 
+        source: 
+    dimensions:
+      ui:
+        dropdown:
+          - Age:
+              elements:
+                - *total
 
 ##########################################################
 
   - name: Employment rate
+    id: MD_3
     category: Employment
     isInOverview: true
     articleLink: *articleLinkEmployment
     datasets:
       citizen:
         id: LFSA_ERGAN
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/1a912262-da95-49ac-a154-44479a7dae31?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_ergan
       birth:
         id: LFSA_ERGACOB
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/d642741b-30e8-45d3-b160-2abb17d8a2c9?lang=en
-    dimensions:
-      ui:
-        range:
-          - time:
-            start: 2017
-            end: 2022
-            current: 2018
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_ergacob
 
   - name: Activity rate
+    id: MD_4
     category: Employment
     isInOverview: true
     articleLink: *articleLinkEmployment
     datasets:
       citizen:
         id: LFSA_ARGAN
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/315c3cec-f90a-4937-8d99-539c819165c7?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_argan
       birth:
-        id: LFSA_ARGACOB  #__custom_4567803 TODO
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/2fb73dd3-85d4-4d3a-ba87-0134f789781c?lang=en
+        id: LFSA_ARGACOB
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_argacob
 
-  - name: Unemployment rate
+  - name: Unemployment
+    nameLong: Unemployment rate
+    id: MD_5
     category: Employment
     isInOverview: true
     articleLink: *articleLinkEmployment
     datasets:
       citizen:
         id: LFSA_URGAN
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/0764d2d1-0709-41cf-aaae-6b0200b3a3a6?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_urgan
       birth:
         id: LFSA_URGACOB
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/37ee939a-b8ad-481e-b713-91e55b7aabf7?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_urgacob
     dimensions:
       ui:
         dropdown:
           - Age:
               elements:
-                - *15-74s
+                - *15-74
                 - *20-64
-                - *15-24
+                - *15-29
 
   - name: Long-term unemployment
+    id: MD_6
     category: Employment
     articleLink: *articleLinkEmployment
     datasets:
       citizen:
-        id: LFSA_UPGAN  #__custom_4567848    only works w/o custom...  TODO 
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/b9a3e453-e4cd-4e26-93ae-eb521a5e544d?lang=en
+        id: LFSA_UPGAN
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_upgan
       birth:
-        id: LFSA_UPGACOB  #__custom_4567874    only works w/o custom...
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/c6eef82a-0818-4be4-a030-563ea6eb34f0?lang=en
+        id: LFSA_UPGACOB
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_upgacob
     dimensions:
       ui:
         dropdown:
           - Age:
               elements:
-                - *15-74s
+                - *15-74
                 - *20-64
-                - *15-24
+                - *15-29
 
   - name: Over-qualification rate
+    id: MD_7
     category: Employment
-    ignore: true  # from excel, that's not implemented. TODO
     articleLink: *articleLinkEmployment
+    datasets:
+      citizen:
+        id: lfsa_eoqgan
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eoqgan
+      birth:
+        id: LFSA_eoqgac
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eoqgac
+    dimensions:
+      ui:
+        dropdown:
+          - Age:
+              inherit: false
+      nonUi:
+        Age:
+        - *20-64
 
-  - name: Share of self-employed in total employment
+  - name: Self-employment
+    id: MD_8
     category: Employment
-    ignore: true  # calculated from 2 different datasets each; no specific instructions on how to do that, not implemented. TODO
+    ignore: true
     articleLink: *articleLinkEmployment
+    datasets:
+      citizen:
+        id: lfsa_eppgan
+        source: Available 31. August 23
+      birth:
+        id: LFSA_eppgacob
+        source: Available 31. August 23
 
-  - name: Part-time employment as percentage of the total employment
+  - name: Part-time employment
+    id: MD_9
     category: Employment
     articleLink: *articleLinkEmployment
     datasets:
       citizen:
         id: LFSA_EPPGAN
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/041fefa6-8aed-4bb0-82a5-37a4d7deff2c?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eppgan
       birth:
-        id: LFSA_EPPGACOB   # TODO __custom_4568116
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/b228dfaf-8068-40b2-920f-90473770f1e5?lang=en
+        id: LFSA_EPPGACOB
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eppgacob
 
-  - name: Share of employees with contract of limited duration in the total number of employees
+  - name: Limited duration contracts
+    id: MD_10
     category: Employment
     articleLink: *articleLinkEmployment
     datasets:
       citizen:
         id: LFSA_ETPGAN
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/04c19a0f-a1b3-4b30-b526-99f87dae6269?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_etpgan
       birth:
-        id: LFSA_ETPGACOB   # TODO __custom_4568028
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/3d3e89dd-d7d2-4d8c-acdd-4d1c167c6875?lang=en
+        id: LFSA_ETPGACOB
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_etpgacob
 
   - name: Labour market slack
+    id: MD_11
     category: Employment
     articleLink: *articleLinkEmployment
     datasets:
       citizen:
-        id: LFSA_SUP_NAT #__custom_4568171 TODO 
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/d22fe93f-637d-434d-b361-dbc74623db94?lang=en
+        id: LFSA_SUP_NAT
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_sup_nat
       birth:
-        id: LFSA_SUP_COB #__custom_4568198
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/19e8b8ff-842b-478e-b835-c72d00be325e?lang=en
+        id: LFSA_SUP_COB
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_sup_cob
     dimensions:
       ui:
         dropdown:
           - Age:
-              elements:
-                - *15-74s
-                - *20-64
-                - *15-24
+              inherit: false
       nonUi:
+        Age:
+        - *15-74
         wstatus:
         - label: Labour market slack
           code: SLACK
@@ -429,25 +470,27 @@ indicators:
           code: "PC_ELF"
 
   - name: Newly employed
+    id: MD_12
+    ignore: true
     category: Employment
     articleLink: *articleLinkEmployment
     datasets:
       citizen:
         id: LFSA_ENEWASN
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/76894644-7b53-4af0-b322-d1769ada25d4?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_enewasn
       birth:
-        id: LFSA_ENEWASC   # TODO __custom_4568245
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/c344c8f1-6bb3-4aa4-bab9-ab289a36e63e?lang=en
+        id: LFSA_ENEWASC
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_enewasc
     dimensions:
       ui:
         dropdown:
-          - Sex:
-              ignore: true
+          - Sex:  # TODO
+              inherit: false
           - Age:
               elements:
                 - *15-over
-                - *15-29
                 - *20-64s
+                - *15-29
       nonUi:
         wstatus:
         - label: Employed persons
@@ -456,40 +499,46 @@ indicators:
 ##########################################################
 
   - name: Highest educational attainment
+    id: MD_13
     category: Education
     articleLink: *articleLinkEducation
     datasets:
       citizen:
         id: EDAT_LFS_9911
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/72d853fc-1d1a-4ae0-8ee0-0a6a3320bbfe?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfs_9911
       birth:
         id: EDAT_LFS_9912
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/9695b868-8edc-4f3a-82ff-4dbbf69e27d3?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfs_9912
     dimensions:
       ui:
         dropdown:
           - Age:
-              ignore: true
+              inherit: false
+          - isced11:
+              elements:
+                - label: Low
+                  code: ED0-2
+                - label: Medium
+                  code: ED3_4   # yes, there really is a _ in that code
+                - label: High
+                  code: ED5-8
       nonUi:
         Age:
         - label: Age
           code: Y25-74
-        isced11:
-        - label: Less than primary, primary and lower secondary education (levels 0-2)
-          code: ED0-2
 
-  - name: Tertiary educational attainment
-    fullName: Share of 30-34-year-olds with tertiary educational attainment
+  - name: Educational attainment
+    id: MD_14
     category: Education
     isInOverview: true
     articleLink: *articleLinkEducation
     datasets:
       citizen:
-        id: EDAT_LFS_9911 #__custom_4568481  TODO 
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/1ed97120-e2d0-4500-b93d-84f97f2962ce?lang=en
+        id: EDAT_LFS_9911
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfs_9911
       birth:
-        id: EDAT_LFS_9912 #__custom_4568588
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/b4398174-ba0c-417e-a393-4343e9e50c3d?lang=en
+        id: EDAT_LFS_9912
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfs_9912
     dimensions:
       ui:
         dropdown:
@@ -497,58 +546,66 @@ indicators:
               elements:
                 - *30-34s
                 - *25-34
+        isced11:
+        - label: label    #TODO
+          code: ED5-8
 
-  - name: Leaving education early
-    fullName: Share of 18-24-year-olds leaving education and training early
+  - name: Early leavers
+    id: MD_15
     category: Education
     isInOverview: true
     articleLink: *articleLinkEducation
     datasets:
       citizen:
         id: EDAT_LFSE_01
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/3360a61f-9a96-4241-9477-b0998be03f06?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfse_01
       birth:
         id: EDAT_LFSE_02
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/605f367f-f9a2-49f8-9144-02d196ceddca?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfse_02
     dimensions:
       ui:
         dropdown:
           - Age:
-              ignore: true
+              inherit: false
       nonUi:
         Age:
         - *18-24
+        wstatus:
+        - label: label    #TODO
+          code: POP
 
-  - name: Participation rate in lifelong learning
+  - name: Lifelong learning
+    id: MD_16
     category: Education
     articleLink: *articleLinkEducation
     datasets:
       citizen:
         id: TRNG_LFS_12
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/98bd3b77-4bd5-4145-9d7e-5d260dcbe0da?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/trng_lfs_12
       birth:
         id: TRNG_LFS_13
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/3c053d6b-9871-402f-99fb-5f68cbc3f67e?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/trng_lfs_13
     dimensions:
       ui:
         dropdown:
           - Age:
-              ignore: true
+              inherit: false
       nonUi:
         Age:
         - *18-74
 
-  - name: Young people neither in employment nor in education and training NEET rate
+  - name: NEET
+    id: MD_17
     category: Education
     articleLink:
       url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_socioeconomic_situation_of_young_people
     datasets:
       citizen:
         id: EDAT_LFSE_23
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/51072151-ab67-484d-9058-7b96e06868bb?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfse_23
       birth:
         id: EDAT_LFSE_28
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/41a7e4d5-b4df-4cd2-bde9-80f395807318?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfse_28
     dimensions:
       ui:
         dropdown:
@@ -556,8 +613,16 @@ indicators:
               elements:
                 - *15-29s
                 - *15-34
+        wstatus:
+        - label: label    #TODO
+          code: NEMP
+        training:
+        - label: label    #TODO
+          code: NO_FE_NO_NFE
 
-  - name: Share of people with skills in the main host country language before migrating
+  - name: Language skills before migrating
+    id: MD_18
+    ignore: true
     category: Education
     articleLink: *articleLinkEducation
     datasets:
@@ -575,7 +640,7 @@ indicators:
                 - *15-74s
                 - *15-29
                 - *20-64
-          - Country of citizenship/birth:   # TODO: check ramifications
+          - Country of citizenship/birth:   # TODO: wait for masterfile and if neccessary, make non-default config work
               elements:
                 - *nonEuB
                 - *euB
@@ -600,17 +665,18 @@ indicators:
 
 ##########################################################
 
-  - name: Share of adults at risk of poverty or social exclusion
+  - name: At risk of poverty or social exclusion
+    id: MD_19
     category: Social inclusion
     isInOverview: true
     articleLink: *articleLinkSocialInclusion
     datasets:
       citizen:
         id: ILC_PEPS05N
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/e5355ba1-b4bf-4f2c-a5d6-4ca46cd88406?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_peps05n
       birth:
         id: ILC_PEPS06N
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/7acca101-803d-44f2-85cd-834dbe582384?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_peps06n
     dimensions:
       ui:
         dropdown:
@@ -618,20 +684,20 @@ indicators:
               elements:
                 - *18-over
                 - *20-64
-                - *16-29    # TODO citizenship
-                - *18-29    # birth
+                - *16-29
 
   - name: At-risk-of-poverty rate
+    id: MD_20
     category: Social inclusion
     isInOverview: true
     articleLink: *articleLinkSocialInclusion
     datasets:
       citizen:
         id: ILC_LI31
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/e9d64427-793b-4e0a-8a5e-0cffb07888ff?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_li31
       birth:
         id: ILC_LI32
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/0f6376a0-e24d-48fd-9a7c-2129d53b94c6?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_li32
     dimensions:
       ui:
         dropdown:
@@ -639,20 +705,20 @@ indicators:
               elements:
                 - *18-over
                 - *20-64
-                - *16-29    # TODO citizenship
-                - *18-29    # birth
+                - *16-29
 
   - name: Median net income
+    id: MD_21
     category: Social inclusion
     isInOverview: true
     articleLink: *articleLinkSocialInclusion
     datasets:
       citizen:
         id: ILC_DI15
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/06023946-85db-4e8a-ae02-0e860e775b54?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_di15
       birth:
         id: ILC_DI16
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/8a87b735-56ad-4852-b57d-40aaba8bf715?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_di16
     dimensions:
       ui:
         dropdown:
@@ -668,41 +734,52 @@ indicators:
         - label: Euro
           code: EUR
 
-  - name: Child poverty rate At-risk-of poverty rate for children
+  - name: Child poverty rate
+    id: MD_22
+    ignore: true
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
     datasets:
       citizen:
-        id: ILC_LI33
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/257354e9-1826-4082-bfd4-838441acb7dd?lang=en
+        id: ilc_di15
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_di15
       birth:
-        id: ILC_LI34
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/68fd3d0d-2eac-4819-b51c-f56cfd653c2f?lang=en
+        id: ilc_di16
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_di16
     dimensions:
       ui:
         dropdown:
           - Age:
-              ignore: true
+              inherit: false
           - Sex:
-              ignore: true
+              inherit: false
+      nonUi:
+        Age:
+        - *0-17
+        Sex:
+        - *total
+        indic_il:
+        - label: Median equivalised net income
+          code: MED_E
 
-  - name: Share of adults living in households with very low work intensity   # TODO: EU isnt included in data
+  - name: Households with very low work intensity   # TODO: EU isnt included in data
+    id: MD_23
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
     datasets:
       citizen:
         id: ILC_LVHL15N
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/12393227-d44b-486b-b494-224a912b85a8?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvhl15n
       birth:
-        id: ILC_LVHL16N  # TODO __custom_4572826
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/8cd9f52f-c732-4e88-baee-496000c184c9?lang=en
+        id: ILC_LVHL16N
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvhl16n
     dimensions:
       ui:
         dropdown:
           - Age:
-              ignore: true
+              inherit: false
           - Sex:
-              ignore: true
+              inherit: false
       nonUi:
         Age:
           - *18-64
@@ -710,45 +787,47 @@ indicators:
           - *total
 
   - name: Material and social deprivation rate
+    id: MD_24
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
     datasets:
       citizen:
         id: ILC_MDSD04
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/eb106c8a-f51c-4c4e-8080-5ac067eb14d4?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_mdsd04
       birth:
         id: ILC_MDSD05
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/6528ffae-303c-4649-ba01-f798327daf4a?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_mdsd05
     dimensions:
       ui:
         dropdown:
           - Age:
-              ignore: true
+              inherit: false
           - Sex:
-              ignore: true
+              inherit: false
       nonUi:
         Age:
           - *18-over
         Sex:
           - *total
 
-  - name: In-work at-risk-of-poverty rate persistent poverty risk
+  - name: In-work poverty
+    id: MD_25
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
     datasets:
       citizen:
         id: ILC_IW15
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/836c704e-88f5-472a-af2a-b154a1bdaedb?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvps15
       birth:
         id: ILC_IW16
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/b13305ef-990b-4376-83aa-f3a795025e84?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvps16
     dimensions:
       ui:
         dropdown:
           - Age:
-              ignore: true
+              inherit: false
           - Sex:
-              ignore: true
+              inherit: false
       nonUi:
         Age:
           - *18-over
@@ -757,49 +836,52 @@ indicators:
 
 ##########################################################
 
-  - name: Home ownership rate
+  - name: Home ownership
+    id: MD_26
     category: Housing
     isInOverview: true
     articleLink: *articleLinkHousing
     datasets:
       citizen:
         id: ILC_LVPS15
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/cf1f1df3-d356-451d-a0dc-9b38be4cd9c1?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvps15
+
       birth:
         id: ILC_LVPS16
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/9aa7ad1a-8350-47cd-a9e8-83c8e0c59e23?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvps16
     dimensions:
       ui:
         dropdown:
           - Age:
-              ignore: true
+              inherit: false
           - Sex:
-              ignore: true
+              inherit: false
       nonUi:
         Age:
           - *18-over
         Sex:
           - *total
         Tenure:
-          - *tenure1
+          - *tenureOwn
 
   - name: Housing cost overburden rate
+    id: MD_27
     category: Housing
     articleLink: *articleLinkHousing
     datasets:
       citizen:
         id: ILC_LVHO25
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/b0305aa0-53e7-445c-abe2-601fa33de3d8?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvho25
       birth:
         id: ILC_LVHO26
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/b872ac81-5aeb-4da7-b52a-44ba54ddb69a?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvho26
     dimensions:
       ui:
         dropdown:
           - Age:
-              ignore: true
+              inherit: false
           - Sex:
-              ignore: true
+              inherit: false
       nonUi:
         Age:
           - *18-over
@@ -807,22 +889,23 @@ indicators:
           - *total
 
   - name: Overcrowding rate
+    id: MD_28
     category: Housing
     articleLink: *articleLinkHousing
     datasets:
       citizen:
         id: ILC_LVHO15
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/1df3b41e-3658-4059-9dda-de6187dd7bb5?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvho15
       birth:
         id: ILC_LVHO16
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/8e06437d-ce21-4ad1-a929-1eeb170fa35b?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvho16
     dimensions:
       ui:
         dropdown:
           - Age:
-              ignore: true
+              inherit: false
           - Sex:
-              ignore: true
+              inherit: false
       nonUi:
         Age:
           - *18-over
@@ -832,17 +915,17 @@ indicators:
 ##########################################################
 
   - name: Health status perception
-    fullName: Share of people perceiving their health status as good or bad
+    id: MD_29
     category: Health
     isInOverview: true
     articleLink: *articleLinkHealth
     datasets:
       citizen:
         id: HLTH_SILC_24
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/31210a4f-cdeb-4a2a-8422-6e63007b00d2?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_24
       birth:
         id: HLTH_SILC_23
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/81376051-e9b1-413f-bbbf-d64cd00dfd73?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_23
     dimensions:
       ui:
         dropdown:
@@ -862,16 +945,17 @@ indicators:
                 - *45-64
                 - *65-over
 
-  - name: Share of people with self-reported unmet need for medical care
+  - name: Unmet medical needs
+    id: MD_30
     category: Health
     articleLink: *articleLinkHealth
     datasets:
       citizen:
         id: HLTH_SILC_30
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/35e3a5cd-23c7-4b30-9d78-d11f0640c7d4?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_30
       birth:
         id: HLTH_SILC_29
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/d4386ffc-6550-436d-8146-56b372d5290d?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_29
     dimensions:
       ui:
         dropdown:
@@ -886,16 +970,17 @@ indicators:
           - label: Too expensive
             code: TOOEXP
 
-  - name: Share of people with self-reported unmet needs for dental examination
+  - name: Unmet dental needs
+    id: MD_31
     category: Health
     articleLink: *articleLinkHealth
     datasets:
       citizen:
         id: HLTH_SILC_32
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/35e3a5cd-23c7-4b30-9d78-d11f0640c7d4?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_32
       birth:
         id: HLTH_SILC_31
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/d4386ffc-6550-436d-8146-56b372d5290d?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_31
     dimensions:
       ui:
         dropdown:
@@ -907,19 +992,20 @@ indicators:
                 - *65-over
       nonUi:
         Reason:
-          - label: No unmet needs to declare
-            code: NO_UNMET    # TODO: theres no "All unmet". mistake in excel?
+          - label: Too expensive
+            code: TOOEXP
 
-  - name: Share of people having a long-standing illness or health problem
+  - name: Long standing illness
+    id: MD_32
     category: Health
     articleLink: *articleLinkHealth
     datasets:
       citizen:
         id: HLTH_SILC_26
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/35e3a5cd-23c7-4b30-9d78-d11f0640c7d4?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_26
       birth:
         id: HLTH_SILC_25
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/e89e0200-85fd-4f8f-b9de-a4577c534cc4?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_25
     dimensions:
       ui:
         dropdown:
@@ -929,22 +1015,18 @@ indicators:
                 - *16-44
                 - *45-64
                 - *65-over
-          - Sex:
-              ignore: true
-      nonUi:
-        Sex:
-          - *total
 
-  - name: Self-perceived long-standing limitations in usual activities due to health problem
+  - name: Long standing limitations
+    id: MD_33
     category: Health
     articleLink: *articleLinkHealth
     datasets:
       citizen:
         id: HLTH_SILC_28
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/35e3a5cd-23c7-4b30-9d78-d11f0640c7d4?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_28
       birth:
         id: HLTH_SILC_27
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/e89e0200-85fd-4f8f-b9de-a4577c534cc4?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_27
     dimensions:
       ui:
         dropdown:
@@ -954,60 +1036,59 @@ indicators:
                 - *16-44
                 - *45-64
                 - *65-over
-          - Sex:
-              ignore: true
       nonUi:
-        Sex:
-          - *total
         lev_limit:
           - label: Some
-            code: SOME
+            code: SM_SEV
 
 ##########################################################
 
   - name: Naturalisation rate
+    id: MD_34
     category: Active citizenship
+    ignore: true
     isInOverview: true
     articleLink: *articleLinkActiveCitizenship
     datasets:
       citizen:
         id: MIGR_ACQS
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/91e29ffb-4b88-48fe-94ed-14fc1f332109?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/migr_acqs
       birth:
         id: MIGR_ACQS   # dummy
         source: null
     dimensions:
       ui:
         dropdown:
-          - Country of citizenship/birth:   # TODO check ramifications
-              elements:
-                - originalCode: NEU_P_HHAB
-                  code: indicNEU_FOR
-                  label: Share of non-EU citizens who have acquired citizenship
-                - originalCode: EU_P_HHAB
-                  code: indicEU_FOR
-                  label: Share of EU citizens who have acquired citizenship
-                - originalCode: FOR_P_HHAB
-                  code: indicNAT
-                  label: Share of foreign citizens who have acquired citizenship
-              groups:
-                *bySelectGroupTitles
+#          - Country of citizenship/birth:   # TODO check ramifications
+#              elements:
+#                - code: NEU_P_HHAB
+#                  label: Share of non-EU citizens who have acquired citizenship
+#                - code: EU_P_HHAB
+#                  label: Share of EU citizens who have acquired citizenship
+#                - code: FOR_P_HHAB
+#                  label: Share of foreign citizens who have acquired citizenship
+#              groups:
+#                NEU_P_HHAB: Select all
+          - Country of citizenship/birth:
+              inherit: false
           - Age:
-              ignore: true
+              inherit: false
           - Sex:
-              ignore: true
+              inherit: false
       nonUi:
         Sex:
           - *total
 
   - name: Share of third country nationals holding long-term residence permits
+    id: MD_35
     category: Active citizenship
+    ignore: true
     isInOverview: true
     articleLink: *articleLinkActiveCitizenship
     datasets:
       citizen:
         id: MIGR_RESSHARE
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/7142bcff-071a-48cf-8bd6-1db0fb2b8309?lang=en
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/migr_resshare
       birth:
         id: MIGR_RESSHARE   # dummy
         source: null
@@ -1020,9 +1101,9 @@ indicators:
                   code: citizenNEU_FOR
                   label: Share of non-EU citizens who have acquired citizenship
           - Age:
-              ignore: true
+              inherit: false
           - Sex:
-              ignore: true
+              inherit: false
       nonUi:
         leg_fram:
           - code: TOTAL
