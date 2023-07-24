@@ -14,7 +14,7 @@ export function createDropdownBoxes(cfg, datasets) {
     const attribs = new Map()
 
     const boxName = Object.keys(cfg[i])[0]          // eg "age"
-    if(cfg[i][boxName]["ignore"] && cfg[i][boxName]["ignore"]===true) {continue}
+    if(typeof cfg[i][boxName]["inherit"] !== "undefined" && cfg[i][boxName]["inherit"]===false) {continue}
     const elements = cfg[i][boxName]["elements"]    // [{label:.., code:.., selected:false/true}]
 
 

@@ -305,8 +305,3 @@ export function setTooltipStyle(numberOfCountriesSelected, numberOfBySelected) {
 	const cond = numberOfCountriesSelected > 1 && numberOfBySelected === 1
 	TooltipLine.setGroupByCountry(!cond)
 }
-
-export function setSubtitle(id, subtitle) {
-	const card = document.getElementById(id)
-	card.setAttribute("subtitle", subtitle)
-}

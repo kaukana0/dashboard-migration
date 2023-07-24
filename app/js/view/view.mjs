@@ -15,6 +15,7 @@ import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
 // both used to decide when to update one instead of all cards
 let currentlyExpandedId = null
 let currentFavoriteStar = ""
+const subtitleDelim = " | "
 
 
 export function createUIElements(cfg, triggerInitialRequest) {
@@ -71,18 +72,13 @@ function onSelectedForOneCard(cardId) {
   Cards.setTooltipStyle(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
 }
 
-function getSelectionTexts(boxes) {
+function getSelectionTexts(boxes, filter) {
   let retVal = ""
-  let isFirst = true
   for(let [key, value] of boxes.selections.entries()) {
     // TODO: yaml / magic strings
     if(["time","geo","Country of citizenship/birth"].includes(key)) {continue}
-    if(isFirst) {
-      isFirst = false
-    } else {
-      retVal += " | "
-    }
-    retVal += Array.from(value.values())
+    if(filter && !filter.includes(key)) {continue}
+    retVal += subtitleDelim + Array.from(value.values())
   }
   return retVal
 }
@@ -102,9 +98,11 @@ function fetch(cardId) {
 }
 
 function updateCardAttributes(cardId, boxes) {
-  document.getElementById(cardId).setAttribute("right1", Array.from(GeoSelect.getSelected().keys()).join(" ") )
-  document.getElementById(cardId).setAttribute("right2", "2023")
-  Cards.setSubtitle(cardId, getSelectionTexts(boxes))
+  const card = document.getElementById(cardId)
+  card.setAttribute("right1", Array.from(GeoSelect.getSelected().keys()).join(" ") )
+  card.setAttribute("right2", "2023")
+  card.setAttribute("subtitle_c", card.getAttribute("ylabel") + getSelectionTexts(boxes,"Age") )
+  card.setAttribute("subtitle_e", card.getAttribute("ylabel") + getSelectionTexts(boxes) )
 }
 
 // menuItemId can be anything, menuItem or submenuItem
