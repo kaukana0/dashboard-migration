@@ -9,20 +9,20 @@ import {MS} from "../common/magicStrings.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../model/url.mjs"
 import Fetcher from "../model/fetcher.mjs"
-import {getMapFromObject} from "./modules/selects/util.mjs"
+import {getMapFromArray} from "./modules/util.mjs"
 import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
+import * as Subtitle from "./modules/cards/subtitle.mjs"
 
 // both used to decide when to update one instead of all cards
 let currentlyExpandedId = null
 let currentFavoriteStar = ""
-const subtitleDelim = " | "
 
 
 export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
   const categories = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, categories)
-  GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromObject(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
+  GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromArray(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
   currentFavoriteStar = GeoSelect.getFavoriteStar()
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, categories, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
@@ -72,17 +72,6 @@ function onSelectedForOneCard(cardId) {
   Cards.setTooltipStyle(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
 }
 
-function getSelectionTexts(boxes, filter) {
-  let retVal = ""
-  for(let [key, value] of boxes.selections.entries()) {
-    // TODO: yaml / magic strings
-    if(["time","geo","Country of citizenship/birth"].includes(key)) {continue}
-    if(filter && !filter.includes(key)) {continue}
-    retVal += subtitleDelim + Array.from(value.values())
-  }
-  return retVal
-}
-
 function fetch(cardId) {
   console.debug("fetch for card", cardId)
   document.getElementById(cardId).indicateLoading()
@@ -101,8 +90,8 @@ function updateCardAttributes(cardId, boxes) {
   const card = document.getElementById(cardId)
   card.setAttribute("right1", Array.from(GeoSelect.getSelected().keys()).join(" ") )
   card.setAttribute("right2", "2023")
-  card.setAttribute("subtitle_c", card.getAttribute("ylabel") + getSelectionTexts(boxes,"Age") )
-  card.setAttribute("subtitle_e", card.getAttribute("ylabel") + getSelectionTexts(boxes) )
+  card.setAttribute("subtitle_c", card.getAttribute("ylabel") + Subtitle.get(card.userData, boxes, "Age") )
+  card.setAttribute("subtitle_e", card.getAttribute("ylabel") + Subtitle.get(card.userData, boxes) )
 }
 
 // menuItemId can be anything, menuItem or submenuItem

@@ -1,7 +1,7 @@
 // all the boxes for one card
 
 import {MS} from "../../../common/magicStrings.mjs"
-import {getMapFromObject} from "./util.mjs"
+import {getMapFromArray} from "../util.mjs"
 
 
 // "cfg" is the dimensions.ui.dropdown section from the yaml config, converted to json.
@@ -10,16 +10,16 @@ import {getMapFromObject} from "./util.mjs"
 export function createDropdownBoxes(cfg, datasets) {
   let retVal = []
 
+  // TODO: make more comprehensive by using getMapFromArrayWObjects()
   for(const i in cfg) {
-    const attribs = new Map()
 
     const boxName = Object.keys(cfg[i])[0]          // eg "age"
     if(typeof cfg[i][boxName]["inherit"] !== "undefined" && cfg[i][boxName]["inherit"]===false) {continue}
     const elements = cfg[i][boxName]["elements"]    // [{label:.., code:.., selected:false/true}]
-
-
-    const items = getMapFromObject(elements)
-
+    
+    const items = getMapFromArray(elements)
+    
+    const attribs = new Map()
     attribs.set("dimension", boxName)
     attribs.set("id", Math.floor(Math.random() * 10000))  // doesnt matter which, this is only needed to make it dismissable
     attribs.set("style", "width:200px; margin-right: 20px;")

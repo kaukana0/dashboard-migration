@@ -20,31 +20,35 @@ import * as CommonConstraints from "../selects/commonConstraints.mjs"
 import {MS} from "../../../common/magicStrings.mjs"
 import * as Url from "../../../model/url.mjs"
 import * as Util from "../../../../components/util/util.mjs"
-import * as UtilSelect from "../selects/util.mjs"
+import {getMapFromArray, getMapFromArrayWObjects}  from "../util.mjs"
 import * as TooltipLine from "./tooltips/tooltipLineChart.mjs"
 import * as TooltipDot from "./tooltips/tooltipDotChart.mjs"
 import * as TooltipCommon from "./tooltips/common.mjs"
 import "../../../../components/range/range.mjs"							// the WebComponent
 import * as Range from "./range.mjs"
-
+import * as Subtitle from "./subtitle.mjs"
 
 let categories
 let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't come from processors/data but from config
 let overviewCardIds = []
 
+
+// pretty much the core of processing the YAML
 export function create(containerId, cfg, _categories, selectedCallback, onCardExpand, onCardContract) {
 	let retVal = []
 
 	categories = _categories
 
 	for(const i in cfg.indicators) {
+
 		const merged = Util.mergeObjects(cfg.indicatorBase, cfg.indicators[i])
 		const id = getIdFromName(merged.name)
+
 		console.debug("cards: merged cfg for indicator", merged.name, merged, id)
 		const parser = new DOMParser()
 
 		if(!merged.ignore) {
-			if(merged["obiWan"]) {document.getElementById(containerId).innerHTML = ""}
+			if(merged["hanSolo"]) {document.getElementById(containerId).innerHTML = ""}
 
 			const html = MarkUpCode.getCardHtmlString( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
 			const doc = parser.parseFromString(html, "text/html")
@@ -60,11 +64,11 @@ export function create(containerId, cfg, _categories, selectedCallback, onCardEx
 
 			retVal.push(id)
 
-			if(merged["obiWan"]) {break}	// only one card
+			if(merged["hanSolo"]) {break}	// only one card
 		}
 	}
 
-	countryNamesFull = UtilSelect.getMapFromObject(cfg.codeList.countries)
+	countryNamesFull = getMapFromArray(cfg.codeList.countries)
 
 	if(overviewCardIds.length===0) {
 		console.warn("cards: no 'isInOverview' is defined in yaml, so there's no card in the overview")
@@ -86,6 +90,11 @@ function setupCard(id, merged, onCardExpand, onCardContract) {
 	card.tooltipFn2 = TooltipDot.tooltipFn
 	card.tooltipCSS = TooltipCommon.CSS()
 	card.setLegendTexts([MS.TXT_BY_LBL_CNEU, MS.TXT_BY_LBL_CEU, MS.TXT_BY_LBL_CNAT])
+	card.userData = Subtitle.getInfoAboutOrder(
+		getMapFromArrayWObjects(merged.dimensions.ui.dropdown), 
+		getMapFromArrayWObjects(merged.dimensions.ui.subtitle),
+		merged.dimensions.nonUi,
+		merged.dimensions.excludeFromSubtitle)
 }
 
 function setupRange(id, values, selectedCallback) {

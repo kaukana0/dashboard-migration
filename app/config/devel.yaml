@@ -1,4 +1,4 @@
-# yaml schema v0.6.0 - for migration dashboard 
+# yaml schema v0.7.0 - for migration dashboard 
 
 codeList:
 
@@ -266,6 +266,7 @@ indicatorBase:
       - *freq
       unit:
       - *unit
+    excludeFromSubtitle: ["time","geo","Country of citizenship/birth"]
 
 
 # each indicator can overwrite the properties it "inherited" (via merge) from indicatorBase
@@ -466,11 +467,10 @@ indicators:
         - label: Labour market slack
           code: SLACK
         unit:
-        - label: "Percentage of extended labour force"
+        - label: "%"    # TODO "Percentage of extended labour force"
           code: "PC_ELF"
 
   - name: Newly employed
-    id: MD_12
     ignore: true
     category: Employment
     articleLink: *articleLinkEmployment
@@ -499,7 +499,7 @@ indicators:
 ##########################################################
 
   - name: Highest educational attainment
-    id: MD_13
+    id: MD_12
     category: Education
     articleLink: *articleLinkEducation
     datasets:
@@ -524,11 +524,10 @@ indicators:
                   code: ED5-8
       nonUi:
         Age:
-        - label: Age
-          code: Y25-74
+        - *25-74
 
   - name: Educational attainment
-    id: MD_14
+    id: MD_13
     category: Education
     isInOverview: true
     articleLink: *articleLinkEducation
@@ -551,7 +550,7 @@ indicators:
           code: ED5-8
 
   - name: Early leavers
-    id: MD_15
+    id: MD_14
     category: Education
     isInOverview: true
     articleLink: *articleLinkEducation
@@ -575,7 +574,7 @@ indicators:
           code: POP
 
   - name: Lifelong learning
-    id: MD_16
+    id: MD_15
     category: Education
     articleLink: *articleLinkEducation
     datasets:
@@ -592,10 +591,10 @@ indicators:
               inherit: false
       nonUi:
         Age:
-        - *18-74
+        - *20-64
 
   - name: NEET
-    id: MD_17
+    id: MD_16
     category: Education
     articleLink:
       url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_socioeconomic_situation_of_young_people
@@ -613,6 +612,14 @@ indicators:
               elements:
                 - *15-29s
                 - *15-34
+        subtitle:
+          - wstatus:
+            - code: X
+              label: Nonemployment
+          - training:
+            - code: X
+              label: No Fe no Nfe
+      nonUi:
         wstatus:
         - label: label    #TODO
           code: NEMP
@@ -621,7 +628,7 @@ indicators:
           code: NO_FE_NO_NFE
 
   - name: Language skills before migrating
-    id: MD_18
+    id: MD_17
     ignore: true
     category: Education
     articleLink: *articleLinkEducation
@@ -666,7 +673,7 @@ indicators:
 ##########################################################
 
   - name: At risk of poverty or social exclusion
-    id: MD_19
+    id: MD_18
     category: Social inclusion
     isInOverview: true
     articleLink: *articleLinkSocialInclusion
@@ -687,7 +694,7 @@ indicators:
                 - *16-29
 
   - name: At-risk-of-poverty rate
-    id: MD_20
+    id: MD_19
     category: Social inclusion
     isInOverview: true
     articleLink: *articleLinkSocialInclusion
@@ -708,7 +715,7 @@ indicators:
                 - *16-29
 
   - name: Median net income
-    id: MD_21
+    id: MD_20
     category: Social inclusion
     isInOverview: true
     articleLink: *articleLinkSocialInclusion
@@ -735,7 +742,7 @@ indicators:
           code: EUR
 
   - name: Child poverty rate
-    id: MD_22
+    id: MD_21
     ignore: true
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
@@ -763,7 +770,7 @@ indicators:
           code: MED_E
 
   - name: Households with very low work intensity   # TODO: EU isnt included in data
-    id: MD_23
+    id: MD_22
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
     datasets:
@@ -787,7 +794,7 @@ indicators:
           - *total
 
   - name: Material and social deprivation rate
-    id: MD_24
+    id: MD_23
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
     datasets:
@@ -811,7 +818,7 @@ indicators:
           - *total
 
   - name: In-work poverty
-    id: MD_25
+    id: MD_24
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
     datasets:
@@ -837,7 +844,7 @@ indicators:
 ##########################################################
 
   - name: Home ownership
-    id: MD_26
+    id: MD_25
     category: Housing
     isInOverview: true
     articleLink: *articleLinkHousing
@@ -865,7 +872,7 @@ indicators:
           - *tenureOwn
 
   - name: Housing cost overburden rate
-    id: MD_27
+    id: MD_26
     category: Housing
     articleLink: *articleLinkHousing
     datasets:
@@ -889,7 +896,7 @@ indicators:
           - *total
 
   - name: Overcrowding rate
-    id: MD_28
+    id: MD_27
     category: Housing
     articleLink: *articleLinkHousing
     datasets:
@@ -915,7 +922,7 @@ indicators:
 ##########################################################
 
   - name: Health status perception
-    id: MD_29
+    id: MD_28
     category: Health
     isInOverview: true
     articleLink: *articleLinkHealth
@@ -946,7 +953,7 @@ indicators:
                 - *65-over
 
   - name: Unmet medical needs
-    id: MD_30
+    id: MD_29
     category: Health
     articleLink: *articleLinkHealth
     datasets:
@@ -971,7 +978,7 @@ indicators:
             code: TOOEXP
 
   - name: Unmet dental needs
-    id: MD_31
+    id: MD_30
     category: Health
     articleLink: *articleLinkHealth
     datasets:
@@ -996,7 +1003,7 @@ indicators:
             code: TOOEXP
 
   - name: Long standing illness
-    id: MD_32
+    id: MD_31
     category: Health
     articleLink: *articleLinkHealth
     datasets:
@@ -1017,7 +1024,7 @@ indicators:
                 - *65-over
 
   - name: Long standing limitations
-    id: MD_33
+    id: MD_32
     category: Health
     articleLink: *articleLinkHealth
     datasets:
@@ -1044,7 +1051,7 @@ indicators:
 ##########################################################
 
   - name: Naturalisation rate
-    id: MD_34
+    id: MD_33
     category: Active citizenship
     ignore: true
     isInOverview: true
@@ -1080,7 +1087,7 @@ indicators:
           - *total
 
   - name: Share of third country nationals holding long-term residence permits
-    id: MD_35
+    id: MD_34
     category: Active citizenship
     ignore: true
     isInOverview: true
