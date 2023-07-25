@@ -74,7 +74,7 @@ codeList:
     label: "15 years and over"
     code: "Y_GE15"
   16-over: &16-over
-    label: "16 years and below"
+    label: "16 years and over"
     code: "Y_GE16"
   16-29: &16-29
     label: "16 to 29 years"
