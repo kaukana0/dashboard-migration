@@ -272,8 +272,11 @@ function getColorSet(forLineChart, geoSelections) {
 	return retVal
 }
 
-export function contractAll() {
-	iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => document.getElementById(cardId).contract() )
+export function contractAll(except) {
+	iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => {
+		console.log(except,cardId)
+		if(cardId!==except) { document.getElementById(cardId).contract() }
+	})
 }
 
 export function setDefaultSelections(node) {
@@ -284,7 +287,7 @@ export function setDefaultSelections(node) {
 }
 
 export function expand(card) {
-	contractAll()
+	contractAll(card.getAttribute("id"))
 	card.expand(document.getElementById("anchorSelectCountryOutsideOfCard"))
 }
 
