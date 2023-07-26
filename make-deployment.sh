@@ -60,17 +60,22 @@ mv ./js/view/modules/cards/tooltips/tooltipLineChartGC.mjs    ./js/view/modules/
 mv ./js/view/modules/cards/tooltips/tooltipLineChartGB.mjs    ./js/view/modules/cards/tooltips/tooltipLineChartGB.js
 mv ./js/view/modules/cards/tooltips/tooltipLineChart.mjs    ./js/view/modules/cards/tooltips/tooltipLineChart.js
 mv ./js/view/modules/cards/tooltips/labelMapping.mjs    ./js/view/modules/cards/tooltips/labelMapping.js
+mv ./js/view/modules/cards/subtitle.mjs    ./js/view/modules/cards/subtitle.js
 mv ./js/view/modules/mainMenu.mjs    ./js/view/modules/mainMenu.js
-mv ./js/view/modules/loadingIndicator.mjs    ./js/view/modules/loadingIndicator.js
 mv ./js/view/modules/selects/selectBoxes.mjs    ./js/view/modules/selects/selectBoxes.js
 mv ./js/view/modules/selects/bySelectConstraints.mjs    ./js/view/modules/selects/bySelectConstraints.js
 mv ./js/view/modules/selects/geoSelect.mjs    ./js/view/modules/selects/geoSelect.js
-mv ./js/view/modules/selects/util.mjs    ./js/view/modules/selects/util.js
 mv ./js/view/modules/selects/commonConstraints.mjs    ./js/view/modules/selects/commonConstraints.js
 mv ./js/view/modules/selects/bySelect.mjs    ./js/view/modules/selects/bySelect.js
+mv ./js/view/modules/loadingIndicator.mjs    ./js/view/modules/loadingIndicator.js
+mv ./js/view/modules/util.mjs    ./js/view/modules/util.js
 mv ./js/view/view.mjs    ./js/view/view.js
 mv ./js/common/magicStrings.mjs    ./js/common/magicStrings.js
 mv ./redist/js-yaml.mjs    ./redist/js-yaml.js
+
+
+
+
 
 # replace "mjs" with "js" in all the files containing mjs
 # grep -i -r -l .mjs *
@@ -87,7 +92,6 @@ sed -i 's/\.mjs/\.js/'   index.html
 sed -i 's/\.mjs/\.js/'   js/main.js
 sed -i 's/\.mjs/\.js/'   js/model/pipelineProcessors/timeSeries.js
 sed -i 's/\.mjs/\.js/'   js/model/pipelineProcessors/countrySeries.js
-sed -i 's/\.mjs/\.js/'   js/model/pipelineProcessors/byOrder.js
 sed -i 's/\.mjs/\.js/'   js/model/fetcher.js
 sed -i 's/\.mjs/\.js/'   js/model/common/textMappings.js
 sed -i 's/\.mjs/\.js/'   js/model/common/codeMappings.js
@@ -99,11 +103,12 @@ sed -i 's/\.mjs/\.js/'   js/view/modules/cards/tooltips/tooltipLineChartGC.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/cards/tooltips/tooltipLineChartGB.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/cards/tooltips/tooltipLineChart.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/cards/tooltips/labelMapping.js
+sed -i 's/\.mjs/\.js/'   js/view/modules/cards/subtitle.js
+sed -i 's/\.mjs/\.js/'   js/view/modules/mainMenu.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/selects/selectBoxes.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/selects/bySelectConstraints.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/selects/geoSelect.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/selects/bySelect.js
-sed -i 's/\.mjs/\.js/'   js/view/modules/mainMenu.js
 sed -i 's/\.mjs/\.js/'   js/view/view.js
 
 cd ..
