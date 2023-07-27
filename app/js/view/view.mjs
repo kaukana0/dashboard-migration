@@ -60,6 +60,7 @@ function onSelectedForAllCards() {
   Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => { 
     const boxes = fetch(cardId)
     updateCardAttributes(cardId, boxes)
+    Cards.setTooltipStyle(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
   })
 }
 

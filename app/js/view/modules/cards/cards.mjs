@@ -50,7 +50,8 @@ export function create(containerId, cfg, _categories, selectedCallback, onCardEx
 		if(!merged.ignore) {
 			if(merged["hanSolo"]) {document.getElementById(containerId).innerHTML = ""}
 
-			const html = MarkUpCode.getCardHtmlString( id, merged.name, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
+			const longTitle = typeof merged.nameLong === "undefined" ? merged.name : merged.nameLong
+			const html = MarkUpCode.getCardHtmlString( id, merged.name, longTitle, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
 			const doc = parser.parseFromString(html, "text/html")
 			document.getElementById(containerId).appendChild( doc.body.firstElementChild )
 

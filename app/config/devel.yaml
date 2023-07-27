@@ -1,4 +1,6 @@
-# yaml schema v0.7.0 - for migration dashboard 
+# configuration for "Migrant integration indicators dashboard" by Eurostat
+# yaml schema v0.7.0
+# version: devel-07-23
 
 codeList:
 
@@ -70,11 +72,8 @@ codeList:
     label: "15 to 74 years"
     code: "Y15-74"
     selected: true
-  15-over: &15-over
-    label: "15 years and over"
-    code: "Y_GE15"
   16-over: &16-over
-    label: "16 years and over"
+    label: "16 years or over"
     code: "Y_GE16"
   16-29: &16-29
     label: "16 to 29 years"
@@ -131,6 +130,7 @@ codeList:
     code: "PC"
   # this determines the contents and order of UI elements, except for the chart.
   # the country order for that is determined through processorCountryOrder.
+  # note: mind "replaceEuInRawData"
   countries: &countries   #ISO 3166-1 alpha2
     - code: EU
       label: European Union
@@ -237,8 +237,8 @@ indicatorBase:
         - Age:
             elements:
               - *15-74
-              - *20-64s
               - *15-29
+              - *20-64s
         - Sex:        # in the REST request, this becomes the dimension
             elements:
               - *total    # and code becomes the code; label becomes dropdownbox item
@@ -259,7 +259,7 @@ indicatorBase:
       range:              # start/end from requested data may override this
         - time:
           start: 2010
-          end: 0          # if end is null then current year + current is calculated (current has to be negative)
+          end: 2022       # if end is null then current year + current is calculated (current has to be negative)
           current: -10
     nonUi:                # dimensions which are request-relevant and not represented by an ui element
       freq:
@@ -272,7 +272,7 @@ indicatorBase:
 # each indicator can overwrite the properties it "inherited" (via merge) from indicatorBase
 indicators:
 
-  - name: Migrant population share
+  - name: Migrant population
     id: MD_1
     ignore: true
     category: Demography
@@ -319,7 +319,7 @@ indicators:
 
 ##########################################################
 
-  - name: Employment rate
+  - name: Employment
     id: MD_3
     category: Employment
     isInOverview: true
@@ -332,7 +332,8 @@ indicators:
         id: LFSA_ERGACOB
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_ergacob
 
-  - name: Activity rate
+  - name: Active population
+    nameLong: Economically active population 
     id: MD_4
     category: Employment
     isInOverview: true
@@ -346,7 +347,6 @@ indicators:
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_argacob
 
   - name: Unemployment
-    nameLong: Unemployment rate
     id: MD_5
     category: Employment
     isInOverview: true
@@ -364,8 +364,8 @@ indicators:
           - Age:
               elements:
                 - *15-74
-                - *20-64
                 - *15-29
+                - *20-64
 
   - name: Long-term unemployment
     id: MD_6
@@ -384,10 +384,10 @@ indicators:
           - Age:
               elements:
                 - *15-74
-                - *20-64
                 - *15-29
+                - *20-64
 
-  - name: Over-qualification rate
+  - name: Over-qualification
     id: MD_7
     category: Employment
     articleLink: *articleLinkEmployment
@@ -432,7 +432,7 @@ indicators:
         id: LFSA_EPPGACOB
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eppgacob
 
-  - name: Limited duration contracts
+  - name: Temporary employment
     id: MD_10
     category: Employment
     articleLink: *articleLinkEmployment
@@ -470,35 +470,10 @@ indicators:
         - label: "%"    # TODO "Percentage of extended labour force"
           code: "PC_ELF"
 
-  - name: Newly employed
-    ignore: true
-    category: Employment
-    articleLink: *articleLinkEmployment
-    datasets:
-      citizen:
-        id: LFSA_ENEWASN
-        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_enewasn
-      birth:
-        id: LFSA_ENEWASC
-        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_enewasc
-    dimensions:
-      ui:
-        dropdown:
-          - Sex:  # TODO
-              inherit: false
-          - Age:
-              elements:
-                - *15-over
-                - *20-64s
-                - *15-29
-      nonUi:
-        wstatus:
-        - label: Employed persons
-          code: EMP
-
 ##########################################################
 
-  - name: Highest educational attainment
+  - name: Educational attainment
+    nameLong: Population by educational attainment level
     id: MD_12
     category: Education
     articleLink: *articleLinkEducation
@@ -526,7 +501,8 @@ indicators:
         Age:
         - *25-74
 
-  - name: Educational attainment
+  - name: Tertiary educational attainment
+    nameLong: Population with tertiary educational attainment
     id: MD_13
     category: Education
     isInOverview: true
@@ -543,13 +519,14 @@ indicators:
         dropdown:
           - Age:
               elements:
-                - *30-34s
                 - *25-34
+                - *30-34s
         isced11:
         - label: label    #TODO
           code: ED5-8
 
-  - name: Early leavers
+  - name: Early school leavers 
+    nameLong: Early leavers from education and training
     id: MD_14
     category: Education
     isInOverview: true
@@ -573,7 +550,8 @@ indicators:
         - label: label    #TODO
           code: POP
 
-  - name: Lifelong learning
+  - name: Adult learning
+    nameLong: Adults participating in learning
     id: MD_15
     category: Education
     articleLink: *articleLinkEducation
@@ -594,6 +572,7 @@ indicators:
         - *20-64
 
   - name: NEET
+    nameLong: Young people neither in employment nor in education and training (NEET)
     id: MD_16
     category: Education
     articleLink:
@@ -612,13 +591,6 @@ indicators:
               elements:
                 - *15-29s
                 - *15-34
-        subtitle:
-          - wstatus:
-            - code: X
-              label: Nonemployment
-          - training:
-            - code: X
-              label: No Fe no Nfe
       nonUi:
         wstatus:
         - label: label    #TODO
@@ -672,7 +644,8 @@ indicators:
 
 ##########################################################
 
-  - name: At risk of poverty or social exclusion
+  - name: Poverty or social exclusion
+    nameLong: People at risk of poverty or social exclusion
     id: MD_18
     category: Social inclusion
     isInOverview: true
@@ -689,11 +662,12 @@ indicators:
         dropdown:
           - Age:
               elements:
+                - *16-29
                 - *18-over
                 - *20-64
-                - *16-29
 
-  - name: At-risk-of-poverty rate
+  - name: Poverty
+    nameLong: People at risk of poverty
     id: MD_19
     category: Social inclusion
     isInOverview: true
@@ -710,11 +684,12 @@ indicators:
         dropdown:
           - Age:
               elements:
+                - *16-29
                 - *18-over
                 - *20-64
-                - *16-29
 
-  - name: Median net income
+  - name: Median income
+    nameLong: Median net equivalised disposable income
     id: MD_20
     category: Social inclusion
     isInOverview: true
@@ -738,10 +713,11 @@ indicators:
         - label: Median equivalised net income
           code: MED_E
         unit:
-        - label: Euro
-          code: EUR
+        - label: PPS
+          code: PPS
 
-  - name: Child poverty rate
+  - name: Child poverty
+    nameLong: Children at risk of poverty
     id: MD_21
     ignore: true
     category: Social inclusion
@@ -769,7 +745,8 @@ indicators:
         - label: Median equivalised net income
           code: MED_E
 
-  - name: Households with very low work intensity   # TODO: EU isnt included in data
+  - name: Low work intensity   # TODO: EU isnt included in data
+    nameLong: People living in a household with a very low work intensity
     id: MD_22
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
@@ -793,7 +770,7 @@ indicators:
         Sex:
           - *total
 
-  - name: Material and social deprivation rate
+  - name: Material and social deprivation
     id: MD_23
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
@@ -817,7 +794,8 @@ indicators:
         Sex:
           - *total
 
-  - name: In-work poverty
+  - name: In-work at risk of poverty
+    nameLong: Employed persons at risk of poverty 
     id: MD_24
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
@@ -871,7 +849,7 @@ indicators:
         Tenure:
           - *tenureOwn
 
-  - name: Housing cost overburden rate
+  - name: Housing cost overburden
     id: MD_26
     category: Housing
     articleLink: *articleLinkHousing
@@ -895,7 +873,8 @@ indicators:
         Sex:
           - *total
 
-  - name: Overcrowding rate
+  - name: Overcrowded homes
+    nameLong: People living in overcrowded homes
     id: MD_27
     category: Housing
     articleLink: *articleLinkHousing
@@ -921,7 +900,8 @@ indicators:
 
 ##########################################################
 
-  - name: Health status perception
+  - name: Self-perceived health
+    nameLong: Health status perception 
     id: MD_28
     category: Health
     isInOverview: true
@@ -953,6 +933,7 @@ indicators:
                 - *65-over
 
   - name: Unmet medical needs
+    nameLong: Self-reported unmet need for medical care 
     id: MD_29
     category: Health
     articleLink: *articleLinkHealth
@@ -978,6 +959,7 @@ indicators:
             code: TOOEXP
 
   - name: Unmet dental needs
+    nameLong: Self-reported unmet need for dental care
     id: MD_30
     category: Health
     articleLink: *articleLinkHealth
@@ -1003,6 +985,7 @@ indicators:
             code: TOOEXP
 
   - name: Long standing illness
+    nameLong: People having a long-standing illness or health problem
     id: MD_31
     category: Health
     articleLink: *articleLinkHealth
@@ -1023,7 +1006,8 @@ indicators:
                 - *45-64
                 - *65-over
 
-  - name: Long standing limitations
+  - name: Long-standing activity limitations
+    nameLong: People having long-standing limitations in usual activities 
     id: MD_32
     category: Health
     articleLink: *articleLinkHealth
@@ -1086,7 +1070,8 @@ indicators:
         Sex:
           - *total
 
-  - name: Share of third country nationals holding long-term residence permits
+  - name: Long-term residence permits 
+    nameLong: Third country nationals holding long-term residence permits
     id: MD_34
     category: Active citizenship
     ignore: true
