@@ -96,15 +96,16 @@ function updateCardAttributes(cardId, boxes) {
 }
 
 // menuItemId can be anything, menuItem or submenuItem
-function onSelectMenu(menuItemId, parentItemId) {
-  const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(menuItemId)}]`)
-  if(card) {  // submenu item
+function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {
+  console.log(isParentMenuItem)
+  if(isParentMenuItem) {
+    Cards.contractAll()
+    Cards.filter(menuItemId)
+  } else {
+    const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(menuItemId)}]`)
     // filter for the category it belongs to
     Cards.filter(parentItemId)
     Cards.expand(card)
-  } else {  // menu item
-    Cards.contractAll()
-    Cards.filter(menuItemId)
   }
 }
 
