@@ -274,7 +274,6 @@ function getColorSet(forLineChart, geoSelections) {
 
 export function contractAll(except) {
 	iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => {
-		console.log(except,cardId)
 		if(cardId!==except) { document.getElementById(cardId).contract() }
 	})
 }
