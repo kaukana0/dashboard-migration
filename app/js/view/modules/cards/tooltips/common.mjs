@@ -7,7 +7,7 @@ export function pre(headerText) {
   const head = `<div class="t-head">${headerText}</div>`
   retVal += head
 
-  const contentStart = `<div style="display: grid; grid-template-columns: 5fr 1fr;">`
+  const contentStart = `<div style="display: grid; grid-template-columns: 5fr 2fr;">`
   retVal += contentStart
 
   return retVal

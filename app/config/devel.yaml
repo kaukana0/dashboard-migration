@@ -42,7 +42,7 @@ codeList:
     code: "M"
   women: &women
     label: "Women"
-    code: "W"
+    code: "F"
   total: &total
     label: "Total"
     code: "T"
@@ -109,6 +109,9 @@ codeList:
   25-34: &25-34
     label: "25 to 34 years"
     code: "Y25-34"
+  25-64: &25-64
+    label: "25 to 64 years"
+    code: "Y25-64"
   25-74: &25-74
     label: "25 to 74 years"
     code: "Y25-74"
@@ -132,7 +135,7 @@ codeList:
   # the country order for that is determined through processorCountryOrder.
   # note: mind "replaceEuInRawData"
   countries: &countries   #ISO 3166-1 alpha2
-    - code: EU
+    - code: EU    # QWE
       label: European Union
     - code: AT
       label: Austria
@@ -318,6 +321,7 @@ indicators:
                 - *total
 
 ##########################################################
+# note: id and bookmark are purely informative, they're not used by the software at all
 
   - name: Employment
     id: MD_3
@@ -569,7 +573,7 @@ indicators:
               inherit: false
       nonUi:
         Age:
-        - *20-64
+        - *25-64
 
   - name: NEET
     nameLong: Young people neither in employment nor in education and training (NEET)
@@ -581,9 +585,11 @@ indicators:
       citizen:
         id: EDAT_LFSE_23
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfse_23
+        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/5039d719-ce9d-4afb-b083-4a38fa425309?lang=en
       birth:
         id: EDAT_LFSE_28
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfse_28
+        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/5039d719-ce9d-4afb-b083-4a38fa425309?lang=en
     dimensions:
       ui:
         dropdown:
@@ -610,7 +616,8 @@ indicators:
         source: null
       birth:
         id: LFSO_21LANG01
-        source: https://ec.europa.eu/eurostat/databrowser/bookmark/7b7309b3-501f-483d-aef3-ab8f9fc797f0?lang=en
+        source: null
+        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/7b7309b3-501f-483d-aef3-ab8f9fc797f0?lang=en
     dimensions:
       ui:
         dropdown:
@@ -645,6 +652,7 @@ indicators:
 ##########################################################
 
   - name: Poverty or social exclusion
+#    hanSolo: true    QWE
     nameLong: People at risk of poverty or social exclusion
     id: MD_18
     category: Social inclusion
@@ -654,9 +662,11 @@ indicators:
       citizen:
         id: ILC_PEPS05N
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_peps05n
+        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/32e8fb39-ab5b-4a69-80cc-50c704726827?lang=en
       birth:
         id: ILC_PEPS06N
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_peps06n
+        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/7fec6647-136a-4127-b58a-2704114d542f?lang=en
     dimensions:
       ui:
         dropdown:
@@ -676,9 +686,11 @@ indicators:
       citizen:
         id: ILC_LI31
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_li31
+        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/cb378138-68bd-4bf9-b3f0-2bc23582a18b?lang=en
       birth:
         id: ILC_LI32
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_li32
+        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/f096b040-9517-4238-a3b2-b7e9c839245c?lang=en
     dimensions:
       ui:
         dropdown:
@@ -754,9 +766,11 @@ indicators:
       citizen:
         id: ILC_LVHL15N
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvhl15n
+        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/7c414067-c874-46cf-964b-bb45f55842ec?lang=en
       birth:
         id: ILC_LVHL16N
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvhl16n
+        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/0e87b413-b5b5-40cb-b989-7cad801c3cbb?lang=en
     dimensions:
       ui:
         dropdown:
