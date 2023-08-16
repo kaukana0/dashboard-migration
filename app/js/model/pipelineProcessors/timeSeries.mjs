@@ -1,6 +1,8 @@
 import * as MultiDim from "../../../components/multiDimAccess/multiDimAccess.mjs"
 import * as TM from "../common/textMappings.mjs"
 import * as Url from "../url.mjs"
+import * as EUCode from "../common/euCode.mjs"
+import * as BYCode from "../common/byCode.mjs"
 
 /*
 adds something like this to output:
@@ -30,6 +32,7 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   
   const [byDim, byIdx] = TM.getIndexOfByDimension(inputDataFromRequest.id)
   const geoDimIdx = inputDataFromRequest.id.findIndex(e=>e==="geo")
+  console.log("geoDimIdx",geoDimIdx)
   const timeDimIdx = inputDataFromRequest.id.findIndex(e=>e==="time")
   
   const byDimMax = inputDataFromRequest.size[byIdx]  // "by" c_birth or citizen
@@ -38,28 +41,29 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   
   const valence = MultiDim.calcOrdinalValence(inputDataFromRequest.size)
 
-  let byLabel = ""
-  let geoLabel = ""
+  let byCode
+  let geoLabel
 
   for(let geo=0; geo<geoDimMax; geo++) {
 
     output.byOrder.forEach( (orderedBy) => {
-      const by = inputDataFromRequest.dimension[byDim].category.index[orderedBy]
+      const by = inputDataFromRequest.dimension[byDim].category.index[BYCode.replaceRev(orderedBy)]
       // possibly not in data
       if(typeof(by) !== "undefined") {
-        byLabel = Object.keys(inputDataFromRequest.dimension[byDim].category.index)[by]
-        geoLabel = Object.keys(inputDataFromRequest.dimension.geo.category.index)[geo]
+        byCode = BYCode.replace( Object.keys(inputDataFromRequest.dimension[byDim].category.index)[by] )
+        geoLabel = EUCode.replace( Object.keys(inputDataFromRequest.dimension.geo.category.index)[geo] )
+        if(typeof geoLabel === "undefined") {console.warn("timeSeries processor: something is fishy, a geo is missing in the input data!")}
         if(selectedGeo.find(e=>e===geoLabel)) {   // filter what isn't selected
           // combi of by/country is a unique compound key. used as display text by chart tooltip and legend
-          const ll = [geoLabel + ", " + TM.getByLabelShort(byDim, byLabel)] 
+          const ll = [geoLabel + ", " + TM.getByLabelShort(byDim, byCode)] 
           for(let time=0; time<timeDimMax; time++) {
             if(output.time[time]<selectedTime) continue  // filter anything earlier
-            let bla = new Array(inputDataFromRequest.size.length)
-            bla.fill(0)
-            bla[byIdx] = by
-            bla[geoDimIdx] = geo
-            bla[timeDimIdx] = time
-            const i = MultiDim.getIndex(valence, bla)
+            let coeff = new Array(inputDataFromRequest.size.length)
+            coeff.fill(0)
+            coeff[byIdx] = by
+            coeff[geoDimIdx] = geo
+            coeff[timeDimIdx] = time
+            const i = MultiDim.getIndex(valence, coeff)
             if(typeof inputDataFromRequest.value[i] === 'undefined') {
               ll.push(null)
             } else {

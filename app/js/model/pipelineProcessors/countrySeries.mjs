@@ -1,6 +1,8 @@
 import * as MultiDim from "../../../components/multiDimAccess/multiDimAccess.mjs"
 import * as TM from "../common/textMappings.mjs"
 import * as Url from "../url.mjs"
+import * as EUCode from "../common/euCode.mjs"
+import * as BYCode from "../common/byCode.mjs"
 
 /*
 extracts data for all countries at a certain time.
@@ -32,25 +34,24 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   const [byDim, byIdx] = TM.getIndexOfByDimension(inputDataFromRequest.id)
 
   output.byOrder.forEach( (orderedBy) => {
-    const by = inputDataFromRequest.dimension[byDim].category.index[orderedBy]
+    const by = inputDataFromRequest.dimension[byDim].category.index[BYCode.replaceRev(orderedBy)]
     // possibly not in data
     if(typeof(by) !== "undefined") {
       const xByCode = Object.keys(inputDataFromRequest.dimension[byDim].category.index)[by]
-      const ll = [TM.getByLabel(byDim, xByCode)]    // used as display text by chart tooltip
-  
+      const ll = [TM.getByLabel(byDim, BYCode.replace(xByCode))]    // used as display text by chart tooltip
       // the order of countries comes from a processor which was run before this processor
       output.countryOrder.forEach( country => {
-        let bla = new Array(inputDataFromRequest.size.length)
-        const idxGeo = inputDataFromRequest.dimension.geo.category.index[country]
+        let coeff = new Array(inputDataFromRequest.size.length)
+        const idxGeo = inputDataFromRequest.dimension.geo.category.index[EUCode.replaceRev(country)]
         if(typeof idxGeo !== 'undefined') {
           //output.countrySeries.data[0].push( inputDataFromRequest.dimension.geo.category.label[country] )
           output.countrySeries.data[0].push( country )
   
-          bla.fill(0)
-          bla[byIdx] = by
-          bla[geoDimIdx] = idxGeo
-          bla[timeDimIdx] = timeCodeIdx
-          const i = MultiDim.getIndex(valence, bla)
+          coeff.fill(0)
+          coeff[byIdx] = by
+          coeff[geoDimIdx] = idxGeo
+          coeff[timeDimIdx] = timeCodeIdx
+          const i = MultiDim.getIndex(valence, coeff)
           if(typeof inputDataFromRequest.value[i] === 'undefined') {
             ll.push(null)
           } else {

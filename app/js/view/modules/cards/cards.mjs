@@ -250,13 +250,13 @@ function getColorSet(forLineChart, geoSelections) {
 				// no operation; meaning no fixed colors, meaning default dynamic color assignment mechanism (from chart WebCompoment)
 			}
 		}
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CNAT] = colorsEU.dark
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CEU] = colorsEU.mid
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_CNEU] = colorsEU.light
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_SHORT_CNAT] = colorsEU.dark
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_SHORT_CEU] = colorsEU.mid
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_SHORT_CNEU] = colorsEU.light
 
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BNAT] = colorsEU.dark
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BEU] = colorsEU.mid
-		retVal["EU, "+MS.TXT_BY_LBL_SHORT_BNEU] = colorsEU.light
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_SHORT_BNAT] = colorsEU.dark
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_SHORT_BEU] = colorsEU.mid
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_SHORT_BNEU] = colorsEU.light
 
 	} else {		// fixed colors for dot plot
 		

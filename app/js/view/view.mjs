@@ -90,14 +90,13 @@ function fetch(cardId) {
 function updateCardAttributes(cardId, boxes) {
   const card = document.getElementById(cardId)
   card.setAttribute("right1", Array.from(GeoSelect.getSelected().keys()).join(" ") )
-  card.setAttribute("right2", "2023")
+  card.setAttribute("right2", "")
   card.setAttribute("subtitle_c", card.getAttribute("ylabel") + Subtitle.get(card.userData, boxes, "Age") )
   card.setAttribute("subtitle_e", card.getAttribute("ylabel") + Subtitle.get(card.userData, boxes) )
 }
 
 // menuItemId can be anything, menuItem or submenuItem
 function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {
-  console.log(isParentMenuItem)
   if(isParentMenuItem) {
     Cards.contractAll()
     Cards.filter(menuItemId)

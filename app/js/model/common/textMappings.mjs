@@ -22,10 +22,10 @@ shortLabels.set("c_birthNEU_FOR", MS.TXT_BY_LBL_SHORT_BNEU)
 // "by" means: either "by birth country" or "by citizenship"
 // returns index and also what the by-dim actually is
 export function getIndexOfByDimension(arr) {
-  let dim = "c_birth"
+  let dim = MS.DIM_BIRTH
   let idx = arr.findIndex(e=>e===dim)
   if(idx===-1) {
-    dim = "citizen"
+    dim = MS.DIM_CITIZEN
     idx = arr.findIndex(e=>e===dim)
   }
   return [dim, idx]

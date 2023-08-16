@@ -7,30 +7,24 @@ codeList:
   nativeB: &nativeB
     label: "Native-born"
     code: c_birthNAT        # this is for the selectbox entry key, which has to be unique
-    originalCode: NAT       # this is in the dataset
   euB: &euB
     label: "Born in another EU country"
     code: c_birthEU_FOR
-    originalCode: EU27_2020_FOR
   nonEuB: &nonEuB
     label: "Born in a non-EU country"
     code: c_birthNEU_FOR 
-    originalCode: NEU27_2020_FOR
 
   nativeC: &nativeC
     label: "Nationals"
     code: citizenNAT
-    originalCode: NAT       # it's the same as in nativeB but has to be a unique key in the selectbox, that's why an artificial code (not existing in dataset) is introduced
     selected: true
   euC: &euC
     label: "Citizens of another EU country"
     code: citizenEU_FOR
-    originalCode: EU27_2020_FOR
     selected: true
   nonEuC: &nonEuC
     label: "Citizens of a non-EU country"
     code: citizenNEU_FOR
-    originalCode: NEU27_2020_FOR
     selected: true
 
   bySelectGroupTitles: &bySelectGroupTitles
@@ -96,6 +90,10 @@ codeList:
   18-over: &18-over
     label: "18 years and over"
     code: "Y_GE18"
+  18-overs: &18-overs
+    label: "18 years and over"
+    code: "Y_GE18"
+    selected: true
   16-44: &16-44
     label: "16 to 44 years"
     code: "Y16-44"
@@ -133,9 +131,8 @@ codeList:
     code: "PC"
   # this determines the contents and order of UI elements, except for the chart.
   # the country order for that is determined through processorCountryOrder.
-  # note: mind "replaceEuInRawData"
   countries: &countries   #ISO 3166-1 alpha2
-    - code: EU    # QWE
+    - code: EU
       label: European Union
     - code: AT
       label: Austria
@@ -652,7 +649,6 @@ indicators:
 ##########################################################
 
   - name: Poverty or social exclusion
-#    hanSolo: true    QWE
     nameLong: People at risk of poverty or social exclusion
     id: MD_18
     category: Social inclusion
@@ -673,7 +669,7 @@ indicators:
           - Age:
               elements:
                 - *16-29
-                - *18-over
+                - *18-overs
                 - *20-64
 
   - name: Poverty
@@ -697,7 +693,7 @@ indicators:
           - Age:
               elements:
                 - *16-29
-                - *18-over
+                - *18-overs
                 - *20-64
 
   - name: Median income

@@ -12,9 +12,8 @@ additional dims		either from a selectBox or from yaml cfg file
 
 Almost all are per card, except countrySelectbox - it affects all cards.
 */
-import * as Cache from "./cache.mjs"
+import * as Cache from "./cacheLs.mjs"
 
-import { replaceEuInRawData } from "../../components/util/util.mjs"
 import { run } from "../../components/pipeline/pipeline.mjs"
 import { process as defineCountriesOrder } from "../../components/processorCountryOrder/countryOrder.mjs"
 import { process as defineCountryColors } from "../../components/processorCountryColors/countryColors.mjs"
@@ -54,6 +53,7 @@ export default function go(urls, callback) {
 				input: strippedUrl,
 				//input: "./persistedData/example-request-answer.json",
 				//input: "./persistedData/ausbel.json",
+				//input: "./persistedData/dots.json",
 				cache: {
 					store: (data) => Cache.store(strippedUrl, data),
 					restore: (id) => Cache.restore(id)
@@ -82,8 +82,8 @@ export default function go(urls, callback) {
 		},
 		(e) => {
 			displayFailure(e)
-		},
-		replaceEuInRawData
+		}
+		,replaceInRawData
 	)
 
 	function displayFailure(e) {
@@ -97,4 +97,20 @@ export default function go(urls, callback) {
 // returns url w/o "geo=.*&" and w/o "time=.*&" params (& or EOL)
 function removeParams(url) {
 	return url.replace(new RegExp("(time|geo)=[^&]*[^]", "g"), "")
+}
+
+export function replaceInRawData(arrayBuffer) {
+	var dataView = new DataView(arrayBuffer)
+	var decoder = new TextDecoder('utf8')
+	try {
+		var obj = JSON.parse(
+			decoder.decode(dataView)
+			.replaceAll("European Union - 27 countries (from 2020)", "European Union")
+			.replaceAll("Germany (until 1990 former territory of the FRG)", "Germany")
+			)
+		return obj
+	} catch(e) {
+		console.error("main: invalid (json) or no data. native error follows.\n\n", e)
+		return {}
+	}
 }

@@ -57,5 +57,5 @@ export function getFavoriteStar() {
 }
 
 export function isEUSelected() {
-  return document.getElementById(id).selected.keys().next().value === "EU"
+  return document.getElementById(id).selected.keys().next().value === MS.CODE_EU
 }
