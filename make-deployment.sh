@@ -46,10 +46,13 @@ mv ./js/model/pipelineProcessors/timeSeries.mjs    ./js/model/pipelineProcessors
 mv ./js/model/pipelineProcessors/countrySeries.mjs    ./js/model/pipelineProcessors/countrySeries.js
 mv ./js/model/pipelineProcessors/byOrder.mjs    ./js/model/pipelineProcessors/byOrder.js
 mv ./js/model/cache.mjs    ./js/model/cache.js
+mv ./js/model/cacheLs.mjs    ./js/model/cacheLs.js
 mv ./js/model/fetcher.mjs    ./js/model/fetcher.js
 mv ./js/model/common/textMappings.mjs    ./js/model/common/textMappings.js
 mv ./js/model/common/groupDefinition.mjs    ./js/model/common/groupDefinition.js
 mv ./js/model/common/codeMappings.mjs    ./js/model/common/codeMappings.js
+mv ./js/model/common/byCode.mjs    ./js/model/common/byCode.js
+mv ./js/model/common/euCode.mjs    ./js/model/common/euCode.js
 mv ./js/model/url.mjs    ./js/model/url.js
 mv ./js/view/modules/cards/cards.mjs    ./js/view/modules/cards/cards.js
 mv ./js/view/modules/cards/markUpCode.mjs    ./js/view/modules/cards/markUpCode.js
@@ -95,6 +98,9 @@ sed -i 's/\.mjs/\.js/'   js/model/pipelineProcessors/countrySeries.js
 sed -i 's/\.mjs/\.js/'   js/model/fetcher.js
 sed -i 's/\.mjs/\.js/'   js/model/common/textMappings.js
 sed -i 's/\.mjs/\.js/'   js/model/common/codeMappings.js
+sed -i 's/\.mjs/\.js/'   js/model/common/byCode.js
+sed -i 's/\.mjs/\.js/'   js/model/common/euCode.js
+sed -i 's/\.mjs/\.js/'   js/model/common/groupDefinition.js
 sed -i 's/\.mjs/\.js/'   js/model/url.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/cards/cards.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/cards/tooltips/tooltipDotChart.js
@@ -110,6 +116,7 @@ sed -i 's/\.mjs/\.js/'   js/view/modules/selects/bySelectConstraints.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/selects/geoSelect.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/selects/bySelect.js
 sed -i 's/\.mjs/\.js/'   js/view/view.js
+sed -i 's/\.mjs/\.js/'   js/common/magicStrings.js
 
 cd ..
 

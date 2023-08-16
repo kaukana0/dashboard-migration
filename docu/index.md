@@ -15,6 +15,8 @@
 - [Range slider input](./adr/adr08.md)
 - [Range slider config](./adr/adr09.md)
 - [Chart colors](./adr/adr10.md)
+- [Various Breakdowns (WIP)](./adr/adr11.md)
+- [Handling of "EU" code](./adr/adr12.md)
 
 # Technical details
 

@@ -32,10 +32,8 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   
   const [byDim, byIdx] = TM.getIndexOfByDimension(inputDataFromRequest.id)
   const geoDimIdx = inputDataFromRequest.id.findIndex(e=>e==="geo")
-  console.log("geoDimIdx",geoDimIdx)
   const timeDimIdx = inputDataFromRequest.id.findIndex(e=>e==="time")
   
-  const byDimMax = inputDataFromRequest.size[byIdx]  // "by" c_birth or citizen
   const geoDimMax = inputDataFromRequest.size[geoDimIdx]
   const timeDimMax = inputDataFromRequest.size[timeDimIdx]
   
