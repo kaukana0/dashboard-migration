@@ -1,10 +1,10 @@
-# 11. Handling of "EU" code
+# 12. Handling of "EU" code
 
 Date: 2023-08
 
 ## Status
 
-Accepted.
+Accepted
 
 ## Context
 
