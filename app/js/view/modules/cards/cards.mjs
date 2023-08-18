@@ -31,6 +31,8 @@ import * as Subtitle from "./subtitle.mjs"
 let categories
 let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't come from processors/data but from config
 let overviewCardIds = []
+let numberOfCountriesSelected = 0
+let numberOfBySelected = 0
 
 
 // pretty much the core of processing the YAML
@@ -91,11 +93,14 @@ function setupCard(id, merged, onCardExpand, onCardContract) {
 	card.tooltipFn2 = TooltipDot.tooltipFn
 	card.tooltipCSS = TooltipCommon.CSS()
 	card.setLegendTexts([MS.TXT_BY_LBL_CNEU, MS.TXT_BY_LBL_CEU, MS.TXT_BY_LBL_CNAT])
+
 	card.userData = Subtitle.getInfoAboutOrder(
 		getMapFromArrayWObjects(merged.dimensions.ui.dropdown), 
 		getMapFromArrayWObjects(merged.dimensions.ui.subtitle),
 		merged.dimensions.nonUi,
 		merged.dimensions.excludeFromSubtitle)
+
+	card.lineHoverCallback = onLineHover
 }
 
 function setupRange(id, values, selectedCallback) {
@@ -313,7 +318,23 @@ export function filter(category) {
 
 }
 
-export function setTooltipStyle(numberOfCountriesSelected, numberOfBySelected) {
-	const cond = numberOfCountriesSelected > 1 && numberOfBySelected === 1
-	TooltipLine.setGroupByCountry(!cond)
+export function setTooltipStyle(numberOfBySelected) {
+	TooltipLine.setGroupByCountry(numberOfBySelected !== 1)
+}
+
+export function storeSelectedCounts(_numberOfCountriesSelected, _numberOfBySelected) {
+	numberOfCountriesSelected = _numberOfCountriesSelected
+	numberOfBySelected = _numberOfBySelected
+}
+
+function onLineHover(ids) {
+	if(numberOfCountriesSelected * numberOfBySelected === 6) {
+		if(ids.length>0) { 
+			TooltipLine.setFilter([ids[0].slice(0,2)])	// let only 1 pass through filter; show only selected item-group in tooltip
+		} else {
+			TooltipLine.setFilter([""])		// effectively filter everything (there is no ""); no tooltip
+		}
+	} else {
+		TooltipLine.setFilter([])		// filter nothing; normal tooltip
+	}
 }

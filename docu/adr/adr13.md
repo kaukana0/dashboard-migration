@@ -1,4 +1,4 @@
-# 13. Line-group highligting
+# 13. Line-group highligting, Legend and Tooltip
 
 Date: 2023-08
 
@@ -10,6 +10,7 @@ Accepted
 
 Req. say, that 3 lines belonging to one country should all be highlighted if one of them is hovered w/ mouse (possibly also touched).
 Additionally, hovering over a legend item should higlight also 3 lines.
+This functionality ties in with the tooltip - adr07 is being revised - please see also adr07.
 
 ## Decision
 
@@ -36,3 +37,4 @@ Ungeneralized, specific code relies on assumptions about internals of billboardj
 Of course changing/updating billboard.js might break this completely.
 If business specific naming changes, this has to be adapted.
 All in all, not a desireable solution but alternativeless because billboard.js doesn't support this functionality out of the box.
+Making this functionality configurable results in additional effort.
