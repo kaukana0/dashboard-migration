@@ -15,7 +15,6 @@ import * as Subtitle from "./modules/cards/subtitle.mjs"
 
 // both used to decide when to update one instead of all cards
 let currentlyExpandedId = null
-let currentFavoriteStar = ""
 
 
 export function createUIElements(cfg, triggerInitialRequest) {
@@ -23,7 +22,6 @@ export function createUIElements(cfg, triggerInitialRequest) {
   const categories = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, categories)
   GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromArray(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
-  currentFavoriteStar = GeoSelect.getFavoriteStar()
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, categories, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {   // TODO: not everything at once. start w/ what is in user's view, do the other stuff in the background quietly/slowly one by one (intersection observer)
@@ -60,8 +58,8 @@ function onSelectedForAllCards() {
   Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => { 
     const boxes = fetch(cardId)
     updateCardAttributes(cardId, boxes)
-    Cards.setTooltipStyle(boxes.selections.get(MS.BY_SELECT_ID).size)
     Cards.storeSelectedCounts(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
+    Cards.setTooltipStyle(boxes.selections.get(MS.BY_SELECT_ID).size)
   })
 }
 
@@ -71,8 +69,8 @@ function onSelectedForAllCards() {
 function onSelectedForOneCard(cardId) {
   const boxes = fetch(cardId)
   updateCardAttributes(cardId, boxes)
-  Cards.setTooltipStyle(boxes.selections.get(MS.BY_SELECT_ID).size)
   Cards.storeSelectedCounts(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
+  Cards.setTooltipStyle(boxes.selections.get(MS.BY_SELECT_ID).size)
 }
 
 function fetch(cardId) {
@@ -119,8 +117,6 @@ function onCardExpand(id) {
   document.body.style.overflowY="hidden"
   document.body.style.overflowX="hidden"
   window.scrollTo(0, 0)
-
-  currentFavoriteStar = GeoSelect.getFavoriteStar()
 
   // this is done here not because of resetting to original value,
   // but to let range WebComponent calculate and display the correct slider position

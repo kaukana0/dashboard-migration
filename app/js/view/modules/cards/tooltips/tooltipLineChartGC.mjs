@@ -41,13 +41,14 @@ function getGroups(d) {
 		const country = e.name.substr(0,2)
 		if(filter.length===0 || filter.includes(country)) {
 			const by = e.name.substr(4)
-			const o = {text:by,value:e.value,index:i++}		// need the original index for d[] access later
+			const o = {text:by,value:e.value,index:i}		// need the original index for d[] access later
 			if(groups.has(country)) {
 				groups.get(country).push(o)
 			} else {
 				groups.set(country,[o])
 			}
 		}
+		i++
 	})
 	return groups
 }

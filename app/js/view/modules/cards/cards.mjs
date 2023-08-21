@@ -320,6 +320,7 @@ export function filter(category) {
 
 export function setTooltipStyle(numberOfBySelected) {
 	TooltipLine.setGroupByCountry(numberOfBySelected !== 1)
+	onLineHover([])
 }
 
 export function storeSelectedCounts(_numberOfCountriesSelected, _numberOfBySelected) {
@@ -327,14 +328,15 @@ export function storeSelectedCounts(_numberOfCountriesSelected, _numberOfBySelec
 	numberOfBySelected = _numberOfBySelected
 }
 
+// these "ids" are billboard.js specific - a substring w/ substitutions of SVG element's class
 function onLineHover(ids) {
 	if(numberOfCountriesSelected * numberOfBySelected === 6) {
 		if(ids.length>0) { 
-			TooltipLine.setFilter([ids[0].slice(0,2)])	// let only 1 pass through filter; show only selected item-group in tooltip
+			TooltipLine.setFilter([ids[0].slice(0,2)])	// let only 1 pass through filter -> show only hovered item-group in tooltip
 		} else {
-			TooltipLine.setFilter([""])		// effectively filter everything (there is no ""); no tooltip
+			TooltipLine.setFilter([""])		// effectively filter everything (there is no "" ever) -> no tooltip
 		}
 	} else {
-		TooltipLine.setFilter([])		// filter nothing; normal tooltip
+		TooltipLine.setFilter([])		// filter nothing -> normal tooltip
 	}
 }
