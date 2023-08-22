@@ -70,7 +70,11 @@ export function getBySelectFrag(v) {
   let retVal = ""
   const merged = new Map([...GROUPS.GRP_B, ...GROUPS.GRP_C])
   for(let [key] of v.entries()) {
-    retVal += CM.CODE_TO_DIM.get(key)+"="+merged.get(key)+delim
+    if(CM.CODE_TO_DIM.has(key)) {
+      retVal += CM.CODE_TO_DIM.get(key)+"="+merged.get(key)+delim
+    } else {
+      console.warn("url.mjs: unknown key", key)
+    }
   }
   return retVal
 }

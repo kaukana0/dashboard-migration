@@ -27,6 +27,10 @@ export function getIndexOfByDimension(arr) {
   if(idx===-1) {
     dim = MS.DIM_CITIZEN
     idx = arr.findIndex(e=>e===dim)
+    if(idx===-1) {
+      dim = MS.DIM_INDIC
+      idx = arr.findIndex(e=>e===dim)
+    }
   }
   return [dim, idx]
 }

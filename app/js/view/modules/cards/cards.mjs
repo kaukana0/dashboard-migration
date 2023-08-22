@@ -159,7 +159,7 @@ export function getCurrentSelections(cardId) {
 
 	const boxSelector = `#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} ~ div ecl-like-select-x`
 	const boxes = document.querySelectorAll(boxSelector)
-	if(boxes.length===0) { console.warn("cards: no boxes for selector", boxSelector) }
+	if(boxes.length===0) { console.warn("cards: no boxes for", cardId) }
 	for(let box of boxes) {
 		if(box.hasAttribute("dimension")) {
 			retVal[0].selections.set(box.getAttribute("dimension"), box.selected)

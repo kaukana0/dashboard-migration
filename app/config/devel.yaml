@@ -1045,9 +1045,9 @@ indicators:
 ##########################################################
 
   - name: Naturalisation rate
+    ignore: true
     id: MD_33
     category: Active citizenship
-    ignore: true
     isInOverview: true
     articleLink: *articleLinkActiveCitizenship
     datasets:
@@ -1060,18 +1060,14 @@ indicators:
     dimensions:
       ui:
         dropdown:
-#          - Country of citizenship/birth:   # TODO check ramifications
-#              elements:
-#                - code: NEU_P_HHAB
-#                  label: Share of non-EU citizens who have acquired citizenship
-#                - code: EU_P_HHAB
-#                  label: Share of EU citizens who have acquired citizenship
-#                - code: FOR_P_HHAB
-#                  label: Share of foreign citizens who have acquired citizenship
-#              groups:
-#                NEU_P_HHAB: Select all
           - Country of citizenship/birth:
-              inherit: false
+              elements:
+                - code: NEU_P_HHAB
+                  label: Share of non-EU citizens who have acquired citizenship
+                - code: EU_P_HHAB
+                  label: Share of EU citizens who have acquired citizenship
+              #groups:
+              #  NEU_P_HHAB: Select all
           - Age:
               inherit: false
           - Sex:
@@ -1081,10 +1077,10 @@ indicators:
           - *total
 
   - name: Long-term residence permits 
+    ignore: true
     nameLong: Third country nationals holding long-term residence permits
     id: MD_34
     category: Active citizenship
-    ignore: true
     isInOverview: true
     articleLink: *articleLinkActiveCitizenship
     datasets:
@@ -1098,10 +1094,11 @@ indicators:
       ui:
         dropdown:
           - Country of citizenship/birth:   # TODO check ramifications
-              elements:
-                - originalCode: TOTAL
-                  code: citizenNEU_FOR
-                  label: Share of non-EU citizens who have acquired citizenship
+              inherit: false
+              #elements:
+              #  - originalCode: TOTAL
+              #    code: citizenNEU_FOR
+              #    label: Share of non-EU citizens who have acquired citizenship
           - Age:
               inherit: false
           - Sex:
@@ -1109,3 +1106,5 @@ indicators:
       nonUi:
         leg_fram:
           - code: TOTAL
+        citizen:
+          - *total

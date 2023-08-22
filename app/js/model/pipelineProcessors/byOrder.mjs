@@ -3,6 +3,9 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   output.byOrder = [
     "NEU_FOR",
     "EU_FOR",
-    "NAT"
+    "NAT",
+
+    "NEU_P_HHAB",
+    "EU_P_HHAB"
   ]
 }

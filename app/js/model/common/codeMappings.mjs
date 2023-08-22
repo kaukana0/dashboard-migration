@@ -8,6 +8,9 @@ code2DsId.set("c_birthNAT", MS.DS_ID_BIRTH)
 code2DsId.set("c_birthEU_FOR",  MS.DS_ID_BIRTH)
 code2DsId.set("c_birthNEU_FOR", MS.DS_ID_BIRTH)
 
+code2DsId.set("NEU_P_HHAB", MS.DS_ID_CITIZEN)
+code2DsId.set("EU_P_HHAB", MS.DS_ID_CITIZEN)
+
 const code2Dim = new Map()
 code2Dim.set("citizenNAT", MS.DIM_CITIZEN)
 code2Dim.set("citizenEU_FOR",  MS.DIM_CITIZEN)
