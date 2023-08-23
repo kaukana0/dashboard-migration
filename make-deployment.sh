@@ -31,6 +31,8 @@ mv ./components/multiDimAccess/tests.mjs    ./components/multiDimAccess/tests.js
 mv ./components/multiDimAccess/visualizer.mjs    ./components/multiDimAccess/visualizer.js
 mv ./components/eclLikeMenu/markUpCode.mjs    ./components/eclLikeMenu/markUpCode.js
 mv ./components/eclLikeMenu/menu.mjs    ./components/eclLikeMenu/menu.js
+mv ./components/eclLikeMessage/markUpCode.mjs    ./components/eclLikeMessage/markUpCode.js
+mv ./components/eclLikeMessage/message.mjs    ./components/eclLikeMessage/message.js
 mv ./components/select/select.mjs    ./components/select/select.js
 mv ./components/select/markUpCode.mjs    ./components/select/markUpCode.js
 mv ./components/eclLikeHeroBanner/heroBanner.mjs    ./components/eclLikeHeroBanner/heroBanner.js
@@ -88,6 +90,7 @@ sed -i 's/\.mjs/\.js/'   components/chart/chart.js
 sed -i 's/\.mjs/\.js/'   components/chartCard/chartCard.js
 sed -i 's/\.mjs/\.js/'   components/multiDimAccess/tests.js
 sed -i 's/\.mjs/\.js/'   components/eclLikeMenu/menu.js
+sed -i 's/\.mjs/\.js/'   components/eclLikeMessage/message.js
 sed -i 's/\.mjs/\.js/'   components/select/select.js
 sed -i 's/\.mjs/\.js/'   components/eclLikeHeroBanner/heroBanner.js
 sed -i 's/\.mjs/\.js/'   components/buttonX/button.js
