@@ -16,7 +16,7 @@ export function setup(_id, cfg, _groups, callback) {
 
   CommonConstraints.setGeoSelect(el)
 
-  el.onSelect = CommonConstraints.geoSelectionAllowed
+  el.onSelect = selectionAllowed
   el.onSelected = callback
   const groups = new Map()
   _groups.forEach((item) => {
@@ -58,4 +58,20 @@ export function getFavoriteStar() {
 
 export function isEUSelected() {
   return document.getElementById(id).selected.keys().next().value === MS.CODE_EU
+}
+
+function showMessage(text) {
+  document.getElementsByTagName("ecl-like-message")[0].setHeader("Attention!")
+  document.getElementsByTagName("ecl-like-message")[0].setText(text)
+  document.getElementsByTagName("ecl-like-message")[0].show()
+}
+
+function selectionAllowed(k,v) {
+  switch(CommonConstraints.geoSelectionAllowed(k,v)) {
+    case 0: return true
+    case 1: showMessage("This selection will only allow you to select max 10 countries."); return false
+    case 2: showMessage("This selection will only allow you to use one dimension."); return false
+    default:
+      return false
+  }
 }
