@@ -584,10 +584,6 @@ indicators:
         wstatus:
         - label: label    #TODO
           code: POP
-        unit:
-        - label: "%"
-          labelLong: "% of population 18-24"
-          code: PC
 
   - name: Adult learning
     nameLong: Adults participating in learning
@@ -609,10 +605,6 @@ indicators:
       nonUi:
         Age:
         - *25-64
-        unit:
-        - label: "%"
-          labelLong: "% of population 25-64"
-          code: PC
 
   - name: NEET
     nameLong: Young people neither in employment nor in education and training (NEET)
@@ -643,10 +635,6 @@ indicators:
         training:
         - label: label    #TODO
           code: NO_FE_NO_NFE
-        unit:
-        - label: "%"
-          labelLong: "% of population 15-29"
-          code: PC
 
   - name: Language skills before migrating
     id: MD_17
@@ -798,10 +786,6 @@ indicators:
         indic_il:
         - label: Median equivalised net income
           code: MED_E
-        unit:
-        - label: "%"
-          labelLong: "% of population 0-17"
-          code: PC
 
   - name: Low work intensity   # TODO: EU isnt included in data
     nameLong: People living in a household with a very low work intensity
@@ -829,10 +813,6 @@ indicators:
           - *18-64
         Sex:
           - *total
-        unit:
-        - label: "%"
-          labelLong: "% of population 18-64"
-          code: PC
 
   - name: Material and social deprivation
     id: MD_23
