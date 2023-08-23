@@ -85,7 +85,8 @@ function setupCard(id, merged, onCardExpand, onCardContract) {
 	card.addEventListener("expanding", () => { onCardExpand(id) })
 	card.addEventListener("contracting", () => { onCardContract(id) })
 	card.addEventListener("chartSwitched", (e) => { Range.reset(id, e.to==2, true) })
-	card.setAttribute("yLabel", merged.dimensions.nonUi.unit[0].label)
+	card.setAttribute("unitShort", merged.dimensions.nonUi.unit[0].label)
+	card.setAttribute("unitLong", merged.dimensions.nonUi.unit[0].labelLong ? merged.dimensions.nonUi.unit[0].labelLong : merged.dimensions.nonUi.unit[0].label)
 	card.setAttribute("srcLink1", merged.datasets.citizen.source)
 	card.setAttribute("srcLink2", merged.datasets.birth.source)
 	card.setAttribute("articleLink", merged.articleLink.url)
@@ -101,6 +102,14 @@ function setupCard(id, merged, onCardExpand, onCardContract) {
 		merged.dimensions.excludeFromSubtitle)
 
 	card.lineHoverCallback = onLineHover
+}
+
+export function updateCardAttributes(cardId, boxes, textRight) {
+  const card = document.getElementById(cardId)
+  card.setAttribute("right1", textRight)
+  card.setAttribute("right2", "")
+  card.setAttribute("subtitle_c", card.getAttribute("unitLong") + Subtitle.get(card.userData, boxes, "Age") )
+  card.setAttribute("subtitle_e", card.getAttribute("unitLong") + Subtitle.get(card.userData, boxes) )
 }
 
 function setupRange(id, values, selectedCallback) {

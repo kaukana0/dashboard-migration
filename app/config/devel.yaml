@@ -128,6 +128,7 @@ codeList:
     code: "A"
   unit: &unit
     label: "%"
+    labelLong: "% of population"
     code: "PC"
   # this determines the contents and order of UI elements, except for the chart.
   # the country order for that is determined through processorCountryOrder.
@@ -367,6 +368,11 @@ indicators:
                 - *15-74
                 - *15-29
                 - *20-64
+      nonUi:
+        unit:
+        - label: "%"
+          labelLong: "% of active population"
+          code: PC
 
   - name: Long-term unemployment
     id: MD_6
@@ -387,6 +393,11 @@ indicators:
                 - *15-74
                 - *15-29
                 - *20-64
+      nonUi:
+        unit:
+        - label: "%"
+          labelLong: "% of active population"
+          code: PC
 
   - name: Over-qualification
     id: MD_7
@@ -407,6 +418,10 @@ indicators:
       nonUi:
         Age:
         - *20-64
+        unit:
+        - label: "%"
+          labelLong: "% of employed in medium /low-skilled jobs"
+          code: PC
 
   - name: Self-employment
     id: MD_8
@@ -420,6 +435,12 @@ indicators:
       birth:
         id: LFSA_eppgacob
         source: Available 31. August 23
+    dimensions:
+      nonUi:
+        unit:
+        - label: "%"
+          labelLong: "% of total employment"
+          code: PC
 
   - name: Part-time employment
     id: MD_9
@@ -432,6 +453,12 @@ indicators:
       birth:
         id: LFSA_EPPGACOB
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eppgacob
+    dimensions:
+      nonUi:
+        unit:
+        - label: "%"
+          labelLong: "% of total employment"
+          code: PC
 
   - name: Temporary employment
     id: MD_10
@@ -444,6 +471,12 @@ indicators:
       birth:
         id: LFSA_ETPGACOB
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_etpgacob
+    dimensions:
+      nonUi:
+        unit:
+        - label: "%"
+          labelLong: "% of total employees"
+          code: PC
 
   - name: Labour market slack
     id: MD_11
@@ -468,7 +501,8 @@ indicators:
         - label: Labour market slack
           code: SLACK
         unit:
-        - label: "%"    # TODO "Percentage of extended labour force"
+        - label: "%"
+          labelLong: Percentage of extended labour force
           code: "PC_ELF"
 
 ##########################################################
@@ -550,6 +584,10 @@ indicators:
         wstatus:
         - label: label    #TODO
           code: POP
+        unit:
+        - label: "%"
+          labelLong: "% of population 18-24"
+          code: PC
 
   - name: Adult learning
     nameLong: Adults participating in learning
@@ -571,6 +609,10 @@ indicators:
       nonUi:
         Age:
         - *25-64
+        unit:
+        - label: "%"
+          labelLong: "% of population 25-64"
+          code: PC
 
   - name: NEET
     nameLong: Young people neither in employment nor in education and training (NEET)
@@ -601,6 +643,10 @@ indicators:
         training:
         - label: label    #TODO
           code: NO_FE_NO_NFE
+        unit:
+        - label: "%"
+          labelLong: "% of population 15-29"
+          code: PC
 
   - name: Language skills before migrating
     id: MD_17
@@ -752,6 +798,10 @@ indicators:
         indic_il:
         - label: Median equivalised net income
           code: MED_E
+        unit:
+        - label: "%"
+          labelLong: "% of population 0-17"
+          code: PC
 
   - name: Low work intensity   # TODO: EU isnt included in data
     nameLong: People living in a household with a very low work intensity
@@ -779,6 +829,10 @@ indicators:
           - *18-64
         Sex:
           - *total
+        unit:
+        - label: "%"
+          labelLong: "% of population 18-64"
+          code: PC
 
   - name: Material and social deprivation
     id: MD_23

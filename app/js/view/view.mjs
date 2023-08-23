@@ -11,7 +11,6 @@ import * as Url from "../model/url.mjs"
 import Fetcher from "../model/fetcher.mjs"
 import {getMapFromArray} from "./modules/util.mjs"
 import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
-import * as Subtitle from "./modules/cards/subtitle.mjs"
 
 // both used to decide when to update one instead of all cards
 let currentlyExpandedId = null
@@ -50,6 +49,10 @@ function setCardLegends(isEU) {
   })
 }
 
+function bla() {
+  return Array.from(GeoSelect.getSelected().keys()).join(" ")
+}
+
 // user changed some selection which affects ALL cards,
 // so update charts in all cards.
 // this actually can only be the country box.
@@ -57,7 +60,7 @@ function setCardLegends(isEU) {
 function onSelectedForAllCards() {
   Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => { 
     const boxes = fetch(cardId)
-    updateCardAttributes(cardId, boxes)
+    Cards.updateCardAttributes(cardId, boxes, bla())
     Cards.storeSelectedCounts(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
     Cards.setTooltipStyle(boxes.selections.get(MS.BY_SELECT_ID).size)
   })
@@ -68,7 +71,7 @@ function onSelectedForAllCards() {
 // so, update charts in one card
 function onSelectedForOneCard(cardId) {
   const boxes = fetch(cardId)
-  updateCardAttributes(cardId, boxes)
+  Cards.updateCardAttributes(cardId, boxes, bla())
   Cards.storeSelectedCounts(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
   Cards.setTooltipStyle(boxes.selections.get(MS.BY_SELECT_ID).size)
 }
@@ -85,14 +88,6 @@ function fetch(cardId) {
   const bla = {} ; bla[MS.BY_SELECT_ID] = Url.getBySelectFrag
   Fetcher( Url.buildFrag(boxes,dataset,bla), Cards.setData.bind(this, cardId, GeoSelect.getSelected()) )
   return boxes
-}
-
-function updateCardAttributes(cardId, boxes) {
-  const card = document.getElementById(cardId)
-  card.setAttribute("right1", Array.from(GeoSelect.getSelected().keys()).join(" ") )
-  card.setAttribute("right2", "")
-  card.setAttribute("subtitle_c", card.getAttribute("ylabel") + Subtitle.get(card.userData, boxes, "Age") )
-  card.setAttribute("subtitle_e", card.getAttribute("ylabel") + Subtitle.get(card.userData, boxes) )
 }
 
 // menuItemId can be anything, menuItem or submenuItem
