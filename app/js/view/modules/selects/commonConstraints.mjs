@@ -22,6 +22,7 @@ export function geoSelectionAllowed(k,v) {
   } else {
     const numberOfGeoSelections = geoSelect.selected.size+1
     const numberOfBySelections = bySelect.selected.size
+    if(numberOfBySelections===1 && numberOfGeoSelections<=10) {return true}
     return numberOfGeoSelections * numberOfBySelections <= 6
   }
 }
