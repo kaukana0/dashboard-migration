@@ -37,3 +37,6 @@
 [submodule "app/components/eclLikeMessage"]
 	path = app/components/eclLikeMessage
 	url = https://github.com/kaukana0/eclLikeMessage.git
+[submodule "app/components/eclLikeModal"]
+	path = app/components/eclLikeModal
+	url = https://github.com/kaukana0/eclLikeModal.git

@@ -37,6 +37,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 	<script src="./components/eclLikeHeroBanner/heroBanner.mjs" type="module"></script>
 	<script src="./components/buttonX/button.mjs" type="module"></script>
 	<script src="./components/eclLikeMessage/message.mjs" type="module"></script>
+	<script src="./components/eclLikeModal/modal.mjs" type="module"></script>
 
 	<style>
 			html,
@@ -71,7 +72,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 		<ecl-like-menu id="menu"></ecl-like-menu>
 		<!--symbol-button symbol="sharing" style="position:absolute; width:40px; height:40px; right:40px; top:96px;"></symbol-button-->
 		
-		<!-- https://developer.mozilla.org/en-US/docs/Web/CSS/position#values -->
+		<!-- note "Fixed positioning" at https://developer.mozilla.org/en-US/docs/Web/CSS/position#values -->
 		<div style="transform: scale(1); display:block;">
 
 			<div id="anchorExpandedCard"></div>
@@ -116,6 +117,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 	</div>
 
 	<ecl-like-message></ecl-like-message>
+	<ecl-like-modal id="globalModal"></ecl-like-modal>
 
 </body>
 

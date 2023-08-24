@@ -100,6 +100,8 @@ function setupCard(id, merged, onCardExpand, onCardContract) {
 		getMapFromArrayWObjects(merged.dimensions.ui.subtitle),
 		merged.dimensions.nonUi,
 		merged.dimensions.excludeFromSubtitle)
+	
+	card.setAttribute("infoText", merged.infoText ? merged.infoText : "No information available.")
 
 	card.lineHoverCallback = onLineHover
 }
