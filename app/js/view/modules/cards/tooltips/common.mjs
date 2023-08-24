@@ -85,6 +85,6 @@ export function getValText(val, suffix, decimals) {
 	if(val===null) {
 		return MS.TXT_NOT_AVAILABLE
 	} else {
-		return Number(val).toFixed(decimals) + (suffix?suffix:"")
+		return Intl.NumberFormat("en-US",{minimumFractionDigits:decimals}).format(val).replaceAll(","," ") + (suffix?suffix:"")
 	}
 }

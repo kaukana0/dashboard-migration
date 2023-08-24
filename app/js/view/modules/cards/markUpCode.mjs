@@ -12,7 +12,7 @@ export function getCardHtmlString(id, title, longTitle, urlFrag, anchorElDomId) 
         <range-slider single id="timeRange${id}" thumbWidthInPixel="130" style="width: 100%;"></range-slider>
       </div>
 
-      <div slot="slotBottomLeft">
+      <!--div slot="slotBottomLeft">
         <div style="font-size: 16px; color: #0E47CB; text-align: left; padding-left: 30px;">
           <p>
             <a href="https://ec.europa.eu/info/cookies_en?lang=en&amp;lang=en"><span tabindex="0">Cookies</span></a>
@@ -22,7 +22,7 @@ export function getCardHtmlString(id, title, longTitle, urlFrag, anchorElDomId) 
             <a href="https://ec.europa.eu/info/legal-notice_en?lang=en&amp;lang=en"><span tabindex="0">Legal notice</span></a>
           </p>
         </div>
-      </div>
+      </div-->
 
     </chart-card>`
 }
