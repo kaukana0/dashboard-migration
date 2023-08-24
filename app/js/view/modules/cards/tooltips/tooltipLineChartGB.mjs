@@ -18,7 +18,7 @@ export default function tooltip(context, d, defaultTitleFormat, defaultValueForm
 				<span class="colorIcon" style="background-color:${color(d[i++])};"></span>
 				${context.seriesLabels.get(o.text)}
 			</div>
-			<div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText)}</div>`
+			<div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText, context.decimals)}</div>`
 		})
 	}
 

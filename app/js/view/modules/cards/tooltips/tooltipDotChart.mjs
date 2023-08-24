@@ -25,7 +25,7 @@ export function tooltipFn(context) {
 						<span class="colorIcon" style="background-color:${color(o)};"></span>
 						${o.name}
 					</div>
-					<div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText)}
+					<div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText, context.decimals)}
 					</div>`
 				})
 

@@ -81,10 +81,10 @@ border-radius: 5px;
 `
 }
 
-export function getValText(val, suffix) {
+export function getValText(val, suffix, decimals) {
 	if(val===null) {
 		return MS.TXT_NOT_AVAILABLE
 	} else {
-		return Number(val).toFixed(1) + (suffix?suffix:"")
+		return Number(val).toFixed(decimals) + (suffix?suffix:"")
 	}
 }

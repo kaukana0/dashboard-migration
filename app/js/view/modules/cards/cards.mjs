@@ -105,6 +105,8 @@ function setupCard(id, merged, onCardExpand, onCardContract) {
 	
 	card.setAttribute("infoText", merged.infoText ? merged.infoText : "No information available.")
 
+	card.decimals = typeof merged.decimals === "undefined" ? 1 : merged.decimals
+
 	card.lineHoverCallback = onLineHover
 }
 

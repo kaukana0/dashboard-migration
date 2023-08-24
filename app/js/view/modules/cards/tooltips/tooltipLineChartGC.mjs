@@ -21,7 +21,7 @@ export function tooltip(context, d, defaultTitleFormat, defaultValueFormat, colo
 					<span class="colorIcon" style="background-color:${color(d[o.index])};"></span>
 					${SHORT2LONG.get(o.text)}
 				</div>
-				<div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText)}</div>`
+				<div class="t-b-cr t-text-val">${Common.getValText(o.value, context.suffixText, context.decimals)}</div>`
 			})
 		}
 	

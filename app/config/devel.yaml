@@ -827,6 +827,7 @@ indicators:
               <p>The median of the equivalised disposable income distribution is typically used in the EU as a key measure for analysing standards of living within each economy. It is simply the income level that divides the population into two groups of equal size: one group encompasses half the population with a level of disposable income above the median and the other group encompasses the half of the population with a level of disposable income below the median. Note to users: Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>
               <p>Note to users:</p>
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
+    decimals: 0
 
   - name: Child poverty
     nameLong: Children at risk of poverty
