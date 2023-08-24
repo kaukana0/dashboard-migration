@@ -27,6 +27,8 @@ import * as TooltipCommon from "./tooltips/common.mjs"
 import "../../../../components/range/range.mjs"							// the WebComponent
 import * as Range from "./range.mjs"
 import * as Subtitle from "./subtitle.mjs"
+import * as PopUpMessage from "../popUpMessage.mjs"
+
 
 let categories
 let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't come from processors/data but from config
@@ -135,7 +137,12 @@ function addBoxEventHandlers(id, boxes, selectedCallback) {
 
 		domEl.onSelect = function(k,v) {
 			if(box.dimId === MS.BY_SELECT_ID) {
-				return CommonConstraints.bySelectionAllowed( BySelectConstraint.howManyAreGoingToBeSelected(k) )
+				if(CommonConstraints.bySelectionAllowed( BySelectConstraint.howManyAreGoingToBeSelected(k) )) {
+					return true
+				} else {
+					PopUpMessage.show(PopUpMessage.TEXT.FOR_BY)
+					return false
+				}
 			}
 			return true
 		}
