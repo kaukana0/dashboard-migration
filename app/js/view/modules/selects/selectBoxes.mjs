@@ -13,10 +13,10 @@ export function createDropdownBoxes(cfg, datasets) {
   // TODO: make more comprehensive by using getMapFromArrayWObjects()
   for(const i in cfg) {
 
-    const boxName = Object.keys(cfg[i])[0]          // eg "age"
+    const boxName = Object.keys(cfg[i])[0]          // eg "Age"
     if(typeof cfg[i][boxName]["inherit"] !== "undefined" && cfg[i][boxName]["inherit"]===false) {continue}
     const elements = cfg[i][boxName]["elements"]    // [{label:.., code:.., selected:false/true}]
-    
+
     const items = getMapFromArray(elements)
     
     const attribs = new Map()
@@ -40,7 +40,9 @@ export function createDropdownBoxes(cfg, datasets) {
     // if groups but not multiselect is needed, change yaml to support that - don't forget to inc. semver in the yaml
     const isMultiselect = cfg[i][boxName]["groups"] ? true : false
 
-    retVal.push({dimId: boxName, docFrag: getDocFrag(items, attribs, isMultiselect, cfg[i][boxName]["groups"], getDefaultSelectionsFromObject(elements))})
+    const label = (typeof cfg[i][boxName]["label"] === "undefined") ? boxName : cfg[i][boxName]["label"]
+
+    retVal.push({dimId: boxName, docFrag: getDocFrag(items, attribs, label, isMultiselect, cfg[i][boxName]["groups"], getDefaultSelectionsFromObject(elements))})
   }
 
   return retVal
@@ -59,7 +61,7 @@ v:
 see also cards.mjs::insertAndHookUpBoxes()
 note: the structure is assumed in multiple locations: i.e. addBoxEventHandlers, onCardExpand  TODO: find elegant solution for this
 */
-function getDocFrag(items, attribs, isMultiselect=false, groups={}, defaultSelections=[]) {
+function getDocFrag(items, attribs, label, isMultiselect=false, groups={}, defaultSelections=[]) {
 	const fragment = new DocumentFragment()
 
 	const dropdownBox = document.createElement('ecl-like-select-x')
@@ -73,7 +75,7 @@ function getDocFrag(items, attribs, isMultiselect=false, groups={}, defaultSelec
   const div = document.createElement('div')
 
   const labelLeft = document.createElement('a')
-  labelLeft.innerHTML = attribs.get("dimension")
+  labelLeft.innerHTML = label
   labelLeft.classList.add("boxLabelLeft")
 
   div.appendChild(labelLeft)

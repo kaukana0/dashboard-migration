@@ -52,7 +52,7 @@ export function create(containerId, cfg, _categories, selectedCallback, onCardEx
 		const parser = new DOMParser()
 
 		if(!merged.ignore) {
-			if(merged["hanSolo"]) {document.getElementById(containerId).innerHTML = ""}
+			if(merged["hanSolo"]) {document.getElementById(containerId).innerHTML = ""}			// undocumented feature. for troubleshooting purposes.
 
 			const longTitle = typeof merged.nameLong === "undefined" ? merged.name : merged.nameLong
 			const html = MarkUpCode.getCardHtmlString( id, merged.name, longTitle, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )

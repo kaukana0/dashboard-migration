@@ -1,6 +1,6 @@
 # configuration for "Migrant integration indicators dashboard" by Eurostat
-# yaml schema v0.7.0
-# version: devel-07-23
+# yaml schema v0.8.0
+# version: devel-08-24
 
 codeList:
 
@@ -271,6 +271,7 @@ indicatorBase:
 
 
 # each indicator can overwrite the properties it "inherited" (via merge) from indicatorBase
+# note: id is purely informative, it's not used by the software at all
 indicators:
 
   - name: Migrant population
@@ -322,7 +323,6 @@ indicators:
     infoText: "<p>The median age is the age that divides a population into two groups that are numerically equivalent.</p>"
 
 ##########################################################
-# note: id and bookmark are purely informative, they're not used by the software at all
 
   - name: Employment
     id: MD_3
@@ -568,6 +568,7 @@ indicators:
           - Age:
               inherit: false
           - isced11:
+              label: "Level"
               elements:
                 - label: Low
                   code: ED0-2
@@ -677,11 +678,9 @@ indicators:
       citizen:
         id: EDAT_LFSE_23
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfse_23
-        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/5039d719-ce9d-4afb-b083-4a38fa425309?lang=en
       birth:
         id: EDAT_LFSE_28
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfse_28
-        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/5039d719-ce9d-4afb-b083-4a38fa425309?lang=en
     dimensions:
       ui:
         dropdown:
@@ -712,7 +711,6 @@ indicators:
       birth:
         id: LFSO_21LANG01
         source: null
-        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/7b7309b3-501f-483d-aef3-ab8f9fc797f0?lang=en
     dimensions:
       ui:
         dropdown:
@@ -729,6 +727,7 @@ indicators:
               groups:
                 *bySelectGroupTitles
           - lev_know:
+              label: "Level"
               elements:
                 - label: "Mother tongue"
                   code: "MOT"
@@ -756,11 +755,9 @@ indicators:
       citizen:
         id: ILC_PEPS05N
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_peps05n
-        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/32e8fb39-ab5b-4a69-80cc-50c704726827?lang=en
       birth:
         id: ILC_PEPS06N
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_peps06n
-        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/7fec6647-136a-4127-b58a-2704114d542f?lang=en
     dimensions:
       ui:
         dropdown:
@@ -784,11 +781,9 @@ indicators:
       citizen:
         id: ILC_LI31
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_li31
-        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/cb378138-68bd-4bf9-b3f0-2bc23582a18b?lang=en
       birth:
         id: ILC_LI32
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_li32
-        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/f096b040-9517-4238-a3b2-b7e9c839245c?lang=en
     dimensions:
       ui:
         dropdown:
@@ -874,11 +869,9 @@ indicators:
       citizen:
         id: ILC_LVHL15N
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvhl15n
-        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/7c414067-c874-46cf-964b-bb45f55842ec?lang=en
       birth:
         id: ILC_LVHL16N
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvhl16n
-        bookmark: https://ec.europa.eu/eurostat/databrowser/bookmark/0e87b413-b5b5-40cb-b989-7cad801c3cbb?lang=en
     dimensions:
       ui:
         dropdown:
@@ -1086,7 +1079,7 @@ indicators:
       ui:
         dropdown:
           - lev_perc:
-              text: "Level of perception"   # TODO: implement using this instead of "lev_perc"
+              label: "Level"
               elements:
                 - label: Very bad or bad
                   code: B_VB
