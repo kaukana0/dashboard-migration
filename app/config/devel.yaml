@@ -228,6 +228,12 @@ globals:
       geo: *countries
   byCitizenGroupTitle: "By country of citizenship"
   byBirthGroupTitle: "By country of birth"
+  texts:
+    sharing:
+      text: "Migration Dashboard"
+      hashTags: "#Eurostat #Migration"
+      mailSubject: "Check out the Migration Dashboard"
+      mailBody: "europa.eu"
 
 
 # these are used as a base for each indicator in the indicators section

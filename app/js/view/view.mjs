@@ -12,7 +12,7 @@ import Fetcher from "../model/fetcher.mjs"
 import {getMapFromArray} from "./modules/util.mjs"
 import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
 
-// both used to decide when to update one instead of all cards
+// used to decide when to update one instead of all cards (reduce number of chart reloads)
 let currentlyExpandedId = null
 
 
@@ -49,7 +49,7 @@ function setCardLegends(isEU) {
   })
 }
 
-function bla() {
+function geoSelectSelectedText() {
   return Array.from(GeoSelect.getSelected().keys()).join(" ")
 }
 
@@ -60,7 +60,7 @@ function bla() {
 function onSelectedForAllCards() {
   Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => { 
     const boxes = fetch(cardId)
-    Cards.updateCardAttributes(cardId, boxes, bla())
+    Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
     Cards.storeSelectedCounts(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
     Cards.setTooltipStyle(boxes.selections.get(MS.BY_SELECT_ID).size)
   })
@@ -71,7 +71,7 @@ function onSelectedForAllCards() {
 // so, update charts in one card
 function onSelectedForOneCard(cardId) {
   const boxes = fetch(cardId)
-  Cards.updateCardAttributes(cardId, boxes, bla())
+  Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
   Cards.storeSelectedCounts(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
   Cards.setTooltipStyle(boxes.selections.get(MS.BY_SELECT_ID).size)
 }
@@ -147,4 +147,23 @@ function onCardContract(id) {
   currentlyExpandedId = null
 
   document.getElementById("countrySelectLabel").textContent = ""
+}
+
+export function setupGlobalInfoClick() {
+  document.getElementById("globalInfoButton").addEventListener("click", () => {
+    document.getElementById("globalModal").setHeader("Information")
+    document.getElementById("globalModal").setText("Global Info text... TODO")
+    document.getElementById("globalModal").show()
+  })
+}
+
+export function setupSharing(cfg) {
+  const btn = document.getElementById("sharingButton")
+  btn.addEventListener("click", () => { menu.toggleVisibility() })
+
+  const menu = document.getElementsByTagName("ecl-like-social-share")[0]
+  menu.setAttribute("text", cfg.text)
+  menu.setAttribute("hashTags", cfg.hashTags)
+  menu.setAttribute("mailSubject", cfg.mailSubject)
+  menu.setAttribute("mailBody", cfg.mailBody)
 }

@@ -40,3 +40,6 @@
 [submodule "app/components/eclLikeModal"]
 	path = app/components/eclLikeModal
 	url = https://github.com/kaukana0/eclLikeModal.git
+[submodule "app/components/eclLikeSocialMediaShare"]
+	path = app/components/eclLikeSocialMediaShare
+	url = https://github.com/kaukana0/eclLikeSocialMediaShare.git

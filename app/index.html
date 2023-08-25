@@ -38,6 +38,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 	<script src="./components/buttonX/button.mjs" type="module"></script>
 	<script src="./components/eclLikeMessage/message.mjs" type="module"></script>
 	<script src="./components/eclLikeModal/modal.mjs" type="module"></script>
+	<script src="./components/eclLikeSocialMediaShare/share.mjs" type="module"></script>
 
 	<style>
 			html,
@@ -69,9 +70,15 @@ Author: robert.gebhardt@ext.ec.europa.eu
 
 		<ecl-like-hero-banner text="Migrant integration indicators dashboard"></ecl-like-hero-banner>
 
-		<ecl-like-menu id="menu"></ecl-like-menu>
-		<!--symbol-button symbol="sharing" style="position:absolute; width:40px; height:40px; right:40px; top:96px;"></symbol-button-->
-		
+		<div style="display:flex; justify-content: space-between; align-items: center; background-color: #0E47CB">
+			<ecl-like-menu id="menu" style="flex-grow:1;"></ecl-like-menu>
+			<symbol-button id="globalInfoButton" symbol="info" style="width:40px; height:40px; margin-right: 10px;"></symbol-button>
+			<div>
+				<symbol-button id="sharingButton" symbol="sharing" style="width:40px; height:40px; margin-right: 40px;"></symbol-button>
+				<ecl-like-social-share></ecl-like-social-share>
+			</div>
+		</div>
+
 		<!-- note "Fixed positioning" at https://developer.mozilla.org/en-US/docs/Web/CSS/position#values -->
 		<div style="transform: scale(1); display:block;">
 
