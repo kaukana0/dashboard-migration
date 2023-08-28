@@ -298,7 +298,7 @@ function getColorSet(forLineChart, geoSelections) {
 	return retVal
 }
 
-export function contractAll(except) {
+export function contractAll(except) {		// but we assume that max 1 can be expanded; instead of "find the 1 expanded"
 	iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => {
 		if(cardId!==except) { document.getElementById(cardId).contract() }
 	})

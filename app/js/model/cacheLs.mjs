@@ -5,7 +5,7 @@ const updateId = "lastUpdate"
 window.addEventListener('keydown', e => {
   if(e.ctrlKey && e.shiftKey && e.key==="F") {
     localStorage.clear()
-    console.debug("cacheLS: ctrl+shift+F pressed, cache cleared")
+    console.log("cacheLS: ctrl+shift+F pressed, cache cleared")
   }
 })
 

@@ -18,6 +18,7 @@ let currentlyExpandedId = null
 
 export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
+  document.body.style.overflowX="hidden"
   const categories = MainMenu.getCategories(cfg)
   MainMenu.create(onSelectMenu, categories)
   GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromArray(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
@@ -100,6 +101,7 @@ function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {
     // filter for the category it belongs to
     Cards.filter(parentItemId)
     Cards.expand(card)
+    //setTimeout(()=>Cards.expand(card), 500)
   }
 }
 
@@ -110,7 +112,6 @@ function onCardExpand(id) {
 
   GeoSelect.moveIntoCard(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
   document.body.style.overflowY="hidden"
-  document.body.style.overflowX="hidden"
   window.scrollTo(0, 0)
 
   // this is done here not because of resetting to original value,
@@ -125,7 +126,6 @@ function onCardContract(id) {
 
   GeoSelect.moveToMainArea()
   document.body.style.overflowY="auto"
-  document.body.style.overflowX="auto"
 
   Range.reset(id)
 
