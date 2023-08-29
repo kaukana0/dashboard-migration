@@ -300,7 +300,7 @@ function getColorSet(forLineChart, geoSelections) {
 
 export function contractAll(except) {		// but we assume that max 1 can be expanded; effectively just contracts one
 	iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => {
-		if(cardId!==except) { document.getElementById(cardId).contract() }
+		if(cardId!==except) { document.getElementById(cardId).contract(false) }
 	})
 }
 
@@ -340,8 +340,8 @@ export async function filter(category, callback = ()=>{}) {
 			bla.push(vis+" "+elements[i].getAttribute("id"))
 		}
 	}
-	//console.log(bla,promises)
-	Promise.all(promises).then((v)=>{/*console.log("ERGEBNIS",v);*/ callback()})
+	console.log(bla,promises)
+	Promise.all(promises).then((v)=>{console.log("BH filter",v); callback()})
 	//console.log("all")
 }
 

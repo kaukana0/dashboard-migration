@@ -94,15 +94,17 @@ function fetch(cardId) {
 // menuItemId can be anything, menuItem or submenuItem
 function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {
   if(isParentMenuItem) {
-    Cards.filter(menuItemId, () => {Cards.contractAll()})
+    Cards.contractAll()
+    Cards.filter(menuItemId)
   } else {
     const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(menuItemId)}]`)
     // filter for the category it belongs to
-    Cards.filter(parentItemId, () => {Cards.expand(card)})
+    Cards.filter(parentItemId, () => {console.log("BH onSelectMenu exp"); Cards.expand(card)})
   }
 }
 
 function onCardExpand(id) {
+  console.log("BH onCardExpand "+id)
   currentlyExpandedId = id
   const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
   CommonConstraints.setBySelect(anchorEl.nextSibling.childNodes[1])
