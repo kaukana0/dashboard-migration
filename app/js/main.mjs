@@ -10,7 +10,7 @@ function init() {
     .then((data) => {
       const cfg = Yaml.load(data)
       View.createUIElements(cfg, true)
-      View.setupGlobalInfoClick()
+      View.setupGlobalInfoClick(cfg.globals.texts.globalInfo)
       View.setupSharing(cfg.globals.texts.sharing)
       setTimeout(()=>LoadingIndicator.hide(), 2000)
     })

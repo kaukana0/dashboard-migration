@@ -298,7 +298,7 @@ function getColorSet(forLineChart, geoSelections) {
 	return retVal
 }
 
-export function contractAll(except) {		// but we assume that max 1 can be expanded; instead of "find the 1 expanded"
+export function contractAll(except) {		// but we assume that max 1 can be expanded; effectively just contracts one
 	iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => {
 		if(cardId!==except) { document.getElementById(cardId).contract() }
 	})
@@ -316,26 +316,33 @@ export function expand(card) {
 	card.expand(document.getElementById("anchorSelectCountryOutsideOfCard"))
 }
 
-export function filter(category) {
+export async function filter(category, callback = ()=>{}) {
 	const cardsOfCategory = categories.get(category).map( (e)=>getIdFromName(e) )
 	const elements = document.querySelectorAll("div [id=cards] chart-card")
-
+  const promises = []
+	const bla = []
 	if(cardsOfCategory.length>0) {
 		for (var i = 0; i < elements.length; i++) {
 			if( cardsOfCategory.includes(elements[i].id) ) {
-				elements[i].isVisible=true
+				promises.push( elements[i].setVisible(true) )
+				bla.push("show "+elements[i].getAttribute("id"))
 			} else {
-				elements[i].isVisible=false
+				promises.push( elements[i].setVisible(false) )
+				bla.push("hide "+elements[i].getAttribute("id"))
 			}
 		}
 	} else {
 		// "Overview" category doesn't exist, therefore can't have any cards.
 		// show all which are supposed to be in overview
 		for (var i = 0; i < elements.length; i++) {
-			elements[i].isVisible = overviewCardIds.includes(elements[i].getAttribute("id"))
+			const vis = overviewCardIds.includes(elements[i].getAttribute("id"))
+			promises.push( elements[i].setVisible( vis ) )
+			bla.push(vis+" "+elements[i].getAttribute("id"))
 		}
 	}
-
+	//console.log(bla,promises)
+	Promise.all(promises).then((v)=>{/*console.log("ERGEBNIS",v);*/ callback()})
+	//console.log("all")
 }
 
 export function setTooltipStyle(numberOfBySelected) {

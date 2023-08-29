@@ -94,14 +94,11 @@ function fetch(cardId) {
 // menuItemId can be anything, menuItem or submenuItem
 function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {
   if(isParentMenuItem) {
-    Cards.contractAll()
-    Cards.filter(menuItemId)
+    Cards.filter(menuItemId, () => {Cards.contractAll()})
   } else {
     const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(menuItemId)}]`)
     // filter for the category it belongs to
-    Cards.filter(parentItemId)
-    Cards.expand(card)
-    //setTimeout(()=>Cards.expand(card), 500)
+    Cards.filter(parentItemId, () => {Cards.expand(card)})
   }
 }
 
@@ -138,6 +135,8 @@ function onCardContract(id) {
 
   CommonConstraints.setBySelect(null)			// effectively disable those constraints
 
+  // a selection in one expanded card might affect all cards; i.e. favourite star
+  // attention: leads to setData on all cards
   onSelectedForAllCards()
 
   setCardLegends(GeoSelect.isEUSelected())
@@ -149,10 +148,10 @@ function onCardContract(id) {
   document.getElementById("countrySelectLabel").textContent = ""
 }
 
-export function setupGlobalInfoClick() {
+export function setupGlobalInfoClick(txt) {
   document.getElementById("globalInfoButton").addEventListener("click", () => {
     document.getElementById("globalModal").setHeader("Information")
-    document.getElementById("globalModal").setText("Global Info text... TODO")
+    document.getElementById("globalModal").setText(txt)
     document.getElementById("globalModal").show()
   })
 }
