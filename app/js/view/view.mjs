@@ -19,13 +19,13 @@ let currentlyExpandedId = null
 export function createUIElements(cfg, triggerInitialRequest) {
   console.debug("cfg json from vanilla yaml", cfg)
   document.body.style.overflowX="hidden"
-  const categories = MainMenu.getCategories(cfg)
-  MainMenu.create(onSelectMenu, categories)
+  MainMenu.create(cfg, onSelectMenu)
   GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromArray(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
-  Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, categories, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
+  Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, MainMenu.getCategories(), onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerInitialRequest) {   // TODO: not everything at once. start w/ what is in user's view, do the other stuff in the background quietly/slowly one by one (intersection observer)
     onSelectedForAllCards()
+    MainMenu.select(MS.TXT_OVERVIEW)
     Cards.filter(MS.TXT_OVERVIEW)
     setCardLegends(true)
   }
@@ -93,18 +93,21 @@ function fetch(cardId) {
 
 // menuItemId can be anything, menuItem or submenuItem
 function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {
+  const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(menuItemId)}]`)
   if(isParentMenuItem) {
-    Cards.contractAll()
+    Cards.contractAll(card)
+    if(menuItemId===MS.TXT_OVERVIEW) { 
+      setTimeout(()=>MainMenu.select(MS.TXT_OVERVIEW), 250)  // TODO
+    }
     Cards.filter(menuItemId)
   } else {
-    const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(menuItemId)}]`)
     // filter for the category it belongs to
-    Cards.filter(parentItemId, () => {console.log("BH onSelectMenu exp"); Cards.expand(card)})
+    Cards.filter(parentItemId)
+    Cards.expand(card)
   }
 }
 
 function onCardExpand(id) {
-  console.log("BH onCardExpand "+id)
   currentlyExpandedId = id
   const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
   CommonConstraints.setBySelect(anchorEl.nextSibling.childNodes[1])
@@ -117,6 +120,8 @@ function onCardExpand(id) {
   // but to let range WebComponent calculate and display the correct slider position
   // note: setting pos during display:none has no effect
   Range.reset(id)
+
+  MainMenu.select(MainMenu.getMenuItemIds(id)[1])
 
   document.getElementById("countrySelectLabel").textContent = "Country"
 }
@@ -142,8 +147,9 @@ function onCardContract(id) {
   onSelectedForAllCards()
 
   setCardLegends(GeoSelect.isEUSelected())
-  
-  // todo: scroll back to previous pos
+
+  MainMenu.select( MainMenu.getMenuItemIds(id)[0] )
+  Cards.filter( MainMenu.getMenuItemIds(id)[0] )
 
   currentlyExpandedId = null
 
