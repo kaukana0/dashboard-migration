@@ -206,15 +206,27 @@ export function setData(cardId, geoSelections, data) {
 
 	document.getElementById(cardId).setData1({
 		cols: data.timeSeries.data,	countryNamesFull:countryNamesFull,
-		palette:data.colorPalette, fixColors:getColorSet(true,  geoSelections)
+		palette:data.colorPalette, fixColors:getColorSet(true, geoSelections)
 	})
 
 	document.getElementById(cardId).setData2({
 		cols: data.countrySeries.data,	countryNamesFull:countryNamesFull,
-		palette:data.colorPalette, fixColors:getColorSet(false,  geoSelections)
+		palette:data.colorPalette, fixColors:getColorSet(false, geoSelections),
+		highlightIndices:getIndices(data,geoSelections)
 	})
 
 	document.getElementById(cardId).stopIndicateLoading()
+}
+
+function getIndices(data, geoSelections) {
+	const retVal = []
+	const bla = Array.from(geoSelections.keys())
+	for(let i=0;i<data.countrySeries.data[0].length;i++) {
+		if(bla.includes(data.countrySeries.data[0][i])) {
+			retVal.push(i)
+		}
+	}
+	return retVal
 }
 
 export function getColorSetDefinitions() {
@@ -293,7 +305,13 @@ function getColorSet(forLineChart, geoSelections) {
 		retVal[MS.TXT_BY_LBL_BEU] = colorsSet1.mid
 		retVal[MS.TXT_BY_LBL_BNEU] = colorsSet1.light
 
-		// TODO: EU different
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_CNAT] = colorsEU.dark
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_CEU] = colorsEU.mid
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_CNEU] = colorsEU.light
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_BNAT] = colorsEU.dark
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_BEU] = colorsEU.mid
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_BNEU] = colorsEU.light
+
 	}
 	return retVal
 }

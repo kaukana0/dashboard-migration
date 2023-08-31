@@ -1,4 +1,4 @@
-# configuration for "Migrant integration indicators dashboard" by Eurostat
+# configuration for "Migration dashboard" by Eurostat
 # yaml schema v0.8.0
 # version: devel-08-24
 
@@ -230,11 +230,11 @@ globals:
   byBirthGroupTitle: "By country of birth"
   texts:
     sharing:
-      text: "Explore the Migrant integration indicators dashboard"
+      text: "Explore the Migrant integration and social exclusion dashboard"
       hashTags: "#Eurostat #Migration"
-      mailSubject: "Explore the Migrant integration indicators dashboard"
+      mailSubject: "Explore the Migrant integration and social exclusion dashboard"
       mailBody: "europa.eu"
-    globalInfo: "<h4>About this dashboard</h4><p>This migrant integration indicators dashboard was developed by Eurostat, the statistical office of the European Union.</p><p>Data in this dashboard is constantly updated with the latest data available in the Eurostat database.</p><h4>Further reading</h4><p>If you wish to obtain more in-depth information, please also consult our article in <a href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics' target='_blank'>Statistics Explained</a>.</p><h4>Feedback</h4><p>If you have any (positive or negative) feedback for us, please send us an <a href='mailto:ESTAT-USER-SUPPORT@ec.europa.eu'>e-mail</a>."
+    globalInfo: "<h4>About this dashboard</h4><p>This migrant integration and social exclusion dashboard was developed by Eurostat, the statistical office of the European Union.</p><p>Data in this dashboard is constantly updated with the latest data available in the Eurostat database.</p><h4>Further reading</h4><p>If you wish to obtain more in-depth information, please also consult our article in <a href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics' target='_blank'>Statistics Explained</a>.</p><h4>Feedback</h4><p>If you have any (positive or negative) feedback for us, please send us an <a href='mailto:ESTAT-USER-SUPPORT@ec.europa.eu'>e-mail</a>."
 
 
 # these are used as a base for each indicator in the indicators section
@@ -773,6 +773,11 @@ indicators:
                 - *16-29
                 - *18-overs
                 - *20-64
+        range:
+          - time:
+            start: 2015
+            end: 2022
+            current: 2018
     infoText: "<p>At risk of poverty or social exclusion, abbreviated as AROPE, corresponds to the sum of persons who are either at risk of poverty, or severely materially and socially deprived or living in a household with a very low work intensity. People are included only once even if they are in more than one of the situations mentioned above.</p>
               <p>The AROPE rate is the share of the total population which is at risk of poverty or social exclusion. It is the main indicator to monitor the EU 2030 target on poverty and social exclusion and was the headline indicator to monitor the EU 2020 Strategy poverty target.</p>
               <p>Note to users:</p>
@@ -1190,7 +1195,7 @@ indicators:
               <p>Note to users:</p>
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
 
-  - name: Long-standing activity limitations
+  - name: Long-standing limitations
     nameLong: People having long-standing limitations in usual activities 
     id: MD_32
     category: Health
