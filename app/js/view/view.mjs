@@ -95,13 +95,10 @@ function fetch(cardId) {
 function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {
   const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(menuItemId)}]`)
   if(isParentMenuItem) {
-    Cards.contractAll(card)
-    if(menuItemId===MS.TXT_OVERVIEW) { 
-      setTimeout(()=>MainMenu.select(MS.TXT_OVERVIEW), 250)  // TODO
-    }
-    Cards.filter(menuItemId)
+    Cards.contractAll()
+    setTimeout(()=> { MainMenu.select(parentItemId) }, 250)  // TODO
+    Cards.filter(parentItemId)
   } else {
-    // filter for the category it belongs to
     Cards.filter(parentItemId)
     Cards.expand(card)
   }
@@ -122,6 +119,8 @@ function onCardExpand(id) {
   Range.reset(id)
 
   MainMenu.select(MainMenu.getMenuItemIds(id)[1])
+
+  Cards.filter( MainMenu.getMenuItemIds(id)[0] )
 
   document.getElementById("countrySelectLabel").textContent = "Country"
 }
@@ -149,7 +148,6 @@ function onCardContract(id) {
   setCardLegends(GeoSelect.isEUSelected())
 
   MainMenu.select( MainMenu.getMenuItemIds(id)[0] )
-  Cards.filter( MainMenu.getMenuItemIds(id)[0] )
 
   currentlyExpandedId = null
 
