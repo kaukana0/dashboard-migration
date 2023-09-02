@@ -12,19 +12,24 @@ export function setCallbacks(cardId, onSelect) {
 	el.addEventListener('selected', onSelect)
 }
 
-export function setValuesFromConfig(cardId, _min, _max, _current) {
+// if _max is 0, current year is taken
+// if _selected is negative, then [selected = max + _selected] is calculated (it's now relative to the end)
+export function setValuesFromConfig(cardId, _min, _max, _selected) {
 	const el = document.getElementById("timeRange"+cardId)
 	const max = _max>0 ? _max : new Date().getFullYear()
-	const current = _current > 0 ? _current : max + _current
+	const selected = _selected > 0 ? _selected : max + _selected
+
 	el.setAttribute("mingap", 0)
 	el.setAttribute("min", _min)
 	el.setAttribute("max", max)
 	el.setAttribute("valuer", max)
-	el.setAttribute("valuel", current)
-	el.setAttribute("textl", current)
-	el.setAttribute("defaultValue", current)
+	el.setAttribute("valuel", selected)
+	el.setAttribute("textl", selected)
+	el.setAttribute("defaultValue", selected)
 }
 
+// this is called after setValuesFromConfig and has the ability to
+// overrule the config values, because the time in the actual data might start later or end earlier
 export function setMinMax(cardId, min, max) {
 	const el = document.getElementById("timeRange"+cardId)
 

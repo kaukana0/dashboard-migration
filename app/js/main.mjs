@@ -1,6 +1,5 @@
 import Yaml from "../redist/js-yaml.mjs"
 import * as View from "./view/view.mjs"
-//import "../../redist/html2canvas-1.4.1.js"    // TODO: esm?
 import * as LoadingIndicator from "./view/modules/loadingIndicator.mjs"
 
 function init() {

@@ -123,7 +123,7 @@ function setupRange(id, values, selectedCallback) {
 		TooltipDot.setHeader( document.getElementById("timeRange"+id).valuel )
 		selectedCallback(id)
 	})
-	Range.setValuesFromConfig(id, values.start, values.end, values.current)
+	Range.setValuesFromConfig(id, values.start, values.end, values.selected)
 	TooltipDot.setHeader( document.getElementById("timeRange"+id).valuel )
 }
 
@@ -210,7 +210,7 @@ export function setData(cardId, geoSelections, data) {
 	})
 
 	document.getElementById(cardId).setData2({
-		cols: data.countrySeries.data,	countryNamesFull:countryNamesFull,
+		cols: bla(data.countrySeries.data), countryNamesFull:countryNamesFull,
 		palette:data.colorPalette, fixColors:getColorSet(false, geoSelections),
 		highlightIndices:getIndices(data,geoSelections)
 	})
@@ -226,6 +226,17 @@ function getIndices(data, geoSelections) {
 			retVal.push(i)
 		}
 	}
+	return retVal
+}
+
+function bla(countrySeries) {
+	const retVal = countrySeries
+	let pos = 1
+	//retVal.forEach((e)=>{
+	//	e.splice(pos, 0, null)
+	//	pos = pos===1?2:2
+	//})
+	//console.log(retVal)
 	return retVal
 }
 
@@ -305,7 +316,7 @@ function getColorSet(forLineChart, geoSelections) {
 		retVal[MS.TXT_BY_LBL_BEU] = colorsSet1.mid
 		retVal[MS.TXT_BY_LBL_BNEU] = colorsSet1.light
 
-		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_CNAT] = colorsEU.dark
+		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_CNAT] = colorsEU.dark		// see also "firstDifferent" in chart config options
 		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_CEU] = colorsEU.mid
 		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_CNEU] = colorsEU.light
 		retVal[MS.CODE_EU+", "+MS.TXT_BY_LBL_BNAT] = colorsEU.dark

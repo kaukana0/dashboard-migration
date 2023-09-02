@@ -267,11 +267,11 @@ indicatorBase:
       range:              # start/end from requested data may override this
         - time:
           start: 2010
-          end: 2022       # if end is null then current year + current is calculated (current has to be negative)
-          current: -10
+          end: 0              # if end is 0, current year is taken
+          selected: 2013      # if selected is negative, then [selected = end + selected] is calculated
     nonUi:                # dimensions which are request-relevant and not represented by an ui element
-      freq:
-      - *freq
+      #freq:
+      #- *freq
       unit:
       - *unit
     excludeFromSubtitle: ["time","geo","Country of citizenship/birth"]
@@ -305,6 +305,13 @@ indicators:
                 - *15-29
                 - *20-64
                 - *65-over
+        range:
+          - time:
+            start: 1998
+            end: 0
+            selected: 2013
+
+
     infoText: "<p>The population, of a given area (region or country), is the total number of persons that are usually resident in that area.</p>
               <p>This count is generally compiled on 31 December each year and published as 1 January of the next year.</p>"
 
@@ -327,6 +334,11 @@ indicators:
           - Age:
               elements:
                 - *total
+        range:
+          - time:
+            start: 1998
+            end: 0
+            selected: 2013
     infoText: "<p>The median age is the age that divides a population into two groups that are numerically equivalent.</p>"
 
 ##########################################################
@@ -343,6 +355,14 @@ indicators:
       birth:
         id: LFSA_ERGACOB
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_ergacob
+    dimensions:
+      ui:
+        range:
+          - time:
+            start: 2002
+            end: 0
+            selected: 2013
+
     infoText: "<p>The employment rate is the percentage of employed persons in relation to the comparable total population. Employed persons are defined as all persons who worked at least one hour for pay or profit during the reference week or were temporarily absent from such work.</p>
               <p>Note to users:</p>
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
@@ -360,6 +380,13 @@ indicators:
       birth:
         id: LFSA_ARGACOB
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_argacob
+    dimensions:
+      ui:
+        range:
+          - time:
+            start: 2002
+            end: 0
+            selected: 2013
     infoText: "<p>Activity rate is the percentage of active persons in relation to the comparable total population. The economically active population comprises employed and unemployed persons.</p>
               <p>Note to users:</p>
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
@@ -384,6 +411,11 @@ indicators:
                 - *15-74
                 - *15-29
                 - *20-64
+        range:
+          - time:
+            start: 2002
+            end: 0
+            selected: 2013
       nonUi:
         unit:
         - label: "%"
@@ -412,6 +444,11 @@ indicators:
                 - *15-74
                 - *15-29
                 - *20-64
+        range:
+          - time:
+            start: 2002
+            end: 0
+            selected: 2013
       nonUi:
         unit:
         - label: "%"
@@ -438,6 +475,11 @@ indicators:
         dropdown:
           - Age:
               inherit: false
+        range:
+          - time:
+            start: 2002
+            end: 0
+            selected: 2013
       nonUi:
         Age:
         - *20-64
@@ -463,6 +505,12 @@ indicators:
         id: LFSA_eppgacob
         source: Available 31. August 23
     dimensions:
+      ui:
+        range:
+          - time:
+            start: 2002
+            end: 0
+            selected: 2013
       nonUi:
         unit:
         - label: "%"
@@ -492,6 +540,12 @@ indicators:
         id: LFSA_EPPGACOB
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eppgacob
     dimensions:
+      ui:
+        range:
+          - time:
+            start: 2002
+            end: 0
+            selected: 2013
       nonUi:
         unit:
         - label: "%"
@@ -514,6 +568,12 @@ indicators:
         id: LFSA_ETPGACOB
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_etpgacob
     dimensions:
+      ui:
+        range:
+          - time:
+            start: 2002
+            end: 0
+            selected: 2013
       nonUi:
         unit:
         - label: "%"
@@ -540,6 +600,11 @@ indicators:
         dropdown:
           - Age:
               inherit: false
+        range:
+          - time:
+            start: 2002
+            end: 0
+            selected: 2013
       nonUi:
         Age:
         - *15-74
@@ -583,6 +648,11 @@ indicators:
                   code: ED3_4   # yes, there really is a _ in that code
                 - label: High
                   code: ED5-8
+        range:
+          - time:
+            start: 2004
+            end: 0
+            selected: 2013
       nonUi:
         Age:
         - *25-74
@@ -615,6 +685,11 @@ indicators:
               elements:
                 - *25-34
                 - *30-34s
+        range:
+          - time:
+            start: 2004
+            end: 0
+            selected: 2013
         isced11:
         - label: label    #TODO
           code: ED5-8
@@ -640,6 +715,11 @@ indicators:
         dropdown:
           - Age:
               inherit: false
+        range:
+          - time:
+            start: 2004
+            end: 0
+            selected: 2013
       nonUi:
         Age:
         - *18-24
@@ -668,6 +748,11 @@ indicators:
         dropdown:
           - Age:
               inherit: false
+        range:
+          - time:
+            start: 2004
+            end: 0
+            selected: 2013
       nonUi:
         Age:
         - *25-64
@@ -695,6 +780,11 @@ indicators:
               elements:
                 - *15-29s
                 - *15-34
+        range:
+          - time:
+            start: 2004
+            end: 0
+            selected: 2013
       nonUi:
         wstatus:
         - label: label    #TODO
@@ -775,9 +865,9 @@ indicators:
                 - *20-64
         range:
           - time:
-            start: 2015
-            end: 2022
-            current: 2015
+            start: 2014
+            end: 0
+            selected: 2015
     infoText: "<p>At risk of poverty or social exclusion, abbreviated as AROPE, corresponds to the sum of persons who are either at risk of poverty, or severely materially and socially deprived or living in a household with a very low work intensity. People are included only once even if they are in more than one of the situations mentioned above.</p>
               <p>The AROPE rate is the share of the total population which is at risk of poverty or social exclusion. It is the main indicator to monitor the EU 2030 target on poverty and social exclusion and was the headline indicator to monitor the EU 2020 Strategy poverty target.</p>
               <p>Note to users:</p>
@@ -892,6 +982,11 @@ indicators:
               inherit: false
           - Sex:
               inherit: false
+        range:
+          - time:
+            start: 2014
+            end: 0
+            selected: 2014
       nonUi:
         Age:
           - *18-64
@@ -921,6 +1016,11 @@ indicators:
               inherit: false
           - Sex:
               inherit: false
+        range:
+          - time:
+            start: 2014
+            end: 0
+            selected: 2014
       nonUi:
         Age:
           - *18-over
@@ -1254,6 +1354,11 @@ indicators:
               inherit: false
           - Sex:
               inherit: false
+        range:
+          - time:
+            start: 2009
+            end: 0
+            selected: 2012
       nonUi:
         Sex:
           - *total
@@ -1286,6 +1391,11 @@ indicators:
               inherit: false
           - Sex:
               inherit: false
+        range:
+          - time:
+            start: 2008
+            end: 0
+            selected: 2013
       nonUi:
         leg_fram:
           - code: TOTAL
