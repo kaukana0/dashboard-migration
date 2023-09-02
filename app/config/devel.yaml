@@ -234,7 +234,34 @@ globals:
       hashTags: "#Eurostat #Migration"
       mailSubject: "Explore the Migrant integration and inclusion dashboard"
       mailBody: "europa.eu"
-    globalInfo: "<h4>About this dashboard</h4><p>This migrant integration and inclusion dashboard was developed by Eurostat, the statistical office of the European Union.</p><p>Data in this dashboard is constantly updated with the latest data available in the Eurostat database.</p><h4>Further reading</h4><p>If you wish to obtain more in-depth information, please also consult our article in <a href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics' target='_blank'>Statistics Explained</a>.</p><h4>Feedback</h4><p>If you have any (positive or negative) feedback for us, please send us an <a href='mailto:ESTAT-USER-SUPPORT@ec.europa.eu'>e-mail</a>."
+    globalInfo: "<h4 class='ecl-u-type-heading-4'>About this dashboard</h4>
+<p class='ecl-u-type-paragraph'>This migrant integration and inclusion dashboard was developed by Eurostat, the statistical office of the European Union.</p>
+<p class='ecl-u-type-paragraph'>Data in this dashboard is constantly updated with the latest data available in the Eurostat database.</p>
+<p class='ecl-u-type-paragraph'>Two different concepts are used in the dashboard to define migrant population:</p>
+<ul class='ecl-unordered-list'>
+                <li class='ecl-unordered-list__item'>the concept of country of citizenship</li>
+                <li class='ecl-unordered-list__item'>the concept of country of birth.</li>
+</ul>
+<p class='ecl-u-type-paragraph'>Based on these concepts, two broad groups of the migrant population are defined.</p>
+<p class='ecl-u-type-paragraph'>According to the concept of <span class='ecl-u-type-bold'>country of citizenship</span>, the population is divided into the following groups:</p>
+<ul class='ecl-unordered-list'>
+                <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Nationals: the citizens of the reporting country</li>
+                <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Citizens of another EU country than the reporting country (e.g. person with a German citizenship residing in France)</li>
+                <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Citizens of a non-EU country.</li>
+</ul>
+<p class='ecl-u-type-paragraph'>Foreign citizens are in a different situation than nationals with regard to their legal rights. This is particularly the case for non-EU citizens (third-country nationals). Foreign citizens may have migrated into their country of current residence or may have been born there.</p>
+<p class='ecl-u-type-paragraph'>According to the concept of <span class='ecl-u-type-bold'>country of birth</span>, the population is divided into the following groups:</p>
+<ul class='ecl-unordered-list'>
+                <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Native-born: the population born in the reporting country</li>
+                <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Born in another EU country than the reporting country (e.g. person born in Germany residing in France)</li>
+                <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Born in a non-EU country: the population born outside the EU.</li>
+</ul>
+<p class='ecl-u-type-paragraph'>Foreign population by country of birth is the population most commonly described as migrants, as these persons have migrated to their current country of residence at some stage during their lives. It includes persons with foreign citizenship as well as persons with the citizenship of their country of residence, either from birth or acquired later in life.</p>
+<h4 class='ecl-u-type-heading-4'>Further reading</h4>
+<p class='ecl-u-type-paragraph'>If you wish to obtain more in-depth information, please see our online publication in&nbsp;<a class='ecl-link' href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics'>Statistics Explained</a>.</p>
+<h4 class='ecl-u-type-heading-4'>Feedback</h4>
+<p class='ecl-u-type-paragraph'>If you have any&nbsp; feedback for us, please send us an <a class='ecl-link' href='http://mailto:ESTAT-USER-SUPPORT@ec.europa.eu'>e-mail</a>.</p>
+"
 
 
 # these are used as a base for each indicator in the indicators section
