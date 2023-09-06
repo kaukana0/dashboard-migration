@@ -210,7 +210,7 @@ export function setData(cardId, geoSelections, data) {
 	})
 
 	document.getElementById(cardId).setData2({
-		cols: bla(data.countrySeries.data), countryNamesFull:countryNamesFull,
+		cols: data.countrySeries.data, countryNamesFull:countryNamesFull,
 		palette:data.colorPalette, fixColors:getColorSet(false, geoSelections),
 		highlightIndices:getIndices(data,geoSelections)
 	})
@@ -226,17 +226,6 @@ function getIndices(data, geoSelections) {
 			retVal.push(i)
 		}
 	}
-	return retVal
-}
-
-function bla(countrySeries) {
-	const retVal = countrySeries
-	let pos = 1
-	//retVal.forEach((e)=>{
-	//	e.splice(pos, 0, null)
-	//	pos = pos===1?2:2
-	//})
-	//console.log(retVal)
 	return retVal
 }
 

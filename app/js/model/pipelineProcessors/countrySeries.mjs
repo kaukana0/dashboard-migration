@@ -43,19 +43,24 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
       output.countryOrder.forEach( country => {
         let coeff = new Array(inputDataFromRequest.size.length)
         const idxGeo = inputDataFromRequest.dimension.geo.category.index[EUCode.replaceRev(country)]
-        if(typeof idxGeo !== 'undefined') {
-          //output.countrySeries.data[0].push( inputDataFromRequest.dimension.geo.category.label[country] )
-          output.countrySeries.data[0].push( country )
-  
-          coeff.fill(0)
-          coeff[byIdx] = by
-          coeff[geoDimIdx] = idxGeo
-          coeff[timeDimIdx] = timeCodeIdx
-          const i = MultiDim.getIndex(valence, coeff)
-          if(typeof inputDataFromRequest.value[i] === 'undefined') {
-            ll.push(null)
-          } else {
-            ll.push(inputDataFromRequest.value[i])
+        if(country==="-") {
+          output.countrySeries.data[0].push(null)
+          ll.push(null)
+        } else {
+          if(typeof idxGeo !== 'undefined') {
+            //output.countrySeries.data[0].push( inputDataFromRequest.dimension.geo.category.label[country] )
+            output.countrySeries.data[0].push( country )
+    
+            coeff.fill(0)
+            coeff[byIdx] = by
+            coeff[geoDimIdx] = idxGeo
+            coeff[timeDimIdx] = timeCodeIdx
+            const i = MultiDim.getIndex(valence, coeff)
+            if(typeof inputDataFromRequest.value[i] === 'undefined') {
+              ll.push(null)
+            } else {
+              ll.push(inputDataFromRequest.value[i])
+            }
           }
         }
       })

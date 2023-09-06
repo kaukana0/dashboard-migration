@@ -15,7 +15,7 @@ export function tooltipFn(context) {
 
 			//  access map via index  (⊙_☉)
 			retVal += `<div class="t-b-cl t-text-group-header">
-				${ context.seriesLabels.get( Array.from(context.seriesLabels.keys())[ d[0].index ] ) }
+				${ context.seriesLabels.get( context.categories[ d[0].index ] ) }
 			</div>
 			<div class="t-b-cr"></div>`
 
