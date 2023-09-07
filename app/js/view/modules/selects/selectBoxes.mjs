@@ -22,7 +22,8 @@ export function createDropdownBoxes(cfg, datasets) {
     const attribs = new Map()
     attribs.set("dimension", boxName)
     attribs.set("id", Math.floor(Math.random() * 10000))  // doesnt matter which, this is only needed to make it dismissable
-    attribs.set("style", "width:200px; margin-right: 20px;")
+    const width = typeof cfg[i][boxName]["width"] === "undefined" ? "200px" : cfg[i][boxName]["width"]
+    attribs.set("style", `width:${width}; margin-right: 20px;`)
 
     // something "special" here - add additional info to DOM element
     if(boxName===MS.BY_SELECT_ID) {

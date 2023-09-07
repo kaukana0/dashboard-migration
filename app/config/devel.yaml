@@ -121,7 +121,7 @@ codeList:
     label: "45 to 64 years"
     code: "Y45-64"
   65-over: &65-over
-    label: "65 and years or over"
+    label: "65 years or over"
     code: "Y_GE65"
   freq: &freq
     label: "Time frequency Annual"
@@ -1218,6 +1218,7 @@ indicators:
         dropdown:
           - lev_perc:
               label: "Level"
+              width: "220px"
               elements:
                 - label: Very bad or bad
                   code: B_VB
