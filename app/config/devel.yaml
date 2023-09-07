@@ -953,7 +953,7 @@ indicators:
         - label: PPS
           code: PPS
     infoText: "<p>The equivalised disposable income is the total income of a household, after tax and other deductions, that is available for spending or saving, divided by the number of household members converted into equalised adults; household members are equalised or made equivalent by weighting each according to their age, using the so-called modified OECD equivalence scale.</p>
-              <p>The median of the equivalised disposable income distribution is typically used in the EU as a key measure for analysing standards of living within each economy. It is simply the income level that divides the population into two groups of equal size: one group encompasses half the population with a level of disposable income above the median and the other group encompasses the half of the population with a level of disposable income below the median. Note to users: Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>
+              <p>The median of the equivalised disposable income distribution is typically used in the EU as a key measure for analysing standards of living within each economy. It is simply the income level that divides the population into two groups of equal size: one group encompasses half the population with a level of disposable income above the median and the other group encompasses the half of the population with a level of disposable income below the median.</p>
               <p>Note to users:</p>
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
     decimals: 0
@@ -1011,17 +1011,15 @@ indicators:
               inherit: false
         range:
           - time:
-            start: 2014
+            start: 2015
             end: 0
-            selected: 2014
+            selected: 2015
       nonUi:
         Age:
           - *18-64
         Sex:
           - *total
     infoText: "<p><p>The at-risk-of-poverty rate for children is calculated as the share of children living in households with an equivalised disposable income (after social transfer) below the at-risk-of-poverty threshold, which is set at 60 % of the national median equivalised disposable income after social transfers.</p>
-              <p>Note to users:</p>
-              <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>
               <p>Note to users:</p>
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
 
