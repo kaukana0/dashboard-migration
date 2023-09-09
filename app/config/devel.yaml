@@ -233,7 +233,7 @@ globals:
       text: "Explore the Migrant integration and inclusion dashboard"
       hashTags: "#Eurostat #Migration"
       mailSubject: "Explore the Migrant integration and inclusion dashboard"
-      mailBody: "europa.eu"
+      mailBody: "https://ec.europa.eu/eurostat/cache/test/migdash/"
     globalInfo: "<h4 >About this dashboard</h4>
 <p class='ecl-u-type-paragraph'>This migrant integration and inclusion dashboard was developed by Eurostat, the statistical office of the European Union.</p>
 <p class='ecl-u-type-paragraph'>Data in this dashboard is constantly updated with the latest data available in the Eurostat database.</p>
@@ -260,8 +260,7 @@ globals:
 <h4 >Further reading</h4>
 <p class='ecl-u-type-paragraph'>If you wish to obtain more in-depth information, please see our online publication in&nbsp;<a class='ecl-link' href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics'>Statistics Explained</a>.</p>
 <h4 >Feedback</h4>
-<p class='ecl-u-type-paragraph'>If you have any&nbsp; feedback for us, please send us an <a class='ecl-link' href='http://mailto:ESTAT-USER-SUPPORT@ec.europa.eu'>e-mail</a>.</p>
-"
+<p>If you have any feedback for us, please send us an&nbsp;<a class='ecl-link' href='mailto:estat-user-support@ec.europa.eu?subject=Migrant%20integration%20and%20inclusion%20dashboard'>email</a>.</p>"
 
 
 # these are used as a base for each indicator in the indicators section
@@ -419,6 +418,7 @@ indicators:
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
 
   - name: Unemployment
+    hanSolo: true
     id: MD_5
     category: Employment
     isInOverview: true
@@ -446,9 +446,9 @@ indicators:
       nonUi:
         unit:
         - label: "%"
-          labelLong: "% of active population"
+          labelLong: "% of labour force"
           code: PC
-    infoText: "<p>The unemployment rate is the number of people unemployed as a percentage of the labour force (in other words the economically active population). Unemployed persons are defined as those who: are without work; are available to start work within the next two weeks; and have actively sought employment at some time during the previous four weeks. Contrary to activity and employment rates, the economically inactive population is not part of this ratio.</p>
+    infoText: "<p>The unemployment rate is the number of people unemployed as a percentage of the labour force. Unemployed persons are defined as those who: are without work; are available to start work within the next two weeks; and have actively sought employment at some time during the previous four weeks. Contrary to activity and employment rates, the economically inactive population is not part of this ratio.</p>
               <p>Note to users:</p>
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
 
@@ -489,7 +489,7 @@ indicators:
   - name: Over-qualification
     id: MD_7
     category: Employment
-    articleLink: *articleLinkEmployment
+    articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_over-qualification
     datasets:
       citizen:
         id: lfsa_eoqgan
@@ -497,6 +497,7 @@ indicators:
       birth:
         id: LFSA_eoqgac
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eoqgac
+        
     dimensions:
       ui:
         dropdown:
@@ -512,7 +513,7 @@ indicators:
         - *20-64
         unit:
         - label: "%"
-          labelLong: "% of overqualified employed persons"
+          labelLong: "% of highly educated employed"
           code: PC
     infoText: "<p>The over-qualification rate is calculated for employed persons with a tertiary level of education attainment (international standard classification of education (ISCED) levels 5–8).</p>
               <p>The rate shows what proportion of these people are employed in a low- or medium-skilled occupations (international standard classification of occupations (ISCO) major groups 4–9).</p>
@@ -873,7 +874,6 @@ indicators:
     nameLong: People at risk of poverty or social exclusion
     id: MD_18
     category: Social inclusion
-    isInOverview: true
     articleLink: *articleLinkSocialInclusion
     datasets:
       citizen:
@@ -990,7 +990,7 @@ indicators:
               <p>Note to users:</p>
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
 
-  - name: Low work intensity   # TODO: EU isnt included in data
+  - name: Low work intensity   # TODO: EU isnt included in data before 2015
     nameLong: People living in a household with a very low work intensity
     id: MD_22
     category: Social inclusion
