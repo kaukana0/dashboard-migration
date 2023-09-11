@@ -1,4 +1,4 @@
-# 14. Race conditions, unwanted concurrency
+# 14. Concurrency issues
 
 Date: 2023-08-28
 

@@ -25,6 +25,11 @@ Now these aspects have to either:
 a) be modified for particular exceptions
 b) or be made more flexible
 
+### concerned datasets
+
+![components](./active-citizenship-migr_aqcs.png)
+![components](./active-citizenship-migr-resshare.png)
+
 ## Decision
 
 ### "originalCode"
