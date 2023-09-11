@@ -82,7 +82,7 @@ border-radius: 5px;
 }
 
 export function getValText(val, suffix, decimals) {
-	if(val===null) {
+	if(val===MS.ID_NO_DATAPOINT) {
 		return MS.TXT_NOT_AVAILABLE
 	} else {
 		return Intl.NumberFormat("en-US",{minimumFractionDigits:decimals}).format(val).replaceAll(","," ") + (suffix?suffix:"")

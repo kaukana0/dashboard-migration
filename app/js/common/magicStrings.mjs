@@ -47,6 +47,8 @@ export const MS = {
 
   TXT_NOT_AVAILABLE: "N/A",
 
-  TXT_OVERVIEW: "Home"      // ui text changed late in development process, so the word "overview" is found all over the place and it means the same as "Home"
+  TXT_OVERVIEW: "Home",     // ui text changed late in development process, so the word "overview" is found all over the place and it means the same as "Home"
 
+  ID_NO_DATA: null,         // the whole series has no data (used ie for visual gaps in categories/x-axis)
+  ID_NO_DATAPOINT: "",      // datapoint missing
 }

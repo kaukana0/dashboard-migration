@@ -3,6 +3,7 @@ import * as TM from "../common/textMappings.mjs"
 import * as Url from "../url.mjs"
 import * as EUCode from "../common/euCode.mjs"
 import * as BYCode from "../common/byCode.mjs"
+import {MS} from "../../common/magicStrings.mjs"
 
 /*
 extracts data for all countries at a certain time.
@@ -44,8 +45,8 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
         let coeff = new Array(inputDataFromRequest.size.length)
         const idxGeo = inputDataFromRequest.dimension.geo.category.index[EUCode.replaceRev(country)]
         if(country==="-") {
-          output.countrySeries.data[0].push(null)
-          ll.push(null)
+          output.countrySeries.data[0].push(MS.ID_NO_DATA)
+          ll.push(MS.ID_NO_DATA)
         } else {
           if(typeof idxGeo !== 'undefined') {
             //output.countrySeries.data[0].push( inputDataFromRequest.dimension.geo.category.label[country] )
@@ -57,7 +58,7 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
             coeff[timeDimIdx] = timeCodeIdx
             const i = MultiDim.getIndex(valence, coeff)
             if(typeof inputDataFromRequest.value[i] === 'undefined') {
-              ll.push(null)
+              ll.push(MS.ID_NO_DATAPOINT)
             } else {
               ll.push(inputDataFromRequest.value[i])
             }

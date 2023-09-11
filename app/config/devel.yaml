@@ -418,7 +418,6 @@ indicators:
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
 
   - name: Unemployment
-    hanSolo: true
     id: MD_5
     category: Employment
     isInOverview: true
