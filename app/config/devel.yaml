@@ -1,6 +1,6 @@
 # configuration for "Migration dashboard" by Eurostat
 # yaml schema v0.8.0
-# version: devel-08-24
+# version: devel-09-11
 
 codeList:
 
@@ -488,7 +488,8 @@ indicators:
   - name: Over-qualification
     id: MD_7
     category: Employment
-    articleLink: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_over-qualification
+    articleLink: 
+      url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_over-qualification
     datasets:
       citizen:
         id: lfsa_eoqgan
@@ -872,6 +873,7 @@ indicators:
   - name: Poverty or social exclusion
     nameLong: People at risk of poverty or social exclusion
     id: MD_18
+    isInOverview: true
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
     datasets:
@@ -903,7 +905,6 @@ indicators:
     nameLong: People at risk of poverty
     id: MD_19
     category: Social inclusion
-    isInOverview: true
     articleLink: *articleLinkSocialInclusion
     datasets:
       citizen:
