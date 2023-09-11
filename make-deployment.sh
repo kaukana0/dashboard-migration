@@ -96,6 +96,7 @@ mv ./redist/js-yaml.mjs   ./redist/js-yaml.js
 sed -i 's/\.mjs/\.js/'   components/chart/axis.js
 sed -i 's/\.mjs/\.js/'   components/chart/chart.js
 sed -i 's/\.mjs/\.js/'   components/chartCard/chartCard.js
+sed -i 's/\.mjs/\.js/'   components/chartCard/functionalities/verticalLines.js
 sed -i 's/\.mjs/\.js/'   components/chartCard/functionalities/multilineFocus.js
 sed -i 's/\.mjs/\.js/'   components/multiDimAccess/tests.js
 sed -i 's/\.mjs/\.js/'   components/eclLikeMenu/menu.js

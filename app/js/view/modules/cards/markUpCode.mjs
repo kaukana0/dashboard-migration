@@ -9,7 +9,9 @@ export function getCardHtmlString(id, title, longTitle, urlFrag, anchorElDomId) 
       </div>
 
       <div slot="slotBottom">
-        <range-slider single id="timeRange${id}" thumbWidthInPixel="130" style="width: 100%;"></range-slider>
+        <div style="margin: 0px 15% 0px 10%;">
+          <range-slider single id="timeRange${id}" thumbWidthInPixel="130"></range-slider>
+        </div>
       </div>
 
       <!--div slot="slotBottomLeft">
