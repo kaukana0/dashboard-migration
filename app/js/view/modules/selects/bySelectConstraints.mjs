@@ -11,10 +11,14 @@ import {MS} from "../../../common/magicStrings.mjs"
 // onSelected (called after onSelect only if it returns true)
 export function tryToSelectWholeGroup(domElement, k,v) {
   if(k===MS.TXT_GRP_C) {
-    domElement.selected = Array.from(GROUPS.GRP_C.keys())
+    const x = Array.from(GROUPS.GRP_C.keys())
+    x.push(k)
+    domElement.selected = x
     return true
   } else if(k===MS.TXT_GRP_B) {
-    domElement.selected = Array.from(GROUPS.GRP_B.keys())
+    const x = Array.from(GROUPS.GRP_B.keys())
+    x.push(k)
+    domElement.selected = x
     return true
   }
   return false
