@@ -1263,8 +1263,8 @@ indicators:
                 - *65-over
       nonUi:
         Reason:
-          - label: Too expensive
-            code: TOOEXP
+          - label: Total
+            code: TOTAL
     infoText: "<p>Self-reported unmet needs concern a person’s own assessment of whether he or she needed examination or treatment for a specific type of health care, but did not have it or did not seek it.</p> 
               <p>Medical care refers to individual healthcare services (medical examination or treatment excluding dental care) provided by or under direct supervision of medical doctors or equivalent professions according to national healthcare systems.</p>
               <p>Note to users:</p>
@@ -1293,8 +1293,8 @@ indicators:
                 - *65-over
       nonUi:
         Reason:
-          - label: Too expensive
-            code: TOOEXP
+          - label: Total
+            code: TOTAL
     infoText: "<p>Self-reported unmet needs concern a person’s own assessment of whether he or she needed examination or treatment for a specific type of health care, but did not have it or did not seek it.</p> 
               <p>Dental care refers to individual health care services provided by or under direct supervision of stomatologists (dentists). Health care provided by orthodontists is included.</p>
               <p>Note to users:</p>
