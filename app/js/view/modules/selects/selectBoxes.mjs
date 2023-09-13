@@ -25,6 +25,8 @@ export function createDropdownBoxes(cfg, datasets) {
     const width = typeof cfg[i][boxName]["width"] === "undefined" ? "200px" : cfg[i][boxName]["width"]
     attribs.set("style", `width:${width}; margin-right: 20px;`)
 
+    const selected = getDefaultSelectionsFromObject(elements)
+
     // something "special" here - add additional info to DOM element
     if(boxName===MS.BY_SELECT_ID) {
       if(datasets) {
@@ -35,6 +37,7 @@ export function createDropdownBoxes(cfg, datasets) {
       } else {
         console.error("selectBoxes: datasets in yaml missing for:", boxName)
       }
+      selected.push(MS.TXT_GRP_C)
     }
 
     // a bit of a short-cut cheat. 
@@ -43,7 +46,7 @@ export function createDropdownBoxes(cfg, datasets) {
 
     const label = (typeof cfg[i][boxName]["label"] === "undefined") ? boxName : cfg[i][boxName]["label"]
 
-    retVal.push({dimId: boxName, docFrag: getDocFrag(items, attribs, label, isMultiselect, cfg[i][boxName]["groups"], getDefaultSelectionsFromObject(elements))})
+    retVal.push({dimId: boxName, docFrag: getDocFrag(items, attribs, label, isMultiselect, cfg[i][boxName]["groups"], selected)})
   }
 
   return retVal
