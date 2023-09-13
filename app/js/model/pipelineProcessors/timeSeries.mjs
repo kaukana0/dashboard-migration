@@ -3,6 +3,7 @@ import * as TM from "../common/textMappings.mjs"
 import * as Url from "../url.mjs"
 import * as EUCode from "../common/euCode.mjs"
 import * as BYCode from "../common/byCode.mjs"
+import {MS} from "../../common/magicStrings.mjs"
 
 /*
 adds something like this to output:
@@ -63,7 +64,7 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
             coeff[timeDimIdx] = time
             const i = MultiDim.getIndex(valence, coeff)
             if(typeof inputDataFromRequest.value[i] === 'undefined') {
-              ll.push(null)
+              ll.push(MS.ID_NO_DATAPOINT_TIMESERIES)
             } else {
               ll.push(inputDataFromRequest.value[i])
             }

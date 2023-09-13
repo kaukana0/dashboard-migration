@@ -23,7 +23,7 @@ export function tooltipFn(context) {
 
 			let i=0
 			d.forEach(o=>{
-					const value = context.currentCols[i][idx]===MS.ID_NO_DATAPOINT ? MS.ID_NO_DATAPOINT : o.value
+					const value = context.currentCols[i][idx]===MS.ID_NO_DATAPOINT_COUNTRYSERIES ? MS.ID_NO_DATAPOINT_COUNTRYSERIES : o.value
 					retVal += 
 					`<div class="t-b-cl t-text-entry">
 						<span class="colorIcon" style="background-color:${color(o)};"></span>

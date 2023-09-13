@@ -58,7 +58,7 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
             coeff[timeDimIdx] = timeCodeIdx
             const i = MultiDim.getIndex(valence, coeff)
             if(typeof inputDataFromRequest.value[i] === 'undefined') {
-              ll.push(MS.ID_NO_DATAPOINT)
+              ll.push(MS.ID_NO_DATAPOINT_COUNTRYSERIES)
             } else {
               ll.push(inputDataFromRequest.value[i])
             }

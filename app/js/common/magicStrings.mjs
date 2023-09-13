@@ -49,6 +49,8 @@ export const MS = {
 
   TXT_OVERVIEW: "Home",     // ui text changed late in development process, so the word "overview" is found all over the place and it means the same as "Home"
 
-  ID_NO_DATA: null,         // the whole series has no data (used ie for visual gaps in categories/x-axis)
-  ID_NO_DATAPOINT: "",      // datapoint missing
+  ID_NO_DATA: null,                       // the whole series has no data (used ie for visual gaps in categories/x-axis)
+  ID_NO_DATAPOINT_TIMESERIES: null,       // datapoint missing in line chart
+  ID_NO_DATAPOINT_COUNTRYSERIES: "",      // datapoint missing in dot plot
+  
 }
