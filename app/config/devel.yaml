@@ -559,7 +559,8 @@ indicators:
   - name: Part-time employment
     id: MD_9
     category: Employment
-    articleLink: *articleLinkEmployment
+    articleLink:
+      url:  https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_employment_conditions
     datasets:
       citizen:
         id: LFSA_EPPGAN
@@ -587,7 +588,8 @@ indicators:
   - name: Temporary employment
     id: MD_10
     category: Employment
-    articleLink: *articleLinkEmployment
+    articleLink:
+      url:  https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_employment_conditions
     datasets:
       citizen:
         id: LFSA_ETPGAN
@@ -950,10 +952,11 @@ indicators:
         - label: Median equivalised net income
           code: MED_E
         unit:
-        - label: PPS
+        - label: PPS  # Purchasing power standard
           code: PPS
     infoText: "<p>The equivalised disposable income is the total income of a household, after tax and other deductions, that is available for spending or saving, divided by the number of household members converted into equalised adults; household members are equalised or made equivalent by weighting each according to their age, using the so-called modified OECD equivalence scale.</p>
               <p>The median of the equivalised disposable income distribution is typically used in the EU as a key measure for analysing standards of living within each economy. It is simply the income level that divides the population into two groups of equal size: one group encompasses half the population with a level of disposable income above the median and the other group encompasses the half of the population with a level of disposable income below the median.</p>
+              <p>The <a href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Purchasing_power_standard_(PPS)'>purchasing power standard</a>, abbreviated as PPS, is an artificial currency unit.</p>
               <p>Note to users:</p>
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
     decimals: 0
@@ -1296,7 +1299,7 @@ indicators:
               <p>Note to users:</p>
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
 
-  - name: Long standing illness
+  - name: Long-standing illness
     nameLong: People having a long-standing illness or health problem
     id: MD_31
     category: Health
