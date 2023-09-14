@@ -86,7 +86,7 @@ function setupCard(id, merged, onCardExpand, onCardContract) {
 	const card = document.getElementById(id)
 	card.addEventListener("expanding", () => { onCardExpand(id) })
 	card.addEventListener("contracting", () => { onCardContract(id) })
-	card.addEventListener("chartSwitched", (e) => { Range.reset(id, e.to==2, true) })
+	card.addEventListener("chartSwitched", (e) => { Range.reset(id, e.to==2, true, e.to==2) })
 	card.setAttribute("unitShort", merged.dimensions.nonUi.unit[0].label)
 	card.setAttribute("unitLong", merged.dimensions.nonUi.unit[0].labelLong ? merged.dimensions.nonUi.unit[0].labelLong : merged.dimensions.nonUi.unit[0].label)
 	card.setAttribute("srcLink1", merged.datasets.citizen.source)

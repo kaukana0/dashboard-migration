@@ -60,10 +60,11 @@ export function getSelection(el) {
 	return retVal
 }
 
-export function reset(cardId, toMax=false, fireSelected=false) {
+export function reset(cardId, toMax=false, fireSelected=false, isSinglularValue=false) {
 	const el = document.getElementById("timeRange"+cardId)
 	const max = el.getAttribute("max")
 	const defaultValue = el.getAttribute("defaultValue")
+	el.setAttribute("singularvalue", isSinglularValue)
 	el.setAttribute("valuel", toMax?max:defaultValue)
 	el.setAttribute("textl",  toMax?max:defaultValue)
 	if(fireSelected) {el.fireSelected()}
