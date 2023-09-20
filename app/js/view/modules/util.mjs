@@ -27,7 +27,7 @@ in:
 [
   {
     "Age": {
-      "elements": [
+      "items": [
           {
               "label": "15 to 74 years",
               "code": "Y15-74"
@@ -38,7 +38,7 @@ in:
 ]
 
 out:
-map w/ {Age:{elements....}}
+map w/ {Age:{items....}}
 
 */
 export function getMapFromArrayWObjects(arr) {

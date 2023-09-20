@@ -33,6 +33,12 @@ drawback of current impl': code like
 
     if boxName === "Country of citizenship/birth"
 
+### ...
+
+comes from config, goes into card OR box
+cards.mjs::create() datasetInfo -> selectBox attribute
+
+
 ## by-selector is treated specially (no generalization for it's features)
 
 ...
@@ -56,3 +62,16 @@ billboard.js' svg element has to be resized "manually" on two occasions:
   - setData() -> onLoaded billboard.js callback -> resize()
 - when expanding/contracting
   - expand/contract -> resize() -> onResized billboard.js callback -> event dispatch
+
+# Logs
+
+No matter if as an introduction or during development, the following logs provide essential information.
+
+- "cfg json from vanilla yaml" - the yaml parsed into a JS object
+- "cards: merged cfg for indicator [name of indicator]" - all configs for a specific indicator
+
+the following exist for each indicator
+
+- "inputData" - raw input data (to a pipeline-processor) from the REST service as string
+- "data from cfg" - another input parameter to a pipliene-processor. in this application, it's the URL of the REST request
+- "output" - what the pipeline-processor outputs - data for billboard.js

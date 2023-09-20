@@ -17,3 +17,12 @@ export const DEFINITIONS = {
   GRP_C : grp_c,
   GRP_B : grp_b
 }
+
+export function isInGroupC(code) {
+  if(grp_b.has(code)) return false
+  return true
+}
+
+export function isGroup(k) {
+  return k===MS.TXT_GRP_C || k===MS.TXT_GRP_B
+}

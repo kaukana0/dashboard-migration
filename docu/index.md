@@ -35,3 +35,7 @@
 ## sequence
 
 ![sequence](./technical/sequence.svg)
+
+## sequence fetch
+
+![fetch](./technical/fetch.svg)

@@ -1,5 +1,6 @@
 /**
-This creates the cards.
+This creates the cards and manages them as a whole.
+
 Also the slot contents which go into a card.
 That content is:
 - selectboxes corresponding to YAMLCfg.dimensions.ui.dropdown
@@ -10,6 +11,8 @@ on collapse:
 - country selects favourited entry
 - bySelect selects the default (eg first three entries)
 - switch to line display (1st chart)
+
+TODO: refactor - split this file up, it's too big already.
 */
 
 
@@ -28,7 +31,7 @@ import "../../../../components/range/range.mjs"							// the WebComponent
 import * as Range from "./range.mjs"
 import * as Subtitle from "./subtitle.mjs"
 import * as PopUpMessage from "../popUpMessage.mjs"
-
+import * as GROUPS from "../../../model/common/groupDefinition.mjs"
 
 let categories
 let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't come from processors/data but from config
@@ -59,10 +62,14 @@ export function create(containerId, cfg, _categories, selectedCallback, onCardEx
 			const doc = parser.parseFromString(html, "text/html")
 			document.getElementById(containerId).appendChild( doc.body.firstElementChild )
 
-			const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, merged.datasets)
+			// info is either in box or in card
+			const DSIdBox = merged.dataset["exclusive"] ? null : merged.dataset
+			const DSIdCard = merged.dataset["exclusive"] ? merged.dataset.exclusive.id : null
+
+			const boxes = Selects.createDropdownBoxes(merged.dimensions.ui.dropdown, DSIdBox)
 			addBoxEventHandlers(id, boxes, selectedCallback)
 			insertBoxes(id, boxes)
-			setupCard(id, merged, onCardExpand, onCardContract, selectedCallback)
+			setupCard(id, merged, onCardExpand, onCardContract, DSIdCard)
 			setupRange(id, merged.dimensions.ui.range[0], selectedCallback)
 
 			if(merged.isInOverview && merged.isInOverview===true) { overviewCardIds.push(id) }
@@ -82,15 +89,20 @@ export function create(containerId, cfg, _categories, selectedCallback, onCardEx
 	return retVal
 }
 
-function setupCard(id, merged, onCardExpand, onCardContract) {
+function setupCard(id, merged, onCardExpand, onCardContract, DSIdCard) {
 	const card = document.getElementById(id)
 	card.addEventListener("expanding", () => { onCardExpand(id) })
 	card.addEventListener("contracting", () => { onCardContract(id) })
 	card.addEventListener("chartSwitched", (e) => { Range.reset(id, e.to==2, true, e.to==2) })
 	card.setAttribute("unitShort", merged.dimensions.nonUi.unit[0].label)
 	card.setAttribute("unitLong", merged.dimensions.nonUi.unit[0].labelLong ? merged.dimensions.nonUi.unit[0].labelLong : merged.dimensions.nonUi.unit[0].label)
-	card.setAttribute("srcLink1", merged.datasets.citizen.source)
-	card.setAttribute("srcLink2", merged.datasets.birth.source)
+	if(merged.dataset["exclusive"]) {
+		card.setAttribute("srcLink1", merged.dataset.exclusive.source)
+		card.setAttribute("srcLink2", merged.dataset.exclusive.source)
+	} else {
+		card.setAttribute("srcLink1", merged.dataset.citizen.source)
+		card.setAttribute("srcLink2", merged.dataset.birth.source)
+	}
 	card.setAttribute("articleLink", merged.articleLink.url)
 	card.tooltipFn1 = TooltipLine.tooltipFn
 	card.tooltipFn2 = TooltipDot.tooltipFn
@@ -107,10 +119,12 @@ function setupCard(id, merged, onCardExpand, onCardContract) {
 
 	card.decimals = typeof merged.decimals === "undefined" ? 1 : merged.decimals
 
+	if(DSIdCard) { card.setAttribute("dataset", DSIdCard) }
+
 	card.lineHoverCallback = onLineHover
 }
 
-export function updateCardAttributes(cardId, boxes, textRight) {
+export function updateCardAttributes(cardId, boxes, textRight, bla) {
   const card = document.getElementById(cardId)
   card.setAttribute("right1", textRight)
   card.setAttribute("right2", "")
@@ -151,9 +165,7 @@ function addBoxEventHandlers(id, boxes, selectedCallback) {
 
 		domEl.onSelected = function(k,v) {
 			if(box.dimId === MS.BY_SELECT_ID) {
-				if(!BySelectConstraint.tryToSelectWholeGroup(domEl,k,v)) {
-					domEl.selected = [k]
-				}
+				if(!GROUPS.isGroup(k)) { domEl.selected = [k]	}
 			}
 
 			// assumption: a caller is not interested in one box's selection right here, so omit passing on k,v.
@@ -173,9 +185,12 @@ function insertBoxes(id, boxes) {
 export function getCurrentSelections(cardId) {
 	let retVal = [{cardId: cardId, selections: new Map()}, ""]
 
+	const card = document.getElementById(cardId)
 	// mimic (adapt to) select's api
-	const range = document.getElementById(cardId).querySelector("range-slider")
+	const range = card.querySelector("range-slider")
 	retVal[0].selections.set("time", Range.getSelection(range))
+
+	let dataset = card.getAttribute("dataset")
 
 	const boxSelector = `#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} ~ div ecl-like-select-x`
 	const boxes = document.querySelectorAll(boxSelector)
@@ -184,11 +199,13 @@ export function getCurrentSelections(cardId) {
 		if(box.hasAttribute("dimension")) {
 			retVal[0].selections.set(box.getAttribute("dimension"), box.selected)
 			// this is the place to retrieve the dataset from the by-select
-			if(box.getAttribute("dimension") === MS.BY_SELECT_ID) {
-				retVal[1] = BySelectConstraint.getDataset(box)
+			if(!dataset && box.getAttribute("dimension") === MS.BY_SELECT_ID) {
+				dataset = BySelectConstraint.getDataset(box)
 			}
 		}
 	}
+
+	retVal[1] = dataset
 
 	return retVal
 }
@@ -201,21 +218,22 @@ export function iterate(containerId, callback) {
 	}
 }
 
-export function setData(cardId, geoSelections, data) {
+export function setData(cardId, geoSelections, isInGroupC, data) {
 	Range.setMinMax(cardId, Number(data.time[0]), Number(data.time[data.time.length-1]))
 
-	document.getElementById(cardId).setData1({
+	const card = document.getElementById(cardId)
+
+	card.switchSrcLink(isInGroupC)
+	card.setData1({
 		cols: data.timeSeries.data,	countryNamesFull:countryNamesFull,
 		palette:data.colorPalette, fixColors:getColorSet(true, geoSelections)
 	})
-
-	document.getElementById(cardId).setData2({
+	card.setData2({
 		cols: data.countrySeries.data, countryNamesFull:countryNamesFull,
 		palette:data.colorPalette, fixColors:getColorSet(false, geoSelections),
 		highlightIndices:getIndices(data,geoSelections)
 	})
-
-	document.getElementById(cardId).stopIndicateLoading()
+	card.stopIndicateLoading()
 }
 
 function getIndices(data, geoSelections) {

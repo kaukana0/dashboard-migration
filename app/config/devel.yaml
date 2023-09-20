@@ -1,9 +1,10 @@
 # configuration for "Migration dashboard" by Eurostat
-# yaml schema v0.8.0
+# yaml schema v0.9.0
 # version: devel-09-11
 
 codeList:
 
+  # see also codeMappings.mjs
   nativeB: &nativeB
     label: "Native-born"
     code: c_birthNAT        # this is for the selectbox entry key, which has to be unique
@@ -13,6 +14,7 @@ codeList:
   nonEuB: &nonEuB
     label: "Born in a non-EU country"
     code: c_birthNEU_FOR 
+    groupStart: By country of birth
 
   nativeC: &nativeC
     label: "Nationals"
@@ -26,10 +28,8 @@ codeList:
     label: "Citizens of a non-EU country"
     code: citizenNEU_FOR
     selected: true
-
-  bySelectGroupTitles: &bySelectGroupTitles
-    c_birthNEU_FOR: By country of birth
-    citizenNEU_FOR: By country of citizenship
+    groupStart: By country of citizenship
+    groupSelected: true
 
   men: &men
     label: "Men"
@@ -258,7 +258,7 @@ globals:
 </ul>
 <p class='ecl-u-type-paragraph'>Foreign population by country of birth is the population most commonly described as migrants, as these persons have migrated to their current country of residence at some stage during their lives. It includes persons with foreign citizenship as well as persons with the citizenship of their country of residence, either from birth or acquired later in life.</p>
 <h4 >Further reading</h4>
-<p class='ecl-u-type-paragraph'>If you wish to obtain more in-depth information, please see our online publication in&nbsp;<a class='ecl-link' href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics'>Statistics Explained</a>.</p>
+<p class='ecl-u-type-paragraph'>If you wish to obtain more in-depth information, please see our online publication in&nbsp;<a class='ecl-link' target='_blank' href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics'>Statistics Explained</a>.</p>
 <h4 >Feedback</h4>
 <p>If you have any feedback for us, please send us an&nbsp;<a class='ecl-link' href='mailto:estat-user-support@ec.europa.eu?subject=Migrant%20integration%20and%20inclusion%20dashboard'>email</a>.</p>"
 
@@ -269,27 +269,27 @@ indicatorBase:
     ui:               # UI elements reflect user selection for these
       dropdown:
         - Age:
-            elements:
+            items:
               - *15-74
               - *15-29
               - *20-64s
         - Sex:        # in the REST request, this becomes the dimension
-            elements:
+            items:
               - *total    # and code becomes the code; label becomes dropdownbox item
               - *women
               - *men
           # note 1: in the implementation, bySelect is treated differently than any other dropdown
           # note 2: must correspond w/ magicStrings.mjs
         - Country of citizenship/birth:
-            elements:
+            multiselect: true
+            width: "360px"
+            items:
               - *nonEuC
               - *euC
               - *nativeC
               - *nonEuB
               - *euB
               - *nativeB
-            groups:
-              *bySelectGroupTitles
       range:              # start/end from requested data may override this
         - time:
           start: 2010
@@ -300,7 +300,7 @@ indicatorBase:
       #- *freq
       unit:
       - *unit
-    excludeFromSubtitle: ["time","geo","Country of citizenship/birth"]
+    excludeFromSubtitle: ["time","geo","Country of citizenship/birth","indic_mg"]
 
 
 # each indicator can overwrite the properties it "inherited" (via merge) from indicatorBase
@@ -313,7 +313,7 @@ indicators:
     category: Demography
     isInOverview: true
     articleLink: *articleLinkDemography
-    datasets:
+    dataset:
       citizen:
         id: 
         source: 
@@ -324,7 +324,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *total
                 - *0-15
                 - *15-74
@@ -347,7 +347,7 @@ indicators:
     category: Demography
     isInOverview: true
     articleLink: *articleLinkDemography
-    datasets:
+    dataset:
       citizen:
         id: 
         source: 
@@ -358,7 +358,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *total
         range:
           - time:
@@ -374,7 +374,7 @@ indicators:
     category: Employment
     isInOverview: true
     articleLink: *articleLinkEmployment
-    datasets:
+    dataset:
       citizen:
         id: LFSA_ERGAN
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_ergan
@@ -399,7 +399,7 @@ indicators:
     category: Employment
     isInOverview: true
     articleLink: *articleLinkEmployment
-    datasets:
+    dataset:
       citizen:
         id: LFSA_ARGAN
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_argan
@@ -422,7 +422,7 @@ indicators:
     category: Employment
     isInOverview: true
     articleLink: *articleLinkEmployment
-    datasets:
+    dataset:
       citizen:
         id: LFSA_URGAN
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_urgan
@@ -433,7 +433,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *15-74
                 - *15-29
                 - *20-64
@@ -455,7 +455,7 @@ indicators:
     id: MD_6
     category: Employment
     articleLink: *articleLinkEmployment
-    datasets:
+    dataset:
       citizen:
         id: LFSA_UPGAN
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_upgan
@@ -466,7 +466,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *15-74
                 - *15-29
                 - *20-64
@@ -490,7 +490,7 @@ indicators:
     category: Employment
     articleLink: 
       url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_over-qualification
-    datasets:
+    dataset:
       citizen:
         id: lfsa_eoqgan
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eoqgan
@@ -525,7 +525,7 @@ indicators:
     category: Employment
     ignore: true
     articleLink: *articleLinkEmployment
-    datasets:
+    dataset:
       citizen:
         id: lfsa_eppgan
         source: Available 31. August 23
@@ -561,7 +561,7 @@ indicators:
     category: Employment
     articleLink:
       url:  https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_employment_conditions
-    datasets:
+    dataset:
       citizen:
         id: LFSA_EPPGAN
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eppgan
@@ -590,7 +590,7 @@ indicators:
     category: Employment
     articleLink:
       url:  https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_employment_conditions
-    datasets:
+    dataset:
       citizen:
         id: LFSA_ETPGAN
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_etpgan
@@ -618,7 +618,7 @@ indicators:
     id: MD_11
     category: Employment
     articleLink: *articleLinkEmployment
-    datasets:
+    dataset:
       citizen:
         id: LFSA_SUP_NAT
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_sup_nat
@@ -657,7 +657,7 @@ indicators:
     id: MD_12
     category: Education
     articleLink: *articleLinkEducation
-    datasets:
+    dataset:
       citizen:
         id: EDAT_LFS_9911
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfs_9911
@@ -671,7 +671,7 @@ indicators:
               inherit: false
           - isced11:
               label: "Level"
-              elements:
+              items:
                 - label: Low
                   code: ED0-2
                 - label: Medium
@@ -701,7 +701,7 @@ indicators:
     category: Education
     isInOverview: true
     articleLink: *articleLinkEducation
-    datasets:
+    dataset:
       citizen:
         id: EDAT_LFS_9911
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfs_9911
@@ -712,7 +712,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *25-34
                 - *30-34s
         range:
@@ -733,7 +733,7 @@ indicators:
     category: Education
     isInOverview: true
     articleLink: *articleLinkEducation
-    datasets:
+    dataset:
       citizen:
         id: EDAT_LFSE_01
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfse_01
@@ -766,7 +766,7 @@ indicators:
     id: MD_15
     category: Education
     articleLink: *articleLinkEducation
-    datasets:
+    dataset:
       citizen:
         id: TRNG_LFS_12
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/trng_lfs_12
@@ -796,7 +796,7 @@ indicators:
     category: Education
     articleLink:
       url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_socioeconomic_situation_of_young_people
-    datasets:
+    dataset:
       citizen:
         id: EDAT_LFSE_23
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/edat_lfse_23
@@ -807,7 +807,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *15-29s
                 - *15-34
         range:
@@ -831,7 +831,7 @@ indicators:
     ignore: true
     category: Education
     articleLink: *articleLinkEducation
-    datasets:
+    dataset:
       citizen:
         id: LFSO_21LANG01   # dummy
         source: null
@@ -842,20 +842,18 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *15-74s
                 - *15-29
                 - *20-64
           - Country of citizenship/birth:   # TODO: wait for masterfile and if neccessary, make non-default config work
-              elements:
+              items:
                 - *nonEuB
                 - *euB
                 - *nativeB
-              groups:
-                *bySelectGroupTitles
           - lev_know:
               label: "Level"
-              elements:
+              items:
                 - label: "Mother tongue"
                   code: "MOT"
                 - label: "Proficient"
@@ -878,7 +876,7 @@ indicators:
     isInOverview: true
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
-    datasets:
+    dataset:
       citizen:
         id: ILC_PEPS05N
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_peps05n
@@ -889,7 +887,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *16-29
                 - *18-overs
                 - *20-64
@@ -908,7 +906,7 @@ indicators:
     id: MD_19
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
-    datasets:
+    dataset:
       citizen:
         id: ILC_LI31
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_li31
@@ -919,7 +917,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *16-29
                 - *18-overs
                 - *20-64
@@ -933,7 +931,7 @@ indicators:
     category: Social inclusion
     isInOverview: true
     articleLink: *articleLinkSocialInclusion
-    datasets:
+    dataset:
       citizen:
         id: ILC_DI15
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_di15
@@ -944,7 +942,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *18-over
                 - *20-64
       nonUi:
@@ -957,7 +955,7 @@ indicators:
           code: PPS
     infoText: "<p>The equivalised disposable income is the total income of a household, after tax and other deductions, that is available for spending or saving, divided by the number of household members converted into equalised adults; household members are equalised or made equivalent by weighting each according to their age, using the so-called modified OECD equivalence scale.</p>
               <p>The median of the equivalised disposable income distribution is typically used in the EU as a key measure for analysing standards of living within each economy. It is simply the income level that divides the population into two groups of equal size: one group encompasses half the population with a level of disposable income above the median and the other group encompasses the half of the population with a level of disposable income below the median.</p>
-              <p>The <a href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Purchasing_power_standard_(PPS)'>purchasing power standard</a>, abbreviated as PPS, is an artificial currency unit.</p>
+              <p>The <a target='_blank' href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Purchasing_power_standard_(PPS)'>purchasing power standard</a>, abbreviated as PPS, is an artificial currency unit.</p>
               <p>Note to users:</p>
               <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
     decimals: 0
@@ -968,7 +966,7 @@ indicators:
     ignore: true
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
-    datasets:
+    dataset:
       citizen:
         id: ilc_di15
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_di15
@@ -999,7 +997,7 @@ indicators:
     id: MD_22
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
-    datasets:
+    dataset:
       citizen:
         id: ILC_LVHL15N
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvhl15n
@@ -1031,7 +1029,7 @@ indicators:
     id: MD_23
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
-    datasets:
+    dataset:
       citizen:
         id: ILC_MDSD04
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_mdsd04
@@ -1082,7 +1080,7 @@ indicators:
     id: MD_24
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
-    datasets:
+    dataset:
       citizen:
         id: ILC_IW15
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvps15
@@ -1112,7 +1110,7 @@ indicators:
     category: Housing
     isInOverview: true
     articleLink: *articleLinkHousing
-    datasets:
+    dataset:
       citizen:
         id: ILC_LVPS15
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvps15
@@ -1143,7 +1141,7 @@ indicators:
     id: MD_26
     category: Housing
     articleLink: *articleLinkHousing
-    datasets:
+    dataset:
       citizen:
         id: ILC_LVHO25
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvho25
@@ -1171,7 +1169,7 @@ indicators:
     id: MD_27
     category: Housing
     articleLink: *articleLinkHousing
-    datasets:
+    dataset:
       citizen:
         id: ILC_LVHO15
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvho15
@@ -1210,7 +1208,7 @@ indicators:
     category: Health
     isInOverview: true
     articleLink: *articleLinkHealth
-    datasets:
+    dataset:
       citizen:
         id: HLTH_SILC_24
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_24
@@ -1223,7 +1221,7 @@ indicators:
           - lev_perc:
               label: "Level"
               width: "220px"
-              elements:
+              items:
                 - label: Very bad or bad
                   code: B_VB
                 - label: Fair
@@ -1231,7 +1229,7 @@ indicators:
                 - label: Very good and good
                   code: VG_G
           - Age:
-              elements:
+              items:
                 - *16-over
                 - *16-44
                 - *45-64
@@ -1245,7 +1243,7 @@ indicators:
     id: MD_29
     category: Health
     articleLink: *articleLinkHealth
-    datasets:
+    dataset:
       citizen:
         id: HLTH_SILC_30
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_30
@@ -1256,7 +1254,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *16-over
                 - *16-44
                 - *45-64
@@ -1275,7 +1273,7 @@ indicators:
     id: MD_30
     category: Health
     articleLink: *articleLinkHealth
-    datasets:
+    dataset:
       citizen:
         id: HLTH_SILC_32
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_32
@@ -1286,7 +1284,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *16-over
                 - *16-44
                 - *45-64
@@ -1305,7 +1303,7 @@ indicators:
     id: MD_31
     category: Health
     articleLink: *articleLinkHealth
-    datasets:
+    dataset:
       citizen:
         id: HLTH_SILC_26
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_26
@@ -1316,7 +1314,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *16-over
                 - *16-44
                 - *45-64
@@ -1330,7 +1328,7 @@ indicators:
     id: MD_32
     category: Health
     articleLink: *articleLinkHealth
-    datasets:
+    dataset:
       citizen:
         id: HLTH_SILC_28
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/hlth_silc_28
@@ -1341,7 +1339,7 @@ indicators:
       ui:
         dropdown:
           - Age:
-              elements:
+              items:
                 - *16-over
                 - *16-44
                 - *45-64
@@ -1356,30 +1354,55 @@ indicators:
 
 ##########################################################
 
+  # attention: this indicator works only because of some hardcoded, dedicated, specialised sourcecode
   - name: Naturalisation rate
     ignore: true
     id: MD_33
     category: Active citizenship
     isInOverview: true
     articleLink: *articleLinkActiveCitizenship
-    datasets:
-      citizen:
+    dataset:
+      exclusive:
         id: MIGR_ACQS
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/migr_acqs
-      birth:
-        id: MIGR_ACQS   # dummy
-        source: null
     dimensions:
       ui:
         dropdown:
           - Country of citizenship/birth:
-              elements:
-                - code: NEU_P_HHAB
-                  label: Share of non-EU citizens who have acquired citizenship
-                - code: EU_P_HHAB
-                  label: Share of EU citizens who have acquired citizenship
-              #groups:
-              #  NEU_P_HHAB: Select all
+              inherit: false
+          # just 2 options available.
+          - indic_mg:
+              label: Country of citizenship/birth
+              width: "360px"
+              multiselect: true
+              items:
+                - nonEuC:
+                  groupStart: By country of citizenship
+                  groupSelected: true
+                  label: "Citizens of a non-EU country"
+                  code: NEU_P_HHAB
+                  selected: true
+                - euC:
+                  label: "Citizens of another EU country"
+                  code: EU_P_HHAB
+                  selected: true
+                - nativeC:
+                  label: "Nationals"
+                  code: dummy-cocb-3
+                  enabled: false
+                - nonEuB:
+                  groupStart: By country of birth
+                  label: "Born in a non-EU country"
+                  code: dummy-cocb-4
+                  enabled: false
+                - euB:
+                  label: "Born in another EU country"
+                  code: dummy-cocb-5
+                  enabled: false
+                - nativeB:
+                  label: "Native-born"
+                  code: dummy-cocb-6
+                  enabled: false
           - Age:
               inherit: false
           - Sex:
@@ -1394,29 +1417,58 @@ indicators:
           - *total
     infoText: "<p>The naturalisation rate is the ratio between the number of persons who acquired the citizenship of a country during a calendar year and the stock of non-national residents in the same country at the beginning of the year.</p>"
 
-  - name: Long-term residence permits 
+  # attention: this indicator works only because of some hardcoded, dedicated, specialised sourcecode
+  - name: Long-term residence permits
     ignore: true
     nameLong: Third country nationals holding long-term residence permits
     id: MD_34
     category: Active citizenship
     isInOverview: true
     articleLink: *articleLinkActiveCitizenship
-    datasets:
-      citizen:
+    dataset:
+      exclusive:
         id: MIGR_RESSHARE
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/migr_resshare
-      birth:
-        id: MIGR_RESSHARE   # dummy
-        source: null
     dimensions:
       ui:
         dropdown:
-          - Country of citizenship/birth:   # TODO check ramifications
+          - Country of citizenship/birth:
               inherit: false
-              #elements:
-              #  - originalCode: TOTAL
-              #    code: citizenNEU_FOR
-              #    label: Share of non-EU citizens who have acquired citizenship
+          # just 1 option available.
+          # it doesn't have an interactive purpose at all - functionally it might as well be in "nonUi".
+          # just recreate it to visually be in line w/ all other indicators.
+          - leg_fram:
+              label: Country of citizenship/birth
+              width: "360px"
+              multiselect: true
+              items:
+                - nonEuC:
+                  groupStart: By country of citizenship
+                  groupSelected: true
+                  label: "Citizens of a non-EU country"
+                  code: TOTAL
+                  selected: true
+                - euC:
+                  label: "Citizens of another EU country"
+                  code: dummy-cocb-5
+                  enabled: false
+                - nativeC:
+                  label: "Nationals"
+                  code: dummy-cocb-4
+                  enabled: false
+                - nonEuB:
+                  groupStart: By country of birth
+                  label: "Born in a non-EU country"
+                  code: dummy-cocb-3
+                  enabled: false
+                - euB:
+                  label: "Born in another EU country"
+                  code: dummy-cocb-2
+                  enabled: false
+                - nativeB:
+                  label: "Native-born"
+                  code: dummy-cocb-1
+                  enabled: false
           - Age:
               inherit: false
           - Sex:
@@ -1427,9 +1479,8 @@ indicators:
             end: 0
             selected: 2013
       nonUi:
-        leg_fram:
-          - code: TOTAL
         citizen:
-          - *total
+          - label: "Total"
+            code: "TOTAL"
     infoText: "<p>Long-term residence permits cover all residence permits granted to non-EU citizens (third-country nationals) valid for at least five years or more (including permanent residence permits).</p>
               <p>To calculate the share, as a denominator data on the stock of all valid permits to stay at the end of each reporting year are used. As a numerator data on the stock of long-term residents are used.</p>"

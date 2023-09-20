@@ -11,6 +11,6 @@ export function process(inputData,c,output) {
     }
   }
   if(txt) {
-    console.debug("analyzer: no data for dimension(s): " + txt)
+    console.warn("analyzer: no data for dimension(s): " + txt)
   }
 }

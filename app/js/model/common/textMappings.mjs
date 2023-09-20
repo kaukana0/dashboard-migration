@@ -22,23 +22,37 @@ shortLabels.set("c_birthNEU_FOR", MS.TXT_BY_LBL_SHORT_BNEU)
 // "by" means: either "by birth country" or "by citizenship"
 // returns index and also what the by-dim actually is
 export function getIndexOfByDimension(arr) {
-  let dim = MS.DIM_BIRTH
-  let idx = arr.findIndex(e=>e===dim)
-  if(idx===-1) {
-    dim = MS.DIM_CITIZEN
-    idx = arr.findIndex(e=>e===dim)
-    if(idx===-1) {
-      dim = MS.DIM_INDIC
-      idx = arr.findIndex(e=>e===dim)
+  let _dim
+  let _idx = -1
+  const b = [MS.DIM_LEG_FRAM, MS.DIM_INDIC, MS.DIM_CITIZEN, MS.DIM_BIRTH]
+  b.forEach(dim=>{
+    const idx = arr.findIndex(e=>e===dim)
+    if(idx!==-1 && _idx===-1) {
+      _dim=dim,
+      _idx=idx
     }
-  }
-  return [dim, idx]
+  })
+  if(_idx===-1) { console.error("textMappings: dim not found in", arr) }
+  return [_dim, _idx]
 }
 
 export function getByLabel(byDim, code, _default = "") {
-  return labels.has(byDim+code) ? labels.get(byDim+code) : _default
+  switch(byDim) {
+    case "indic_mg":
+    case "leg_fram":
+      return code
+    default:
+      return labels.has(byDim+code) ? labels.get(byDim+code) : _default
+  }
+
 }
 
 export function getByLabelShort(byDim, code, _default = "") {
-  return shortLabels.has(byDim+code) ? shortLabels.get(byDim+code) : _default
+  switch(byDim) {
+    case "indic_mg":
+    case "leg_fram":
+      return code
+    default:
+      return shortLabels.has(byDim+code) ? shortLabels.get(byDim+code) : _default
+  }
 }

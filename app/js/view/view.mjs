@@ -11,6 +11,7 @@ import * as Url from "../model/url.mjs"
 import Fetcher from "../model/fetcher.mjs"
 import {getMapFromArray} from "./modules/util.mjs"
 import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
+import * as GROUPS from "../model/common/groupDefinition.mjs"
 
 // used to decide when to update one instead of all cards (reduce number of chart reloads)
 let currentlyExpandedId = null
@@ -62,8 +63,10 @@ function onSelectedForAllCards() {
   Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => { 
     const boxes = fetch(cardId)
     Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
-    Cards.storeSelectedCounts(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
-    Cards.setTooltipStyle(boxes.selections.get(MS.BY_SELECT_ID).size)
+    // uuu
+    const count = boxes.selections.get(MS.BY_SELECT_ID) ? boxes.selections.get(MS.BY_SELECT_ID).size : 0
+    Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
+    Cards.setTooltipStyle(count)
   })
 }
 
@@ -73,8 +76,10 @@ function onSelectedForAllCards() {
 function onSelectedForOneCard(cardId) {
   const boxes = fetch(cardId)
   Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
-  Cards.storeSelectedCounts(GeoSelect.getSelected().size, boxes.selections.get(MS.BY_SELECT_ID).size)
-  Cards.setTooltipStyle(boxes.selections.get(MS.BY_SELECT_ID).size)
+  // uuu
+  const count = boxes.selections.get(MS.BY_SELECT_ID) ? boxes.selections.get(MS.BY_SELECT_ID).size : 0
+  Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
+  Cards.setTooltipStyle(count)
 }
 
 function fetch(cardId) {
@@ -86,8 +91,15 @@ function fetch(cardId) {
   boxes.selections.set(MS.GEO_SELECT_ID, GeoSelect.getSelected())
   // non-ui url fragment
   Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
+
+  let isInGroupC = ""    // TODO: refactor, get this out of here
+  if(boxes.selections.has(MS.BY_SELECT_ID)) {
+    const firstSel = Array.from(boxes.selections.get(MS.BY_SELECT_ID).keys())[0]
+    isInGroupC = GROUPS.isInGroupC(firstSel)
+  }
+
   const bla = {} ; bla[MS.BY_SELECT_ID] = Url.getBySelectFrag
-  Fetcher( Url.buildFrag(boxes,dataset,bla), Cards.setData.bind(this, cardId, GeoSelect.getSelected()) )
+  Fetcher( Url.buildFrag(boxes,dataset,bla), Cards.setData.bind(this, cardId, GeoSelect.getSelected(), isInGroupC) )
   return boxes
 }
 

@@ -6,7 +6,13 @@ export const MS = {
 
   DIM_CITIZEN: "citizen",
   DIM_BIRTH: "c_birth",
-  DIM_INDIC: "indic_mg",    // an alternative to citizen, used only by "Active citizenship" cards
+
+  DIM_INDIC: "indic_mg",    // an alternative to citizen/c_birth, used by "Active citizenship" card
+  NEU_P_HHAB: "NEU_P_HHAB",
+  EU_P_HHAB: "EU_P_HHAB",
+
+  DIM_LEG_FRAM: "leg_fram",
+  TOTAL: "TOTAL",
 
   CODE_EU_DATA: "EU27_2020",    // effectively picks the EU code from the data
   CODE_EU: "EU",                // the one EU code used throughout the sourcecode and config

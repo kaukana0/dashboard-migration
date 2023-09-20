@@ -75,7 +75,6 @@ mv ./js/view/modules/mainMenu.mjs   ./js/view/modules/mainMenu.js
 mv ./js/view/modules/selects/selectBoxes.mjs   ./js/view/modules/selects/selectBoxes.js
 mv ./js/view/modules/selects/geoSelect.mjs   ./js/view/modules/selects/geoSelect.js
 mv ./js/view/modules/selects/commonConstraints.mjs   ./js/view/modules/selects/commonConstraints.js
-mv ./js/view/modules/selects/bySelect.mjs   ./js/view/modules/selects/bySelect.js
 mv ./js/view/modules/selects/bySelectConstraints.mjs   ./js/view/modules/selects/bySelectConstraints.js
 mv ./js/view/modules/util.mjs   ./js/view/modules/util.js
 mv ./js/view/modules/popUpMessage.mjs   ./js/view/modules/popUpMessage.js
@@ -83,8 +82,6 @@ mv ./js/view/modules/loadingIndicator.mjs   ./js/view/modules/loadingIndicator.j
 mv ./js/view/view.mjs   ./js/view/view.js
 mv ./js/common/magicStrings.mjs   ./js/common/magicStrings.js
 mv ./js/main.mjs   ./js/main.js
-mv ./redist/jsonStat/import.mjs   ./redist/jsonStat/import.js
-mv ./redist/lz-string.mjs   ./redist/lz-string.js
 mv ./redist/js-yaml.mjs   ./redist/js-yaml.js
 
 
@@ -127,7 +124,6 @@ sed -i 's/\.mjs/\.js/'   js/view/modules/cards/cards.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/mainMenu.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/selects/selectBoxes.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/selects/geoSelect.js
-sed -i 's/\.mjs/\.js/'   js/view/modules/selects/bySelect.js
 sed -i 's/\.mjs/\.js/'   js/view/modules/selects/bySelectConstraints.js
 sed -i 's/\.mjs/\.js/'   js/view/view.js
 sed -i 's/\.mjs/\.js/'   js/main.js
