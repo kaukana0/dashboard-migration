@@ -60,14 +60,15 @@ function geoSelectSelectedText() {
 // this actually can only be the country box.
 // (note: greendeal dashboard behaviour: zoom out => reset all selections except country)
 function onSelectedForAllCards() {
+  let count = -1
   Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => { 
     const boxes = fetch(cardId)
     Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
-    // uuu
-    const count = boxes.selections.get(MS.BY_SELECT_ID) ? boxes.selections.get(MS.BY_SELECT_ID).size : 0
-    Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
-    Cards.setTooltipStyle(count)
+    // this is a bit tricky as it considers only the 1st card. please note comment on setTooltipStyle()
+    count = count===-1 ? getBySelectSelectedCount(boxes) : count
   })
+  Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
+  Cards.setTooltipStyle(count)
 }
 
 // user changed some selection that is relevant for ONE card
@@ -76,10 +77,21 @@ function onSelectedForAllCards() {
 function onSelectedForOneCard(cardId) {
   const boxes = fetch(cardId)
   Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
-  // uuu
-  const count = boxes.selections.get(MS.BY_SELECT_ID) ? boxes.selections.get(MS.BY_SELECT_ID).size : 0
+
+  const count = getBySelectSelectedCount(boxes)
   Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
   Cards.setTooltipStyle(count)
+}
+
+function getBySelectSelectedCount(boxes) {
+  let count = 0
+  const b = [MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM]
+  b.forEach(element=>{
+    if(boxes.selections.get(element)) {
+      count = boxes.selections.get(element).size
+    }
+  })
+  return count  
 }
 
 function fetch(cardId) {

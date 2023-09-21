@@ -24,7 +24,7 @@ export function geoSelectionAllowed(k,v) {
     const numberOfGeoSelections = geoSelect.selected.size+1
     const numberOfBySelections = bySelect.selected.size
 
-    if(numberOfBySelections===3) {
+    if(numberOfBySelections>1) {
       if(numberOfGeoSelections>2) {
         return 2
       } else {

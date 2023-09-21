@@ -152,7 +152,8 @@ function addBoxEventHandlers(id, boxes, selectedCallback) {
 		const domEl = box.docFrag.firstChild.childNodes[1]
 
 		domEl.onSelect = function(k,v) {
-			if(box.dimId === MS.BY_SELECT_ID) {
+			const c = [MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM].includes(box.dimId)	// TODO dry
+			if(c) {
 				if(CommonConstraints.bySelectionAllowed( BySelectConstraint.howManyAreGoingToBeSelected(k) )) {
 					return true
 				} else {
@@ -164,7 +165,8 @@ function addBoxEventHandlers(id, boxes, selectedCallback) {
 		}
 
 		domEl.onSelected = function(k,v) {
-			if(box.dimId === MS.BY_SELECT_ID) {
+			const c = [MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM].includes(box.dimId)	// TODO dry
+			if(c) {
 				if(!GROUPS.isGroup(k)) { domEl.selected = [k]	}
 			}
 
@@ -374,6 +376,10 @@ export function filter(category) {
 
 }
 
+// this is a singleton behaviour, so NOT for each card.
+// assumption: in overview, all cards have the same tooltip style.
+// if that assumtion doesn't hold anymore,
+// this function would need another parameter (cardId)...
 export function setTooltipStyle(numberOfBySelected) {
 	TooltipLine.setGroupByCountry(numberOfBySelected !== 1)
 	onLineHover([])

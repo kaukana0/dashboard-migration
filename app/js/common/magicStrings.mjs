@@ -23,6 +23,8 @@ export const MS = {
   CODE_BY_NEU: "NEU_FOR",
 
   BY_SELECT_ID: "Country of citizenship/birth",
+  INDIC_MG_ID: "indic_mg",
+  INDIC_LEG_FRAM: "leg_fram",
 
   GEO_SELECT_ID: "geo",
   GEO_SELECT_DOM_ID: "selectCountry",
