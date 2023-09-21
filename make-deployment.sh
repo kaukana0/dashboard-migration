@@ -105,6 +105,7 @@ sed -i 's/\.mjs/\.js/'   components/eclLikeModal/modal.js
 sed -i 's/\.mjs/\.js/'   components/eclLikeSocialMediaShare/share.js
 sed -i 's/\.mjs/\.js/'   index.html
 sed -i 's/\.mjs/\.js/'   js/model/pipelineProcessors/countrySeries.js
+sed -i 's/\.mjs/\.js/'   js/model/pipelineProcessors/byOrder.js
 sed -i 's/\.mjs/\.js/'   js/model/pipelineProcessors/timeSeries.js
 sed -i 's/\.mjs/\.js/'   js/model/fetcher.js
 sed -i 's/\.mjs/\.js/'   js/model/common/textMappings.js

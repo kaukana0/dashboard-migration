@@ -326,11 +326,9 @@ indicators:
         dropdown:
           - Age:
               items:
-                - label: "Total"
-                  code: "TOTAL"
+                - *15-74
                 - label: "0 to 15 years"
                   code: "Y_LT15"
-                - *15-74
                 - *15-29
                 - *20-64
                 - *65-more
