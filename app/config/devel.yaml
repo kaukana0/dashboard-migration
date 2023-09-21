@@ -123,6 +123,9 @@ codeList:
   65-over: &65-over
     label: "65 years or over"
     code: "Y_GE65"
+  65-more: &65-more
+    label: "65 and more"
+    code: "Y_GE65"
   freq: &freq
     label: "Time frequency Annual"
     code: "A"
@@ -309,33 +312,33 @@ indicators:
 
   - name: Migrant population
     id: MD_1
-    ignore: true
     category: Demography
-    isInOverview: true
     articleLink: *articleLinkDemography
     dataset:
       citizen:
-        id: 
-        source: 
+        id: demo_poppcctz
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/demo_poppcctz
       birth:
-        id: 
-        source: 
+        id: demo_popmdctb
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/demo_popmdctb
     dimensions:
       ui:
         dropdown:
           - Age:
               items:
-                - *total
-                - *0-15
+                - label: "Total"
+                  code: "TOTAL"
+                - label: "0 to 15 years"
+                  code: "Y_LT15"
                 - *15-74
                 - *15-29
                 - *20-64
-                - *65-over
+                - *65-more
         range:
           - time:
-            start: 1998
-            end: 0
-            selected: 2013
+            start: 2022
+            end: 2022
+            selected: 2022
 
 
     infoText: "<p>The population, of a given area (region or country), is the total number of persons that are usually resident in that area.</p>
@@ -343,28 +346,29 @@ indicators:
 
   - name: Median age
     id: MD_2
-    ignore: true
     category: Demography
-    isInOverview: true
     articleLink: *articleLinkDemography
     dataset:
       citizen:
-        id: 
-        source: 
+        id: demo_popmdctz
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/demo_popmdctz
       birth:
-        id: 
-        source: 
+        id: demo_popmdctb
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/demo_popmdctb 
     dimensions:
       ui:
         dropdown:
           - Age:
-              items:
-                - *total
+              inherit: false
         range:
           - time:
-            start: 1998
-            end: 0
-            selected: 2013
+            start: 2022
+            end: 2022
+            selected: 2022
+      nonUi:
+        unit:
+        - label: "Year"
+          code: YR
     infoText: "<p>The median age is the age that divides a population into two groups that are numerically equivalent.</p>"
 
 ##########################################################
