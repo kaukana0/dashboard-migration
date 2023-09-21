@@ -1,9 +1,9 @@
 import Yaml from "../redist/js-yaml.mjs"
 import * as View from "./view/view.mjs"
-import * as LoadingIndicator from "./view/modules/loadingIndicator.mjs"
+import * as LoadScreen from "./view/modules/loadScreen.mjs"
 
 function init() {
-  LoadingIndicator.show()
+  LoadScreen.show()
   fetch("config/devel.yaml")
     .then((response) => response.text())
     .then((data) => {
@@ -11,7 +11,7 @@ function init() {
       View.createUIElements(cfg, true)
       View.setupGlobalInfoClick(cfg.globals.texts.globalInfo)
       View.setupSharing(cfg.globals.texts.sharing)
-      setTimeout(()=>LoadingIndicator.hide(), 2000)
+      setTimeout(()=>LoadScreen.hide(), 2000)
     })
 }
 

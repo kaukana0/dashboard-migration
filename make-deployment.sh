@@ -78,7 +78,7 @@ mv ./js/view/modules/selects/commonConstraints.mjs   ./js/view/modules/selects/c
 mv ./js/view/modules/selects/bySelectConstraints.mjs   ./js/view/modules/selects/bySelectConstraints.js
 mv ./js/view/modules/util.mjs   ./js/view/modules/util.js
 mv ./js/view/modules/popUpMessage.mjs   ./js/view/modules/popUpMessage.js
-mv ./js/view/modules/loadingIndicator.mjs   ./js/view/modules/loadingIndicator.js
+mv ./js/view/modules/loadScreen.mjs   ./js/view/modules/loadScreen.js
 mv ./js/view/view.mjs   ./js/view/view.js
 mv ./js/common/magicStrings.mjs   ./js/common/magicStrings.js
 mv ./js/main.mjs   ./js/main.js

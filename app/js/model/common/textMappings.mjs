@@ -10,6 +10,9 @@ labels.set("citizenNEU_FOR", MS.TXT_BY_LBL_CNEU)
 labels.set("c_birthNAT", MS.TXT_BY_LBL_BNAT)
 labels.set("c_birthEU_FOR", MS.TXT_BY_LBL_BEU)
 labels.set("c_birthNEU_FOR", MS.TXT_BY_LBL_BNEU)
+labels.set("indic_mgNEU_P_HHAB", MS.TXT_BY_LBL_CNEU)
+labels.set("indic_mgEU_P_HHAB", MS.TXT_BY_LBL_CEU)
+labels.set("leg_framTOTAL", MS.TXT_BY_LBL_CNEU)
 
 const shortLabels = new Map()
 shortLabels.set("citizenNAT", MS.TXT_BY_LBL_SHORT_CNAT)
@@ -18,6 +21,9 @@ shortLabels.set("citizenNEU_FOR", MS.TXT_BY_LBL_SHORT_CNEU)
 shortLabels.set("c_birthNAT", MS.TXT_BY_LBL_SHORT_BNAT)
 shortLabels.set("c_birthEU_FOR", MS.TXT_BY_LBL_SHORT_BEU)
 shortLabels.set("c_birthNEU_FOR", MS.TXT_BY_LBL_SHORT_BNEU) 
+//shortlabels.set("indic_mgNEU_P_HHAB", MS.TXT_BY_LBL_CNEU)
+//shortlabels.set("indic_mgEU_P_HHAB", MS.TXT_BY_LBL_CEU)
+//shortlabels.set("leg_framTOTAL", MS.TXT_BY_LBL_CNEU)
 
 // "by" means: either "by birth country" or "by citizenship"
 // returns index and also what the by-dim actually is
@@ -37,14 +43,7 @@ export function getIndexOfByDimension(arr) {
 }
 
 export function getByLabel(byDim, code, _default = "") {
-  switch(byDim) {
-    case "indic_mg":
-    case "leg_fram":
-      return code
-    default:
-      return labels.has(byDim+code) ? labels.get(byDim+code) : _default
-  }
-
+  return labels.has(byDim+code) ? labels.get(byDim+code) : _default
 }
 
 export function getByLabelShort(byDim, code, _default = "") {

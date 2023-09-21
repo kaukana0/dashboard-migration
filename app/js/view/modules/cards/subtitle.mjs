@@ -55,7 +55,7 @@ export function getInfoAboutOrder(dropdownsCfg, subtitleCfg, nonUiCfg, excludedI
           if(nonUiCfg[k] && nonUiCfg[k][0])
             part.set(k, nonUiCfg[k][0].label)
           else {
-            console.error("subtitle.mjs: bad config for " + k)
+            console.debug("subtitle.mjs: bad config for " + k)
           }
         }
       } else {

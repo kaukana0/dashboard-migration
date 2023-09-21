@@ -18,7 +18,7 @@ export function show() {
 
 export function hide() {
   document.getElementById("mainLoader").classList.add("fadeOut")
-  setTimeout(()=>document.getElementById("mainLoader").remove(), 2000)
+  setTimeout(()=>document.getElementById("mainLoader").remove(), 200)
 }
 
 function html() {
