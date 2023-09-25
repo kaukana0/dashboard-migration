@@ -1,5 +1,5 @@
 # configuration for "Migration dashboard" by Eurostat
-# yaml schema v0.9.0
+# yaml schema v0.9.1
 # version: devel-09-11
 
 codeList:
@@ -51,10 +51,10 @@ codeList:
     code: "Y15-24"
   15-29: &15-29
     label: "15 to 29 years"
-    code: "Y25-29"
+    code: "Y15-29"
   15-29s: &15-29s
     label: "15 to 29 years"
-    code: "Y25-29"
+    code: "Y15-29"
     selected: true
   15-34: &15-34
     label: "15 to 34 years"
@@ -212,6 +212,8 @@ articleLinks:
     url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migration_and_migrant_population_statistics
   employment: &articleLinkEmployment
     url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_%E2%80%93_labour_market_indicators
+  employmentCond: &articleLinkEmploymentCond
+    url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_employment_conditions
   education: &articleLinkEducation
     url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_education
   si: &articleLinkSocialInclusion
@@ -525,17 +527,22 @@ indicators:
   - name: Self-employment
     id: MD_8
     category: Employment
-    ignore: true
-    articleLink: *articleLinkEmployment
+    articleLink: *articleLinkEmploymentCond
     dataset:
       citizen:
-        id: lfsa_eppgan
-        source: Available 31. August 23
+        id: lfsa_esgan
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_esgan
       birth:
-        id: LFSA_eppgacob
-        source: Available 31. August 23
+        id: lfsa_esgacob
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_esgacob
     dimensions:
       ui:
+        dropdown:
+          - Age:
+              items:
+                - *15-74
+                - *20-64s
+                - *15-29
         range:
           - time:
             start: 2002
@@ -545,24 +552,15 @@ indicators:
         unit:
         - label: "%"
           labelLong: "% of total employment"
-          code: PC
-    infoText: "A self-employed person is the sole or joint 
-              owner of an unincorporated enterprise (one that 
-              has not been incorporated in other words formed 
-              into a legal unit) in which he/she works, unless 
-              they are also in paid employment which is their 
-              main activity (in that case, they are considered to 
-              be employees). 
-
-              Note to users:
-              Some of the results can be of limited reliability — to see the details please consult the respective datasets.
-              "
+          code: PC_EMP
+    infoText: "<p> Self-employed persons are defined as persons who work in their own business, professional practice or farm for the purpose of earning a profit derived from the goods or services produced.</p>
+              <p>Note to users:</p>
+              <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
 
   - name: Part-time employment
     id: MD_9
     category: Employment
-    articleLink:
-      url:  https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_employment_conditions
+    articleLink: *articleLinkEmploymentCond
     dataset:
       citizen:
         id: LFSA_EPPGAN
@@ -590,8 +588,7 @@ indicators:
   - name: Temporary employment
     id: MD_10
     category: Employment
-    articleLink:
-      url:  https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_employment_conditions
+    articleLink: *articleLinkEmploymentCond
     dataset:
       citizen:
         id: LFSA_ETPGAN
