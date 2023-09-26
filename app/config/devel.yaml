@@ -537,12 +537,6 @@ indicators:
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_esgacob
     dimensions:
       ui:
-        dropdown:
-          - Age:
-              items:
-                - *15-74
-                - *20-64s
-                - *15-29
         range:
           - time:
             start: 2002
