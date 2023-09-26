@@ -8,10 +8,17 @@ hmm....
 
 ## Context
 
+Root problem is, that the app is not written in a entirely event driven fashion.
+So there are many issues stemming from not properly sequencing operations.
+The core points are the done() and onresized() callbacks of the chart.
+The whole app has to be restructured around those functions, which are themselves to be treated as a sequence - first done() then onresized().
+
 Some symptoms:
 
 - 1st click menu "material and social deprivation" -> scrollbar still there (always reproducable)
 - "country" select doesn't show up in expanded (not easily reproducable)
+
+### Details
 
 Big problem, many bugs, potential and currently real:
 
@@ -50,6 +57,11 @@ Idea 3)
 - avoid 1 by setting data on all cards initially (ditch the "catchUp" mechanism)
 - avoid 2 by introducing onSelectedForAllCards(exceptThisOne) or similar
 -> not tried yet
+
+Idea 4)
+- Make async things synchroneous.
+- while(flag===undefined) {} and setting flag=true when callback comes back/promise resolves
+-> works w/ minimal example code, doesn't work in the real context (ChartCard::setData()) for reasons not 100% proven, but most likely just due to how JS works
 
 
 ## Consequences

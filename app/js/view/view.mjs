@@ -96,7 +96,6 @@ function getBySelectSelectedCount(boxes) {
 
 function fetch(cardId) {
   console.debug("fetch for card", cardId)
-  document.getElementById(cardId).indicateLoading()
   // from the card's widgets
   const [boxes, dataset] = Cards.getCurrentSelections(cardId)
   // from "global" country select

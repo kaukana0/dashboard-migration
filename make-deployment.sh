@@ -52,6 +52,7 @@ mv ./js/model/pipelineProcessors/analyze.mjs   ./js/model/pipelineProcessors/ana
 mv ./js/model/pipelineProcessors/countrySeries.mjs   ./js/model/pipelineProcessors/countrySeries.js
 mv ./js/model/pipelineProcessors/byOrder.mjs   ./js/model/pipelineProcessors/byOrder.js
 mv ./js/model/pipelineProcessors/timeSeries.mjs   ./js/model/pipelineProcessors/timeSeries.js
+mv ./js/model/pipelineProcessors/addEU.mjs   ./js/model/pipelineProcessors/addEU.js
 mv ./js/model/cache.mjs   ./js/model/cache.js
 mv ./js/model/fetcher.mjs   ./js/model/fetcher.js
 mv ./js/model/common/textMappings.mjs   ./js/model/common/textMappings.js
@@ -107,6 +108,7 @@ sed -i 's/\.mjs/\.js/'   index.html
 sed -i 's/\.mjs/\.js/'   js/model/pipelineProcessors/countrySeries.js
 sed -i 's/\.mjs/\.js/'   js/model/pipelineProcessors/byOrder.js
 sed -i 's/\.mjs/\.js/'   js/model/pipelineProcessors/timeSeries.js
+sed -i 's/\.mjs/\.js/'   js/model/pipelineProcessors/addEU.js
 sed -i 's/\.mjs/\.js/'   js/model/fetcher.js
 sed -i 's/\.mjs/\.js/'   js/model/common/textMappings.js
 sed -i 's/\.mjs/\.js/'   js/model/common/groupDefinition.js

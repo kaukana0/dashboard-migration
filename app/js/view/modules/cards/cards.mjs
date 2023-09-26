@@ -235,7 +235,6 @@ export function setData(cardId, geoSelections, isInGroupC, data) {
 		palette:data.colorPalette, fixColors:getColorSet(false, geoSelections),
 		highlightIndices:getIndices(data,geoSelections)
 	})
-	card.stopIndicateLoading()
 }
 
 function getIndices(data, geoSelections) {

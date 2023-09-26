@@ -1,6 +1,13 @@
 // LS for "local store"
 
+//import { isReachable } from "../../components/util/util.mjs"
+
+console.log("localstore cache enabled")
+
 const updateId = "lastUpdate"
+let baseURL = ""
+
+export function setBaseUrl(_baseURL) {baseURL=_baseURL}
 
 window.addEventListener('keydown', e => {
   if(e.ctrlKey && e.shiftKey && e.key==="F") {
@@ -27,18 +34,36 @@ export function restore(id) {
   return retVal
 }
 
+// log comments to avoid log spam
 function tryToClear() {
   const lastUpdate = window.localStorage.getItem(updateId)
   if(lastUpdate) {
     const last = Date.parse(lastUpdate)
+
     const oneHour = 1000*60*60
     const oneDay = oneHour*24
-    const aMonth = oneDay*31 // pretty convenient for development; you don't need network access anymore for a month
-    const duration = oneHour
+    const aMonth = oneDay*31
+    const fiveSecs = 5000
+
+    const duration = oneDay
+
     //console.debug("cacheLs: ", (Date.now()-last)/duration )
+
     if(Date.now()-last > duration) {
-        localStorage.clear()
-        console.log( `cacheLS: cleared` )
+      if(navigator.onLine) {
+//        isReachable(baseURL, (is) => {
+//          if(is) {
+              localStorage.clear()
+              console.log( `cacheLS: cleared` )
+//            } else {
+              //console.log( `cacheLS: cached data is obsolete but cache is not cleared because REST endpoint ${baseURL} isn't reachable` )
+//            }
+//        })
+      } else  {
+        //console.log( `cacheLS: cached data is obsolete but cache is not cleared because offline` )
+      }
+    } else {
+      // console.log( `cacheLS: cached data is not obsolete, serving data from cache` )
     }
   }
 }
