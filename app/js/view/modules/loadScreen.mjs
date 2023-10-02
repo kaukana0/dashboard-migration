@@ -14,11 +14,14 @@ export function show() {
   for (var i = 0; i < elements.length; i++) {
     elements[i].style.visibility = "visible";
   }
+  document.body.style.overflow = "hidden"
 }
 
 export function hide() {
   document.getElementById("mainLoader").classList.add("fadeOut")
-  setTimeout(()=>document.getElementById("mainLoader").remove(), 2000)
+  setTimeout(()=>document.getElementById("mainLoader").remove(), 700)
+  document.body.style.overflow = ""
+  document.body.style.overflowX = "hidden"
 }
 
 function html() {
@@ -63,7 +66,7 @@ function css() {
   .fadeOut {
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s 2s, opacity 2s linear;
+    transition: visibility 0s 0.3s, opacity 0.4s linear;
   }
   
   #mainLoader {

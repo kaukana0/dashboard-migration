@@ -8,16 +8,18 @@ function init() {
   console.log("online?", navigator.onLine ? "yes" : "no")
 
   LoadScreen.show()
+
   fetch("config/devel.yaml")
     .then((response) => response.text())
     .then((data) => {
       const cfg = Yaml.load(data)
       isReachable(cfg.globals.baseURL, (is) => console.log(`REST endpoint reachable? ${is ? "yes" : "no"}`))
       setBaseUrl(cfg.globals.baseURL)
-      View.createUIElements(cfg, true)
-      View.setupGlobalInfoClick(cfg.globals.texts.globalInfo)
-      View.setupSharing(cfg.globals.texts.sharing)
-      setTimeout(()=>LoadScreen.hide(), 2000)
+      View.createUIElements(cfg, true, ()=> {
+        View.setupGlobalInfoClick(cfg.globals.texts.globalInfo)
+        View.setupSharing(cfg.globals.texts.sharing)
+        LoadScreen.hide()
+      })
     })
 }
 

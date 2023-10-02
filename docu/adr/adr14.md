@@ -1,4 +1,4 @@
-# 14. Concurrency issues
+# 14. Async issues
 
 Date: 2023-08-28
 
@@ -33,19 +33,23 @@ onSelectMenu 1--> filter --> setVisible -->                                --> s
 
 The "whatever" is moving the country-box in and out of a card, scrollbars and more.
 
-1 is because at the beginning, setVisible caches data if card is not visible and when swichting visible for the 1st time, "catches up" by setting the data.
-2 calls onSelectedForAllCards because in another flow the user might have changed favourite, affecting all cards.
-3 this is the desired effect
+- 1 is because setVisible caches data if card is not visible and when swichting visible, "catches up" by setting the data.
+- 2 calls onSelectedForAllCards because in another flow the user might have changed favourite, affecting all cards.
+- 3 this is the desired effect
 
-## Decision
+
+### Ideas to approach a fix
 
 Idea 1)
 introduce a fifo msg queue for resize in chart.mjs.
+
 -> Doesn't solve the bugs
 
 Idea 2)
 introduce Promises and setData only if all setVisible are finished.
--> more bugs!
+
+-> more bugs! also very complicated to introduce promises now.
+
   - sometimes: no country select and no scrollbar in overview; 
   - sometimes: dot plot doesn't redraw; 
   - once: tooltip in overview wrong (grouped by country) + show second country w/ black lines - only in Edge; 
@@ -56,12 +60,21 @@ introduce Promises and setData only if all setVisible are finished.
 Idea 3)
 - avoid 1 by setting data on all cards initially (ditch the "catchUp" mechanism)
 - avoid 2 by introducing onSelectedForAllCards(exceptThisOne) or similar
--> not tried yet
+  - wouldn't work, because the card itself has to have setData called to set favorite
+
+-> partially discarded
 
 Idea 4)
 - Make async things synchroneous.
 - while(flag===undefined) {} and setting flag=true when callback comes back/promise resolves
--> works w/ minimal example code, doesn't work in the real context (ChartCard::setData()) for reasons not 100% proven, but most likely just due to how JS works
 
+-> works w/ minimal example code only. Doesn't work in the real context (ChartCard::setData()) for reasons not 100% proven, but most likely just due to how JS works
+
+## Decision
+
+- 1st point of idea 3, because initially, all cards are visible and get data set anyway. no need for catch-up.
+- setData compares (deep-equal comparison) data-to-be-set w/ current data and doesn't do async things if equal
+- introduce callback for setData to attempt to serialize at least some flows
+- introduce detection mechanism for concurrent resize() calls (in order to potentially do sth about it in case bugs appear again)
 
 ## Consequences

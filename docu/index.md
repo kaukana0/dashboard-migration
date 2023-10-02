@@ -18,7 +18,7 @@
 - [Various Breakdowns (WIP)](./adr/adr11.md)
 - [Handling of "EU" code](./adr/adr12.md)
 - [Line-group highligting, Legend and Tooltip](./adr/adr13.md)
-- [Concurrency issues](./adr/adr14.md)
+- [Async issues](./adr/adr14.md)
 - [Menu Navigation](./adr/adr15.md)
 
 

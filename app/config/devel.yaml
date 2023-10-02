@@ -1076,10 +1076,10 @@ indicators:
     dataset:
       citizen:
         id: ILC_IW15
-        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvps15
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_iw15
       birth:
         id: ILC_IW16
-        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_lvps16
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_iw16
     dimensions:
       ui:
         dropdown:

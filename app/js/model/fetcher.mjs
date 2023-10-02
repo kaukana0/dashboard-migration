@@ -47,7 +47,7 @@ export default function go(urls, callback) {
 		
 		const fullUrl = urls[i]
 		const strippedUrl = removeParams(fullUrl)		// more data
-		//console.debug("fecth", fullUrl)
+		//console.debug("fecth", fullUrl)		// typo is on purpose ;-)
 
 		processingCfg.push(
 			{

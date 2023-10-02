@@ -32,19 +32,17 @@ import * as Range from "./range.mjs"
 import * as Subtitle from "./subtitle.mjs"
 import * as PopUpMessage from "../popUpMessage.mjs"
 import * as GROUPS from "../../../model/common/groupDefinition.mjs"
+import {setOverviewCardIds} from "../cardToMenuMapping.mjs"
 
-let categories
 let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't come from processors/data but from config
-let overviewCardIds = []
 let numberOfCountriesSelected = 0
 let numberOfBySelected = 0
 
 
 // pretty much the core of processing the YAML
-export function create(containerId, cfg, _categories, selectedCallback, onCardExpand, onCardContract) {
+export function create(containerId, cfg, selectedCallback, onCardExpand, onCardContract) {
 	let retVal = []
-
-	categories = _categories
+	let overviewCardIds = []
 
 	for(const i in cfg.indicators) {
 
@@ -79,12 +77,9 @@ export function create(containerId, cfg, _categories, selectedCallback, onCardEx
 			if(merged["hanSolo"]) {break}	// only one card
 		}
 	}
+	setOverviewCardIds(overviewCardIds)
 
 	countryNamesFull = getMapFromArray(cfg.codeList.countries)
-
-	if(overviewCardIds.length===0) {
-		console.warn("cards: no 'isInOverview' is defined in yaml, so there's no card in the overview")
-	}
 
 	return retVal
 }
@@ -216,11 +211,11 @@ export function getCurrentSelections(cardId) {
 export function iterate(containerId, callback) {
 	const childs = document.getElementById(containerId).children
 	for(let i=0; i<childs.length; i++) {
-		callback(childs[i].getAttribute("id"))
+		callback(childs[i].getAttribute("id"), childs.length)
 	}
 }
 
-export function setData(cardId, geoSelections, isInGroupC, data) {
+export function setData(cardId, geoSelections, isInGroupC, data, cb) {
 	Range.setMinMax(cardId, Number(data.time[0]), Number(data.time[data.time.length-1]))
 
 	const card = document.getElementById(cardId)
@@ -229,11 +224,12 @@ export function setData(cardId, geoSelections, isInGroupC, data) {
 	card.setData1({
 		cols: data.timeSeries.data,	countryNamesFull:countryNamesFull,
 		palette:data.colorPalette, fixColors:getColorSet(true, geoSelections)
-	})
+	}, ()=>{
 	card.setData2({
 		cols: data.countrySeries.data, countryNamesFull:countryNamesFull,
 		palette:data.colorPalette, fixColors:getColorSet(false, geoSelections),
 		highlightIndices:getIndices(data,geoSelections)
+			}, cb)
 	})
 }
 
@@ -353,10 +349,8 @@ export function expand(card) {
 	card.expand(document.getElementById("anchorSelectCountryOutsideOfCard"))
 }
 
-export function filter(category) {
-	const cardsOfCategory = categories.get(category).map( (e)=>getIdFromName(e) )
+export function filter(cardsOfCategory) {
 	const elements = document.querySelectorAll("div [id=cards] chart-card")
-
 	if(cardsOfCategory.length>0) {
 		for (var i = 0; i < elements.length; i++) {
 			if( cardsOfCategory.includes(elements[i].id) ) {
@@ -365,14 +359,7 @@ export function filter(category) {
 				elements[i].isVisible=false
 			}
 		}
-	} else {
-		// "Overview" category doesn't exist, therefore can't have any cards.
-		// show all which are supposed to be in overview
-		for (var i = 0; i < elements.length; i++) {
-			elements[i].isVisible = overviewCardIds.includes(elements[i].getAttribute("id"))
-		}
 	}
-
 }
 
 // this is a singleton behaviour, so NOT for each card.

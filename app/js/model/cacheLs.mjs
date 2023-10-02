@@ -51,7 +51,7 @@ function tryToClear() {
 
     if(Date.now()-last > duration) {
       if(navigator.onLine) {
-//        isReachable(baseURL, (is) => {
+//        isReachable(baseURL, (is) => {    async messes up the flow
 //          if(is) {
               localStorage.clear()
               console.log( `cacheLS: cleared` )

@@ -1,4 +1,4 @@
-# how to run
+# how to set up / run (i.e. for development)
 
     git clone https://github.com/kaukana0/dashboard-migration.git
     cd dashboard-migration/
@@ -12,7 +12,14 @@
 
 # how to deploy
 
-TBD
+This project doesn't rely on node/npm ecosystem but on GNU bash.
+Building a deployment can be done like this:
+
+    ./make-deployment.sh
+
+It creates a deployment in dist/ and starts a python server for manual smoke testing.
+
+TODO: utilize gibhub.com/kaukana0/metaTags
 
 # docu
 

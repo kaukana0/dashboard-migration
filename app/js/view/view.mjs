@@ -12,31 +12,54 @@ import Fetcher from "../model/fetcher.mjs"
 import {getMapFromArray} from "./modules/util.mjs"
 import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
 import * as GROUPS from "../model/common/groupDefinition.mjs"
+import {getCardsOfCategory} from "./modules/cardToMenuMapping.mjs"
 
 // used to decide when to update one instead of all cards (reduce number of chart reloads)
 let currentlyExpandedId = null
 
 
-export function createUIElements(cfg, triggerInitialRequest) {
+export function createUIElements(cfg, triggerLoading, cb) {
   console.debug("cfg json from vanilla yaml", cfg)
   document.body.style.overflowX="hidden"
   MainMenu.create(cfg, onSelectMenu)
   GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromArray(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
-  Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, MainMenu.getCategories(), onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
+  Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
-  if(triggerInitialRequest) {   // TODO: not everything at once. start w/ what is in user's view, do the other stuff in the background quietly/slowly one by one (intersection observer)
-    onSelectedForAllCards()
+  if(triggerLoading) { initialRequest(cb) }
+}
+
+function initialRequest(cb) {
+  const overviewCards = getCardsOfCategory(MS.TXT_OVERVIEW)
+
+  // first, fetch only the overview-cards
+  onSelectedForAllCards(overviewCards, ()=> {
     MainMenu.select(MS.TXT_OVERVIEW)
-    Cards.filter(MS.TXT_OVERVIEW)
-    setCardLegends(true)
-  }
+    cb()
+
+    // then the rest
+    onSelectedForAllCards(getAllIdsExcept(overviewCards), ()=> {
+      Cards.filter(overviewCards)
+      setCardLegends(true)
+    })
+
+  })
+
+
+}
+
+function getAllIdsExcept(except) {
+  const retVal = []
+  Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId, len) => { 
+    if(!except.includes(cardId)) {retVal.push(cardId)}
+  })
+  return retVal
 }
 
 function onGeoSelection() {
   if(currentlyExpandedId) {
     onSelectedForOneCard(currentlyExpandedId)
   } else {
-    onSelectedForAllCards()
+    onSelectedForAllCards(null)
   }
   setCardLegends(GeoSelect.isEUSelected())
 }
@@ -59,28 +82,37 @@ function geoSelectSelectedText() {
 // so update charts in all cards.
 // this actually can only be the country box.
 // (note: greendeal dashboard behaviour: zoom out => reset all selections except country)
-function onSelectedForAllCards() {
+function onSelectedForAllCards(including, cb) {
   let count = -1
-  Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => { 
-    const boxes = fetch(cardId)
-    Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
-    // this is a bit tricky as it considers only the 1st card. please note comment on setTooltipStyle()
-    count = count===-1 ? getBySelectSelectedCount(boxes) : count
+  let i=0
+  Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId, len) => { 
+    if(!including || (including && including.includes(cardId))) {
+      const boxes = fetch(cardId, ()=>{
+        Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
+        // this is a bit tricky as it considers only the 1st card. please note comment on setTooltipStyle()
+        count = count===-1 ? getBySelectSelectedCount(boxes) : count
+      })
+    }
+    i+=1
+    if(i===len && cb) {cb()}
   })
   Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
   Cards.setTooltipStyle(count)
 }
 
 // user changed some selection that is relevant for ONE card
-// which is all boxes except country.
+// which is all boxes except country and the time-range slider.
 // so, update charts in one card
-function onSelectedForOneCard(cardId) {
-  const boxes = fetch(cardId)
+function onSelectedForOneCard(cardId, cb) {
+  const boxes = fetch(cardId, ()=> {
   Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
 
   const count = getBySelectSelectedCount(boxes)
   Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
   Cards.setTooltipStyle(count)
+    //document.getElementById("menu").setLocked(false)
+    if(cb) {cb()}
+  })
 }
 
 function getBySelectSelectedCount(boxes) {
@@ -94,7 +126,7 @@ function getBySelectSelectedCount(boxes) {
   return count  
 }
 
-function fetch(cardId) {
+function fetch(cardId, cb) {
   console.debug("fetch for card", cardId)
   // from the card's widgets
   const [boxes, dataset] = Cards.getCurrentSelections(cardId)
@@ -110,7 +142,9 @@ function fetch(cardId) {
   }
 
   const bla = {} ; bla[MS.BY_SELECT_ID] = Url.getBySelectFrag
-  Fetcher( Url.buildFrag(boxes,dataset,bla), Cards.setData.bind(this, cardId, GeoSelect.getSelected(), isInGroupC) )
+  Fetcher( Url.buildFrag(boxes,dataset,bla), (data)=>{
+    Cards.setData(cardId, GeoSelect.getSelected(), isInGroupC, data, cb)
+  } )
   return boxes
 }
 
@@ -120,11 +154,10 @@ function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {
   if(isParentMenuItem) {
     Cards.contractAll()
     setTimeout(()=> { MainMenu.select(parentItemId) }, 250)  // TODO
-    Cards.filter(parentItemId)
   } else {
-    Cards.filter(parentItemId)
     Cards.expand(card)
   }
+  Cards.filter(getCardsOfCategory(parentItemId))
 }
 
 function onCardExpand(id) {
@@ -143,7 +176,7 @@ function onCardExpand(id) {
 
   MainMenu.select(MainMenu.getMenuItemIds(id)[1])
 
-  Cards.filter( MainMenu.getMenuItemIds(id)[0] )
+  Cards.filter( getCardsOfCategory(MainMenu.getMenuItemIds(id)[0]) )
 
   document.getElementById("countrySelectLabel").textContent = "Country"
 }
@@ -165,8 +198,8 @@ function onCardContract(id) {
   CommonConstraints.setBySelect(null)			// effectively disable those constraints
 
   // a selection in one expanded card might affect all cards; i.e. favourite star
-  // attention: leads to setData on all cards
-  onSelectedForAllCards()
+  // attention: leads to setData on all cards.
+  onSelectedForAllCards() // getAllIdsExcept([id])
 
   setCardLegends(GeoSelect.isEUSelected())
 
