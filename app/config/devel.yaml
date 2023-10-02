@@ -457,7 +457,7 @@ indicators:
 
   - name: Long-term unemployment
     id: MD_6
-    category: Employment
+    category: Labour Market
     ignore: true
     articleLink: *articleLinkEmployment
     dataset:
@@ -492,7 +492,7 @@ indicators:
 
   - name: Over-qualification
     id: MD_7
-    category: Employment
+    category: Labour Market
     articleLink: 
       url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_over-qualification
     dataset:
@@ -527,7 +527,7 @@ indicators:
 
   - name: Self-employment
     id: MD_8
-    category: Employment
+    category: Labour Market
     articleLink: *articleLinkEmploymentCond
     dataset:
       citizen:
@@ -554,7 +554,7 @@ indicators:
 
   - name: Part-time employment
     id: MD_9
-    category: Employment
+    category: Labour Market
     articleLink: *articleLinkEmploymentCond
     dataset:
       citizen:
@@ -581,7 +581,7 @@ indicators:
 
   - name: Temporary employment
     id: MD_10
-    category: Employment
+    category: Labour Market
     articleLink: *articleLinkEmploymentCond
     dataset:
       citizen:
@@ -607,7 +607,7 @@ indicators:
 
   - name: Labour market slack
     id: MD_11
-    category: Employment
+    category: Labour Market
     articleLink: *articleLinkEmployment
     dataset:
       citizen:
