@@ -343,7 +343,7 @@ indicators:
 
     infoText: "<p>The population, of a given area (region or country), is the total number of persons that are usually resident in that area.</p>
               <p>This count is generally compiled on 31 December each year and published as 1 January of the next year.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm'>metadata</a>.</p>"
 
   - name: Median age
     id: MD_2
@@ -371,7 +371,7 @@ indicators:
         - label: "years"
           code: YR
     infoText: "<p>The median age is the age that divides a population into two groups that are numerically equivalent.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm'>metadata</a>.</p>"
 
 ##########################################################
 
@@ -395,7 +395,7 @@ indicators:
             end: 0
             selected: 2013
     infoText: "<p Labour force participation rate is the percentage of labour force in relation to the comparable total population. The labour force comprises employed and unemployed persons.</p>
-               <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
+               <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
 
   - name: Employment
     id: MD_4
@@ -418,7 +418,7 @@ indicators:
             selected: 2013
 
     infoText: "<p>The employment rate is the percentage of employed persons in relation to the comparable total population. Employed persons are defined as all persons who worked at least one hour for pay or profit during the reference week or were temporarily absent from such work.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
 
   - name: Unemployment
     id: MD_5
@@ -453,7 +453,7 @@ indicators:
     infoText: "<p >The unemployment rate is the number of people unemployed as a percentage of the labour force, which is the total number of employed and unemployed persons.</p>
               <p >Unemployed persons are defined as those who: are not employed; are available to start work within two weeks and have actively sought employment at some time during the previous four weeks.</p>
               <p >Contrary to labour force participation and employment rates, people outside the labour force do not enter in the calculation of this ratio.</p>
-              <p '>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
+              <p '>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
 
   - name: Long-term unemployment
     id: MD_6
@@ -523,7 +523,7 @@ indicators:
     infoText: "<p>The over-qualification rate is calculated for employed persons with a tertiary level of education attainment (international standard classification of education (ISCED) levels 5–8).</p>
                 <p>The rate shows what proportion of these people are employed in a low- or medium-skilled occupations (international standard classification of occupations (ISCO) major groups 4–9).</p>
                 <p>The employment rate is the percentage of employed persons in relation to the comparable total population. Employed persons are defined as all persons who worked at least one hour for pay or profit during the reference week or were temporarily absent from such work.</p>
-                <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
+                <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
 
   - name: Self-employment
     id: MD_8
@@ -577,7 +577,7 @@ indicators:
           code: PC
     infoText: "<p>Part-time workers are employed persons not working full time. The distinction between full-time and part-time work is generally based on a spontaneous response by the respondent.</p>
               <p>The main exceptions are the Netherlands and Iceland where a 35 hours per week threshold is applied, Sweden where a threshold is applied to the self-employed, and Norway where persons working between 32 and 36 hours are asked whether this is a full- or part-time position.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
 
   - name: Temporary employment
     id: MD_10
@@ -603,7 +603,7 @@ indicators:
           labelLong: "% of total employees"
           code: PC
     infoText: "<p>Temporary employment includes employees under a fixed-term contract or agreement (i.e. the job will terminate after a predefined period).</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
 
   - name: Labour market slack
     id: MD_11
@@ -637,7 +637,7 @@ indicators:
           labelLong: "% of extended labour force"
           code: "PC_ELF"
     infoText: "<p>Data are expressed as a percentage of the extended labour force, that is the persons in the labour force plus the persons seeking work but not immediately available to work and persons available to work but not seeking for a job.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
 
 ##########################################################
 
@@ -681,7 +681,7 @@ indicators:
                 <li>upper secondary and post-secondary non-tertiary education (ISCED levels 3 and 4)</li>
                 <li >tertiary education (ISCED levels 5-8).</li>
                 </ul>
-                <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/edat1_esms.htm'>metadata</a>.</p>"
+                <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/edat1_esms.htm'>metadata</a>.</p>"
 
   - name: Tertiary educational attainment
     nameLong: Population with tertiary educational attainment
@@ -712,7 +712,7 @@ indicators:
         - label: label    #TODO
           code: ED5-8
     infoText: "<p>Population with tertiary education is defined as those having completed the highest level of education (ISCED levels 5-8).</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/edat1_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/edat1_esms.htm'>metadata</a>.</p>"
 
   - name: Early school leavers 
     nameLong: Early leavers from education and training
@@ -745,7 +745,7 @@ indicators:
           code: POP
     infoText: "<p>Early leaver from education and training refers to a person aged 18 to 24 who has completed at most lower secondary education and is not involved in further education or training.&nbsp;</p>
               <p>The indicator 'early leavers from education and training' is expressed as a percentage of the people aged 18 to 24 with such criteria out of the total population aged 18 to 24.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/edat1_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/edat1_esms.htm'>metadata</a>.</p>"
 
   - name: Adult learning
     nameLong: Adults participating in learning
@@ -773,7 +773,7 @@ indicators:
         Age:
         - *25-64
     infoText: "<p>The participation in adult learning is expressed as the percentage of people who received education or training (formal or non-formal) during the four weeks preceding the labour force survey.&nbsp;It is calculated for persons aged 25–64 years.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/trng_lfs_4w0_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/trng_lfs_4w0_esms.htm'>metadata</a>.</p>"
 
   - name: NEET
     nameLong: Young people neither in employment nor in education and training (NEET)
@@ -808,7 +808,7 @@ indicators:
         - label: label    #TODO
           code: NO_FE_NO_NFE
     infoText: "<p>The rate of young people aged 15 to 29 neither in employment nor in education and training (NEET) is calculated as the number of those not employed (i.e. unemployed or outside the labour force according to the International Labour Organisation definition), who have not received any formal or non-formal education or training in the four weeks preceding the survey, divided by the total population of the same age group and sex.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/edat1_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/edat1_esms.htm'>metadata</a>.</p>"
 
   - name: Language skills before migrating
     id: MD_17
@@ -882,7 +882,7 @@ indicators:
             selected: 2015
     infoText: "<p>At risk of poverty or social exclusion, abbreviated as AROPE, corresponds to the sum of persons who are either at risk of poverty, or severely materially and socially deprived or living in a household with a very low work intensity. People are included only once even if they are in more than one of the situations mentioned above.</p>
               <p>The AROPE rate is the share of the total population which is at risk of poverty or social exclusion. The headline target (EU2030 target) on poverty and social inclusion of the European Pillar of Social Rights Action Plan is to reduce the number of people at risk of poverty or social exclusion by at least 15 million by 2030. Progress towards this target is monitored through the AROPE rate, published by Eurostat.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
 
   - name: Poverty
     nameLong: Persons at risk of poverty
@@ -905,7 +905,7 @@ indicators:
                 - *18-overs
                 - *20-64
     infoText: "<p>The at-risk-of-poverty rate is the share of people with an equivalised disposable income (after social transfer) below the at-risk-of-poverty threshold, which is set at 60 % of the national median equivalised disposable income after social transfers.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
 
   - name: Median income
     nameLong: Median net equivalised disposable income
@@ -937,7 +937,7 @@ indicators:
           code: PPS
     infoText: "<p>The equivalised disposable income is the total income of a household, after tax and other deductions, that is available for spending or saving, divided by the number of household members converted into equalised adults; household members are equalised or made equivalent by weighting each according to their age, using the so-called modified OECD equivalence scale.</p>
               <p>The median of the equivalised disposable income distribution is typically used in the EU as a key measure for analysing standards of living within each economy. It is simply the income level that divides the population into two groups of equal size: one group encompasses half the population with a level of disposable income above the median and the other group encompasses the half of the population with a level of disposable income below the median. Note to users: Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
     decimals: 0
 
   - name: Child poverty
@@ -1002,7 +1002,7 @@ indicators:
         Sex:
           - *total
     infoText: "<p>The indicator is defined as the number of persons living in a household where the members of working age: those aged 18-64, but excluding students aged 18-24 and people who are retired according to their self-defined current economic status or who receive any pension (except survivors pension), as well as people in the age bracket 60-64 who are inactive and living in a household where the main income is pensions (except survivors pension)) worked a working time equal or less than 20% of their total work-time potential during the previous year. For information on data quality, please consult the metadata.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
 
   - name: Material and social deprivation
     id: MD_23
@@ -1052,7 +1052,7 @@ indicators:
               <li>having regular leisure activities</li>
               <li>getting together with friends/family for a drink/meal at least once a month.</li>
               </ul>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
 
   - name: In-work at risk of poverty
     nameLong: Employed persons at risk of poverty 
@@ -1079,7 +1079,7 @@ indicators:
         Sex:
           - *total
     infoText: "<p>In-work at-risk-of-poverty rate refers to the percentage of persons in the total population who declared to be at work (employed or self-employed) who are at-risk-of-poverty (i.e. with an equivalised disposable income below the risk-of-poverty threshold, which is set at 60 % of the national median equivalised disposable income (after social transfers)).</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
 
 ##########################################################
 
@@ -1112,7 +1112,7 @@ indicators:
           - *tenureOwn
     infoText: "<p>The home ownership rate is the percentage of people who lived in an owner-occupied dwelling. A property owner is a person who possesses a title deed, independently of whether the house 
                 has been fully paid for or not.</p>
-                <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
+                <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
 
   - name: Housing cost overburden
     id: MD_26
@@ -1138,7 +1138,7 @@ indicators:
         Sex:
           - *total
     infoText: "<p>The housing cost overburden rate is the percentage of the population living in households where the total housing costs ('net' of housing allowances) represent more than 40 % of disposable income ('net' of housing allowances).</p>
-            <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
+            <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
 
   - name: Overcrowded homes
     nameLong: Persons living in overcrowded homes
@@ -1173,7 +1173,7 @@ indicators:
               <li>one room for each single person between 12 and 17 years of age and not included in the previous category</li>
               <li>one room per pair of children under 12 years of age.</li>
               </ul>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
 
 ##########################################################
 
@@ -1209,7 +1209,7 @@ indicators:
                 - *45-64
                 - *65-over
     infoText: "<p>Self-perceived health expresses subjective assessment by the respondent of his/her health. Indicators based on this concept can be used to evaluate the general health status, health inequalities and health care needs at the population level.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
 
   - name: Unmet medical needs
     nameLong: Self-reported unmet needs for medical care
@@ -1238,7 +1238,7 @@ indicators:
             code: TOTAL
     infoText: "<p>Self-reported unmet needs concern a person’s own assessment of whether he or she needed examination or treatment for a specific type of health care, but did not have it or did not seek it.</p> 
               <p>Medical care refers to individual healthcare services (medical examination or treatment excluding dental care) provided by or under direct supervision of medical doctors or equivalent professions according to national healthcare systems.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
 
   - name: Unmet dental needs
     nameLong: Self-reported unmet needs for dental care
@@ -1267,7 +1267,7 @@ indicators:
             code: TOTAL
     infoText: "<p>Self-reported unmet needs concern a person’s own assessment of whether he or she needed examination or treatment for a specific type of health care, but did not have it or did not seek it.</p> 
               <p>Dental care refers to individual health care services provided by or under direct supervision of stomatologists (dentists). Health care provided by orthodontists is included.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
 
   - name: Long-standing illness
     nameLong: Persons having a long-standing illness or health problem
@@ -1291,7 +1291,7 @@ indicators:
                 - *45-64
                 - *65-over
     infoText: "<p>Long-standing health problem or disease is a health problem that has lasted or is likely to last for at least 6 months. The main characteristic of a longstanding problem is that it is permanent and is expected to require a long period of monitoring, observation or care.</p> 
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
 
   - name: Long-standing limitations
     nameLong: Persons having long-standing limitations in usual activities 
@@ -1319,13 +1319,12 @@ indicators:
           - label: Some
             code: SM_SEV
     infoText: "<p>Long-standing limitations in usual activities due to health problem mean limitation in activities people usually do because of one or more health problems. The limitation should have lasted for at least the past six months. Three answer categories are possible: ‘severely limited’, ‘limited but not severely’ or ‘not limited at all’.</p> 
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
 
 ##########################################################
 
   # attention: this indicator works only because of some hardcoded, dedicated, specialised sourcecode
   - name: Naturalisation rate
-    ignore: true
     id: MD_33
     category: Active citizenship
     isInOverview: true
@@ -1385,11 +1384,10 @@ indicators:
         Sex:
           - *total
     infoText: "<p>The naturalisation rate is the ratio between the number of persons who acquired the citizenship of a country during a calendar year and the stock of non-national residents in the same country at the beginning of the year.</p> 
-                <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_acqn_esms.htm'>metadata</a>.</p>"
+                <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_acqn_esms.htm'>metadata</a>.</p>"
 
   # attention: this indicator works only because of some hardcoded, dedicated, specialised sourcecode
   - name: Long-term residence permits
-    ignore: true
     nameLong: Third country nationals holding long-term residence permits
     id: MD_34
     category: Active citizenship
@@ -1454,4 +1452,4 @@ indicators:
             code: "TOTAL"
     infoText: "<p>Long-term residence permits cover all residence permits granted to non-EU citizens (third-country nationals) valid for at least five years or more (including permanent residence permits).</p>
               <p>To calculate the share, as a denominator data on the stock of all valid permits to stay at the end of each reporting year are used. As a numerator data on the stock of long-term residents are used.</p>
-              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_res_esms.htm'>metadata</a>.</p>"
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_res_esms.htm'>metadata</a>.</p>"
