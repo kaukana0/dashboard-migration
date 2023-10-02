@@ -119,7 +119,7 @@ function setupCard(id, merged, onCardExpand, onCardContract, DSIdCard) {
 	card.lineHoverCallback = onLineHover
 }
 
-export function updateCardAttributes(cardId, boxes, textRight, bla) {
+export function updateCardAttributes(cardId, boxes, textRight) {
   const card = document.getElementById(cardId)
   card.setAttribute("right1", textRight)
   card.setAttribute("right2", "")

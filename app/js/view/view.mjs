@@ -44,7 +44,6 @@ function initialRequest(cb) {
 
   })
 
-
 }
 
 function getAllIdsExcept(except) {
