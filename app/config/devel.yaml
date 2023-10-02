@@ -342,7 +342,8 @@ indicators:
 
 
     infoText: "<p>The population, of a given area (region or country), is the total number of persons that are usually resident in that area.</p>
-              <p>This count is generally compiled on 31 December each year and published as 1 January of the next year.</p>"
+              <p>This count is generally compiled on 31 December each year and published as 1 January of the next year.</p>
+              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm'>metadata</a>.</p>"
 
   - name: Median age
     id: MD_2
@@ -369,7 +370,8 @@ indicators:
         unit:
         - label: "years"
           code: YR
-    infoText: "<p>The median age is the age that divides a population into two groups that are numerically equivalent.</p>"
+    infoText: "<p>The median age is the age that divides a population into two groups that are numerically equivalent.</p>
+              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm'>metadata</a>.</p>"
 
 ##########################################################
 
@@ -1382,7 +1384,8 @@ indicators:
       nonUi:
         Sex:
           - *total
-    infoText: "<p>The naturalisation rate is the ratio between the number of persons who acquired the citizenship of a country during a calendar year and the stock of non-national residents in the same country at the beginning of the year.</p>"
+    infoText: "<p>The naturalisation rate is the ratio between the number of persons who acquired the citizenship of a country during a calendar year and the stock of non-national residents in the same country at the beginning of the year.</p> 
+                <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_acqn_esms.htm'>metadata</a>.</p>"
 
   # attention: this indicator works only because of some hardcoded, dedicated, specialised sourcecode
   - name: Long-term residence permits
@@ -1450,4 +1453,5 @@ indicators:
           - label: "Total"
             code: "TOTAL"
     infoText: "<p>Long-term residence permits cover all residence permits granted to non-EU citizens (third-country nationals) valid for at least five years or more (including permanent residence permits).</p>
-              <p>To calculate the share, as a denominator data on the stock of all valid permits to stay at the end of each reporting year are used. As a numerator data on the stock of long-term residents are used.</p>"
+              <p>To calculate the share, as a denominator data on the stock of all valid permits to stay at the end of each reporting year are used. As a numerator data on the stock of long-term residents are used.</p>
+              <p>For information on data quality, please consult the <a href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_res_esms.htm'>metadata</a>.</p>"
