@@ -394,7 +394,7 @@ indicators:
             start: 2002
             end: 0
             selected: 2013
-    infoText: "<p Labour force participation rate is the percentage of labour force in relation to the comparable total population. The labour force comprises employed and unemployed persons.</p>
+    infoText: "<p>Labour force participation rate is the percentage of labour force in relation to the comparable total population. The labour force comprises employed and unemployed persons.</p>
                <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
 
   - name: Employment
@@ -548,9 +548,8 @@ indicators:
         - label: "%"
           labelLong: "% of total employment"
           code: PC_EMP
-    infoText: "<p> Self-employed persons are defined as persons who work in their own business, professional practice or farm for the purpose of earning a profit derived from the goods or services produced.</p>
-              <p>Note to users:</p>
-              <p>Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>"
+    infoText: "<p>A self-employed person is the sole or joint owner of an unincorporated enterprise (one that has not been incorporated in other words formed into a legal unit) in which he/she works, unless they are also in paid employment which is their main activity (in that case, they are considered to be employees).</p>
+              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
 
   - name: Part-time employment
     id: MD_9
@@ -1001,7 +1000,7 @@ indicators:
           - *18-64
         Sex:
           - *total
-    infoText: "<p>The indicator is defined as the number of persons living in a household where the members of working age: those aged 18-64, but excluding students aged 18-24 and people who are retired according to their self-defined current economic status or who receive any pension (except survivors pension), as well as people in the age bracket 60-64 who are inactive and living in a household where the main income is pensions (except survivors pension)) worked a working time equal or less than 20% of their total work-time potential during the previous year. For information on data quality, please consult the metadata.</p>
+    infoText: "<p>The indicator is defined as the number of persons living in a household where the members of working age: those aged 18-64, but excluding students aged 18-24 and people who are retired according to their self-defined current economic status or who receive any pension (except survivors pension), as well as people in the age bracket 60-64 who are inactive and living in a household where the main income is pensions (except survivors pension) worked a working time equal or less than 20% of their total work-time potential during the previous year. For information on data quality, please consult the metadata.</p>
               <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
 
   - name: Material and social deprivation
