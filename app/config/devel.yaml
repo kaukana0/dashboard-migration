@@ -242,7 +242,7 @@ globals:
     globalInfo: "<h4 >About this dashboard</h4>
 <p class='ecl-u-type-paragraph'>This migrant integration and inclusion dashboard was developed by Eurostat, the statistical office of the European Union.</p>
 <p class='ecl-u-type-paragraph'>Data in this dashboard is constantly updated with the latest data available in the Eurostat database.</p>
-<p class='ecl-u-type-paragraph'>Two different concepts are used in the dashboard to define migrant population:</p>
+<p class='ecl-u-type-paragraph'>For the purpose of presenting statistics on migrant integration and in this dashboard two different concepts are used to define migrant population:</p>
 <ul class='ecl-unordered-list'>
                 <li class='ecl-unordered-list__item'>the concept of country of citizenship</li>
                 <li class='ecl-unordered-list__item'>the concept of country of birth.</li>
@@ -262,6 +262,23 @@ globals:
                 <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Born in a non-EU country: the population born outside the EU.</li>
 </ul>
 <p class='ecl-u-type-paragraph'>Foreign population by country of birth is the population most commonly described as migrants, as these persons have migrated to their current country of residence at some stage during their lives. It includes persons with foreign citizenship as well as persons with the citizenship of their country of residence, either from birth or acquired later in life.</p>
+
+<p class='ecl-u-type-paragraph'>Regarding the EU aggregates presented in this dashboard, the <span class='ecl-u-type-bold'>EU</span><span class='ecl-u-type-bold'> population categories</span> should be interpreted as follows:</p>
+
+ 
+
+<ul>
+
+                <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Nationals: this category refers to the sum of the nationals of the reporting countries, not all the nationals of the EU. This group does not cover the EU citizens residing in other EU countries than their country of citizenship.</li>
+
+                <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Native-born: this category refers to the sum of the persons born in the reporting countries, not all the native-born persons within the EU. This group does not cover persons born in other EU countries than the reporting countries.</li>
+
+                <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Citizens of another EU country: sum of all citizens of other EU countries residing in the reporting countries different than their country of citizenship.</li>
+
+                <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Born in another EU country: sum of all persons born in other EU countries residing in the reporting countries different than their country of birth.</li>
+
+</ul>
+
 <h4 >Further reading</h4>
 <p class='ecl-u-type-paragraph'>If you wish to obtain more in-depth information, please see our online publication in&nbsp;<a class='ecl-link' target='_blank' href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics'>Statistics Explained</a>.</p>
 <h4 >Feedback</h4>
