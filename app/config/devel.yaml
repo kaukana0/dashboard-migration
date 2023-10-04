@@ -267,7 +267,7 @@ globals:
 
  
 
-<ul>
+<ul class='ecl-unordered-list'>
 
                 <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Nationals: this category refers to the sum of the nationals of the reporting countries, not all the nationals of the EU. This group does not cover the EU citizens residing in other EU countries than their country of citizenship.</li>
 
