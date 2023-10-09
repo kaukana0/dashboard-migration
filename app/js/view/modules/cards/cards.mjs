@@ -282,6 +282,11 @@ function getColorSet(forLineChart, geoSelections) {
 			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_BNAT] = colorsSet1.dark
 			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_BEU] = colorsSet1.mid
 			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_BNEU] = colorsSet1.light
+
+			retVal[geoKey+", "+MS.TOTAL] = colorsSet1.light		// special for indicator: long term residence permits 
+
+			retVal[geoKey+", "+MS.NEU_P_HHAB] = colorsSet1.light		// special for indicator: naturalization rate 
+			retVal[geoKey+", "+MS.EU_P_HHAB] = colorsSet1.mid		// special for indicator: naturalization rate 
 		} else {
 			if(geoSelections.size===2) {
 				retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_CNAT] = colorsSet2.dark
@@ -298,6 +303,13 @@ function getColorSet(forLineChart, geoSelections) {
 				retVal[geoKey2+", "+MS.TXT_BY_LBL_SHORT_BNAT] = colorsSet1.dark
 				retVal[geoKey2+", "+MS.TXT_BY_LBL_SHORT_BEU] = colorsSet1.mid
 				retVal[geoKey2+", "+MS.TXT_BY_LBL_SHORT_BNEU] = colorsSet1.light
+
+				retVal[geoKey+", "+MS.TOTAL] = colorsSet2.light		// special for indicator: long term residence permits 
+				retVal[geoKey+", "+MS.NEU_P_HHAB] = colorsSet2.light		// special for indicator: naturalization rate 
+				retVal[geoKey+", "+MS.EU_P_HHAB] = colorsSet2.mid		// special for indicator: naturalization rate 
+				retVal[geoKey2+", "+MS.TOTAL] = colorsSet1.light		// special for indicator: long term residence permits 
+				retVal[geoKey2+", "+MS.NEU_P_HHAB] = colorsSet1.light		// special for indicator: naturalization rate 
+				retVal[geoKey2+", "+MS.EU_P_HHAB] = colorsSet1.mid		// special for indicator: naturalization rate 
 			} else {
 				// no operation; meaning no fixed colors, meaning default dynamic color assignment mechanism (from chart WebCompoment)
 			}
@@ -378,7 +390,7 @@ export function storeSelectedCounts(_numberOfCountriesSelected, _numberOfBySelec
 
 // these "ids" are billboard.js specific - a substring w/ substitutions of SVG element's class
 function onLineHover(ids) {
-	if(numberOfCountriesSelected * numberOfBySelected === 6) {
+	if(numberOfCountriesSelected>1 && numberOfBySelected>1) {
 		if(ids.length>0) { 
 			TooltipLine.setFilter([ids[0].slice(0,2)])	// let only 1 pass through filter -> show only hovered item-group in tooltip
 		} else {

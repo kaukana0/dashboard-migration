@@ -32,6 +32,7 @@ export function tooltip(context, d, defaultTitleFormat, defaultValueFormat, colo
 	}
 }
 
+// it's a "discard everything else" type filter
 export function setFilter(ids) { filter = ids }
 
 function getGroups(d) {
