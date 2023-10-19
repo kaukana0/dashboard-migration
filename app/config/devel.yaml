@@ -267,7 +267,7 @@ globals:
 
  
 
-<ul class='ecl-unordered-list'>
+<ul>
 
                 <li class='ecl-u-type-paragraph ecl-unordered-list__item'>Nationals: this category refers to the sum of the nationals of the reporting countries, not all the nationals of the EU. This group does not cover the EU citizens residing in other EU countries than their country of citizenship.</li>
 
@@ -358,9 +358,8 @@ indicators:
             selected: 2022
 
 
-    infoText: "<p>The population, of a given area (region or country), is the total number of persons that are usually resident in that area.</p>
-              <p>This count is generally compiled on 31 December each year and published as 1 January of the next year.</p>
-              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm'>metadata</a>.</p>"
+    infoText: "<p class='ecl-u-type-paragraph'>The number of persons having their usual residence in a country on 1 January of the respective year. When usually resident population is not available, countries may report legal or registered residents.</p>
+              <p class='ecl-u-type-paragraph'>For information on data quality, please consult the <a class='ecl-link' href=https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm target='_blank'>metadata</a>.</p>"
 
   - name: Median age
     id: MD_2
@@ -406,6 +405,11 @@ indicators:
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_argacob
     dimensions:
       ui:
+        dropdown:
+          - Age:
+              items:
+                - *15-74
+                - *20-64s
         range:
           - time:
             start: 2002
@@ -428,6 +432,11 @@ indicators:
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_ergacob
     dimensions:
       ui:
+        dropdown:
+          - Age:
+              items:
+                - *15-74
+                - *20-64s
         range:
           - time:
             start: 2002
@@ -455,7 +464,6 @@ indicators:
           - Age:
               items:
                 - *15-74
-                - *15-29
                 - *20-64
         range:
           - time:
@@ -519,7 +527,6 @@ indicators:
       birth:
         id: LFSA_eoqgac
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eoqgac
-        
     dimensions:
       ui:
         dropdown:
@@ -555,6 +562,11 @@ indicators:
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_esgacob
     dimensions:
       ui:
+        dropdown:
+          - Age:
+              items:
+                - *15-74
+                - *20-64s
         range:
           - time:
             start: 2002
@@ -581,6 +593,11 @@ indicators:
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_eppgacob
     dimensions:
       ui:
+        dropdown:
+          - Age:
+              items:
+                - *15-74
+                - *20-64s
         range:
           - time:
             start: 2002
@@ -608,6 +625,11 @@ indicators:
         source: https://ec.europa.eu/eurostat/web/products-datasets/-/lfsa_etpgacob
     dimensions:
       ui:
+        dropdown:
+          - Age:
+              items:
+                - *15-74
+                - *20-64s
         range:
           - time:
             start: 2002
@@ -888,7 +910,7 @@ indicators:
         dropdown:
           - Age:
               items:
-                - *16-29
+                #- *16-29
                 - *18-overs
                 - *20-64
         range:
@@ -917,7 +939,7 @@ indicators:
         dropdown:
           - Age:
               items:
-                - *16-29
+                #- *16-29
                 - *18-overs
                 - *20-64
     infoText: "<p>The at-risk-of-poverty rate is the share of people with an equivalised disposable income (after social transfer) below the at-risk-of-poverty threshold, which is set at 60 % of the national median equivalised disposable income after social transfers.</p>
@@ -951,9 +973,10 @@ indicators:
         - label: PPS
           labelLong: Purchasing power standard
           code: PPS
-    infoText: "<p>The equivalised disposable income is the total income of a household, after tax and other deductions, that is available for spending or saving, divided by the number of household members converted into equalised adults; household members are equalised or made equivalent by weighting each according to their age, using the so-called modified OECD equivalence scale.</p>
-              <p>The median of the equivalised disposable income distribution is typically used in the EU as a key measure for analysing standards of living within each economy. It is simply the income level that divides the population into two groups of equal size: one group encompasses half the population with a level of disposable income above the median and the other group encompasses the half of the population with a level of disposable income below the median. Note to users: Some of the results can be of limited reliability — to see the details please consult the respective datasets.</p>
-              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
+    infoText: "<p class='ecl-u-type-paragraph'>The equivalised disposable income is the total income of a household, after tax and other deductions, that is available for spending or saving, divided by the number of household members converted into equalised adults; household members are equalised or made equivalent by weighting each according to their age, using the so-called modified OECD equivalence scale.</p>
+                <p class='ecl-u-type-paragraph'>The median of the equivalised disposable income distribution is typically used in the EU as a key measure for analysing standards of living within each economy. It is simply the income level that divides the population into two groups of equal size: one group encompasses half the population with a level of disposable income above the median and the other group encompasses the half of the population with a level of disposable income below the median.</p>
+                <p class='ecl-u-type-paragraph'>For information on data quality, please consult the <a class='ecl-link' href=https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm target='_top'>metadata</a>.</p>"
+
     decimals: 0
 
   - name: Child poverty
@@ -1017,8 +1040,8 @@ indicators:
           - *18-64
         Sex:
           - *total
-    infoText: "<p>The indicator is defined as the number of persons living in a household where the members of working age: those aged 18-64, but excluding students aged 18-24 and people who are retired according to their self-defined current economic status or who receive any pension (except survivors pension), as well as people in the age bracket 60-64 who are inactive and living in a household where the main income is pensions (except survivors pension) worked a working time equal or less than 20% of their total work-time potential during the previous year. For information on data quality, please consult the metadata.</p>
-              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm'>metadata</a>.</p>"
+    infoText: "<p class='ecl-u-type-paragraph'>The indicator is defined as the number of persons living in a household where the members of working age: those aged 18-64, but excluding students aged 18-24 and people who are retired according to their self-defined current economic status or who receive any pension (except survivors pension), as well as people in the age bracket 60-64 who are inactive and living in a household where the main income is pensions (except survivors pension) worked a working time equal or less than 20% of their total work-time potential during the previous year.&nbsp;</p>
+              <p class='ecl-u-type-paragraph'>For information on data quality, please consult the <a class='ecl-link' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm' target='_blank'>metadata</a>.</p>"
 
   - name: Material and social deprivation
     id: MD_23
@@ -1221,9 +1244,10 @@ indicators:
           - Age:
               items:
                 - *16-over
-                - *16-44
-                - *45-64
-                - *65-over
+                - *20-64
+                #- *16-44
+                #- *45-64
+                #- *65-over
     infoText: "<p>Self-perceived health expresses subjective assessment by the respondent of his/her health. Indicators based on this concept can be used to evaluate the general health status, health inequalities and health care needs at the population level.</p>
               <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
 
@@ -1245,9 +1269,10 @@ indicators:
           - Age:
               items:
                 - *16-over
-                - *16-44
-                - *45-64
-                - *65-over
+                - *20-64
+                #- *16-44
+                #- *45-64
+                #- *65-over
       nonUi:
         Reason:
           - label: Total
@@ -1274,9 +1299,10 @@ indicators:
           - Age:
               items:
                 - *16-over
-                - *16-44
-                - *45-64
-                - *65-over
+                - *20-64
+                #- *16-44
+                #- *45-64
+                #- *65-over
       nonUi:
         Reason:
           - label: Total
@@ -1303,9 +1329,10 @@ indicators:
           - Age:
               items:
                 - *16-over
-                - *16-44
-                - *45-64
-                - *65-over
+                - *20-64
+                #- *16-44
+                #- *45-64
+                #- *65-over
     infoText: "<p>Long-standing health problem or disease is a health problem that has lasted or is likely to last for at least 6 months. The main characteristic of a longstanding problem is that it is permanent and is expected to require a long period of monitoring, observation or care.</p> 
               <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/hlth_silc_01_esms.htm'>metadata</a>.</p>"
 
@@ -1327,9 +1354,10 @@ indicators:
           - Age:
               items:
                 - *16-over
-                - *16-44
-                - *45-64
-                - *65-over
+                - *20-64
+                #- *16-44
+                #- *45-64
+                #- *65-over
       nonUi:
         lev_limit:
           - label: Some

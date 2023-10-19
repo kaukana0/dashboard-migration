@@ -31,7 +31,6 @@ export function getColorSet(forLineChart, geoSelections) {
 	if(forLineChart) {
 
     const geoKey = geoSelections.keys().next().value
-    console.log(geoSelections, geoKey)
 		if(geoSelections.size===1) {
 			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_CNAT] = colorsSet1.dark
 			retVal[geoKey+", "+MS.TXT_BY_LBL_SHORT_CEU] = colorsSet1.mid

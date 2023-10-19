@@ -332,7 +332,7 @@ export function setNOSelectable(cardId, geo, by) {
 
 // these "ids" are billboard.js specific - a substring w/ substitutions of SVG element's class
 function onLineHover(ids) {
-	if(numberOfCountriesSelected * numberOfBySelected === 6) {
+	if(numberOfCountriesSelected>1 && numberOfBySelected>1) {
 		if(ids.length>0) { 
 			TooltipLine.setFilter([ids[0].slice(0,2)])	// let only 1 pass through filter -> show only hovered item-group in tooltip
 		} else {
