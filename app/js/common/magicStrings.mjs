@@ -62,6 +62,6 @@ export const MS = {
   ID_NO_DATAPOINT_TIMESERIES: null,       // datapoint missing in line chart
   ID_NO_DATAPOINT_COUNTRYSERIES: "",      // datapoint missing in dot plot
   
-  ID_CARD_ACTIVE_CITIZENSHIP_1: "Naturalisation rate",          // :-(
-  ID_CARD_ACTIVE_CITIZENSHIP_2: "Long-term residence permits",
+  NAME_CARD_ACTIVE_CITIZENSHIP_1: "Naturalisation rate",          // :-(
+  NAME_CARD_ACTIVE_CITIZENSHIP_2: "Long-term residence permits",
 }

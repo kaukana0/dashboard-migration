@@ -2,15 +2,15 @@
 create UI, handle prominent events, initiate data fetching and data forwarding
 */
 
-import * as Cards from "./modules/cards/cards.mjs"
-import * as GeoSelect from "./modules/selects/geoSelect.mjs"
-import * as Range from "./modules/cards/range.mjs"
+import * as Cards from "./modules/card/cards.mjs"
+import * as GeoSelect from "./modules/select/geoSelect.mjs"
+import * as Range from "./modules/card/elements/range.mjs"
 import {MS} from "../common/magicStrings.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../model/url.mjs"
 import Fetcher from "../model/fetcher.mjs"
 import {getMapFromArray} from "./modules/util.mjs"
-import * as CommonConstraints from "./modules/selects/commonConstraints.mjs"
+import * as CommonConstraints from "./modules/select/constraints/commonConstraints.mjs"
 import * as GROUPS from "../model/common/groupDefinition.mjs"
 import {getCardsOfCategory} from "./modules/cardToMenuMapping.mjs"
 
@@ -89,7 +89,7 @@ function onSelectedForAllCards(including, cb) {
   Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId, len) => { 
     if(!including || (including && including.includes(cardId))) {
       const boxes = fetch(cardId, ()=>{
-        onSelectedForOneCard(cardId, null)
+        onSelectedForOneCard(cardId, null, false)
 
         // this is a bit tricky as it considers only the 1st card. please note comment on setTooltipStyle()
         count = count===-1 ? getBySelectSelectedCount(boxes) : count
@@ -98,14 +98,18 @@ function onSelectedForAllCards(including, cb) {
     i+=1
     if(i===len && cb) {cb()}
   })
-  Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
-  Cards.setTooltipStyle(count)
+   Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
+   Cards.setTooltipStyle(count)
 }
 
-// user changed some selection that is relevant for ONE card
-// which is all boxes except country and the time-range slider.
-// so, update charts in one card
-function onSelectedForOneCard(cardId, cb) {
+/*
+user changed some selection that is relevant for ONE card
+which is all boxes except country and the time-range slider.
+so, update charts in one card.
+
+setTooltip is there to consider only 1st tooltip if called from onSelectedForAllCards
+*/
+function onSelectedForOneCard(cardId, cb, setTooltip=true) {
   const boxes = fetch(cardId, ()=> {
     Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
 
@@ -116,9 +120,11 @@ function onSelectedForOneCard(cardId, cb) {
       CommonConstraints.getNOAllowedBySelects(geoCount, cardId)
     )
 
-    Cards.storeSelectedCounts(geoCount, byCount)
-    Cards.setTooltipStyle(byCount)
-
+    if(setTooltip) {
+      Cards.storeSelectedCounts(geoCount, byCount)
+      Cards.setTooltipStyle(byCount)
+    }
+    
     if(cb) {cb()}
   })
 }

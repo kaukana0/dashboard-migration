@@ -1,5 +1,5 @@
 import * as MainMenu from "./mainMenu.mjs"
-import {getIdFromName} from "./cards/cards.mjs"
+import {getIdFromName} from "./card/cards.mjs"
 import {MS} from "../../common/magicStrings.mjs"
 
 let overviewCardIds = []

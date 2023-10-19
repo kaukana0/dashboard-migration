@@ -5,7 +5,7 @@
 */
 
 import * as Common from "./common.mjs"
-import {MS} from "../../../../common/magicStrings.mjs"
+import {MS} from "../../../../../common/magicStrings.mjs"
 
 let headerText = ""
 

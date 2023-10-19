@@ -3,7 +3,7 @@
  - it's being moved in the DOM between the overview and an expanded card.
  - it's declared in the html and not created via JS.
 */
-import * as CommonConstraints from "./commonConstraints.mjs"
+import * as CommonConstraints from "./constraints/commonConstraints.mjs"
 import {MS} from "../../../common/magicStrings.mjs"
 import * as PopUpMessage from "../popUpMessage.mjs"
 

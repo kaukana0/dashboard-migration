@@ -17,19 +17,19 @@ TODO: refactor - split this file up, it's too big already.
 
 
 import * as MarkUpCode from  "./markUpCode.mjs"		// keep this file html/css free
-import * as Selects from "../selects/selectBoxes.mjs"
-import * as BySelectConstraint from "../selects/bySelectConstraints.mjs"
-import * as CommonConstraints from "../selects/commonConstraints.mjs"
+import * as Selects from "../select/selectBoxes.mjs"
+import * as BySelectConstraint from "../select/constraints/bySelectConstraints.mjs"
+import * as CommonConstraints from "../select/constraints/commonConstraints.mjs"
 import {MS} from "../../../common/magicStrings.mjs"
 import * as Url from "../../../model/url.mjs"
 import * as Util from "../../../../components/util/util.mjs"
 import {getMapFromArray, getMapFromArrayWObjects}  from "../util.mjs"
-import * as TooltipLine from "./tooltips/tooltipLineChart.mjs"
-import * as TooltipDot from "./tooltips/tooltipDotChart.mjs"
-import * as TooltipCommon from "./tooltips/common.mjs"
+import * as TooltipLine from "./elements/tooltips/tooltipLineChart.mjs"
+import * as TooltipDot from "./elements/tooltips/tooltipDotChart.mjs"
+import * as TooltipCommon from "./elements/tooltips/common.mjs"
 import "../../../../components/range/range.mjs"							// the WebComponent
-import * as Range from "./range.mjs"
-import * as Subtitle from "./subtitle.mjs"
+import * as Range from "./elements/range.mjs"
+import * as Subtitle from "./elements/subtitle.mjs"
 import * as PopUpMessage from "../popUpMessage.mjs"
 import * as GROUPS from "../../../model/common/groupDefinition.mjs"
 import {setOverviewCardIds} from "../cardToMenuMapping.mjs"
@@ -101,7 +101,7 @@ function setupCard(id, merged, onCardExpand, onCardContract, DSIdCard) {
 	card.tooltipFn1 = TooltipLine.tooltipFn
 	card.tooltipFn2 = TooltipDot.tooltipFn
 	card.tooltipCSS = TooltipCommon.CSS()
-	card.setLegendTexts([MS.TXT_BY_LBL_CNEU, MS.TXT_BY_LBL_CEU, MS.TXT_BY_LBL_CNAT])
+	setLegendTexts(card, id)
 
 	card.userData = Subtitle.getInfoAboutOrder(
 		getMapFromArrayWObjects(merged.dimensions.ui.dropdown), 
@@ -116,6 +116,19 @@ function setupCard(id, merged, onCardExpand, onCardContract, DSIdCard) {
 	if(DSIdCard) { card.setAttribute("dataset", DSIdCard) }
 
 	card.lineHoverCallback = onLineHover
+
+
+	function setLegendTexts(card, cardId) {
+		const uu = [MS.TXT_BY_LBL_CNEU, MS.TXT_BY_LBL_CEU, MS.TXT_BY_LBL_CNAT]
+		if(cardId===getIdFromName(MS.NAME_CARD_ACTIVE_CITIZENSHIP_1)) {		// :-(
+			uu[2] = ""
+		}
+		if(cardId===getIdFromName(MS.NAME_CARD_ACTIVE_CITIZENSHIP_2)) {
+			uu[1] = ""
+			uu[2] = ""
+		}
+		card.setLegendTexts(uu)
+	}
 }
 
 export function updateCardAttributes(cardId, boxes, textRight) {

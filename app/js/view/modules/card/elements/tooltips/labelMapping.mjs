@@ -1,4 +1,4 @@
-import {MS} from "../../../../common/magicStrings.mjs"
+import {MS} from "../../../../../common/magicStrings.mjs"
 
 export const SHORT2LONG = new Map()
 

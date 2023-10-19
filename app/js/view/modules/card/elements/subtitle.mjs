@@ -15,7 +15,7 @@ and Woman from a selectBox while retaining the same order.
 
 */
 
-import {reverseMapOrder} from "../../../../components/util/util.mjs"
+import {reverseMapOrder} from "../../../../../components/util/util.mjs"
 
 const subtitleDelim = " | "
 

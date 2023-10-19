@@ -6,7 +6,7 @@ for an overview of the constraints, see selection-logic-overview.ods
 
 */
 
-import {MS} from "../../../common/magicStrings.mjs"
+import {MS} from "../../../../common/magicStrings.mjs"
 
 
 let bySelect
@@ -55,8 +55,8 @@ export function bySelectionAllowed(numberOfSelections) {
 }
 
 export function getNOAllowedBySelects(geoCount, cardId) {
-  if(cardId===(MS.CARD_DOM_ID_PREFIX+MS.ID_CARD_ACTIVE_CITIZENSHIP_1).replaceAll(" ","-")) {return 2}    // :-(
-  if(cardId===(MS.CARD_DOM_ID_PREFIX+MS.ID_CARD_ACTIVE_CITIZENSHIP_2).replaceAll(" ","-")) {return 1}
+  if(cardId===(MS.CARD_DOM_ID_PREFIX+MS.NAME_CARD_ACTIVE_CITIZENSHIP_1).replaceAll(" ","-")) {return 2}    // :-(
+  if(cardId===(MS.CARD_DOM_ID_PREFIX+MS.NAME_CARD_ACTIVE_CITIZENSHIP_2).replaceAll(" ","-")) {return 1}
   return geoCount>2 ? 1 : 3
 }
 

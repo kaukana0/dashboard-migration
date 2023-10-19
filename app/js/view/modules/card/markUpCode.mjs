@@ -1,5 +1,9 @@
-// all buttons go into the "slotTop" div, which itself goes into the slot of a card
-// TODO: de-dupe slotBottomLeft content (index.html)
+/*
+markup for a card
+all buttons go into the "slotTop" div, which itself goes into the slot of a card
+
+TODO: de-dupe slotBottomLeft content (index.html)
+*/
 export function getCardHtmlString(id, title, longTitle, urlFrag, anchorElDomId) {
   return `
     <chart-card id="${id}" header_c="${title}" header_e="${longTitle}" urlFrag="${urlFrag}" anchor="anchorExpandedCard">

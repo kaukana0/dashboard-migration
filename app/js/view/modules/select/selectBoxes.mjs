@@ -1,8 +1,10 @@
-// all the boxes for one card
+/**
+This creates all the boxes for one card.
+note: it's done via createElement because innerHTML has some showstopping async-behaviour.
+*/
 
 import {MS} from "../../../common/magicStrings.mjs"
-//import {getBoxHtmlString} from "./markUpCode.mjs"
-import "../titledSelect/titledSelect.mjs"
+import "../select/titledSelect.mjs"
 
 
 // "cfg" is the dimensions.ui.dropdown section from the yaml config, converted to json.
