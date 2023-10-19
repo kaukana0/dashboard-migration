@@ -28,8 +28,8 @@ export function store(id, data) {
 
 export function restore(id) {
   let retVal = window.localStorage.getItem(id)
-  if(retVal) {
-    console.debug( `cacheLS: hit id='${id}'.` )
+  if(!retVal) {
+    console.debug( `cacheLS: miss id='${id}'.` )
   }
   return retVal
 }

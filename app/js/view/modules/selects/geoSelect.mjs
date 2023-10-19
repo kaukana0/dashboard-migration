@@ -8,64 +8,76 @@ import {MS} from "../../../common/magicStrings.mjs"
 import * as PopUpMessage from "../popUpMessage.mjs"
 
 
-let id = ""
+let select
 
-export function setup(_id, cfg, _groups, callback) {
-  id = _id
+export function create(cfg, _groups, callback) {
 
-  const el = document.getElementById(_id)
+  select = document.createElement('titled-select')
+  select.setAttribute("id", MS.GEO_SELECT_DOM_ID)
 
-  CommonConstraints.setGeoSelect(el)
+  const box = select.box
+  box.setAttribute("id", MS.GEO_SELECT_DOM_ID)
+  box.setAttribute("dimension", "geo")
+  box.setAttribute("favoriteStar", "true")
+  box.setAttribute("multiselect", "true")
+  box.setAttribute("textForMultiselect", "Countries selected")
+  box.setAttribute("style", "width:250px; white-space:nowrap; text-overflow:ellipsis;")
+  select.setAttribute("style", "width:250px; margin-right: 20px; margin-left:20px; white-space:nowrap; text-overflow:ellipsis;")
+  select.showLabels = false
+  select.labelNumber = 1
 
-  el.onSelect = selectionAllowed
-  el.onSelected = callback
+  CommonConstraints.setGeoSelect(box)
+
+  box.onSelect = selectionAllowed
+  box.onSelected = callback
   const groups = new Map()
   _groups.forEach((item) => {
     groups.set(item, {})
   })
-  el.data = [cfg, groups]
+  box.data = [cfg, groups]
 
   // this is tricky :-/
-  // it's multiselect in the card, single select (w/ multi optics) in the overview.
+  // the geoSelect is multiselect when it is inside the card,
+  // and single select (w/ multi optics) in the overview (when moved outside of any card).
   // initially, it should be single in the overview, so take the attrib away here.
   // but before taking it away, it has had to be created and filled while being declared "multiselect" !
-  el.removeAttribute("multiselect")
+  box.setAttribute("multiselect", "false")
 
-  return el
+  return box
 }
 
 export function moveToMainArea() {
-  document.getElementById(MS.MAIN_AREA_ANCHOR_DOM_ID).after(document.getElementById(MS.GEO_SELECT_CONTAINER_DOM_ID))
-  document.getElementById(MS.GEO_SELECT_DOM_ID).setAttribute("multiselect", "false")
+  select.box.setAttribute("multiselect", "false")
+  document.getElementById(MS.MAIN_AREA_ANCHOR_DOM_ID).after(select)
 }
 
-export function moveIntoCard(id) {
-  document.getElementById(id).after(document.getElementById(MS.GEO_SELECT_CONTAINER_DOM_ID))
-  document.getElementById(MS.GEO_SELECT_DOM_ID).setAttribute("multiselect", "true")
+export function moveIntoCard(cardAnchorId) {
+  select.box.setAttribute("multiselect", "true")
+  document.getElementById(cardAnchorId).insertAdjacentElement("afterbegin", select)
 }
 
 export function selectFav() {
-  const el = document.getElementById(id)
-  el.selected = [el.favoriteStar]
+  const box = select.box
+  box.selected = [box.favoriteStar]
 }
 
 export function getSelected() {
-  return document.getElementById(id).selected
+  return select.box.selected
 }
 
 export function getFavoriteStar() {
-  return document.getElementById(id).favoriteStar
+  return select.box.favoriteStar
 }
 
 export function isEUSelected() {
-  return document.getElementById(id).selected.keys().next().value === MS.CODE_EU
+  return select.box.selected.keys().next().value === MS.CODE_EU
 }
 
 function selectionAllowed(k,v) {
   switch(CommonConstraints.geoSelectionAllowed(k,v)) {
     case 0: return true
-    case 1: PopUpMessage.show(PopUpMessage.TEXT.FOR_GEO); return false
-    case 2: PopUpMessage.show(PopUpMessage.TEXT.FOR_BY); return false
+    case 1: PopUpMessage.show(PopUpMessage.TEXT.FOR_GEO10); return false
+    case 2: PopUpMessage.show(PopUpMessage.TEXT.FOR_GEO2); return false
     default:
       return false
   }

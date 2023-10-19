@@ -17,7 +17,6 @@ export function buildFrag(selections, dataset, fragGetters) {
   let frag=""
   for(let [key, value] of selections.selections.entries()) {
     if(key!=="null") {
-      //const valAsString = value.keys().next().value
       if(fragGetters[key]) {
         frag += fragGetters[key](value)
       } else {
@@ -73,7 +72,7 @@ export function getBySelectFrag(v) {
     if(CM.CODE_TO_DIM.has(key)) {
       retVal += CM.CODE_TO_DIM.get(key)+"="+merged.get(key)+delim
     } else {
-      console.warn("url.mjs: unknown key", key)
+      console.warn("url.mjs: unknown key:", key)
     }
   }
   return retVal

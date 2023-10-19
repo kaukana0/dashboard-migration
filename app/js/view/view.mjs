@@ -22,7 +22,8 @@ export function createUIElements(cfg, triggerLoading, cb) {
   console.debug("cfg json from vanilla yaml", cfg)
   document.body.style.overflowX="hidden"
   MainMenu.create(cfg, onSelectMenu)
-  GeoSelect.setup(MS.GEO_SELECT_DOM_ID, getMapFromArray(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
+  GeoSelect.create(getMapFromArray(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
+  GeoSelect.moveToMainArea()
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerLoading) { initialRequest(cb) }
@@ -30,14 +31,15 @@ export function createUIElements(cfg, triggerLoading, cb) {
 
 function initialRequest(cb) {
   const overviewCards = getCardsOfCategory(MS.TXT_OVERVIEW)
+  const allOtherCards = getAllIdsExcept(overviewCards)
 
   // first, fetch only the overview-cards
   onSelectedForAllCards(overviewCards, ()=> {
     MainMenu.select(MS.TXT_OVERVIEW)
-    cb()
+    cb()  // continue on w/ whatever initialisation things happen next
 
     // then the rest
-    onSelectedForAllCards(getAllIdsExcept(overviewCards), ()=> {
+    onSelectedForAllCards(allOtherCards, ()=> {
       Cards.filter(overviewCards)
       setCardLegends(true)
     })
@@ -87,7 +89,8 @@ function onSelectedForAllCards(including, cb) {
   Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId, len) => { 
     if(!including || (including && including.includes(cardId))) {
       const boxes = fetch(cardId, ()=>{
-        Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
+        onSelectedForOneCard(cardId, null)
+
         // this is a bit tricky as it considers only the 1st card. please note comment on setTooltipStyle()
         count = count===-1 ? getBySelectSelectedCount(boxes) : count
       })
@@ -104,12 +107,18 @@ function onSelectedForAllCards(including, cb) {
 // so, update charts in one card
 function onSelectedForOneCard(cardId, cb) {
   const boxes = fetch(cardId, ()=> {
-  Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
+    Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
 
-  const count = getBySelectSelectedCount(boxes)
-  Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
-  Cards.setTooltipStyle(count)
-    //document.getElementById("menu").setLocked(false)
+    const byCount = getBySelectSelectedCount(boxes)
+    const geoCount = GeoSelect.getSelected().size
+    Cards.setNOSelectable(cardId,
+      CommonConstraints.getNOAllowedGeoSelects(byCount, geoCount),
+      CommonConstraints.getNOAllowedBySelects(geoCount, cardId)
+    )
+
+    Cards.storeSelectedCounts(geoCount, byCount)
+    Cards.setTooltipStyle(byCount)
+
     if(cb) {cb()}
   })
 }
@@ -140,8 +149,8 @@ function fetch(cardId, cb) {
     isInGroupC = GROUPS.isInGroupC(firstSel)
   }
 
-  const bla = {} ; bla[MS.BY_SELECT_ID] = Url.getBySelectFrag
-  Fetcher( Url.buildFrag(boxes,dataset,bla), (data)=>{
+  const fragGetter = {} ; fragGetter[MS.BY_SELECT_ID] = Url.getBySelectFrag
+  Fetcher( Url.buildFrag(boxes,dataset,fragGetter), (data)=>{
     Cards.setData(cardId, GeoSelect.getSelected(), isInGroupC, data, cb)
   } )
   return boxes
@@ -161,8 +170,8 @@ function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {
 
 function onCardExpand(id) {
   currentlyExpandedId = id
-  const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
-  CommonConstraints.setBySelect(anchorEl.nextSibling.childNodes[1])
+
+  CommonConstraints.setBySelect(Cards.getBySelectBox(id))
 
   GeoSelect.moveIntoCard(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
   document.body.style.overflowY="hidden"
@@ -177,7 +186,9 @@ function onCardExpand(id) {
 
   Cards.filter( getCardsOfCategory(MainMenu.getMenuItemIds(id)[0]) )
 
-  document.getElementById("countrySelectLabel").textContent = "Country"
+  document.getElementById(MS.GEO_SELECT_DOM_ID).labelLeft = "Country"
+  document.getElementById(MS.GEO_SELECT_DOM_ID).labelRight = "selectable"
+  document.getElementById(MS.GEO_SELECT_DOM_ID).showLabels = true
 }
 
 function onCardContract(id) {
@@ -190,7 +201,7 @@ function onCardContract(id) {
   // do this after moving geo-select out, because then it's not affected by
   // setDefaultSelections call.
   const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
-  Cards.setDefaultSelections(anchorEl.parentNode)
+  Cards.setDefaultSelections(anchorEl)
   // geo-select's default selection is handeled differently (favStar).
   GeoSelect.selectFav()
 
@@ -206,7 +217,7 @@ function onCardContract(id) {
 
   currentlyExpandedId = null
 
-  document.getElementById("countrySelectLabel").textContent = ""
+  document.getElementById(MS.GEO_SELECT_DOM_ID).showLabels = false
 }
 
 export function setupGlobalInfoClick(txt) {

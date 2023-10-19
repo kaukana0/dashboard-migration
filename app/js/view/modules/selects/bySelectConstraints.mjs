@@ -15,5 +15,5 @@ export function howManyAreGoingToBeSelected(k) {
 }
 
 export function getDataset(DOMel) {
-  return DOMel.getAttribute( CM.CODE_TO_DSID.get(DOMel.selected.keys().next().value) )
+  return DOMel.getAttribute( CM.CODE_TO_DSID.get(DOMel.box.selected.keys().next().value) )
 }

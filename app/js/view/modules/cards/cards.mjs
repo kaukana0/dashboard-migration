@@ -35,9 +35,9 @@ import * as GROUPS from "../../../model/common/groupDefinition.mjs"
 import {setOverviewCardIds} from "../cardToMenuMapping.mjs"
 
 let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't come from processors/data but from config
-let numberOfCountriesSelected = 0
-let numberOfBySelected = 0
-
+let numberOfCountriesSelected = 0		// TODO: possible to get rid of this?
+let numberOfBySelected = 0					// TODO: possible to get rid of this?
+const parser = new DOMParser()
 
 // pretty much the core of processing the YAML
 export function create(containerId, cfg, selectedCallback, onCardExpand, onCardContract) {
@@ -50,11 +50,10 @@ export function create(containerId, cfg, selectedCallback, onCardExpand, onCardC
 		const id = getIdFromName(merged.name)
 
 		console.debug("cards: merged cfg for indicator", merged.name, merged, id)
-		const parser = new DOMParser()
-
+		
 		if(!merged.ignore) {
 			if(merged["hanSolo"]) {document.getElementById(containerId).innerHTML = ""}			// undocumented feature. for troubleshooting purposes.
-
+			
 			const longTitle = typeof merged.nameLong === "undefined" ? merged.name : merged.nameLong
 			const html = MarkUpCode.getCardHtmlString( id, merged.name, longTitle, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
 			const doc = parser.parseFromString(html, "text/html")
@@ -144,9 +143,10 @@ export function getIdFromName(name) {
 function addBoxEventHandlers(id, boxes, selectedCallback) {
 	for(const box of boxes) {
 
-		const domEl = box.docFrag.firstChild.childNodes[1]
+		const domEl = box.docFrag.firstElementChild.box
 
 		domEl.onSelect = function(k,v) {
+
 			const c = [MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM].includes(box.dimId)	// TODO dry
 			if(c) {
 				if(CommonConstraints.bySelectionAllowed( BySelectConstraint.howManyAreGoingToBeSelected(k) )) {
@@ -173,9 +173,9 @@ function addBoxEventHandlers(id, boxes, selectedCallback) {
 }
 
 function insertBoxes(id, boxes) {
+	const el = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
 	for(const box of boxes) {
-		const el = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
-		el.after(box.docFrag)
+		el.insertAdjacentElement("afterbegin", box.docFrag.firstElementChild)
 	}
 }
 
@@ -189,16 +189,17 @@ export function getCurrentSelections(cardId) {
 
 	let dataset = card.getAttribute("dataset")
 
-	const boxSelector = `#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} ~ div ecl-like-select-x`
-	const boxes = document.querySelectorAll(boxSelector)
+	const boxes = getAllBoxes(cardId)
 	if(boxes.length===0) { console.warn("cards: no boxes for", cardId) }
 	for(let box of boxes) {
 		if(box.hasAttribute("dimension")) {
-			retVal[0].selections.set(box.getAttribute("dimension"), box.selected)
+			retVal[0].selections.set(box.getAttribute("dimension"), box.box.selected)
 			// this is the place to retrieve the dataset from the by-select
 			if(!dataset && box.getAttribute("dimension") === MS.BY_SELECT_ID) {
 				dataset = BySelectConstraint.getDataset(box)
 			}
+		} else {
+			//console.warn("cards.mjs: box has no dimension:",box)
 		}
 	}
 
@@ -206,6 +207,22 @@ export function getCurrentSelections(cardId) {
 
 	return retVal
 }
+
+function getAllBoxes(cardId) {
+	const boxSelector = `#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} >  titled-select`	//div ecl-like-select-x
+	//console.log(document.querySelectorAll(boxSelector))
+	return document.querySelectorAll(boxSelector)
+}
+
+export function getBySelectBox(cardId) {
+	const boxes = getAllBoxes(cardId)
+	for(const box of boxes) {
+		if([MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM].includes(box.getAttribute("dimension"))) {
+			return box
+		}	// TODO dry
+	}	
+}
+
 
 // TODO: order by current visibility (the cards in viewport before others)
 export function iterate(containerId, callback) {
@@ -338,9 +355,9 @@ export function contractAll(except) {		// but we assume that max 1 can be expand
 }
 
 export function setDefaultSelections(node) {
-	const elements = node.querySelectorAll("ecl-like-select-x")
+	const elements = node.querySelectorAll("titled-select")
 	for (let i = 0; i < elements.length; i++) {
-		elements[i].selectDefaults()
+		elements[i].box.selectDefaults()
 	}
 }
 
@@ -374,6 +391,16 @@ export function setTooltipStyle(numberOfBySelected) {
 export function storeSelectedCounts(_numberOfCountriesSelected, _numberOfBySelected) {
 	numberOfCountriesSelected = _numberOfCountriesSelected
 	numberOfBySelected = _numberOfBySelected
+}
+
+// number of selectable items
+export function setNOSelectable(cardId, geo, by) {
+	const byBox = getBySelectBox(cardId)
+	byBox.labelNumber=by
+	if(document.getElementById(cardId).isExpanded) {
+		const geoBox = document.getElementById(MS.GEO_SELECT_DOM_ID)
+		geoBox.labelNumber=geo
+	}
 }
 
 // these "ids" are billboard.js specific - a substring w/ substitutions of SVG element's class

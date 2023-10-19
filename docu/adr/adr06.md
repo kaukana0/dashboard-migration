@@ -25,7 +25,7 @@ alternatives:
 1. and 2.: is that functionality even general enough to warrant putting it into the component and in turn, making that even more complicated?
 -> no.
 
-so 3., because smallest of all evil:
+so 3. because least of all evil:
 
   - put markup for DOM elements into getDocFrag for both
     - don't forget CSS for the blue circle

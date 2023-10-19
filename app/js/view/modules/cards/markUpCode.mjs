@@ -4,8 +4,7 @@ export function getCardHtmlString(id, title, longTitle, urlFrag, anchorElDomId) 
   return `
     <chart-card id="${id}" header_c="${title}" header_e="${longTitle}" urlFrag="${urlFrag}" anchor="anchorExpandedCard">
 
-      <div slot="slotTop" style="height:50px; display:flex;">
-        <div id="${anchorElDomId}${id}"></div>
+      <div id="${anchorElDomId}${id}" slot="slotTop" style="height:50px; display:flex;">
       </div>
 
       <div slot="slotBottom">

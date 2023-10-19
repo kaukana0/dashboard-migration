@@ -1,6 +1,8 @@
 // all the boxes for one card
 
 import {MS} from "../../../common/magicStrings.mjs"
+//import {getBoxHtmlString} from "./markUpCode.mjs"
+import "../titledSelect/titledSelect.mjs"
 
 
 // "cfg" is the dimensions.ui.dropdown section from the yaml config, converted to json.
@@ -24,11 +26,12 @@ export function createDropdownBoxes(cfg, datasets) {
     const [items, disabledItems, groups, selected] = getItemInfos(cfg[i][boxName]["items"])
 
     // hardcoded here: add additional info to DOM element
-    if(boxName===MS.BY_SELECT_ID) {
+    if([MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM].includes(boxName)) {
       if(datasets && datasets["citizen"] && datasets["birth"]) {
         attribs.set(MS.DS_ID_CITIZEN, datasets["citizen"]["id"])
         attribs.set(MS.DS_ID_BIRTH, datasets["birth"]["id"])
       }
+      attribs.set("labelRight", "selectable")
     }
 
     const isMultiselect = (typeof cfg[i][boxName]["multiselect"] !== "undefined") && cfg[i][boxName]["multiselect"] === true
@@ -67,47 +70,32 @@ function getItemInfos(selectBoxItemsCfg) {
   return [items, disabledItems, groups, selected]
 }
 
-/*
-k: "sex"
-v:
- [
-    {
-      "label": "Total",
-      "code": "TOTAL"
-    }
-  ]
-}
-see also cards.mjs::insertAndHookUpBoxes()
-note: the structure is assumed in multiple locations: i.e. addBoxEventHandlers, onCardExpand  TODO: find elegant solution for this
-*/
+// note that the country/geo box is in geoSelect.mjs (because it's not card specific)
 function getDocFrag(items, disabledItems, attribs, label, isMultiselect=false, groups={}, defaultSelections=[]) {
-	const fragment = new DocumentFragment()
+  const select = document.createElement('titled-select')
 
-	const dropdownBox = document.createElement('ecl-like-select-x')
-  attribs.forEach( (v,k) => dropdownBox.setAttribute(k,v) )
-  dropdownBox.defaultSelections = defaultSelections
-  dropdownBox.disabledSelections = disabledItems
+  const dropdownBox = select.box
+
+  attribs.forEach( (v,k) => {
+    select.setAttribute(k,v)
+    dropdownBox.setAttribute(k,v)
+  } )
   if(isMultiselect) {
     dropdownBox.setAttribute("multiselect", "true")
   }
-  dropdownBox.data = [items, getGroupsFromObject(groups)]
-  dropdownBox.style.whiteSpace = "nowrap"
-  dropdownBox.style.textOverflow = "ellipsis"
+  select.style.whiteSpace = "nowrap"
+  select.style.textOverflow = "ellipsis"
   dropdownBox.textForMultiselect = "Items selected"
+  dropdownBox.defaultSelections = defaultSelections
+  dropdownBox.disabledSelections = disabledItems
+  dropdownBox.data = [items, getGroupsFromObject(groups)]
 
-  const div = document.createElement('div')
+  select.labelLeft = label
 
-  const labelLeft = document.createElement('a')
-  labelLeft.innerHTML = label
-  labelLeft.classList.add("boxLabelLeft")
-
-  div.appendChild(labelLeft)
-  div.appendChild(dropdownBox)
-
-  fragment.appendChild(div)
-	return fragment
+  const fragment = new DocumentFragment()
+  fragment.appendChild(select)
+  return fragment
 }
-
 
 function getGroupsFromObject(obj) {
   const retVal = new Map()

@@ -34,6 +34,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 	<script src="./components/chartCard/chartCard.mjs" type="module"></script>
 	<script src="./components/eclLikeMenu/menu.mjs" type="module"></script>
 	<script src="./components/select/select.mjs" type="module"></script>
+	<script src="./js/view/modules/titledSelect/titledSelect.mjs" type="module"></script>
 	<script src="./components/eclLikeHeroBanner/heroBanner.mjs" type="module"></script>
 	<script src="./components/buttonX/button.mjs" type="module"></script>
 	<script src="./components/eclLikeMessage/message.mjs" type="module"></script>
@@ -47,6 +48,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 				width: 100%;
 				margin: 0;
 				font-family: Arial,sans-serif;
+				/* background-color: lightgrey; */
 			}
 
 			.boxLabelLeft {
@@ -55,6 +57,12 @@ Author: robert.gebhardt@ext.ec.europa.eu
 				margin-bottom: 5px;
 				font-weight: 600;
 			}
+
+			/*.boxLabelRight {
+				color: white;
+				background-color: #0E47CB;
+				border-radius: 25%;
+			}*/
 
 		</style>
 
@@ -84,13 +92,9 @@ Author: robert.gebhardt@ext.ec.europa.eu
 		<div style="transform: scale(1); display:block;">
 
 			<div id="anchorExpandedCard"></div>
-			<div style="margin-left: 10px; margin-top:10px; height:80px;">
+			<div style="margin-left: 35px; margin-top:10px; height:80px;">
 				<div id="anchorSelectCountryOutsideOfCard"></div>
-				<div id="selectCountryContainer" style="width:250px; margin-left:20px; margin-right:35px; margin-bottom:20px;">
-					<a id="countrySelectLabel" class="boxLabelLeft" style="height:1.1rem;"></a>
-					<!-- style should be similar to selectBoxes.mjs::getDocFrag() -->
-					<ecl-like-select-x id="selectCountry" dimension="geo" multiselect="1" favoriteStar="1" textForMultiselect="Countries selected" style="width:100%; white-space:nowrap; text-overflow:ellipsis;"></ecl-like-select-x>
-				</div>
+				<div id="selectCountryContainer" style="width:250px; margin-left:20px; margin-right:35px; margin-bottom:20px;"></div>
 			</div>
 
 			<div id="cards" style="display: flex; flex-wrap: wrap; justify-content: center;"></div>
