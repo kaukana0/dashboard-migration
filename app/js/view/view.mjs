@@ -13,6 +13,7 @@ import {getMapFromArray} from "./modules/util.mjs"
 import * as CommonConstraints from "./modules/select/constraints/commonConstraints.mjs"
 import * as GROUPS from "../model/common/groupDefinition.mjs"
 import {getCardsOfCategory} from "./modules/cardToMenuMapping.mjs"
+import {getColorSetDefinitions} from "./modules/card/elements/colorSets.mjs"
 
 // used to decide when to update one instead of all cards (reduce number of chart reloads)
 let currentlyExpandedId = null
@@ -66,7 +67,7 @@ function onGeoSelection() {
 }
 
 function setCardLegends(isEU) {
-  const c = Cards.getColorSetDefinitions()
+  const c = getColorSetDefinitions()
   const eu = [c.EU.light, c.EU.mid, c.EU.dark]
   const other = [c.SET1.light, c.SET1.mid, c.SET1.dark]
 
