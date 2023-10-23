@@ -52,10 +52,10 @@ export function create(containerId, cfg, selectedCallback, onCardExpand, onCardC
 		const id = getIdFromName(merged.name)
 
 		console.debug("cards: merged cfg for indicator", merged.name, merged, id)
-		
+
 		if(!merged.ignore) {
 			if(merged["hanSolo"]) {document.getElementById(containerId).innerHTML = ""}			// undocumented feature. for troubleshooting purposes.
-			
+
 			const longTitle = typeof merged.nameLong === "undefined" ? merged.name : merged.nameLong
 			const html = MarkUpCode.getCardHtmlString( id, merged.name, longTitle, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
 			const doc = parser.parseFromString(html, "text/html")
@@ -290,6 +290,7 @@ function getIndices(data, geoSelections) {
 	}
 	return retVal
 }
+
 
 export function contractAll(except) {		// but we assume that max 1 can be expanded; instead of "find the 1 expanded"
 	iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => {
