@@ -14,6 +14,7 @@ import * as CommonConstraints from "./modules/select/constraints/commonConstrain
 import * as GROUPS from "../model/common/groupDefinition.mjs"
 import {getCardsOfCategory} from "./modules/cardToMenuMapping.mjs"
 import {getColorSetDefinitions} from "./modules/card/elements/colorSets.mjs"
+import {getSeries, getSeriesKeys} from "../../components/chart/chart.mjs"
 
 // used to decide when to update one instead of all cards (reduce number of chart reloads)
 let currentlyExpandedId = null
@@ -39,7 +40,7 @@ function initialRequest(cb) {
     MainMenu.select(MS.TXT_OVERVIEW)
     cb()  // continue on w/ whatever initialisation things happen next
 
-    // then the rest
+    // then the rest, sort of parallel in the background
     onSelectedForAllCards(allOtherCards, ()=> {
       Cards.filter(overviewCards)
       setCardLegends(true)
@@ -150,17 +151,32 @@ function fetch(cardId, cb) {
   // non-ui url fragment
   Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
 
-  let isInGroupC = ""    // TODO: refactor, get this out of here
-  if(boxes.selections.has(MS.BY_SELECT_ID)) {
-    const firstSel = Array.from(boxes.selections.get(MS.BY_SELECT_ID).keys())[0]
-    isInGroupC = GROUPS.isInGroupC(firstSel)
-  }
-
+  const bySelections = boxes.selections.get(MS.BY_SELECT_ID)
   const fragGetter = {} ; fragGetter[MS.BY_SELECT_ID] = Url.getBySelectFrag
   Fetcher( Url.buildFrag(boxes,dataset,fragGetter), (data)=>{
-    Cards.setData(cardId, GeoSelect.getSelected(), isInGroupC, data, cb)
-  } )
+    Cards.setData(cardId, GeoSelect.getSelected(), isInGroupC(boxes, bySelections), data, cb)
+    if(bySelections) {
+      const bla = getSeriesKeys(getSeries(data.timeSeries.data))
+      Cards.updateDetailLegend(cardId, GeoSelect.getSelected(), bla)
+    } else {
+      console.warn("No by selections for", cardId)
+    }
+  })
   return boxes
+}
+
+function isInGroupC(boxes, bySelections) {
+  if(bySelections) {
+    const keys = bySelections.keys()
+    let isInGroupC = ""
+    if(boxes.selections.has(MS.BY_SELECT_ID)) {
+      const firstSel = Array.from(keys)[0]
+      isInGroupC = GROUPS.isInGroupC(firstSel)
+    }
+    return isInGroupC
+  } else {
+    return true
+  }
 }
 
 // menuItemId can be anything, menuItem or submenuItem

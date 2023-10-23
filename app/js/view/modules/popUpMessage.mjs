@@ -4,8 +4,8 @@ export const TEXT = {
   FOR_BY: "This selection will only allow you to use one dimension."
 }
 
-export function show(text) {
+export function show(text, showClose=true, timeout=7000) {
   document.getElementsByTagName("ecl-like-message")[0].setHeader("Attention!")
   document.getElementsByTagName("ecl-like-message")[0].setText(text)
-  document.getElementsByTagName("ecl-like-message")[0].show()
+  document.getElementsByTagName("ecl-like-message")[0].show(showClose, timeout)
 }

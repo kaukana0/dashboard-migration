@@ -25,6 +25,8 @@ import { process as addEu } from "./pipelineProcessors/addEU.mjs"
 // this can be pretty helpful for debugging/investigation purposes
 import { process as analyzeIncomingData } from "./pipelineProcessors/analyze.mjs"
 
+import * as ErrorScreen from "../view/modules/errorScreen.mjs"
+
 /*
 called per card.
 
@@ -89,9 +91,10 @@ export default function go(urls, callback) {
 	)
 
 	function displayFailure(e) {
-		//console.error(e)
-		//document.getElementById("loadingIndicator").style.display = "none"
-		//document.getElementById("errorMessage").style.display = "block"
+		ErrorScreen.show(e)
+		if(document.getElementById("loadingIndicator")) {
+			document.getElementById("loadingIndicator").style.display = "none"
+		}
 	}
 
 }

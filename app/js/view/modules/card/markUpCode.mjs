@@ -17,5 +17,9 @@ export function getCardHtmlString(id, title, longTitle, urlFrag, anchorElDomId) 
         </div>
       </div>
 
+      <div slot="slotBottomLeft" style="margin-top:15px;">
+        <detail-legend id="detailLegend-${id}"></detail-legend>
+      </div>
+      
     </chart-card>`
 }

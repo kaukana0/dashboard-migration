@@ -39,6 +39,7 @@ let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't 
 let numberOfCountriesSelected = 0		// TODO: possible to get rid of this?
 let numberOfBySelected = 0					// TODO: possible to get rid of this?
 const parser = new DOMParser()
+const detailLegends = new Map()			// each card gets it's own legend, which is inserted via slot-mechanism
 
 // pretty much the core of processing the YAML
 export function create(containerId, cfg, selectedCallback, onCardExpand, onCardContract) {
@@ -59,6 +60,8 @@ export function create(containerId, cfg, selectedCallback, onCardExpand, onCardC
 			const html = MarkUpCode.getCardHtmlString( id, merged.name, longTitle, Url.getUrlFrag(merged.dimensions.nonUi), MS.CARD_SLOT_ANCHOR_DOM_ID )
 			const doc = parser.parseFromString(html, "text/html")
 			document.getElementById(containerId).appendChild( doc.body.firstElementChild )
+
+			detailLegends.set(id,document.getElementById("detailLegend-"+id))
 
 			// info is either in box or in card
 			const DSIdBox = merged.dataset["exclusive"] ? null : merged.dataset
@@ -224,7 +227,6 @@ export function getCurrentSelections(cardId) {
 
 function getAllBoxes(cardId) {
 	const boxSelector = `#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} >  titled-select`	//div ecl-like-select-x
-	//console.log(document.querySelectorAll(boxSelector))
 	return document.querySelectorAll(boxSelector)
 }
 
@@ -263,6 +265,20 @@ export function setData(cardId, geoSelections, isInGroupC, data, cb) {
 			}, cb)
 	})
 }
+
+export function updateDetailLegend(cardId, geoSelections, bySelections) {
+	detailLegends.get(cardId).content = {countries:Array.from(geoSelections.keys()),
+		 dots:getColors(bySelections,getColorSet(true, geoSelections))}
+	
+	function getColors(x,y) {
+		const retVal = new Map()
+		x.forEach(e=>{
+			retVal.set(e,y[e])
+		})
+		return retVal
+	}
+}
+
 
 function getIndices(data, geoSelections) {
 	const retVal = []
