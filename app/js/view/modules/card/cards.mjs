@@ -140,7 +140,7 @@ export function updateCardAttributes(cardId, boxes, textRight) {
   card.setAttribute("right1", textRight)
   card.setAttribute("right2", "")
   card.setAttribute("subtitle_c", card.getAttribute("unitLong") + Subtitle.get(card.userData, boxes, "Age") )
-  card.setAttribute("subtitle_e", card.getAttribute("unitLong") + Subtitle.get(card.userData, boxes) )
+  card.setAttribute("subtitle_e", card.getAttribute("unitLong") + Subtitle.get(card.userData, null, "Age") )
 }
 
 function setupRange(id, values, selectedCallback) {

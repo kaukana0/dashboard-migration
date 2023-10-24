@@ -28,7 +28,9 @@ export function get(order, boxes, filter) {
       if(v) {
         retVal += subtitleDelim + v
       } else {
-        retVal += subtitleDelim + Array.from(boxes.selections.get(k).values())    // 1 el for singleselect, pot. more for multiselect      
+        if(boxes) {
+          retVal += subtitleDelim + Array.from(boxes.selections.get(k).values())    // 1 el for singleselect, pot. more for multiselect      
+        }
       }
     }
 
