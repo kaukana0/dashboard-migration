@@ -268,12 +268,12 @@ export function setData(cardId, geoSelections, isInGroupC, data, cb) {
 
 export function updateDetailLegend(cardId, geoSelections, bySelections) {
 	detailLegends.get(cardId).content = {countries:Array.from(geoSelections.keys()),
-		 dots:getColors(bySelections,getColorSet(true, geoSelections))}
-	
-	function getColors(x,y) {
+		 dots:getTextAndColor(bySelections,getColorSet(true, geoSelections))}
+
+	function getTextAndColor(x,y) {
 		const retVal = new Map()
 		x.forEach(e=>{
-			retVal.set(e,y[e])
+			retVal.set(e, y[e])
 		})
 		return retVal
 	}

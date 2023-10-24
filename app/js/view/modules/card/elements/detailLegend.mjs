@@ -2,6 +2,8 @@
 slotBottomLeft
 */
 
+import {SHORT2LONG} from "../elements/tooltips/labelMapping.mjs"
+
 
 class Element extends HTMLElement {
 
@@ -31,7 +33,7 @@ class Element extends HTMLElement {
     val.dots.forEach((v,k)=>{
       const s = `[country="${k.substring(0,2)}"]`
       const u = this.shadowRoot.querySelector(s)
-      if(u) { u.innerHTML+=getBlaFragment(v, k.substring(3)) }
+      if(u) { u.innerHTML+=getBlaFragment(v, SHORT2LONG.get(k.substring(4))) }
     })
   }
 
