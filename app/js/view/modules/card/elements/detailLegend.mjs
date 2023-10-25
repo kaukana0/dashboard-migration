@@ -18,11 +18,6 @@ class Element extends HTMLElement {
   /*
   */
   set content(val) {
-    if((val.dots.size===3 || val.dots.size===6) && val.countries.length<=2) {
-      this.show=true
-    } else {
-      this.show=false
-    }
     this.shadowRoot.getElementById("country1").innerText = val.countries[0]
     this.shadowRoot.getElementById("dots1").setAttribute("country", val.countries[0])
     this.shadowRoot.getElementById("dots1").innerHTML=""

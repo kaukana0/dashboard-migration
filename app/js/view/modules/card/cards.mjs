@@ -288,6 +288,7 @@ export function updateDetailLegend(cardId, geoSelections, bySelections, isInGrou
 		}
 	}
 	
+	detailLegends.get(cardId).show = dots.size>=2 && countries.length<=2
 	detailLegends.get(cardId).content = {countries:countries, dots:dots}
 
 	function getTextAndColor(x,y) {

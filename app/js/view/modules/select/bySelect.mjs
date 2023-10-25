@@ -1,15 +1,22 @@
 import {MS} from "../../../common/magicStrings.mjs"
 import * as GROUPS from "../../../model/common/groupDefinition.mjs"
 
-export function getBySelectSelectedCount(boxes) {
-  let count = 0
-  const b = [MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM]
-  b.forEach(element=>{
-    if(boxes.selections.get(element)) {
-      count = boxes.selections.get(element).size
+// these boxes can act as a by-select box. TODO: think about denoting that otherwise, eg in the config
+const bySelectBoxIds = [MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM]
+
+
+export function getBySelectSelections(boxes) {
+  let retVal = null
+  bySelectBoxIds.forEach(e=>{
+    if(boxes.selections.get(e) && retVal===null) {
+      retVal = boxes.selections.get(e)
     }
   })
-  return count  
+  return retVal  
+}
+
+export function getBySelectSelectedCount(boxes) {
+  return getBySelectSelections(boxes).size
 }
 
 export function isInGroupC(boxes, bySelections) {
@@ -27,7 +34,7 @@ export function isInGroupC(boxes, bySelections) {
 }
 
 export function isBySelectBox(id) {
-  return [MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM].includes(id)
+  return bySelectBoxIds.includes(id)
 }
 
 export function getBySelectBox(boxes) {

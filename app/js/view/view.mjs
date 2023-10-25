@@ -14,7 +14,7 @@ import * as CommonConstraints from "./modules/select/constraints/commonConstrain
 import {getCardsOfCategory} from "./modules/cardToMenuMapping.mjs"
 import {getColorSetDefinitions} from "./modules/card/elements/colorSets.mjs"
 import {getSeries, getSeriesKeys} from "../../components/chart/chart.mjs"
-import {getBySelectSelectedCount, isInGroupC} from "./modules/select/bySelect.mjs"
+import {getBySelectSelectedCount, isInGroupC, getBySelectSelections} from "./modules/select/bySelect.mjs"
 
 // used to decide when to update one instead of all cards (reduce number of chart reloads)
 let currentlyExpandedId = null
@@ -141,7 +141,7 @@ function fetch(cardId, cb) {
   // non-ui url fragment
   Url.Affix.post = document.getElementById(cardId).getAttribute("urlfrag")
 
-  const bySelections = boxes.selections.get(MS.BY_SELECT_ID)
+  const bySelections = getBySelectSelections(boxes)
   const fragGetter = {} ; fragGetter[MS.BY_SELECT_ID] = Url.getBySelectFrag
   const inC = isInGroupC(boxes, bySelections)
   Fetcher( Url.buildFrag(boxes,dataset,fragGetter), (data)=>{
