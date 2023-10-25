@@ -5,6 +5,7 @@ note: it's done via createElement because innerHTML has some showstopping async-
 
 import {MS} from "../../../common/magicStrings.mjs"
 import "../select/titledSelect.mjs"
+import {isBySelectBox} from "../select/bySelect.mjs"
 
 
 // "cfg" is the dimensions.ui.dropdown section from the yaml config, converted to json.
@@ -28,7 +29,7 @@ export function createDropdownBoxes(cfg, datasets) {
     const [items, disabledItems, groups, selected] = getItemInfos(cfg[i][boxName]["items"])
 
     // hardcoded here: add additional info to DOM element
-    if([MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM].includes(boxName)) {
+    if(isBySelectBox(boxName)) {
       if(datasets && datasets["citizen"] && datasets["birth"]) {
         attribs.set(MS.DS_ID_CITIZEN, datasets["citizen"]["id"])
         attribs.set(MS.DS_ID_BIRTH, datasets["birth"]["id"])

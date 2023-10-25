@@ -31,9 +31,10 @@ import "../../../../components/range/range.mjs"							// the WebComponent
 import * as Range from "./elements/range.mjs"
 import * as Subtitle from "./elements/subtitle.mjs"
 import * as PopUpMessage from "../popUpMessage.mjs"
-import * as GROUPS from "../../../model/common/groupDefinition.mjs"
+import {isGroup} from "../../../model/common/groupDefinition.mjs"
 import {setOverviewCardIds} from "../cardToMenuMapping.mjs"
-import {getColorSet} from "./elements/colorSets.mjs"
+import {getColorSet, getColorSetDefinitions} from "./elements/colorSets.mjs"
+import { isBySelectBox, getBySelectBox as _getBySelectBox } from "../select/bySelect.mjs"
 
 let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't come from processors/data but from config
 let numberOfCountriesSelected = 0		// TODO: possible to get rid of this?
@@ -164,8 +165,7 @@ function addBoxEventHandlers(id, boxes, selectedCallback) {
 
 		domEl.onSelect = function(k,v) {
 
-			const c = [MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM].includes(box.dimId)	// TODO dry
-			if(c) {
+			if(isBySelectBox(box.dimId)) {
 				if(CommonConstraints.bySelectionAllowed( BySelectConstraint.howManyAreGoingToBeSelected(k) )) {
 					return true
 				} else {
@@ -177,9 +177,8 @@ function addBoxEventHandlers(id, boxes, selectedCallback) {
 		}
 
 		domEl.onSelected = function(k,v) {
-			const c = [MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM].includes(box.dimId)	// TODO dry
-			if(c) {
-				if(!GROUPS.isGroup(k)) { domEl.selected = [k]	}
+			if(isBySelectBox(box.dimId)) {
+				if(!isGroup(k)) { domEl.selected = [k]	}
 			}
 
 			// assumption: a caller is not interested in one box's selection right here, so omit passing on k,v.
@@ -226,17 +225,12 @@ export function getCurrentSelections(cardId) {
 }
 
 function getAllBoxes(cardId) {
-	const boxSelector = `#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} >  titled-select`	//div ecl-like-select-x
+	const boxSelector = `#${MS.CARD_SLOT_ANCHOR_DOM_ID}${cardId} >  titled-select`
 	return document.querySelectorAll(boxSelector)
 }
 
 export function getBySelectBox(cardId) {
-	const boxes = getAllBoxes(cardId)
-	for(const box of boxes) {
-		if([MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM].includes(box.getAttribute("dimension"))) {
-			return box
-		}	// TODO dry
-	}	
+	return _getBySelectBox( getAllBoxes(cardId) )
 }
 
 
@@ -266,9 +260,35 @@ export function setData(cardId, geoSelections, isInGroupC, data, cb) {
 	})
 }
 
-export function updateDetailLegend(cardId, geoSelections, bySelections) {
-	detailLegends.get(cardId).content = {countries:Array.from(geoSelections.keys()),
-		 dots:getTextAndColor(bySelections,getColorSet(true, geoSelections))}
+export function updateDetailLegend(cardId, geoSelections, bySelections, isInGroupC) {
+
+	let countries, dots
+
+	if(document.getElementById(cardId).chart1Displayed) {
+		countries = Array.from(geoSelections.keys()),
+		dots = getTextAndColor(bySelections,getColorSet(true, geoSelections))
+	} else {
+		countries = ["EU","Others"]
+		const c = getColorSetDefinitions()
+		dots = new Map()
+		if(isInGroupC) {
+			dots.set("EU, "+MS.TXT_BY_LBL_SHORT_CNEU, c.EU.light)
+			dots.set("EU, "+MS.TXT_BY_LBL_SHORT_CEU,  c.EU.mid)
+			dots.set("EU, "+MS.TXT_BY_LBL_SHORT_CNAT, c.EU.dark)
+			dots.set("Others, "+MS.TXT_BY_LBL_SHORT_CNEU, c.SET1.light)
+			dots.set("Others, "+MS.TXT_BY_LBL_SHORT_CEU, c.SET1.mid)
+			dots.set("Others, "+MS.TXT_BY_LBL_SHORT_CNAT, c.SET1.dark)
+		} else {
+			dots.set("EU, "+MS.TXT_BY_LBL_SHORT_BNEU, c.EU.light)
+			dots.set("EU, "+MS.TXT_BY_LBL_SHORT_BEU,  c.EU.mid)
+			dots.set("EU, "+MS.TXT_BY_LBL_SHORT_BNAT, c.EU.dark)
+			dots.set("Others, "+MS.TXT_BY_LBL_SHORT_BNEU, c.SET1.light)
+			dots.set("Others, "+MS.TXT_BY_LBL_SHORT_BEU, c.SET1.mid)
+			dots.set("Others, "+MS.TXT_BY_LBL_SHORT_BNAT, c.SET1.dark)
+		}
+	}
+	
+	detailLegends.get(cardId).content = {countries:countries, dots:dots}
 
 	function getTextAndColor(x,y) {
 		const retVal = new Map()
@@ -339,7 +359,7 @@ export function storeSelectedCounts(_numberOfCountriesSelected, _numberOfBySelec
 
 // number of selectable items
 export function setNOSelectable(cardId, geo, by) {
-	const byBox = getBySelectBox(cardId)
+	const byBox = _getBySelectBox(getAllBoxes(cardId))
 	byBox.labelNumber=by
 	if(document.getElementById(cardId).isExpanded) {
 		const geoBox = document.getElementById(MS.GEO_SELECT_DOM_ID)

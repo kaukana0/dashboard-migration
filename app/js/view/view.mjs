@@ -11,10 +11,10 @@ import * as Url from "../model/url.mjs"
 import Fetcher from "../model/fetcher.mjs"
 import {getMapFromArray} from "./modules/util.mjs"
 import * as CommonConstraints from "./modules/select/constraints/commonConstraints.mjs"
-import * as GROUPS from "../model/common/groupDefinition.mjs"
 import {getCardsOfCategory} from "./modules/cardToMenuMapping.mjs"
 import {getColorSetDefinitions} from "./modules/card/elements/colorSets.mjs"
 import {getSeries, getSeriesKeys} from "../../components/chart/chart.mjs"
+import {getBySelectSelectedCount, isInGroupC} from "./modules/select/bySelect.mjs"
 
 // used to decide when to update one instead of all cards (reduce number of chart reloads)
 let currentlyExpandedId = null
@@ -131,16 +131,6 @@ function onSelectedForOneCard(cardId, cb, setTooltip=true) {
   })
 }
 
-function getBySelectSelectedCount(boxes) {
-  let count = 0
-  const b = [MS.BY_SELECT_ID, MS.INDIC_MG_ID, MS.INDIC_LEG_FRAM]
-  b.forEach(element=>{
-    if(boxes.selections.get(element)) {
-      count = boxes.selections.get(element).size
-    }
-  })
-  return count  
-}
 
 function fetch(cardId, cb) {
   console.debug("fetch for card", cardId)
@@ -153,11 +143,12 @@ function fetch(cardId, cb) {
 
   const bySelections = boxes.selections.get(MS.BY_SELECT_ID)
   const fragGetter = {} ; fragGetter[MS.BY_SELECT_ID] = Url.getBySelectFrag
+  const inC = isInGroupC(boxes, bySelections)
   Fetcher( Url.buildFrag(boxes,dataset,fragGetter), (data)=>{
-    Cards.setData(cardId, GeoSelect.getSelected(), isInGroupC(boxes, bySelections), data, cb)
+    Cards.setData(cardId, GeoSelect.getSelected(), inC, data, cb)
     if(bySelections) {
       const bla = getSeriesKeys(getSeries(data.timeSeries.data))
-      Cards.updateDetailLegend(cardId, GeoSelect.getSelected(), bla)
+      Cards.updateDetailLegend(cardId, GeoSelect.getSelected(), bla, inC)
     } else {
       console.warn("No by selections for", cardId)
     }
@@ -165,19 +156,6 @@ function fetch(cardId, cb) {
   return boxes
 }
 
-function isInGroupC(boxes, bySelections) {
-  if(bySelections) {
-    const keys = bySelections.keys()
-    let isInGroupC = ""
-    if(boxes.selections.has(MS.BY_SELECT_ID)) {
-      const firstSel = Array.from(keys)[0]
-      isInGroupC = GROUPS.isInGroupC(firstSel)
-    }
-    return isInGroupC
-  } else {
-    return true
-  }
-}
 
 // menuItemId can be anything, menuItem or submenuItem
 function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {

@@ -1,5 +1,6 @@
 /*
-slotBottomLeft
+This is a WebComponent.
+It is put inside "slotBottomLeft" of a ChartCard.
 */
 
 import {SHORT2LONG} from "../elements/tooltips/labelMapping.mjs"
@@ -17,6 +18,11 @@ class Element extends HTMLElement {
   /*
   */
   set content(val) {
+    if((val.dots.size===3 || val.dots.size===6) && val.countries.length<=2) {
+      this.show=true
+    } else {
+      this.show=false
+    }
     this.shadowRoot.getElementById("country1").innerText = val.countries[0]
     this.shadowRoot.getElementById("dots1").setAttribute("country", val.countries[0])
     this.shadowRoot.getElementById("dots1").innerHTML=""
@@ -31,10 +37,19 @@ class Element extends HTMLElement {
     }
 
     val.dots.forEach((v,k)=>{
-      const s = `[country="${k.substring(0,2)}"]`
+      const idx = k.indexOf(",")
+      const s = `[country="${k.substring(0,idx)}"]`
       const u = this.shadowRoot.querySelector(s)
-      if(u) { u.innerHTML+=getBlaFragment(v, SHORT2LONG.get(k.substring(4))) }
+      if(u) { u.innerHTML+=getBlaFragment(v, SHORT2LONG.get(k.substring(idx+2))) }
     })
+  }
+
+  set show(trueOrFalse) {
+    if(trueOrFalse) {
+      this.shadowRoot.getElementById("main").style.display = "flex"
+    } else {
+      this.shadowRoot.getElementById("main").style.display = "none"
+    }
   }
 
 }
@@ -44,7 +59,7 @@ window.customElements.define('detail-legend', Element)
 
 function html() {
 return `
-<div style="display:flex;">
+<div id="main" style="display:flex;">
   <div id="country1" class="country line"></div>
   <div id="dots1" class="bla"></div>
   <div id="country2" class="country" style="margin-left:20px;"></div>
@@ -57,21 +72,24 @@ function css() {return `<style>
 .bla {
   display:flex;
   flex-direction:column;
+  font-size: 12px;
+  line-height: 20px;
 }
 
 .dot {
-  height: 0.6rem;
-  width: 0.6rem;
+  height: 12px;
+  width: 12px;
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
-  margin-right:10px;
+  margin: 4px 10px 0 0;
 }
 
 .country {
   margin-right:10px; 
   padding-right:10px; 
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .line {
