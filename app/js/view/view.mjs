@@ -148,7 +148,7 @@ function fetch(cardId, cb) {
     Cards.setData(cardId, GeoSelect.getSelected(), inC, data, cb)
     if(bySelections) {
       const bla = getSeriesKeys(getSeries(data.timeSeries.data))
-      Cards.updateDetailLegend(cardId, GeoSelect.getSelected(), bla, inC)
+      Cards.updateDetailLegend(cardId, GeoSelect.getSelected(), bla, inC, bySelections.size)
     } else {
       console.warn("No by selections for", cardId)
     }

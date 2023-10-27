@@ -260,13 +260,14 @@ export function setData(cardId, geoSelections, isInGroupC, data, cb) {
 	})
 }
 
-export function updateDetailLegend(cardId, geoSelections, bySelections, isInGroupC) {
+export function updateDetailLegend(cardId, geoSelections, dataSeriesKeys, isInGroupC, bySelectCount) {
 
 	let countries, dots
 
 	if(document.getElementById(cardId).chart1Displayed) {
 		countries = Array.from(geoSelections.keys()),
-		dots = getTextAndColor(bySelections,getColorSet(true, geoSelections))
+		dots = getTextAndColor(dataSeriesKeys, getColorSet(true, geoSelections))
+		detailLegends.get(cardId).show = dots.size>=2 && countries.length<=2
 	} else {
 		countries = ["EU","Others"]
 		const c = getColorSetDefinitions()
@@ -286,9 +287,9 @@ export function updateDetailLegend(cardId, geoSelections, bySelections, isInGrou
 			dots.set("Others, "+MS.TXT_BY_LBL_SHORT_BEU, c.SET1.mid)
 			dots.set("Others, "+MS.TXT_BY_LBL_SHORT_BNAT, c.SET1.dark)
 		}
+		detailLegends.get(cardId).show = bySelectCount>1
 	}
 	
-	detailLegends.get(cardId).show = dots.size>=2 && countries.length<=2
 	detailLegends.get(cardId).content = {countries:countries, dots:dots}
 
 	function getTextAndColor(x,y) {
