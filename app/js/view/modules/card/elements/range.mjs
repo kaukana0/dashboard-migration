@@ -64,7 +64,8 @@ export function reset(cardId, toMax=false, fireSelected=false, isSinglularValue=
 	const el = document.getElementById("timeRange"+cardId)
 	const max = el.getAttribute("max")
 	const defaultValue = el.getAttribute("defaultValue")
-	el.setAttribute("singularvalue", isSinglularValue)
+	// as per request, have the blue track right of the handle also in dotplot by commenting this out
+	//el.setAttribute("singularvalue", isSinglularValue)
 	el.setAttribute("valuel", toMax?max:defaultValue)
 	el.setAttribute("textl",  toMax?max:defaultValue)
 	if(fireSelected) {el.fireSelected()}

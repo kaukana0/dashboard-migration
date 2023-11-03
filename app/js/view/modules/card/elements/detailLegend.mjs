@@ -72,8 +72,10 @@ function css() {return `<style>
 }
 
 .dot {
-  height: 12px;
-  width: 12px;
+  min-height: 12px;
+  min-width: 12px;
+  max-height: 12px;
+  max-width: 12px;  /* really nail the size down, otherwise they stretch */
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;

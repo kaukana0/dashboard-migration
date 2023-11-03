@@ -275,10 +275,12 @@ export function updateDetailLegend(cardId, geoSelections, dataSeriesKeys, isInGr
 		if(isInGroupC) {
 			dots.set("EU, "+MS.TXT_BY_LBL_SHORT_CNEU, c.EU.light)
 			dots.set("EU, "+MS.TXT_BY_LBL_SHORT_CEU,  c.EU.mid)
-			dots.set("EU, "+MS.TXT_BY_LBL_SHORT_CNAT, c.EU.dark)
 			dots.set("Others, "+MS.TXT_BY_LBL_SHORT_CNEU, c.SET1.light)
 			dots.set("Others, "+MS.TXT_BY_LBL_SHORT_CEU, c.SET1.mid)
-			dots.set("Others, "+MS.TXT_BY_LBL_SHORT_CNAT, c.SET1.dark)
+			if(bySelectCount>2) {
+				dots.set("EU, "+MS.TXT_BY_LBL_SHORT_CNAT, c.EU.dark)
+				dots.set("Others, "+MS.TXT_BY_LBL_SHORT_CNAT, c.SET1.dark)
+			}
 		} else {
 			dots.set("EU, "+MS.TXT_BY_LBL_SHORT_BNEU, c.EU.light)
 			dots.set("EU, "+MS.TXT_BY_LBL_SHORT_BEU,  c.EU.mid)

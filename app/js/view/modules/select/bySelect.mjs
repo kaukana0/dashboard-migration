@@ -23,7 +23,7 @@ export function isInGroupC(boxes, bySelections) {
   if(bySelections) {
     const keys = bySelections.keys()
     let retVal = ""
-    if(boxes.selections.has(MS.BY_SELECT_ID)) {
+    if(getBySelectSelections(boxes)) {
       const firstSel = Array.from(keys)[0]
       retVal = GROUPS.isInGroupC(firstSel)
     }
