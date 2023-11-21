@@ -1043,17 +1043,18 @@ indicators:
     infoText: "<p class='ecl-u-type-paragraph'>The indicator is defined as the number of persons living in a household where the members of working age: those aged 18-64, but excluding students aged 18-24 and people who are retired according to their self-defined current economic status or who receive any pension (except survivors pension), as well as people in the age bracket 60-64 who are inactive and living in a household where the main income is pensions (except survivors pension) worked a working time equal or less than 20% of their total work-time potential during the previous year.&nbsp;</p>
               <p class='ecl-u-type-paragraph'>For information on data quality, please consult the <a class='ecl-link' href='https://ec.europa.eu/eurostat/cache/metadata/en/ilc_sieusilc.htm' target='_blank'>metadata</a>.</p>"
 
-  - name: Material and social deprivation
+  - name: Severe deprivation
+    nameLong: Severe material and social deprivation
     id: MD_23
     category: Social inclusion
     articleLink: *articleLinkSocialInclusion
     dataset:
       citizen:
-        id: ILC_MDSD04
-        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_mdsd04
+        id: ILC_MDSD15
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_mdsd15
       birth:
-        id: ILC_MDSD05
-        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_mdsd05
+        id: ILC_MDSD16
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/ilc_mdsd16
     dimensions:
       ui:
         dropdown:
@@ -1071,7 +1072,7 @@ indicators:
           - *18-over
         Sex:
           - *total
-    infoText: "<p>People are considered in material and social deprivation if they cannot afford five or more of the thirteen standard deprivation items. If seven or more of the thirteen standard deprivation items cannot be afforded, they are considered in severe material deprivation. List of items at household level:</p>
+    infoText: "<p>People are considered in material and social deprivation if they cannot afford five or more of the thirteen standard deprivation items. If seven or more of the thirteen standard deprivation items cannot be afforded, they are considered in severe material and social deprivation. List of items at household level:</p>
               <ul>
               <li>capacity to face unexpected expenses</li>
               <li>capacity to afford paying for one week annual holiday away from home</li>
