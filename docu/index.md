@@ -15,11 +15,14 @@
 - [Range slider input](./adr/adr08.md)
 - [Range slider config](./adr/adr09.md)
 - [Chart colors](./adr/adr10.md)
-- [Various Breakdowns (WIP)](./adr/adr11.md)
+- [Various Breakdowns](./adr/adr11.md)
 - [Handling of "EU" code](./adr/adr12.md)
 - [Line-group highligting, Legend and Tooltip](./adr/adr13.md)
 - [Async issues](./adr/adr14.md)
 - [Menu Navigation](./adr/adr15.md)
+- [Responsive behaviour](./adr/adr16.md)
+- [Implementation of responsive behaviour](./adr/adr17.md)
+- [Accessibility](./adr/adr18.md)
 
 
 # Technical details

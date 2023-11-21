@@ -23,8 +23,9 @@ export function createDropdownBoxes(cfg, datasets) {
     const attribs = new Map()
     attribs.set("dimension", boxName)
     attribs.set("id", Math.floor(Math.random() * 10000))  // doesnt matter which, this is only needed to make it dismissable
+    
     const width = typeof cfg[i][boxName]["width"] === "undefined" ? "200px" : cfg[i][boxName]["width"]
-    attribs.set("style", `width:${width}; margin-right: 20px;`)
+    attribs.set("style", `min-width:${width}; max-width:400px;`) // flex:1 1 0;
 
     const [items, disabledItems, groups, selected] = getItemInfos(cfg[i][boxName]["items"])
 
@@ -94,6 +95,9 @@ function getDocFrag(items, disabledItems, attribs, label, isMultiselect=false, g
   dropdownBox.data = [items, getGroupsFromObject(groups)]
 
   select.labelLeft = label
+
+  select.classList.add("unifiedSelectboxSize")
+  dropdownBox.classList.add("unifiedSelectboxSize")
 
   const fragment = new DocumentFragment()
   fragment.appendChild(select)

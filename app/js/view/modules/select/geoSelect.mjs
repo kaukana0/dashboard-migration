@@ -21,8 +21,9 @@ export function create(cfg, _groups, callback) {
   box.setAttribute("favoriteStar", "true")
   box.setAttribute("multiselect", "true")
   box.setAttribute("textForMultiselect", "Countries selected")
-  box.setAttribute("style", "width:250px; white-space:nowrap; text-overflow:ellipsis;")
-  select.setAttribute("style", "width:250px; margin-right: 20px; margin-left:20px; white-space:nowrap; text-overflow:ellipsis;")
+  select.setAttribute("style", "min-width:360px; white-space:nowrap; text-overflow:ellipsis;") // flex:1 1 0;
+  select.classList.add("unifiedSelectboxSize")
+  box.classList.add("unifiedSelectboxSize")
   select.showLabels = false
   select.labelNumber = 1
 
@@ -49,11 +50,15 @@ export function create(cfg, _groups, callback) {
 export function moveToMainArea() {
   select.box.setAttribute("multiselect", "false")
   document.getElementById(MS.MAIN_AREA_ANCHOR_DOM_ID).after(select)
+  document.getElementById(MS.GEO_SELECT_DOM_ID).showLabels = false
 }
 
 export function moveIntoCard(cardAnchorId) {
   select.box.setAttribute("multiselect", "true")
   document.getElementById(cardAnchorId).insertAdjacentElement("afterbegin", select)
+  document.getElementById(MS.GEO_SELECT_DOM_ID).labelLeft = "Country"
+  document.getElementById(MS.GEO_SELECT_DOM_ID).labelRight = "selectable"
+  document.getElementById(MS.GEO_SELECT_DOM_ID).showLabels = true
 }
 
 export function selectFav() {

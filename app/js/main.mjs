@@ -13,7 +13,7 @@ function init() {
     .then((response) => response.text())
     .then((data) => {
       const cfg = Yaml.load(data)
-      isReachable(cfg.globals.baseURL, (is) => console.log(`REST endpoint reachable? ${is ? "yes" : "no"}`))
+      //isReachable(cfg.globals.baseURL, (is) => console.log(`REST endpoint reachable? ${is ? "yes" : "no"}`))
       setBaseUrl(cfg.globals.baseURL)
       View.createUIElements(cfg, true, ()=> {
         View.setupGlobalInfoClick(cfg.globals.texts.globalInfo)

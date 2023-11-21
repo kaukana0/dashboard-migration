@@ -8,7 +8,8 @@ export function getCardHtmlString(id, title, longTitle, urlFrag, anchorElDomId) 
   return `
     <chart-card id="${id}" header_c="${title}" header_e="${longTitle}" urlFrag="${urlFrag}" anchor="anchorExpandedCard">
 
-      <div id="${anchorElDomId}${id}" slot="slotTop" style="height:50px; display:flex;">
+      <!-- CARD_SLOT_ANCHOR_DOM_ID -->
+      <div id="${anchorElDomId}${id}" slot="slotTop" style="display:flex; flex-wrap:wrap; gap:20px;">
       </div>
 
       <div slot="slotBottom">
@@ -17,8 +18,8 @@ export function getCardHtmlString(id, title, longTitle, urlFrag, anchorElDomId) 
         </div>
       </div>
 
-      <div slot="slotBottomLeft" style="margin-top:15px;">
-        <detail-legend id="detailLegend-${id}"></detail-legend>
+      <div slot="slotBottomLeft" style="margin-top:15px; display:flex; flex-wrap:wrap;">
+        <detail-legend id="detailLegend-${id}" style="display:flex; flex-wrap:wrap;"></detail-legend>
       </div>
       
     </chart-card>`

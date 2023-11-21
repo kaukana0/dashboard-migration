@@ -172,11 +172,13 @@ function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {
 function onCardExpand(id) {
   currentlyExpandedId = id
 
+  document.getElementById("countrySelectContainer").style.display="none"
+
   CommonConstraints.setBySelect(Cards.getBySelectBox(id))
 
   GeoSelect.moveIntoCard(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
   document.body.style.overflowY="hidden"
-  window.scrollTo(0, 0)
+  window.scrollTo(0, 1)
 
   // this is done here not because of resetting to original value,
   // but to let range WebComponent calculate and display the correct slider position
@@ -187,13 +189,16 @@ function onCardExpand(id) {
 
   Cards.filter( getCardsOfCategory(MainMenu.getMenuItemIds(id)[0]) )
 
-  document.getElementById(MS.GEO_SELECT_DOM_ID).labelLeft = "Country"
-  document.getElementById(MS.GEO_SELECT_DOM_ID).labelRight = "selectable"
-  document.getElementById(MS.GEO_SELECT_DOM_ID).showLabels = true
+  const y = document.getElementById("anchorExpandedCard").getBoundingClientRect().top + window.scrollY
+  document.getElementById(id).setAttribute("offsety", y+"px")
+
+  setCardsActive(false, id)
 }
 
 function onCardContract(id) {
 
+  document.getElementById("countrySelectContainer").style.display=""
+  
   GeoSelect.moveToMainArea()
   document.body.style.overflowY="auto"
 
@@ -218,7 +223,24 @@ function onCardContract(id) {
 
   currentlyExpandedId = null
 
-  document.getElementById(MS.GEO_SELECT_DOM_ID).showLabels = false
+  setCardsActive(true)
+}
+
+function setCardsActive(isActive, id) {
+  Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => {
+
+    if(id && cardId===id) {
+    } else {
+      if(!isActive) {
+        document.getElementById(cardId).setAttribute("inert", true)
+        //document.getElementById(cardId).setAttribute("aria-hidden", true)
+      } else {
+        document.getElementById(cardId).removeAttribute("inert")
+        //document.getElementById(cardId).removeAttribute("aria-hidden")
+      }
+    }
+
+  })
 }
 
 export function setupGlobalInfoClick(txt) {

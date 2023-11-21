@@ -71,8 +71,8 @@ function css() {
   
   #mainLoader {
     position: fixed;
-    width: 100vw;
-    height: 150vh;
+    width: 100%;
+    height: 150%;
     left: 0%;
     top: 0%;
     margin-top: 30px;

@@ -49,6 +49,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 				width: 100%;
 				margin: 0;
 				font-family: Arial,sans-serif;
+				position: relative;
 			}
 
 			.boxLabelLeft {
@@ -56,6 +57,14 @@ Author: robert.gebhardt@ext.ec.europa.eu
 				padding-left: 5px;
 				margin-bottom: 5px;
 				font-weight: 600;
+			}
+
+			/* selectboxes all have same width when they start wrapping
+			due to narrowing the viewport - but not on wide displays */
+			@media (max-width:1455px) {
+				.unifiedSelectboxSize {
+					min-width: 340px !important;
+				}
 			}
 
 		</style>
@@ -71,50 +80,54 @@ Author: robert.gebhardt@ext.ec.europa.eu
 
 	<div style="height:100%; display: flex; flex-flow: column;">
 
+		<header>
 		<ecl-like-hero-banner text="Migrant integration and inclusion dashboard"></ecl-like-hero-banner>
+		</header>
 
 		<div style="display:flex; justify-content: space-between; align-items: center; background-color: #0E47CB">
 			<ecl-like-menu id="menu" style="flex-grow:1;"></ecl-like-menu>
-			<symbol-button id="globalInfoButton" symbol="infoWhite" style="width:40px; height:40px; margin-right: 10px;"></symbol-button>
+			<symbol-button id="globalInfoButton" symbol="infoWhite" style="width:40px; height:40px; margin-right: 10px;" tabindex="0"></symbol-button>
 			<div>
-				<symbol-button id="sharingButton" symbol="sharing" style="width:40px; height:40px; margin-right: 40px;"></symbol-button>
+				<symbol-button id="sharingButton" symbol="sharing" style="width:40px; height:40px; margin-right: 40px;" tabindex="0"></symbol-button>
 				<ecl-like-social-share></ecl-like-social-share>
 			</div>
 		</div>
 
-		<!-- note "Fixed positioning" at https://developer.mozilla.org/en-US/docs/Web/CSS/position#values -->
-		<div style="transform: scale(1); display:block;">
-
+		<div style="">
 			<div id="anchorExpandedCard"></div>
-			<div style="margin-left: 35px; margin-top:10px; height:80px;">
+			<div id="countrySelectContainer" style="margin-left: 35px; margin-top:10px; padding-top:30px; height:80px; max-width:300px;">
 				<div id="anchorSelectCountryOutsideOfCard"></div>
-				<div id="selectCountryContainer" style="width:250px; margin-left:20px; margin-right:35px; margin-bottom:20px;"></div>
 			</div>
 
-			<div id="cards" style="display: flex; flex-wrap: wrap; justify-content: center;"></div>
+			<main>
+			<div id="cards" style="width:100%; display: flex; flex-wrap: wrap; justify-content: center;"></div>
+			</main>
 		</div>
 
+		<footer>
 		<div class="showAfterLoad" style="visibility:hidden; display:flex; justify-content: space-between;">
 
 			<!-- legal links -->
 			<div style="font-size: 16px; color: #0E47CB; margin-left:5%;">
 				<p>
-					<a href="https://ec.europa.eu/info/cookies_en?lang=en&amp;lang=en"><span tabindex="0">Cookies</span></a>
+					<a href="https://ec.europa.eu/info/cookies_en?lang=en&amp;lang=en"><span>Cookies</span></a>
 					|
-					<a href="https://ec.europa.eu/info/privacy-policy_en?lang=en&amp;lang=en"><span tabindex="0">Privacy policy</span></a>
+					<a href="https://ec.europa.eu/info/privacy-policy_en?lang=en&amp;lang=en"><span>Privacy policy</span></a>
 					|
-					<a href="https://ec.europa.eu/info/legal-notice_en?lang=en&amp;lang=en"><span tabindex="0">Legal notice</span></a>
+					<a href="https://ec.europa.eu/info/legal-notice_en?lang=en&amp;lang=en"><span>Legal notice</span></a>
 				</p>
 			</div>
 	
-			<div class="showAfterLoad" style="visibility:hidden; font-size: 16px; display:flex; justify-content: space-evenly; align-items: center; margin-right:5%">
-					<div style="width: 1.2rem; height: 1.2rem; margin-right:5px; color: #0E47CB;">
-						<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg>
-					</div >
-					<a href="mailto:Estat-user-support@ec.europa.eu?subject=Migrant%20integration%20indicators%20Dashboard" target="_blank">Feedback</a></div>
+			<div class="" style="visibility:hidden; font-size: 16px; display:flex; justify-content: space-evenly; align-items: center; margin-right:5%">
+				<div style="width: 1.2rem; height: 1.2rem; margin-right:5px; color: #0E47CB;">
+					<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg>
+				</div>
+				<a href="mailto:Estat-user-support@ec.europa.eu?subject=Migrant%20integration%20indicators%20Dashboard" target="_blank">Feedback</a>
 			</div>
-
 		</div>
+		</footer>
+
+	</div>
 
 	<ecl-like-message></ecl-like-message>
 	<ecl-like-modal id="globalModal"></ecl-like-modal>

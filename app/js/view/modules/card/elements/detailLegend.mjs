@@ -54,11 +54,15 @@ window.customElements.define('detail-legend', Element)
 
 function html() {
 return `
-<div id="main" style="display:flex;">
-  <div id="country1" class="country line"></div>
-  <div id="dots1" class="bla"></div>
-  <div id="country2" class="country" style="margin-left:20px;"></div>
-  <div id="dots2" class="bla"></div>
+<div id="main" style="display:flex; flex-wrap:wrap;">
+  <div style="display:flex; margin-right:20px;">
+    <div id="country1" class="country line"></div>
+    <div id="dots1" class="bla"></div>
+  </div>
+  <div style="display:flex; margin:5px;">
+    <div id="country2" class="country""></div>
+    <div id="dots2" class="bla"></div>
+  </div>
 </div>`
 }
   
