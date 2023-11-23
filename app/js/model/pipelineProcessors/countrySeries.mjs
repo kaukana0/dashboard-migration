@@ -43,13 +43,18 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
       // the order of countries comes from a processor which was run before this processor
       output.countryOrder.forEach( country => {
         let coeff = new Array(inputDataFromRequest.size.length)
-        const idxGeo = inputDataFromRequest.dimension.geo.category.index[EUCode.replaceRev(country)]
+
+        let idxGeo = inputDataFromRequest.dimension.geo.category.index[EUCode.replaceRev(country)]
+        // this is a specialty - if code EU27_2020 is missing, "EU" is tried
+        if((typeof idxGeo === 'undefined') && country===MS.CODE_EU) {
+          idxGeo = inputDataFromRequest.dimension.geo.category.index[MS.CODE_EU]
+        }
+
         if(country==="-") {
           output.countrySeries.data[0].push(MS.ID_NO_DATA)
           ll.push(MS.ID_NO_DATA)
         } else {
           if(typeof idxGeo !== 'undefined') {
-            //output.countrySeries.data[0].push( inputDataFromRequest.dimension.geo.category.label[country] )
             output.countrySeries.data[0].push( country )
     
             coeff.fill(0)
@@ -62,6 +67,8 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
             } else {
               ll.push(inputDataFromRequest.value[i])
             }
+          } else {
+            console.error("countrySeriesProcessor: idxGeo not found for country ", country)
           }
         }
       })

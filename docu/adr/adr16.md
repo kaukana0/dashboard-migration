@@ -42,6 +42,7 @@ Following a description of actions that happen to elements when resizing.
     3) Close button disappering, a link named "Back" appearing top left
     4) Download and Article Buttons move below footnote
     5) Title and Subtitle text is wrapping (creating a new line) and fontsize is decreasing.
+    6) Info and chart-type buttons move above the title
 
     Footer:
 

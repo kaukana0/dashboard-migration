@@ -8,8 +8,6 @@ WIP
 
 ## Context
 
-ISO 30071-1
-
 The following critera are goint to be explcitly addressed:
 
 - contrast

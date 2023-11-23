@@ -51,10 +51,11 @@ export function create(containerId, cfg, selectedCallback, onCardExpand, onCardC
 
 		const merged = Util.mergeObjects(cfg.indicatorBase, cfg.indicators[i])
 		const id = getIdFromName(merged.name)
-
-		console.debug("cards: merged cfg for indicator", merged.name, merged, id)
-
+		
 		if(!merged.ignore) {
+	
+			console.debug("cards: merged cfg for indicator", merged.name, merged, id)
+
 			if(merged["hanSolo"]) {document.getElementById(containerId).innerHTML = ""}			// undocumented feature. for troubleshooting purposes.
 
 			const longTitle = typeof merged.nameLong === "undefined" ? merged.name : merged.nameLong

@@ -71,6 +71,8 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
           }
           output.timeSeries.data.push(ll)
         }
+      } else {
+        //console.error("timeSeries processor: by not found for orderedBy",orderedBy)
       }
     })
   }
