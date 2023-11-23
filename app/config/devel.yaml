@@ -296,7 +296,6 @@ indicatorBase:
               - *15-29
               - *20-64s
         - Sex:        # in the REST request, this becomes the dimension
-            width: "250px"
             items:
               - *total    # and code becomes the code; label becomes dropdownbox item
               - *women
@@ -360,7 +359,7 @@ indicators:
 
 
     infoText: "<p class='ecl-u-type-paragraph'>The number of persons having their usual residence in a country on 1 January of the respective year. When usually resident population is not available, countries may report legal or registered residents.</p>
-              <p class='ecl-u-type-paragraph'>For information on data quality, please consult the <a class='ecl-link' href=https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm target='_blank'>metadata</a>.</p>"
+              <p class='ecl-u-type-paragraph'>For information, please consult the <a class='ecl-link' href=https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm target='_blank'>metadata</a>.</p>"
 
   - name: Median age
     id: MD_2
@@ -388,7 +387,7 @@ indicators:
         - label: "years"
           code: YR
     infoText: "<p>The median age is the age that divides a population into two groups that are numerically equivalent.</p>
-              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm'>metadata</a>.</p>"
+              <p>For information, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm'>metadata</a>.</p>"
 
 ##########################################################
 
@@ -443,6 +442,7 @@ indicators:
             start: 2002
             end: 0
             selected: 2013
+
     infoText: "<p>The employment rate is the percentage of employed persons in relation to the comparable total population. Employed persons are defined as all persons who worked at least one hour for pay or profit during the reference week or were temporarily absent from such work.</p>
               <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/lfsa_esms.htm'>metadata</a>.</p>"
 
@@ -1429,7 +1429,7 @@ indicators:
         Sex:
           - *total
     infoText: "<p>The naturalisation rate is the ratio between the number of persons who acquired the citizenship of a country during a calendar year and the stock of non-national residents in the same country at the beginning of the year.</p> 
-                <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_acqn_esms.htm'>metadata</a>.</p>"
+                <p>For information, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_acqn_esms.htm'>metadata</a>.</p>"
 
   # attention: this indicator works only because of some hardcoded, dedicated, specialised sourcecode
   - name: Long-term residence permits
@@ -1497,4 +1497,4 @@ indicators:
             code: "TOTAL"
     infoText: "<p>Long-term residence permits cover all residence permits granted to non-EU citizens (third-country nationals) valid for at least five years or more (including permanent residence permits).</p>
               <p>To calculate the share, as a denominator data on the stock of all valid permits to stay at the end of each reporting year are used. As a numerator data on the stock of long-term residents are used.</p>
-              <p>For information on data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_res_esms.htm'>metadata</a>.</p>"
+              <p>For information, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_res_esms.htm'>metadata</a>.</p>"
