@@ -746,6 +746,7 @@ indicators:
             start: 2004
             end: 0
             selected: 2013
+      nonUi:
         isced11:
         - label: label    #TODO
           code: ED5-8
