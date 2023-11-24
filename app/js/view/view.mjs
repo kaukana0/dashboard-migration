@@ -226,6 +226,7 @@ function onCardContract(id) {
   setCardsActive(true)
 }
 
+// TODO: refactor; via CSS class!
 function setCardsActive(isActive, id) {
   Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId) => {
 
@@ -241,6 +242,13 @@ function setCardsActive(isActive, id) {
     }
 
   })
+
+  if(!isActive) {
+    document.getElementById("footerBottom").setAttribute("inert", true)
+  } else {
+    document.getElementById("footerBottom").removeAttribute("inert")
+  }
+
 }
 
 export function setupGlobalInfoClick(txt) {
