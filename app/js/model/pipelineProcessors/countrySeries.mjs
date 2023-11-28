@@ -25,6 +25,10 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   if(!output.countrySeries) {
     output.countrySeries = {}
     output.countrySeries.data = [[]]
+    output.countrySeries.meta = {
+      smallestValue:Number.POSITIVE_INFINITY,
+      biggestValue:Number.NEGATIVE_INFINITY
+    }
   }
 
   const valence = MultiDim.calcOrdinalValence(inputDataFromRequest.size)
@@ -65,7 +69,10 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
             if(typeof inputDataFromRequest.value[i] === 'undefined') {
               ll.push(MS.ID_NO_DATAPOINT_COUNTRYSERIES)
             } else {
-              ll.push(inputDataFromRequest.value[i])
+              const v = inputDataFromRequest.value[i]
+              ll.push(v)
+              if(v<output.countrySeries.meta.smallestValue) { output.countrySeries.meta.smallestValue=v }
+              if(v>output.countrySeries.meta.biggestValue) { output.countrySeries.meta.biggestValue=v }
             }
           } else {
             console.error("countrySeriesProcessor: idxGeo not found for country ", country)

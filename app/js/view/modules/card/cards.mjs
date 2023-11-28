@@ -254,16 +254,17 @@ export function setData(cardId, geoSelections, isInGroupC, data, cb) {
 
 	const card = document.getElementById(cardId)
 
+
 	card.switchSrcLink(isInGroupC)
 	card.setData1({
 		cols: data.timeSeries.data,	countryNamesFull:countryNamesFull,
-		palette:data.colorPalette, fixColors:getColorSet(true, geoSelections)
+		palette:data.colorPalette, fixColors:getColorSet(true, geoSelections)		
 	}, ()=>{
-	card.setData2({
-		cols: data.countrySeries.data, countryNamesFull:countryNamesFull,
-		palette:data.colorPalette, fixColors:getColorSet(false, geoSelections),
-		highlightIndices:getIndices(data,geoSelections)
-			}, cb)
+		card.setData2({
+			cols: data.countrySeries.data, countryNamesFull:countryNamesFull,
+			palette:data.colorPalette, fixColors:getColorSet(false, geoSelections),
+			highlightIndices:getIndices(data,geoSelections), meta: data.countrySeries.meta
+		}, cb)
 	})
 }
 
