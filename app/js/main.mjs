@@ -9,7 +9,7 @@ function init() {
 
   LoadScreen.show()
 
-  fetch("config/devel.yaml")
+  fetch("config/config.yaml")
     .then((response) => response.text())
     .then((data) => {
       const cfg = Yaml.load(data)

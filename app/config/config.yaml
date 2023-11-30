@@ -1,6 +1,6 @@
-# configuration for "Migration dashboard" by Eurostat
+# configuration for "Migrant integration and inclusion dashboard" by Eurostat
 # yaml schema v0.9.1
-# version: devel-09-11
+# date: 2023-11-30
 
 codeList:
 
