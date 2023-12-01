@@ -23,6 +23,7 @@
 - [Responsive behaviour](./adr/adr16.md)
 - [Implementation of responsive behaviour](./adr/adr17.md)
 - [Accessibility](./adr/adr18.md)
+- [Detail Legend](./adr/adr19.md)
 
 
 # Technical details

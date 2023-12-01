@@ -4,7 +4,7 @@ import {MS} from "../../../../common/magicStrings.mjs"
 export function getColorSetDefinitions() {
 	return {
 		EU: { dark:"#082b7a", mid:"#0e47cb ", light:"#388ae2" },
-		SET1: { dark:"#734221", mid:"#c66914", light:"#dfb18b" },
+		SET1: { dark:"#734221", mid:"#BD6719", light:"#dfb18b" },
 		SET2: { dark:"#005500", mid:"#008800", light:"#00BB00" }
 	}
 }

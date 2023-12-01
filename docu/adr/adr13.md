@@ -8,6 +8,8 @@ Accepted
 
 ## Context
 
+note: Legend here means the legend right side of the chart.
+
 Req. say, that 3 lines belonging to one country should all be highlighted if one of them is hovered w/ mouse (possibly also touched).
 Additionally, hovering over a legend item should higlight also 3 lines.
 This functionality ties in with the tooltip - adr07 is being revised - please see also adr07.

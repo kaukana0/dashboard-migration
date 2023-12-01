@@ -4,6 +4,9 @@ all buttons go into the "slotTop" div, which itself goes into the slot of a card
 
 TODO: de-dupe slotBottomLeft content (index.html)
 */
+
+import {MS} from "../../../common/magicStrings.mjs"
+
 export function getCardHtmlString(id, title, longTitle, urlFrag, anchorElDomId) {
   return `
     <chart-card id="${id}" header_c="${title}" header_e="${longTitle}" urlFrag="${urlFrag}" anchor="anchorExpandedCard">
@@ -19,7 +22,7 @@ export function getCardHtmlString(id, title, longTitle, urlFrag, anchorElDomId) 
       </div>
 
       <div slot="slotBottomLeft" style="margin-top:15px; display:flex; flex-wrap:wrap;">
-        <detail-legend id="detailLegend-${id}" style="display:flex; flex-wrap:wrap;"></detail-legend>
+        <detail-legend id="${MS.DOM_ID_DETAIL_LEGEND}${id}" style="display:flex; flex-wrap:wrap;"></detail-legend>
       </div>
       
     </chart-card>`

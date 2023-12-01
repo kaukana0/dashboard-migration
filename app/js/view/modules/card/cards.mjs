@@ -63,7 +63,7 @@ export function create(containerId, cfg, selectedCallback, onCardExpand, onCardC
 			const doc = parser.parseFromString(html, "text/html")
 			document.getElementById(containerId).appendChild( doc.body.firstElementChild )
 
-			detailLegends.set(id,document.getElementById("detailLegend-"+id))
+			detailLegends.set(id,document.getElementById(MS.DOM_ID_DETAIL_LEGEND+id))
 
 			// info is either in box or in card
 			const DSIdBox = merged.dataset["exclusive"] ? null : merged.dataset
@@ -275,7 +275,7 @@ export function updateDetailLegend(cardId, geoSelections, dataSeriesKeys, isInGr
 	if(document.getElementById(cardId).chart1Displayed) {
 		countries = Array.from(geoSelections.keys()),
 		dots = getTextAndColor(dataSeriesKeys, getColorSet(true, geoSelections))
-		detailLegends.get(cardId).show = dots.size>=2 && countries.length<=2
+		detailLegends.get(cardId).show = bySelectCount>=2
 	} else {
 		countries = ["EU","Others"]
 		const c = getColorSetDefinitions()

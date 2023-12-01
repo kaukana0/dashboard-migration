@@ -63,4 +63,6 @@ export const MS = {
   
   NAME_CARD_ACTIVE_CITIZENSHIP_1: "Naturalisation rate",          // :-(
   NAME_CARD_ACTIVE_CITIZENSHIP_2: "Long-term residence permits",
+
+  DOM_ID_DETAIL_LEGEND: "detailLegend-",
 }
