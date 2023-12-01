@@ -1,6 +1,6 @@
 # configuration for "Migrant integration and inclusion dashboard" by Eurostat
 # yaml schema v0.9.1
-# date: 2023-11-30_2
+# date: 2023-12-01
 
 codeList:
 
@@ -330,7 +330,7 @@ indicatorBase:
 indicators:
 
   - name: Migrant population
-    nameLong: Proportion of population by country of citizenship/birth, sex and age group
+    nameLong: Population by country of citizenship/birth, sex and age group
     id: MD_1
     category: Demography
     articleLink: *articleLinkDemography
