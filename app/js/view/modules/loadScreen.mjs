@@ -27,7 +27,7 @@ export function hide() {
 function html() {
   return `
 <div id="mainLoader" class="loader">
-  <div id="genericProgressBar" style="position:absolute;transform: translateY(-50%);left:2%;font-size:12px;">
+  <div id="genericProgressBar" style="position:absolute;left:2%;font-size:12px;">
     <div id="circleProgressContainer">
         <div id="circularProgress" class="pulse2">
 
@@ -75,7 +75,7 @@ function css() {
     height: 150%;
     left: 0%;
     top: 0%;
-    margin-top: 30px;
+    margin-top: 130px;
   }
   
   .loader-main {
