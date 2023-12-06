@@ -24,6 +24,7 @@
 - [Implementation of responsive behaviour](./adr/adr17.md)
 - [Accessibility](./adr/adr18.md)
 - [Detail Legend](./adr/adr19.md)
+- [Icons in Menu Line](./adr/adr20.md)
 
 
 # Technical details

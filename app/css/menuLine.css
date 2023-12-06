@@ -1,0 +1,43 @@
+#globalBackButton {
+/*  display:none; */
+}
+
+
+@media (min-width:995px) {
+  #mainMenuLineLeft {
+    display:none;
+  }
+  #mainMenuLineRight {
+    width:100%;
+  }
+}
+
+@media (max-width:995px) {
+  #sharingButton {
+    order:-1;
+  }
+  #globalInfoButton {
+    order:-2;
+  }
+  .ecl-menu {
+    background: unset;
+  }
+}
+
+@media (min-width:1230px) {
+  #mainMenuLineLeft {
+    display:none;
+  }
+}
+
+@media (min-width:540px) {
+  #globalBackButton {
+    display: var(--gbbDisplay);
+  }
+}
+
+@media (max-width:540px) {
+  #mainMenuLineLeft {
+    display:flex;
+  }
+}

@@ -15,6 +15,7 @@ import {getCardsOfCategory} from "./modules/cardToMenuMapping.mjs"
 import {getColorSetDefinitions} from "./modules/card/elements/colorSets.mjs"
 import {getSeries, getSeriesKeys} from "../../components/chart/chart.mjs"
 import {getBySelectSelectedCount, isInGroupC, getBySelectSelections} from "./modules/select/bySelect.mjs"
+import * as BackButton from "./backButton.mjs"
 
 // used to decide when to update one instead of all cards (reduce number of chart reloads)
 let currentlyExpandedId = null
@@ -29,6 +30,11 @@ export function createUIElements(cfg, triggerLoading, cb) {
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
   if(triggerLoading) { initialRequest(cb) }
+  BackButton.hide()
+  BackButton.callback(()=>{
+    Cards.contractAll()
+    onCardContract(currentlyExpandedId)
+  })
 }
 
 function initialRequest(cb) {
@@ -193,6 +199,8 @@ function onCardExpand(id) {
   document.getElementById(id).setAttribute("offsety", y+"px")
 
   setCardsActive(false, id)
+
+  BackButton.show()
 }
 
 function onCardContract(id) {
@@ -224,6 +232,8 @@ function onCardContract(id) {
   currentlyExpandedId = null
 
   setCardsActive(true)
+
+  BackButton.hide()
 }
 
 // TODO: refactor; via CSS class!
