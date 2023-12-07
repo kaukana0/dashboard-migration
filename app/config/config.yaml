@@ -1432,6 +1432,10 @@ indicators:
       nonUi:
         Sex:
           - *total
+        unit:
+          - label: "%"
+            labelLong: "% of respective population"
+            code: PC
     infoText: "<p>The naturalisation rate is the ratio between the number of persons who acquired the citizenship of a country during a calendar year and the stock of non-national residents in the same country at the beginning of the year.</p> 
                 <p>For information on methodology and data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_acqn_esms.htm'>metadata</a>.</p>"
 
@@ -1499,6 +1503,10 @@ indicators:
         citizen:
           - label: "Total"
             code: "TOTAL"
+        unit:
+          - label: "%"
+            labelLong: "% of all valid permits"
+            code: PC         
     infoText: "<p>Long-term residence permits cover all residence permits granted to non-EU citizens (third-country nationals) valid for at least five years or more (including permanent residence permits).</p>
               <p>To calculate the share, as a denominator data on the stock of all valid permits to stay at the end of each reporting year are used. As a numerator data on the stock of long-term residents are used.</p>
               <p>For information on methodology and data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/migr_res_esms.htm'>metadata</a>.</p>"
