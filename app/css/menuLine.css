@@ -1,5 +1,5 @@
 #globalBackButton {
-/*  display:none; */
+  display:none;
 }
 
 
@@ -30,9 +30,9 @@
   }
 }
 
-@media (min-width:540px) {
+@media (max-width:995px) {
   #globalBackButton {
-    display: var(--gbbDisplay);
+    display: var(--gbbdisplay);
   }
 }
 
