@@ -1,7 +1,7 @@
 
 export function show() {
   const b = document.getElementById("globalBackButton")
-  b.style.setProperty('--gbbdisplay', "block")
+  b.style.setProperty('--gbbdisplay', "flex")
 }
 
 export function hide() {

@@ -94,20 +94,25 @@ function geoSelectSelectedText() {
 function onSelectedForAllCards(including, cb) {
   let count = -1
   let i=0
-  Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId, len) => { 
+  Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId, _len) => { 
+    const len = including ? including.length : _len
     if(!including || (including && including.includes(cardId))) {
       const boxes = fetch(cardId, ()=>{
-        onSelectedForOneCard(cardId, null, false)
-
-        // this is a bit tricky as it considers only the 1st card. please note comment on setTooltipStyle()
-        count = count===-1 ? getBySelectSelectedCount(boxes) : count
+        onSelectedForOneCard(cardId, ()=>{
+          // this is a bit tricky as it considers only the 1st card. please note comment on setTooltipStyle()
+          count = count===-1 ? getBySelectSelectedCount(boxes) : count
+  
+          // when promise from http-fetch resolves, setData on card is called,
+          // when it's the last card, invoke this fct's callback
+          // it's a poor man's Promise.All()
+          i+=1
+          if(i===len && cb) {cb()}
+        }, false)
       })
     }
-    i+=1
-    if(i===len && cb) {cb()}
   })
-   Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
-   Cards.setTooltipStyle(count)
+  Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
+  Cards.setTooltipStyle(count)
 }
 
 /*
@@ -195,7 +200,7 @@ function onCardExpand(id) {
 
   Cards.filter( getCardsOfCategory(MainMenu.getMenuItemIds(id)[0]) )
 
-  const y = document.getElementById("anchorExpandedCard").getBoundingClientRect().top + window.scrollY
+  const y = document.getElementById("anchorExpandedCard").getBoundingClientRect().top + window.scrollY - 1
   document.getElementById(id).setAttribute("offsety", y+"px")
 
   setCardsActive(false, id)

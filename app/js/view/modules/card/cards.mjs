@@ -253,8 +253,6 @@ export function setData(cardId, geoSelections, isInGroupC, data, cb) {
 	Range.setMinMax(cardId, Number(data.time[0]), Number(data.time[data.time.length-1]))
 
 	const card = document.getElementById(cardId)
-
-
 	card.switchSrcLink(isInGroupC)
 	card.setData1({
 		cols: data.timeSeries.data,	countryNamesFull:countryNamesFull,

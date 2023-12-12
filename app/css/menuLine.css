@@ -14,10 +14,10 @@
 
 @media (max-width:995px) {
   #sharingButton {
-    order:-1;
+    /*order:-1;*/
   }
   #globalInfoButton {
-    order:-2;
+    /*order:-2;*/
   }
   .ecl-menu {
     background: unset;
