@@ -194,7 +194,7 @@ function onCardExpand(id) {
   // this is done here not because of resetting to original value,
   // but to let range WebComponent calculate and display the correct slider position
   // note: setting pos during display:none has no effect
-  Range.reset(id)
+  setTimeout( ()=> Range.reset(id), 50)
 
   MainMenu.select(MainMenu.getMenuItemIds(id)[1])
 
