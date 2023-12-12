@@ -46,3 +46,7 @@ export function getMenuItemIds(cardId) {
 	}
 	return retVal
 }
+
+export function close() {
+	document.getElementById("menu").close()	
+}

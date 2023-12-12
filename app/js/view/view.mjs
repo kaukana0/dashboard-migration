@@ -24,7 +24,7 @@ let currentlyExpandedId = null
 export function createUIElements(cfg, triggerLoading, cb) {
   console.debug("cfg json from vanilla yaml", cfg)
   document.body.style.overflowX="hidden"
-  MainMenu.create(cfg, onSelectMenu)
+  MainMenu.create(cfg, onMenuSelected)
   GeoSelect.create(getMapFromArray(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
   GeoSelect.moveToMainArea()
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
@@ -33,7 +33,6 @@ export function createUIElements(cfg, triggerLoading, cb) {
   BackButton.hide()
   BackButton.callback(()=>{
     Cards.contractAll()
-    onCardContract(currentlyExpandedId)
   })
 }
 
@@ -169,13 +168,14 @@ function fetch(cardId, cb) {
 
 
 // menuItemId can be anything, menuItem or submenuItem
-function onSelectMenu(menuItemId, parentItemId, isParentMenuItem) {
+function onMenuSelected(menuItemId, parentItemId, isParentMenuItem) {
   const card = document.getElementById("cards").querySelector(`[id=${Cards.getIdFromName(menuItemId)}]`)
   if(isParentMenuItem) {
     Cards.contractAll()
     setTimeout(()=> { MainMenu.select(parentItemId) }, 250)  // TODO
   } else {
     Cards.expand(card)
+    MainMenu.close()
   }
   Cards.filter(getCardsOfCategory(parentItemId))
 }
@@ -220,7 +220,12 @@ function onCardContract(id) {
   // do this after moving geo-select out, because then it's not affected by
   // setDefaultSelections call.
   const anchorEl = document.getElementById(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
-  Cards.setDefaultSelections(anchorEl)
+  if(anchorEl) {
+    Cards.setDefaultSelections(anchorEl)
+  } else {
+    console.warn("view: no el w/ id", MS.CARD_SLOT_ANCHOR_DOM_ID+id)
+  }
+
   // geo-select's default selection is handeled differently (favStar).
   GeoSelect.selectFav()
 

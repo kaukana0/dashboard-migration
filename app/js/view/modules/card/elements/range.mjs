@@ -62,6 +62,10 @@ export function getSelection(el) {
 
 export function reset(cardId, toMax=false, fireSelected=false, isSinglularValue=false) {
 	const el = document.getElementById("timeRange"+cardId)
+	if(!el) {
+		console.error("range.mjs: id doesnt exist ", "timeRange"+cardId)
+		return
+	}
 	const max = el.getAttribute("max")
 	const defaultValue = el.getAttribute("defaultValue")
 	// as per request, have the blue track right of the handle also in dotplot by commenting this out

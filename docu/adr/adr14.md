@@ -27,7 +27,7 @@ Big problem, many bugs, potential and currently real:
     - It suggests a fire-and-forget, when - in fact - the way it's implemented behind (by card.mjs webComponent) is that the only one wins, others get lost.
 
 
-onSelectMenu 1--> filter --> setVisible -->                                --> setData --> resize --> whatever
+onMenuSelected 1--> filter --> setVisible -->                                --> setData --> resize --> whatever
              2--> contract --> onCardContract --> onSelectedForAllCards --/           /
              3--> expand -->                                                    -----/
 
