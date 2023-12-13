@@ -85,6 +85,6 @@ export function getValText(val, suffix, decimals) {
 	if(val===MS.ID_NO_DATAPOINT_TIMESERIES || val===MS.ID_NO_DATAPOINT_COUNTRYSERIES) {
 		return MS.TXT_NOT_AVAILABLE
 	} else {
-		return Intl.NumberFormat("en-US",{minimumFractionDigits:decimals}).format(val).replaceAll(","," ") + (suffix?suffix:"")
+		return Intl.NumberFormat("en-US",{minimumFractionDigits:decimals, maximumFractionDigits:decimals}).format(val).replaceAll(","," ") + (suffix?suffix:"")
 	}
 }
