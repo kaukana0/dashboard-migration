@@ -257,12 +257,11 @@ export function setData(cardId, geoSelections, isInGroupC, data, cb) {
 	card.setData1({
 		cols: data.timeSeries.data,	countryNamesFull:countryNamesFull,
 		palette:data.colorPalette, fixColors:getColorSet(true, geoSelections)		
-	}, ()=>{
-		card.setData2({
-			cols: data.countrySeries.data, countryNamesFull:countryNamesFull,
-			palette:data.colorPalette, fixColors:getColorSet(false, geoSelections),
-			highlightIndices:getIndices(data,geoSelections), meta: data.countrySeries.meta
-		}, cb)
+	}, cb)
+	card.setData2({
+		cols: data.countrySeries.data, countryNamesFull:countryNamesFull,
+		palette:data.colorPalette, fixColors:getColorSet(false, geoSelections),
+		highlightIndices:getIndices(data,geoSelections), meta: data.countrySeries.meta
 	})
 }
 

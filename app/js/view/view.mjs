@@ -51,8 +51,7 @@ function initialRequest(cb) {
         setCardLegends(true)
         cb()  // continue on w/ whatever initialisation things happen next
       })
-    } else 
-    {
+    } else  {
       cb()
     }
 
@@ -101,18 +100,16 @@ function onSelectedForAllCards(including, cb) {
   Cards.iterate(MS.CARD_CONTAINER_DOM_ID, (cardId, _len) => { 
     const len = including ? including.length : _len
     if(!including || (including && including.includes(cardId))) {
-      const boxes = fetch(cardId, ()=>{
-        onSelectedForOneCard(cardId, ()=>{
-          // this is a bit tricky as it considers only the 1st card. please note comment on setTooltipStyle()
-          count = count===-1 ? getBySelectSelectedCount(boxes) : count
-  
-          // when promise from http-fetch resolves, setData on card is called,
-          // when it's the last card, invoke this fct's callback
-          // it's a poor man's Promise.All()
-          i+=1
-          if(i===len && cb) {cb()}
-        }, false)
-      })
+      const boxes = onSelectedForOneCard(cardId, ()=>{
+        // this is a bit tricky as it considers only the 1st card. please note comment on setTooltipStyle()
+        count = count===-1 ? getBySelectSelectedCount(boxes) : count
+
+        // when promise from http-fetch resolves, setData on card is called,
+        // when it's the last card, invoke this fct's callback
+        // it's a poor man's Promise.All()
+        i+=1
+        if(i===len && cb) {cb()}
+      }, false)
     }
   })
   Cards.storeSelectedCounts(GeoSelect.getSelected().size, count)
@@ -128,25 +125,28 @@ setTooltip is there to consider only 1st tooltip if called from onSelectedForAll
 */
 function onSelectedForOneCard(cardId, cb, setTooltip=true) {
   const boxes = fetch(cardId, ()=> {
-    Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
-
-    const byCount = getBySelectSelectedCount(boxes)
-    const geoCount = GeoSelect.getSelected().size
-    Cards.setNOSelectable(cardId,
-      CommonConstraints.getNOAllowedGeoSelects(byCount, geoCount),
-      CommonConstraints.getNOAllowedBySelects(geoCount, cardId)
-    )
-
-    if(setTooltip) {
-      Cards.storeSelectedCounts(geoCount, byCount)
-      Cards.setTooltipStyle(byCount)
-    }
-    
     if(cb) {cb()}
   })
+
+  const byCount = getBySelectSelectedCount(boxes)
+  const geoCount = GeoSelect.getSelected().size
+  Cards.setNOSelectable(cardId,
+    CommonConstraints.getNOAllowedGeoSelects(byCount, geoCount),
+    CommonConstraints.getNOAllowedBySelects(geoCount, cardId)
+  )
+
+  if(setTooltip) {
+    Cards.storeSelectedCounts(geoCount, byCount)
+    Cards.setTooltipStyle(byCount)
+  }
+  
+  Cards.updateCardAttributes(cardId, boxes, geoSelectSelectedText())
+
+  return boxes
 }
 
 
+// returns boxes of the card immediately, calls cb() asynchroneously after data is fetched and set on card.
 function fetch(cardId, cb) {
   console.debug("fetch for card", cardId)
   // from the card's widgets
@@ -162,8 +162,8 @@ function fetch(cardId, cb) {
   Fetcher( Url.buildFrag(boxes,dataset,fragGetter), (data)=>{
     Cards.setData(cardId, GeoSelect.getSelected(), inC, data, cb)
     if(bySelections) {
-      const bla = getSeriesKeys(getSeries(data.timeSeries.data))
-      Cards.updateDetailLegend(cardId, GeoSelect.getSelected(), bla, inC, bySelections.size)
+      const seriesKeys = getSeriesKeys(getSeries(data.timeSeries.data))
+      Cards.updateDetailLegend(cardId, GeoSelect.getSelected(), seriesKeys, inC, bySelections.size)
     } else {
       console.warn("No by selections for", cardId)
     }
@@ -178,11 +178,12 @@ function onMenuSelected(menuItemId, parentItemId, isParentMenuItem) {
   if(isParentMenuItem) {
     Cards.contractAll()
     setTimeout(()=> { MainMenu.select(parentItemId) }, 250)  // TODO
+    Cards.filter(getCardsOfCategory(parentItemId))
   } else {
     Cards.expand(card)
+    Cards.filter(card.getAttribute("id"))
     MainMenu.close()
   }
-  Cards.filter(getCardsOfCategory(parentItemId))
 }
 
 function onCardExpand(id) {
