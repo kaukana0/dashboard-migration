@@ -182,8 +182,8 @@ function onMenuSelected(menuItemId, parentItemId, isParentMenuItem) {
   } else {
     Cards.expand(card)
     Cards.filter(card.getAttribute("id"))
-    MainMenu.close()
   }
+  MainMenu.close()
 }
 
 function onCardExpand(id) {
