@@ -59,7 +59,7 @@ return `
     <div id="country1" class="country line"></div>
     <div id="dots1" class="bla"></div>
   </div>
-  <div style="display:flex; margin:5px;">
+  <div style="display:flex;">
     <div id="country2" class="country""></div>
     <div id="dots2" class="bla"></div>
   </div>

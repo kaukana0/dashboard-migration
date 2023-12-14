@@ -398,7 +398,6 @@ indicators:
   - name: Labour force participation
     id: MD_3
     category: Labour Market
-    isInOverview: false
     articleLink: *articleLinkEmployment
     dataset:
       citizen:

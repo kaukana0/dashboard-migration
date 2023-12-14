@@ -43,13 +43,18 @@ function initialRequest(cb) {
   // first, fetch only the overview-cards
   onSelectedForAllCards(overviewCards, ()=> {
     MainMenu.select(MS.TXT_OVERVIEW)
-    cb()  // continue on w/ whatever initialisation things happen next
 
-    // then the rest, sort of parallel in the background
-    onSelectedForAllCards(allOtherCards, ()=> {
-      Cards.filter(overviewCards)
-      setCardLegends(true)
-    })
+    if(allOtherCards.length) {
+      // then the rest, sort of parallel in the background
+      onSelectedForAllCards(allOtherCards, ()=> {
+        Cards.filter(overviewCards)
+        setCardLegends(true)
+        cb()  // continue on w/ whatever initialisation things happen next
+      })
+    } else 
+    {
+      cb()
+    }
 
   })
 
@@ -254,10 +259,10 @@ function setCardsActive(isActive, id) {
     } else {
       if(!isActive) {
         document.getElementById(cardId).setAttribute("inert", true)
-        //document.getElementById(cardId).setAttribute("aria-hidden", true)
+        document.getElementById(cardId).setAttribute("data-html2canvas-ignore", true)
       } else {
         document.getElementById(cardId).removeAttribute("inert")
-        //document.getElementById(cardId).removeAttribute("aria-hidden")
+        document.getElementById(cardId).removeAttribute("data-html2canvas-ignore")
       }
     }
 

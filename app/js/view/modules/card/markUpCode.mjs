@@ -21,7 +21,7 @@ export function getCardHtmlString(id, title, longTitle, urlFrag, anchorElDomId) 
         </div>
       </div>
 
-      <div slot="slotBottomLeft" style="margin-top:15px; display:flex; flex-wrap:wrap;">
+      <div slot="slotBottomLeft" style="margin-top:15px;">
         <detail-legend id="${MS.DOM_ID_DETAIL_LEGEND}${id}" style="display:flex; flex-wrap:wrap;"></detail-legend>
       </div>
       
