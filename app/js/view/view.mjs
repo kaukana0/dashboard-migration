@@ -23,7 +23,7 @@ let currentlyExpandedId = null
 
 export function createUIElements(cfg, triggerLoading, cb) {
   console.debug("cfg json from vanilla yaml", cfg)
-  document.body.style.overflowX="hidden"
+  //document.body.style.overflowX="hidden"
   MainMenu.create(cfg, onMenuSelected)
   GeoSelect.create(getMapFromArray(cfg.globals.ui.dropdown.geo), cfg.codeList.countryGroups, onGeoSelection)
   GeoSelect.moveToMainArea()
@@ -193,7 +193,7 @@ function onCardExpand(id) {
   CommonConstraints.setBySelect(Cards.getBySelectBox(id))
 
   GeoSelect.moveIntoCard(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
-  document.body.style.overflowY="hidden"
+  //document.body.style.overflowY="hidden"
   window.scrollTo(0, 1)
 
   // this is done here not because of resetting to original value,
@@ -203,7 +203,7 @@ function onCardExpand(id) {
 
   MainMenu.select(MainMenu.getMenuItemIds(id)[1])
 
-  Cards.filter( getCardsOfCategory(MainMenu.getMenuItemIds(id)[0]) )
+  Cards.filter(id)
 
   const y = document.getElementById("anchorExpandedCard").getBoundingClientRect().top + window.scrollY - 1
   document.getElementById(id).setAttribute("offsety", y+"px")
@@ -243,6 +243,8 @@ function onCardContract(id) {
   setCardLegends(GeoSelect.isEUSelected())
 
   MainMenu.select( MainMenu.getMenuItemIds(id)[0] )
+
+  Cards.filter( getCardsOfCategory(MainMenu.getMenuItemIds(id)[0]) )
 
   currentlyExpandedId = null
 

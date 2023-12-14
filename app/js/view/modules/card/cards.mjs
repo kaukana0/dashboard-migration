@@ -340,11 +340,12 @@ export function expand(card) {
 	card.expand(document.getElementById("anchorSelectCountryOutsideOfCard"))
 }
 
-export function filter(cardsOfCategory) {
+// filter out (hide) everything except the given
+export function filter(cardIdArray) {
 	const elements = document.querySelectorAll("div [id=cards] chart-card")
-	if(cardsOfCategory.length>0) {
+	if(cardIdArray.length>0) {
 		for (var i = 0; i < elements.length; i++) {
-			if( cardsOfCategory.includes(elements[i].id) ) {
+			if( cardIdArray.includes(elements[i].id) ) {
 				elements[i].isVisible=true
 			} else {
 				elements[i].isVisible=false
