@@ -86,6 +86,23 @@ Author: robert.gebhardt@ext.ec.europa.eu
 				}
 			}
 
+
+			.shriBu {
+				min-height:36px;
+				min-width: 36px;
+				max-height:36px;
+				max-width: 36px;
+			}
+
+			@media (max-width:995px) {
+				.shriBu {
+					min-height:23px;
+					min-width: 23px;
+					max-height:23px;
+					max-width: 23px;
+				}
+			}
+
 		</style>
 
 		<script type="application/json">{"utility": "cck", "url": "https://my.ec.europa.eu/cookie-policy_{lang}"}</script>
@@ -113,8 +130,8 @@ Author: robert.gebhardt@ext.ec.europa.eu
 
 		<div id="mainMenuLineRight" style="display:flex; align-items: center;">
 			<ecl-like-menu id="menu" style="flex-grow:1;"></ecl-like-menu>
-			<symbol-button id="globalInfoButton" symbol="infoWhite" style="min-width:40px; min-height:40px; margin: 0px 10px 0px 10px;" tabindex="0"></symbol-button>
-			<symbol-button id="sharingButton" symbol="sharing" style="min-width:40px; min-height:40px; margin: 0px 10px 0px 10px;" tabindex="0"></symbol-button>
+			<symbol-button id="globalInfoButton" symbol="infoWhite" si="36" style="margin: 0px 10px 0px 10px;" class="shriBu" tabindex="0"></symbol-button>
+			<symbol-button id="sharingButton" symbol="sharing" si="36" style="margin: 0px 10px 0px 10px;" 		  class="shriBu" tabindex="0"></symbol-button>
 			<ecl-like-social-share></ecl-like-social-share>
 		</div>
 	</div>
