@@ -19,7 +19,7 @@ export function setValuesFromConfig(cardId, _min, _max, _selected) {
 	const max = _max>0 ? _max : new Date().getFullYear()
 	const selected = _selected > 0 ? _selected : max + _selected
 
-	el.setAttribute("mingap", 0)
+	el.setAttribute("mingap", 3)
 	el.setAttribute("min", _min)
 	el.setAttribute("max", max)
 	el.setAttribute("valuer", max)
