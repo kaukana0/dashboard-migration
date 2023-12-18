@@ -37,6 +37,8 @@ class Element extends HTMLElement {
       const u = this.shadowRoot.querySelector(s)
       if(u) { u.innerHTML+=getBlaFragment(v, SHORT2LONG.get(k.substring(idx+2))) }
     })
+
+    this.#setWidth(val.countries)
   }
 
   set show(trueOrFalse) {
@@ -44,6 +46,25 @@ class Element extends HTMLElement {
       this.shadowRoot.getElementById("main").style.display = "flex"
     } else {
       this.shadowRoot.getElementById("main").style.display = "none"
+    }
+  }
+
+  #setWidth(c) {
+    if(c.length===1) {
+      this.shadowRoot.getElementById("country1").classList.remove("bla2")
+      this.shadowRoot.getElementById("country1").classList.add("bla1")
+    } else {
+      if(c[0].length>2 || c[1].length>2) {
+        this.shadowRoot.getElementById("country1").classList.remove("bla1")
+        this.shadowRoot.getElementById("country1").classList.add("bla2")
+        this.shadowRoot.getElementById("country2").classList.remove("bla1")
+        this.shadowRoot.getElementById("country2").classList.add("bla2")
+      } else {
+        this.shadowRoot.getElementById("country1").classList.remove("bla2")
+        this.shadowRoot.getElementById("country1").classList.add("bla1")
+        this.shadowRoot.getElementById("country2").classList.remove("bla2")
+        this.shadowRoot.getElementById("country2").classList.add("bla1")
+      }
     }
   }
 
@@ -60,7 +81,7 @@ return `
     <div id="dots1" class="bla"></div>
   </div>
   <div style="display:flex;">
-    <div id="country2" class="country""></div>
+    <div id="country2" class="country"></div>
     <div id="dots2" class="bla"></div>
   </div>
 </div>`
@@ -91,10 +112,19 @@ function css() {return `<style>
   padding-right:10px; 
   font-size: 18px;
   font-weight: bold;
+  margin-top: 5px;
 }
 
 .line {
   border-right: 1px solid black;
+}
+
+.bla1 {
+  min-width: 25px;
+}
+
+.bla2 {
+  min-width: 60px;
 }
 
 </style>`
