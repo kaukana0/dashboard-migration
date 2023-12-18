@@ -19,7 +19,7 @@ export function setValuesFromConfig(cardId, _min, _max, _selected) {
 	const max = _max>0 ? _max : new Date().getFullYear()
 	const selected = _selected > 0 ? _selected : max + _selected
 
-	el.setAttribute("mingap", 3)
+	el.setAttribute("mingap", 2)
 	el.setAttribute("min", _min)
 	el.setAttribute("max", max)
 	el.setAttribute("valuer", max)
@@ -60,7 +60,7 @@ export function getSelection(el) {
 	return retVal
 }
 
-export function reset(cardId, toMax=false, fireSelected=false, isSinglularValue=false) {
+export function reset(cardId, toMax=false, fireSelected=false, minOne=false) {
 	const el = document.getElementById("timeRange"+cardId)
 	if(!el) {
 		console.error("range.mjs: id doesnt exist ", "timeRange"+cardId)
@@ -72,5 +72,6 @@ export function reset(cardId, toMax=false, fireSelected=false, isSinglularValue=
 	//el.setAttribute("singularvalue", isSinglularValue)
 	el.setAttribute("valuel", toMax?max:defaultValue)
 	el.setAttribute("textl",  toMax?max:defaultValue)
+	el.setAttribute("mingap",  minOne?0:2)
 	if(fireSelected) {el.fireSelected()}
 }
