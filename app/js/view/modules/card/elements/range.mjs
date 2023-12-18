@@ -70,8 +70,8 @@ export function reset(cardId, toMax=false, fireSelected=false, minOne=false) {
 	const defaultValue = el.getAttribute("defaultValue")
 	// as per request, have the blue track right of the handle also in dotplot by commenting this out
 	//el.setAttribute("singularvalue", isSinglularValue)
+	el.setAttribute("mingap",  minOne?0:2)
 	el.setAttribute("valuel", toMax?max:defaultValue)
 	el.setAttribute("textl",  toMax?max:defaultValue)
-	el.setAttribute("mingap",  minOne?0:2)
 	if(fireSelected) {el.fireSelected()}
 }
