@@ -16,7 +16,7 @@ import {getColorSetDefinitions} from "./modules/card/elements/colorSets.mjs"
 import {getSeries, getSeriesKeys} from "../../components/chart/chart.mjs"
 import {getBySelectSelectedCount, isInGroupC, getBySelectSelections} from "./modules/select/bySelect.mjs"
 import * as BackButton from "./modules/backButton.mjs"
-import {isNarrowScreen} from "../../../../components/chartCard/chartCard.mjs"
+import {isNarrowScreen} from "../../components/chartCard/chartCard.mjs"
 
 // used to decide when to update one instead of all cards (reduce number of chart reloads)
 let currentlyExpandedId = null
