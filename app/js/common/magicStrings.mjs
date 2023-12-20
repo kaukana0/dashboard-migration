@@ -43,10 +43,10 @@ export const MS = {
   TXT_BY_LBL_SHORT_BEU: "EU Born",
   TXT_BY_LBL_SHORT_BNEU: "Non EU Born",
 
-  TXT_BY_LBL_CNAT: "Nationals",
+  TXT_BY_LBL_CNAT: "Nationals of the reporting country",
   TXT_BY_LBL_CEU: "Citizens of another EU country",
   TXT_BY_LBL_CNEU: "Citizens of a non-EU country",
-  TXT_BY_LBL_BNAT: "Native-born",
+  TXT_BY_LBL_BNAT: "Native born in the reporting country",
   TXT_BY_LBL_BEU: "Born in another EU country",
   TXT_BY_LBL_BNEU: "Born in a non-EU country",
 

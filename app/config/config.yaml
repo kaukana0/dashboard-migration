@@ -6,7 +6,7 @@ codeList:
 
   # see also codeMappings.mjs
   nativeB: &nativeB
-    label: "Native-born"
+    label: "Native born in the reporting country"
     code: c_birthNAT        # this is for the selectbox entry key, which has to be unique
   euB: &euB
     label: "Born in another EU country"
@@ -17,7 +17,7 @@ codeList:
     groupStart: By country of birth
 
   nativeC: &nativeC
-    label: "Nationals"
+    label: "Nationals of the reporting country"
     code: citizenNAT
     selected: true
   euC: &euC
@@ -1403,7 +1403,7 @@ indicators:
                   code: EU_P_HHAB
                   selected: true
                 - nativeC:
-                  label: "Nationals"
+                  label: "Nationals of the reporting country"
                   code: dummy-cocb-3
                   enabled: false
                 - nonEuB:
@@ -1416,7 +1416,7 @@ indicators:
                   code: dummy-cocb-5
                   enabled: false
                 - nativeB:
-                  label: "Native-born"
+                  label: "Native born in the reporting country"
                   code: dummy-cocb-6
                   enabled: false
           - Age:
@@ -1473,7 +1473,7 @@ indicators:
                   code: dummy-cocb-5
                   enabled: false
                 - nativeC:
-                  label: "Nationals"
+                  label: "Nationals of the reporting country"
                   code: dummy-cocb-4
                   enabled: false
                 - nonEuB:
@@ -1486,7 +1486,7 @@ indicators:
                   code: dummy-cocb-2
                   enabled: false
                 - nativeB:
-                  label: "Native-born"
+                  label: "Native born in the reporting country"
                   code: dummy-cocb-1
                   enabled: false
           - Age:
