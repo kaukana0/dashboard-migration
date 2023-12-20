@@ -35,6 +35,7 @@ import {isGroup} from "../../../model/common/groupDefinition.mjs"
 import {setOverviewCardIds} from "../cardToMenuMapping.mjs"
 import {getColorSet, getColorSetDefinitions} from "./elements/colorSets.mjs"
 import { isBySelectBox, getBySelectBox as _getBySelectBox } from "../select/bySelect.mjs"
+import {isNarrowScreen} from "../../../../components/chartCard/chartCard.mjs"
 
 let countryNamesFull = {}		// used by tooltip; via context, meaning: it doesn't come from processors/data but from config
 let numberOfCountriesSelected = 0		// TODO: possible to get rid of this?
@@ -377,7 +378,7 @@ export function setNOSelectable(cardId, geo, by) {
 	}
 }
 
-var tooltipEnabled=false
+var tooltipEnabled = !isNarrowScreen()
 
 export function enableTooltip(trueOrFalse) {
 	tooltipEnabled = trueOrFalse
