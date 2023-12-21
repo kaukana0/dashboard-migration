@@ -31,11 +31,11 @@ codeList:
     groupStart: By country of citizenship
     groupSelected: true
 
-  men: &men
-    label: "Men"
+  males: &males
+    label: "Males"
     code: "M"
-  women: &women
-    label: "Women"
+  females: &females
+    label: "Females"
     code: "F"
   total: &total
     label: "Total"
@@ -298,8 +298,8 @@ indicatorBase:
         - Sex:        # in the REST request, this becomes the dimension
             items:
               - *total    # and code becomes the code; label becomes dropdownbox item
-              - *women
-              - *men
+              - *females
+              - *males
           # note 1: in the implementation, bySelect is treated differently than any other dropdown
           # note 2: must correspond w/ magicStrings.mjs
         - Country of citizenship/birth:
