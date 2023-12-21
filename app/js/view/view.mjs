@@ -218,7 +218,7 @@ function onCardExpand(id) {
 }
 
 function onCardContract(id) {
-  Cards.enableTooltip(false)
+  Cards.enableTooltip(!isNarrowScreen())
 
   document.getElementById("countrySelectContainer").style.display=""
   
