@@ -284,7 +284,7 @@ function setCardsActive(isActive, id) {
 }
 
 export function setupGlobalInfoClick(txt) {
-  document.getElementById("globalInfoButton").addEventListener("click", () => {
+  document.getElementById("globalInfoButton").addEventListener("action", () => {
     document.getElementById("globalModal").setHeader("Information")
     document.getElementById("globalModal").setText(txt)
     document.getElementById("globalModal").show()
@@ -293,7 +293,7 @@ export function setupGlobalInfoClick(txt) {
 
 export function setupSharing(cfg) {
   const btn = document.getElementById("sharingButton")
-  btn.addEventListener("click", () => { menu.toggleVisibility() })
+  btn.addEventListener("action", () => { menu.toggleVisibility() })
 
   const menu = document.getElementsByTagName("ecl-like-social-share")[0]
   menu.setAttribute("text", cfg.text)
