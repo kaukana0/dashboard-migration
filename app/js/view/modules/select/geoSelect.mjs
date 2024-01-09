@@ -14,6 +14,7 @@ export function create(cfg, _groups, callback) {
 
   select = document.createElement('titled-select')
   select.setAttribute("id", MS.GEO_SELECT_DOM_ID)
+  select.setAttribute("aria-label", "Country selectbox")
 
   const box = select.box
   box.setAttribute("id", MS.GEO_SELECT_DOM_ID)
