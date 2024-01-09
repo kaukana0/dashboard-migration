@@ -26,6 +26,8 @@ export function setValuesFromConfig(cardId, _min, _max, _selected) {
 	el.setAttribute("valuel", selected)
 	el.setAttribute("textl", selected)
 	el.setAttribute("defaultValue", selected)
+
+	el.setAttribute("aria-label", "Time range slider")
 }
 
 // this is called after setValuesFromConfig and has the ability to
