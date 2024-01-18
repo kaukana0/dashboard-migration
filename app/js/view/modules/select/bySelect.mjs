@@ -15,10 +15,6 @@ export function getBySelectSelections(boxes) {
   return retVal  
 }
 
-export function getBySelectSelectedCount(boxes) {
-  return getBySelectSelections(boxes).size
-}
-
 export function isInGroupC(boxes, bySelections) {
   if(bySelections) {
     const keys = bySelections.keys()

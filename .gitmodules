@@ -46,3 +46,6 @@
 [submodule "app/components/symbolButton"]
 	path = app/components/symbolButton
 	url = https://github.com/kaukana0/symbolButton.git
+[submodule "app/components/titledSelect"]
+	path = app/components/titledSelect
+	url = https://github.com/kaukana0/titledSelect.git

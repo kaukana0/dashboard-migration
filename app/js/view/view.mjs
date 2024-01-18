@@ -14,7 +14,7 @@ import * as CommonConstraints from "./modules/select/constraints/commonConstrain
 import {getCardsOfCategory} from "./modules/cardToMenuMapping.mjs"
 import {getColorSetDefinitions} from "./modules/card/elements/colorSets.mjs"
 import {getSeries, getSeriesKeys} from "../../components/chart/chart.mjs"
-import {getBySelectSelectedCount, isInGroupC, getBySelectSelections} from "./modules/select/bySelect.mjs"
+import {isInGroupC, getBySelectSelections} from "./modules/select/bySelect.mjs"
 import * as BackButton from "./modules/backButton.mjs"
 import {isNarrowScreen} from "../../components/chartCard/chartCard.mjs"
 
@@ -103,7 +103,7 @@ function onSelectedForAllCards(including, cb) {
     if(!including || (including && including.includes(cardId))) {
       const boxes = onSelectedForOneCard(cardId, ()=>{
         // this is a bit tricky as it considers only the 1st card. please note comment on setTooltipStyle()
-        count = count===-1 ? getBySelectSelectedCount(boxes) : count
+        count = count===-1 ? Cards.getBySelectBox(cardId).box.selected.size : count
 
         // when promise from http-fetch resolves, setData on card is called,
         // when it's the last card, invoke this fct's callback
@@ -129,12 +129,7 @@ function onSelectedForOneCard(cardId, cb, setTooltip=true) {
     if(cb) {cb()}
   })
 
-  const byCount = getBySelectSelectedCount(boxes)
-  const geoCount = GeoSelect.getSelected().size
-  Cards.setNOSelectable(cardId,
-    CommonConstraints.getNOAllowedGeoSelects(byCount, geoCount),
-    CommonConstraints.getNOAllowedBySelects(geoCount, cardId)
-  )
+  const [byCount, geoCount] = setNOSelectable(cardId)
 
   if(setTooltip) {
     Cards.storeSelectedCounts(geoCount, byCount)
@@ -187,12 +182,25 @@ function onMenuSelected(menuItemId, parentItemId, isParentMenuItem) {
   MainMenu.close()
 }
 
+function setNOSelectable(cardId) {
+  const byCount = Cards.getBySelectBox(cardId).box.selected.size
+  const geoCount = GeoSelect.getSelected().size
+  Cards.setNOSelectable(cardId,
+    CommonConstraints.getNOAllowedGeoSelects(byCount, geoCount),
+    CommonConstraints.getNOAllowedBySelects(geoCount, cardId)
+  )
+  return [byCount, geoCount]
+}
+
+
 function onCardExpand(id) {
   currentlyExpandedId = id
 
   document.getElementById("countrySelectContainer").style.display="none"
 
   CommonConstraints.setBySelect(Cards.getBySelectBox(id))
+
+  setNOSelectable(id)
 
   GeoSelect.moveIntoCard(MS.CARD_SLOT_ANCHOR_DOM_ID+id)
   //document.body.style.overflowY="hidden"

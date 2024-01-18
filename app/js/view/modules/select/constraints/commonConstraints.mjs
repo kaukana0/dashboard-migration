@@ -23,7 +23,7 @@ return:
 2 = >1 indicators & more than 2 countries
 */
 export function geoSelectionAllowed(k,v) {
-  if(!bySelect || !geoSelect) {return true}
+  if(!bySelect || !geoSelect) {return 0}
   const isDeselection = Array.from( geoSelect.selected.keys() ).includes(k)
   if(isDeselection) {
     return 0

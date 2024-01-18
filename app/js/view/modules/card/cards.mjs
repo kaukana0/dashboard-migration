@@ -373,8 +373,7 @@ export function setNOSelectable(cardId, geo, by) {
 	const byBox = _getBySelectBox(getAllBoxes(cardId))
 	byBox.labelNumber=by
 	if(document.getElementById(cardId).isExpanded) {
-		const geoBox = document.getElementById(MS.GEO_SELECT_DOM_ID)
-		geoBox.labelNumber=geo
+		document.getElementById(MS.GEO_SELECT_DOM_ID).labelNumber=geo
 	}
 }
 

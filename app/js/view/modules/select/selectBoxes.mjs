@@ -4,7 +4,6 @@ note: it's done via createElement because innerHTML has some showstopping async-
 */
 
 import {MS} from "../../../common/magicStrings.mjs"
-import "../select/titledSelect.mjs"
 import {isBySelectBox} from "../select/bySelect.mjs"
 
 

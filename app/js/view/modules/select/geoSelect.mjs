@@ -17,7 +17,6 @@ export function create(cfg, _groups, callback) {
   select.setAttribute("aria-label", "Country selectbox")
 
   const box = select.box
-  box.setAttribute("id", MS.GEO_SELECT_DOM_ID)
   box.setAttribute("dimension", "geo")
   box.setAttribute("favoriteStar", "true")
   box.setAttribute("multiselect", "true")
@@ -49,17 +48,17 @@ export function create(cfg, _groups, callback) {
 }
 
 export function moveToMainArea() {
-  select.box.setAttribute("multiselect", "false")
   document.getElementById(MS.MAIN_AREA_ANCHOR_DOM_ID).after(select)
-  document.getElementById(MS.GEO_SELECT_DOM_ID).showLabels = false
+  select.box.setAttribute("multiselect", "false")
+  select.showLabels = false
 }
 
 export function moveIntoCard(cardAnchorId) {
-  select.box.setAttribute("multiselect", "true")
   document.getElementById(cardAnchorId).insertAdjacentElement("afterbegin", select)
-  document.getElementById(MS.GEO_SELECT_DOM_ID).labelLeft = "Country"
-  document.getElementById(MS.GEO_SELECT_DOM_ID).labelRight = "selectable"
-  document.getElementById(MS.GEO_SELECT_DOM_ID).showLabels = true
+  select.box.setAttribute("multiselect", "true")
+  select.labelLeft = "Country"
+  select.labelRight = "selectable"
+  select.showLabels = true
 }
 
 export function selectFav() {
