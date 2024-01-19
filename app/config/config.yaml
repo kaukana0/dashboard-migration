@@ -330,7 +330,7 @@ indicatorBase:
 indicators:
 
   - name: Migrant population
-    nameLong: Population by country of citizenship/birth, sex and age group
+    nameLong: Proportion of the respective population by citizenship/birth, sex and age group
     id: MD_1
     category: Demography
     articleLink: *articleLinkDemography
@@ -348,11 +348,11 @@ indicators:
               items:
                 - label: "Total"
                   code: "TOTAL"
-                - *15-74s
+                - *15-74
                 - label: "0 to 15 years"
                   code: "Y_LT15"
                 - *15-29
-                - *20-64
+                - *20-64s
                 - *65-more
         range:
           - time:
@@ -362,7 +362,7 @@ indicators:
       nonUi:
         unit:
         - label: "%"
-          labelLong: "% of respective population"
+          labelLong: "%"
           code: PC
     infoText: "<p class='ecl-u-type-paragraph'>The number of persons having their usual residence in a country on 1 January of the respective year. When usually resident population is not available, countries may report legal or registered residents.</p>
               <p class='ecl-u-type-paragraph'>For information on methodology and data quality, please consult the <a class='ecl-link' href=https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm target='_blank'>metadata</a>.</p>"
