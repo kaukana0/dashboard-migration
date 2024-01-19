@@ -101,8 +101,14 @@ function setupCard(id, merged, onCardExpand, onCardContract, DSIdCard) {
 		onCardContract(id) 
 	})
 	card.addEventListener("chartSwitched", (e) => { Range.reset(id, e.to==2, true, e.to==2) })
-	card.setAttribute("unitShort", merged.dimensions.nonUi.unit[0].label)
-	card.setAttribute("unitLong", merged.dimensions.nonUi.unit[0].labelLong ? merged.dimensions.nonUi.unit[0].labelLong : merged.dimensions.nonUi.unit[0].label)
+
+	const unit = merged.dimensions.nonUi.unit[0]
+	card.setAttribute("unitShort", unit.label)
+	card.setAttribute("unitLong", 
+		unit.labelLong ? unit.labelLong : (unit.labelLongC ? "" : unit.label)
+	)
+	card.setAttribute("unitLongC", unit.labelLongC ? unit.labelLongC : "")
+
 	if(merged.dataset["exclusive"]) {
 		card.setAttribute("srcLink1", merged.dataset.exclusive.source)
 		card.setAttribute("srcLink2", merged.dataset.exclusive.source)
@@ -145,11 +151,12 @@ function setupCard(id, merged, onCardExpand, onCardContract, DSIdCard) {
 }
 
 export function updateCardAttributes(cardId, boxes, textRight) {
-  const card = document.getElementById(cardId)
-  card.setAttribute("right1", textRight)
-  card.setAttribute("right2", "")
-  card.setAttribute("subtitle_c", card.getAttribute("unitLong") + Subtitle.get(card.userData, boxes, "Age") )
-  card.setAttribute("subtitle_e", card.getAttribute("unitLong") + Subtitle.get(card.userData, null, "Age") )
+	const card = document.getElementById(cardId)
+	card.setAttribute("right1", textRight)
+	card.setAttribute("right2", "")
+	const pre = card.getAttribute("unitLongC") !== "" ? card.getAttribute("unitLongC") : card.getAttribute("unitLong")
+	card.setAttribute("subtitle_c", pre + Subtitle.get(card.userData, boxes, "Age") )
+	card.setAttribute("subtitle_e", card.getAttribute("unitLong") + Subtitle.get(card.userData, null, "Age") )
 }
 
 function setupRange(id, values, selectedCallback) {

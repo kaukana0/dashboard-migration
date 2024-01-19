@@ -131,7 +131,8 @@ codeList:
     code: "A"
   unit: &unit
     label: "%"                      # displayed in the tooltip
-    labelLong: "% of population"    # displayed in card subtitle (overview and expanded) and chart's Y-label
+    labelLong: "% of population"    # displayed in chart's Y-label AND card subtitle (overview and expanded)
+    labelLongC: ""                  # displayed in card subtitle overview only
     code: "PC"
   # this determines the contents and order of UI elements, except for the chart.
   # the country order for that is determined through processorCountryOrder.
@@ -362,7 +363,7 @@ indicators:
       nonUi:
         unit:
         - label: "%"
-          labelLong: "%"
+          labelLongC: "% of the respective population"
           code: PC
     infoText: "<p class='ecl-u-type-paragraph'>The number of persons having their usual residence in a country on 1 January of the respective year. When usually resident population is not available, countries may report legal or registered residents.</p>
               <p class='ecl-u-type-paragraph'>For information on methodology and data quality, please consult the <a class='ecl-link' href=https://ec.europa.eu/eurostat/cache/metadata/en/demo_pop_esms.htm target='_blank'>metadata</a>.</p>"

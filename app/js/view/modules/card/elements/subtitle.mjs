@@ -13,6 +13,11 @@ where:
 It might as well be, that Age is from someConfig.label 
 and Woman from a selectBox while retaining the same order.
 
+
+TODO:
+this is probably way more complicated then it needs to be.
+reason is: requirements changed during development ¯\_(ツ)_/¯
+re-evaluate if it's possible to simplify - and if so, do it.
 */
 
 import {reverseMapOrder} from "../../../../../components/util/util.mjs"
