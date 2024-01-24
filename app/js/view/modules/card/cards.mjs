@@ -155,8 +155,8 @@ export function updateCardAttributes(cardId, boxes, textRight) {
 	card.setAttribute("right1", textRight)
 	card.setAttribute("right2", "")
 	const pre = card.getAttribute("unitLongC") !== "" ? card.getAttribute("unitLongC") : card.getAttribute("unitLong")
-	card.setAttribute("subtitle_c", pre + Subtitle.get(card.userData, boxes, "Age") )
-	card.setAttribute("subtitle_e", card.getAttribute("unitLong") + Subtitle.get(card.userData, null, "Age") )
+	card.setAttribute("subtitle_c", pre + Subtitle.get(card.userData, boxes, ["Age","isced11","lev_perc"]) )
+	card.setAttribute("subtitle_e", card.getAttribute("unitLong") + Subtitle.get(card.userData, null, ["Age"]) )
 }
 
 function setupRange(id, values, selectedCallback) {
