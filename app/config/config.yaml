@@ -239,7 +239,7 @@ globals:
       text: "Explore the Migrant integration and inclusion dashboard"
       hashTags: "#Eurostat #Migration"
       mailSubject: "Explore the Migrant integration and inclusion dashboard"
-      mailBody: "https://ec.europa.eu/eurostat/cache/test/migdash/"
+      mailBody: "https://ec.europa.eu/eurostat/cache/dashboard/migrant-integration-inclusion/"
     globalInfo: "<h4 >About this dashboard</h4>
 <p class='ecl-u-type-paragraph'>This migrant integration and inclusion dashboard was developed by Eurostat, the statistical office of the European Union.</p>
 <p class='ecl-u-type-paragraph'>Data in this dashboard is constantly updated with the latest data available in the Eurostat database.</p>
