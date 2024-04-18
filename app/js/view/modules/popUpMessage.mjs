@@ -5,7 +5,7 @@ export const TEXT = {
 }
 
 export function show(text, showClose=true, timeout=null) {
-  document.getElementsByTagName("ecl-like-message")[0].setHeader("Attention!")
+  document.getElementsByTagName("ecl-like-message")[0].setHeader("Attention")
   document.getElementsByTagName("ecl-like-message")[0].setText(text)
   document.getElementsByTagName("ecl-like-message")[0].show(showClose, timeout)
 }
