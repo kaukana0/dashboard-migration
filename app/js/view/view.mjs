@@ -17,6 +17,8 @@ import {getSeries, getSeriesKeys} from "../../components/chart/chart.mjs"
 import {isInGroupC, getBySelectSelections} from "./modules/select/bySelect.mjs"
 import * as BackButton from "./modules/backButton.mjs"
 import {isNarrowScreen} from "../../components/chartCard/chartCard.mjs"
+import * as DialogStyling from "../../components/ewc-dialog/src/externalStyling.mjs"
+import * as FeedbackDialogStyling from "../../components/ewc-dialog-feedback/src/externalStyling.mjs"
 
 // used to decide when to update one instead of all cards (reduce number of chart reloads)
 let currentlyExpandedId = null
@@ -35,6 +37,8 @@ export function createUIElements(cfg, triggerLoading, cb) {
   BackButton.callback(()=>{
     Cards.contractAll()
   })
+  DialogStyling.applyEclClasses()
+  FeedbackDialogStyling.applyEclClasses()
 }
 
 function initialRequest(cb) {

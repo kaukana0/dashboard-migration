@@ -44,6 +44,8 @@ Author: robert.gebhardt@ext.ec.europa.eu
 	<script src="./redist/ecl/ecl-eu.js"></script>
 	<link  href="./redist/ecl/ecl-eu.css" rel="stylesheet"/>
 
+	<link  href="./css/adaptToEwcDialog.css" rel="stylesheet"/>
+
 	<!--link rel="stylesheet" href="css/debug.css"-->
 	<link  href="./css/menuLine.css" rel="stylesheet"/>
 
@@ -58,6 +60,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 	<script src="./components/eclLikeMessage/message.mjs" type="module"></script>
 	<script src="./components/eclLikeModal/modal.mjs" type="module"></script>
 	<script src="./components/eclLikeSocialMediaShare/share.mjs" type="module"></script>
+	<script src="./components/ewc-dialog-feedback/src/main.mjs" type="module"></script>
 
 	<style>
 			html,
@@ -172,6 +175,12 @@ Author: robert.gebhardt@ext.ec.europa.eu
 
 	<ecl-like-message></ecl-like-message>
 	<ecl-like-modal id="globalModal"></ecl-like-modal>
+	<ewc-dialog-feedback
+		cookieName="migrant-dashboard-survey"
+		cookiePath="/eurostat"
+		expiryutc="2024-04-26T17:00:00Z"
+		url="https://ec.europa.eu/eusurvey/runner/statistical_dashboards_users">
+	</ewc-dialog-feedback>
 
 </body>
 

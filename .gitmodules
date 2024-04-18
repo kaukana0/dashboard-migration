@@ -49,3 +49,9 @@
 [submodule "app/components/titledSelect"]
 	path = app/components/titledSelect
 	url = https://github.com/kaukana0/titledSelect.git
+[submodule "app/components/ewc-dialog"]
+	path = app/components/ewc-dialog
+	url = https://citnet.tech.ec.europa.eu/CITnet/stash/scm/ewc/ewc-dialog.git
+[submodule "app/components/ewc-dialog-feedback"]
+	path = app/components/ewc-dialog-feedback
+	url = https://citnet.tech.ec.europa.eu/CITnet/stash/scm/ewc/ewc-dialog-feedback.git
