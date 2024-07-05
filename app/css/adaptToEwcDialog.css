@@ -62,6 +62,13 @@ this application to the ewc-dialog and ewc-dialog-feedback components.
 .ecl-modal__header-content{
   flex-grow:1
 }
+.ecl-button__container{
+  align-items:center;
+  display:flex
+}
+.ecl-menu__button-caret .ecl-button__container{
+  align-self:center
+}
 .ecl-modal__body{
   display:flex;
   flex-direction:column;

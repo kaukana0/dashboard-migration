@@ -95,7 +95,9 @@ export default function go(urls, callback) {
 		if(document.getElementById("loadingIndicator")) {
 			document.getElementById("loadingIndicator").style.display = "none"
 		}
-	}
+		localStorage.clear()
+		console.log( `cacheLS: cleared because of failure display` )
+}
 
 }
 

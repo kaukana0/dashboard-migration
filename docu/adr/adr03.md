@@ -16,7 +16,7 @@ URL for requesting line diagram data:
 
     ILC_PEPS06N?c_birth=NAT&age=Y20-24&sex=T&geo=BG&geo=EU&freq=A&unit=PC&time=from..to
 
-URL for requesting dot plit data:
+URL for requesting dot plot data:
 
     ILC_PEPS06N?c_birth=NAT&age=Y20-24&sex=T&freq=A&unit=PC&
 
@@ -30,8 +30,7 @@ the dot plot URL leaves out geo and time, gets more data, rest is similar.
 - geo select -> requests for all cards
 - any other select -> request for one card
 
-fetcher
-pipeline
+fetcher, pipeline
 
 ### reaching a conclusion
 
