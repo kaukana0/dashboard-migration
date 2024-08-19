@@ -21,7 +21,7 @@ export function createDropdownBoxes(cfg, datasets) {
 
     const attribs = new Map()
     attribs.set("dimension", boxName)
-    attribs.set("aria-label", boxName+" selectbox")
+    attribs.set("aria-label", boxName+" selectbox. Selections are automatically applied to the graph below.")
     attribs.set("id", Math.floor(Math.random() * 10000))  // doesnt matter which, this is only needed to make it dismissable
     
     const width = typeof cfg[i][boxName]["width"] === "undefined" ? "200px" : cfg[i][boxName]["width"]

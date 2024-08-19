@@ -14,7 +14,7 @@ export function create(cfg, _groups, callback) {
 
   select = document.createElement('titled-select')
   select.setAttribute("id", MS.GEO_SELECT_DOM_ID)
-  select.setAttribute("aria-label", "Country selectbox")
+  select.setAttribute("aria-label", "Country selectbox. Selections are automatically applied to the graph below.")
 
   const box = select.box
   box.setAttribute("dimension", "geo")
