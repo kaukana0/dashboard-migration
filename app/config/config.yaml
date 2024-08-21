@@ -305,7 +305,7 @@ indicatorBase:
           # note 2: must correspond w/ magicStrings.mjs
         - Country of citizenship/birth:
             multiselect: true
-            width: "360px"
+            width: "370px"
             items:
               - *nonEuC
               - *euC
