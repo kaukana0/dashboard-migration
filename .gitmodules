@@ -55,3 +55,6 @@
 [submodule "app/components/ewc-dialog-feedback"]
 	path = app/components/ewc-dialog-feedback
 	url = https://citnet.tech.ec.europa.eu/CITnet/stash/scm/ewc/ewc-dialog-feedback.git
+[submodule "app/components/ewc-footer-links"]
+	path = app/components/ewc-footer-links
+	url = https://citnet.tech.ec.europa.eu/CITnet/stash/scm/ewc/ewc-footer-links.git
