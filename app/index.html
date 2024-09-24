@@ -46,6 +46,7 @@ Author: robert.gebhardt@ext.ec.europa.eu
 
 	<link  href="./css/adaptToEwcDialog.css" rel="stylesheet"/>
 	<link  href="./css/footerLinks.css" rel="stylesheet"/>
+	<link  href="./css/socialMediaShare.css" rel="stylesheet"/>
 
 	<!--link rel="stylesheet" href="css/debug.css"-->
 	<link  href="./css/menuLine.css" rel="stylesheet"/>
@@ -56,11 +57,10 @@ Author: robert.gebhardt@ext.ec.europa.eu
 	<script src="./components/select/select.mjs" type="module"></script>
 	<script src="./components/titledSelect/titledSelect.mjs" type="module"></script>
 	<script src="./js/view/modules/card/elements/detailLegend.mjs" type="module"></script>
-	<script src="./components/eclLikeHeroBanner/heroBanner.mjs" type="module"></script>
+	<script src="./components/ewc-social-media-share/src/main.mjs" type="module"></script>
 	<script src="./components/symbolButton/button.mjs" type="module"></script>
 	<script src="./components/eclLikeMessage/message.mjs" type="module"></script>
 	<script src="./components/eclLikeModal/modal.mjs" type="module"></script>
-	<script src="./components/eclLikeSocialMediaShare/share.mjs" type="module"></script>
 	<script src="./components/ewc-dialog-feedback/src/main.mjs" type="module"></script>
 	<script src="./components/ewc-footer-links/src/main.mjs" type="module"></script>
 
@@ -137,7 +137,13 @@ Author: robert.gebhardt@ext.ec.europa.eu
 			<ecl-like-menu id="menu" style="flex-grow:1;"></ecl-like-menu>
 			<symbol-button id="globalInfoButton" symbol="infoWhite" size="36" style="margin: 0px 10px 0px 10px;" class="shriBu" aria-label="Information" title="Information"></symbol-button>
 			<symbol-button id="sharingButton" symbol="sharing" size="36" style="margin: 0px 16px 0px 6px;" 		  class="shriBu" aria-label="Share with others" title="Share"></symbol-button>
-			<ecl-like-social-share style="margin-top: 45px;"></ecl-like-social-share>
+      <ewc-social-media-share
+				assetBaseUrl = "./components/ewc-social-media-share/assets"
+        style="margin-top: 30px;"
+				buttonvisible="false"
+				showEmbed="false"
+				xOffset="-170">
+      </ewc-social-media-share>
 		</div>
 	</div>
 

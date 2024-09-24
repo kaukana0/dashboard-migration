@@ -284,9 +284,9 @@ function setCardsActive(isActive, id) {
   })
 
   if(!isActive) {
-    document.getElementById("footerBottom").setAttribute("inert", true)
+    document.getElementsByTagName("footer")[0].setAttribute("inert", true)
   } else {
-    document.getElementById("footerBottom").removeAttribute("inert")
+    document.getElementsByTagName("footer")[0].removeAttribute("inert")
   }
 
 }
@@ -303,7 +303,7 @@ export function setupSharing(cfg) {
   const btn = document.getElementById("sharingButton")
   btn.addEventListener("action", () => { menu.toggleVisibility() })
 
-  const menu = document.getElementsByTagName("ecl-like-social-share")[0]
+  const menu = document.getElementsByTagName("ewc-social-media-share")[0]
   menu.setAttribute("text", cfg.text)
   menu.setAttribute("hashTags", cfg.hashTags)
   menu.setAttribute("mailSubject", cfg.mailSubject)

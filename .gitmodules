@@ -37,9 +37,6 @@
 [submodule "app/components/eclLikeModal"]
 	path = app/components/eclLikeModal
 	url = https://github.com/kaukana0/eclLikeModal.git
-[submodule "app/components/eclLikeSocialMediaShare"]
-	path = app/components/eclLikeSocialMediaShare
-	url = https://github.com/kaukana0/eclLikeSocialMediaShare.git
 [submodule "app/components/select"]
 	path = app/components/select
 	url = https://github.com/kaukana0/select.git
@@ -58,3 +55,6 @@
 [submodule "app/components/ewc-footer-links"]
 	path = app/components/ewc-footer-links
 	url = https://citnet.tech.ec.europa.eu/CITnet/stash/scm/ewc/ewc-footer-links.git
+[submodule "app/components/ewc-social-media-share"]
+	path = app/components/ewc-social-media-share
+	url = https://citnet.tech.ec.europa.eu/CITnet/stash/scm/ewc/ewc-social-media-share.git
