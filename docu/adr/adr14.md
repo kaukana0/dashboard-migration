@@ -22,16 +22,19 @@ Some symptoms:
 
 Big problem, many bugs, potential and currently real:
 
-- One menu selection can lead to 3 distinct chartInstance.resize() calls.
-- The way the resize is implemented in cartCard is misleading.
-    - It suggests a fire-and-forget, when - in fact - the way it's implemented behind (by card.mjs webComponent) is that the only one wins, others get lost.
+One menu selection can lead to 3 distinct chartInstance.resize() calls.
 
+The way the resize is implemented in cartCard is misleading.
 
-onMenuSelected 1--> filter --> setVisible -->                                --> setData --> resize --> whatever
-             2--> contract --> onCardContract --> onSelectedForAllCards --/           /
-             3--> expand -->                                                    -----/
+It suggests a fire-and-forget, when - in fact - the way it's implemented behind (by card.mjs webComponent) is that the only one wins, others get lost.
 
-The "whatever" is moving the country-box in and out of a card, scrollbars and more.
+There are 3 paths to the resize functionality - as depicted below
+
+    onMenuSelected 1--> filter --> setVisible -->                                --> setData --> resize --> whatever
+                   2--> contract --> onCardContract --> onSelectedForAllCards --/           /
+                   3--> expand -->                                                    -----/
+
+The "whatever" is: moving the country-box in and out of a card, scrollbars and more.
 
 - 1 is because setVisible caches data if card is not visible and when swichting visible, "catches up" by setting the data.
 - 2 calls onSelectedForAllCards because in another flow the user might have changed favourite, affecting all cards.
@@ -72,9 +75,20 @@ Idea 4)
 
 ## Decision
 
-- 1st point of idea 3, because initially, all cards are visible and get data set anyway. no need for catch-up.
-- setData compares (deep-equal comparison) data-to-be-set w/ current data and doesn't do async things if equal
+- 1st point of idea 3, because initially, all cards are visible and get data set anyway. no need for a catch-up mechanism.
+- ~~setData compares (deep-equal comparison) data-to-be-set w/ current data and doesn't do async things if equal~~
+  - turns out to not be neccessary
 - introduce callback for setData to attempt to serialize at least some flows
-- introduce detection mechanism for concurrent resize() calls (in order to potentially do sth about it in case bugs appear again)
+- ~~introduce detection mechanism for concurrent resize() calls (in order to potentially do sth about it in case bugs appear again)~~
+  - attempted in chart, failed to remedy issues
 
 ## Consequences
+
+Reliability has to be empirically confirmed (i.e. tests) for changes of the configuration (especially big ones that affect how many cards are shown in the overview) and for changes to the caching strategy.
+These tests have to be done for slow internet-connections and on mobile devices (different CPU power).
+
+This is true for as long as the root problem is not adressed - i.e. re-write the functionality of fetching data and filling UI elements to be purely event driven - possibly alternatively an appropriate locking mechanism.
+
+### addendum
+
+After a few months in production, there are no reported issues regarding this topic (commitId 3c6b9c1).
