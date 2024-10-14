@@ -8,7 +8,7 @@ import * as Range from "./modules/card/elements/range.mjs"
 import {MS} from "../common/magicStrings.mjs"
 import * as MainMenu from "./modules/mainMenu.mjs"
 import * as Url from "../model/url.mjs"
-import Fetcher from "../model/fetcher.mjs"
+import * as Fetcher from "../model/fetcher.mjs"
 import {getMapFromArray} from "./modules/util.mjs"
 import * as CommonConstraints from "./modules/select/constraints/commonConstraints.mjs"
 import {getCardsOfCategory} from "./modules/cardToMenuMapping.mjs"
@@ -30,6 +30,7 @@ export function createUIElements(cfg, triggerLoading, cb) {
   GeoSelect.moveToMainArea()
   Cards.create(MS.CARD_CONTAINER_DOM_ID, cfg, onSelectedForOneCard, onCardExpand, onCardContract)    // ∀ indicators
   Url.Affix.pre = cfg.globals.baseURL
+  setupDataRetention(cfg.globals.dataRetention)
   if(triggerLoading) { initialRequest(cb) }
   BackButton.hide()
   BackButton.callback(()=>{
@@ -155,7 +156,7 @@ function fetch(cardId, cb) {
   const bySelections = getBySelectSelections(boxes)
   const fragGetter = {} ; fragGetter[MS.BY_SELECT_ID] = Url.getBySelectFrag
   const inC = isInGroupC(boxes, bySelections)
-  Fetcher( Url.buildFrag(boxes,dataset,fragGetter), (data)=>{
+  Fetcher.go( Url.buildFrag(boxes,dataset,fragGetter), (data)=>{
     Cards.setData(cardId, GeoSelect.getSelected(), inC, data, cb)
     if(bySelections) {
       const seriesKeys = getSeriesKeys(getSeries(data.timeSeries.data))
@@ -310,8 +311,19 @@ export function setupSharing(cfg) {
   menu.setAttribute("mailBody", cfg.mailBody)
 }
 
+function setupDataRetention(cfg) {
+  switch(cfg) {
+    case "inmemory":
+    case "localstore":
+      Fetcher.setDataRetention(cfg)
+      break
+    default:
+      Fetcher.setDataRetention("none")
+  }
+}
+
 window.addEventListener('resize', function(event) {
   if(!currentlyExpandedId) {
     Cards.enableTooltip(!isNarrowScreen())
   }
-}, true);
+}, true)

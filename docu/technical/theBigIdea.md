@@ -87,3 +87,59 @@ the following exist for each indicator
 - "output" - what the pipeline-processor outputs - data for billboard.js
 
 Note that during creation of a deployment, evey "log.debug" is being removed.
+
+# Caching strategy
+
+The caching strategy in this context refers to **retention** and **loading behaviour**.
+
+The retention is somewhat configurable while loading behaviour is hardcoded.
+
+## Retention
+
+In the YAML config, "dataRetention" can be set to one of: "inmemory", "localstore" or "none".
+
+The different behaviours are:
+
+- **"localstore"** - data is stored into the browser's local store.
+  - Because of the local store, the loaded data is retained, even if the page is being closed or the computer is being powered off.
+  - The retention period is **24h** (as per non configurable implementation)
+- **"inmemory"** - data is stored in memory.
+  - Data is requested once **during a session** and retained unless the page is being closed/reloaded or the computer is being powered off.
+- **"none"** - there is a network request for every selection, **always**, even when the same selection was made before.
+
+## General loading behaviour
+
+Data caching is closely related to how data is requested.
+
+- There is one card (aka "tile") for every indicator.
+- In general, there is one request for each indicator / card.
+- Cards are visible in the overview if an indicator's config "isInOverview" is set to true.
+- When opening the page, the data for those cards are requested first.
+- After loading, those cards are already displayed, while in the background, data for all other cards are loaded.
+
+When closing an expanded card, what happens w/ regards to network request, depends on the caching strategy:
+
+- none: data for every card (having the default settings) is requested
+- inmemory: data for every card (having the default settings) is taken from cache
+- localstore: data for every card (having the default settings) is taken from local disk storage
+
+## Per Indicator loading
+
+For each indicator, the following applies:
+
+- More data (than actually selected) can be requested, when taking away parameters from the data-fetch URL
+  - Basically decreasing the specificity, making the request "more broad"
+- For a request w/ respect to an indicator, "geo" and "time" parameters are actually omitted
+- Thus, the requested data **includes all geo and all time available on server**
+- If this data is cached (inmemory or localstore), there will not be another network request when users change the selection of country or time. 
+- When changing any other selection however, data is requested - again for all countries and for every year.
+
+## Notes
+
+- On error, local store is cleared
+- There was an effort to make the caching strategy also dependent on online-status and whether the server is actually reachable.
+  - i.e. not clearing local store and indicating to the user the offline-status and possible out-of-date data
+  - But this was not implemented.
+- There is still room for improvement if neccessary
+  - for instance, changing the by-selection - whos default is "By contry of citicenship", so a group of 3 selections - to one of the three selections results in an unneccessary network request.
+  - unneccessary, because data is already contained in the group selection

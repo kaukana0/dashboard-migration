@@ -12,7 +12,8 @@ additional dims		either from a selectBox or from yaml cfg file
 
 Almost all are per card, except countrySelectbox - it affects all cards.
 */
-import * as Cache from "./cacheLs.mjs"
+import * as CacheLs from "./cacheLs.mjs"
+import * as CacheInMem from "./cache.mjs"
 
 import { run } from "../../components/pipeline/pipeline.mjs"
 import { process as defineCountriesOrder } from "../../components/processorCountryOrder/countryOrder.mjs"
@@ -27,6 +28,8 @@ import { process as analyzeIncomingData } from "./pipelineProcessors/analyze.mjs
 
 import * as ErrorScreen from "../view/modules/errorScreen.mjs"
 
+var dataRetention = "none"
+
 /*
 called per card.
 
@@ -39,7 +42,7 @@ and the country-series takes only 1 year but all countries.
 
 the data of the "big request" (unfiltered) is being cached.
 */
-export default function go(urls, callback) {
+export function go(urls, callback) {
 	const processingCfg = []
 
 	// note: some processors can handle being called multiple times
@@ -51,22 +54,31 @@ export default function go(urls, callback) {
 		const strippedUrl = removeParams(fullUrl)		// more data
 		//console.debug("fecth", fullUrl)		// typo is on purpose ;-)
 
-		processingCfg.push(
-			{
-				input: strippedUrl,
-				//input: "./persistedData/example-request-answer.json",
-				//input: "./persistedData/ausbel.json",
-				//input: "./persistedData/dots.json",
-				cache: {
-					store: (data) => Cache.store(strippedUrl, data),
-					restore: (id) => Cache.restore(id)
-				},
-				processors: [defineCountryColors, defineByOrder, extractTimeYearly, extractTimeSeriesData,
-					defineCountriesOrder, extractCountrySeriesData,	addEu,
-					analyzeIncomingData],
-				data: fullUrl
-			}
-		)
+		const cfg = {
+			input: strippedUrl,
+			//input: "./persistedData/example-request-answer.json",
+			//input: "./persistedData/ausbel.json",
+			//input: "./persistedData/dots.json",
+			processors: [defineCountryColors, defineByOrder, extractTimeYearly, extractTimeSeriesData,
+				defineCountriesOrder, extractCountrySeriesData,	addEu,
+				analyzeIncomingData],
+			data: fullUrl
+		}
+
+		if(dataRetention==="localstore") {
+			cfg["cache"] = {
+					store: (data) => CacheLs.store(strippedUrl, data),
+					restore: (id) => CacheLs.restore(id)
+				}	
+		}
+		if(dataRetention==="inmemory") {
+			cfg["cache"] = {
+					store: (data) => CacheInMem.store(strippedUrl, data),
+					restore: (id) => CacheInMem.restore(id)
+				}	
+		}
+
+		processingCfg.push(cfg)
 	}
 
 	// todo: lock ui
@@ -95,8 +107,10 @@ export default function go(urls, callback) {
 		if(document.getElementById("loadingIndicator")) {
 			document.getElementById("loadingIndicator").style.display = "none"
 		}
-		localStorage.clear()
-		console.log( `cacheLS: cleared because of failure display` )
+		if(dataRetention==="localstore") {
+			localStorage.clear()
+			console.log( `cacheLS: cleared because of failure display` )
+		}
 }
 
 }
@@ -120,4 +134,10 @@ export function replaceInRawData(arrayBuffer) {
 		console.error("main: invalid (json) or no data. native error follows.\n\n", e)
 		return {}
 	}
+}
+
+// one of "inmemory", "localstore" or "none"
+export function setDataRetention(val) {
+	console.log("set data retention to: "+val)
+	dataRetention = val
 }

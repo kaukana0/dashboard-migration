@@ -2,8 +2,6 @@
 
 //import { isReachable } from "../../components/util/util.mjs"
 
-console.log("localstore cache enabled")
-
 const updateId = "lastUpdate"
 let baseURL = ""
 

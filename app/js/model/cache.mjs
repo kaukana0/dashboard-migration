@@ -1,7 +1,5 @@
 const cache = new Map()
 
-console.log("in-memory cache enabled")
-
 export function store(id, data) {
   if(!cache.has(id)) {
     console.debug( `cache: store id='${id}'.` )

@@ -25,6 +25,7 @@ Best being, using the least amount of network requests and requesting just about
 ### Config
 
 YAML, because it's well comprehendable by humans, can easily be used as json-object in js and offers a useful set of features (i.e. aliases and anchors).
+Note that the YAML schema is versioned (in the YAML file) and the application also denotes in index.html to which YAML schema it's compatible to.
 
 ## Consequences
 
