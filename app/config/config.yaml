@@ -236,9 +236,9 @@ globals:
   byBirthGroupTitle: "By country of birth"
   texts:
     sharing:
-      text: "'Migrant integration and inclusion dashboard' by Eurostat"
+      text: "Migrant integration and inclusion dashboard"
       hashTags: "#Eurostat #Migration"
-      mailSubject: "'Migrant integration and inclusion dashboard' by Eurostat"
+      mailSubject: "Migrant integration and inclusion dashboard"
       mailBody: "https://ec.europa.eu/eurostat/cache/dashboard/migrant-integration-inclusion/"
     globalInfo: "<h4 >About this dashboard</h4>
 <p class='ecl-u-type-paragraph'>This migrant integration and inclusion dashboard was developed by Eurostat, the statistical office of the European Union.</p>
