@@ -1,0 +1,16 @@
+{
+  "name": "@ewc-lib/ewc-social-media-share",
+  "version": "2.0.0-alpha",
+  "description": "",
+  "main": "src/main.mjs",
+  "scripts": {
+  },
+  "author": "",
+  "license": "EUPL v.1.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@ewc-lib/ewc-css": "0.6.3"
+  }
+}

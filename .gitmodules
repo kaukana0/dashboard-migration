@@ -55,6 +55,3 @@
 [submodule "app/components/ewc-footer-links"]
 	path = app/components/ewc-footer-links
 	url = https://citnet.tech.ec.europa.eu/CITnet/stash/scm/ewc/ewc-footer-links.git
-[submodule "app/components/ewc-social-media-share"]
-	path = app/components/ewc-social-media-share
-	url = https://citnet.tech.ec.europa.eu/CITnet/stash/scm/ewc/ewc-social-media-share.git
