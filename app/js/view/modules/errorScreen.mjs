@@ -32,7 +32,7 @@ return `
 <div id="errorMessage" style="font-size: 30px;">
 Ups, something went wrong!<br>
 Try again later or contact our
-<a href="https://ec.europa.eu/eurostat/web/main/help/support">user support</a>
+<a href="https://ec.europa.eu/eurostat/en/web/main/contact-us/user-support">user support</a>
 </div>
 
 

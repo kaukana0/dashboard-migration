@@ -281,7 +281,7 @@ globals:
 </ul>
 
 <h4 >Further reading</h4>
-<p class='ecl-u-type-paragraph'>If you wish to obtain more in-depth information, please see our online publication in&nbsp;<a class='ecl-link' target='_blank' href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics'>Statistics Explained</a>.</p>
+<p class='ecl-u-type-paragraph'>If you wish to obtain more in-depth information, please see our online publication in&nbsp;<a class='ecl-link' target='_blank' href='https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_facts_and_figures'>Statistics Explained</a>.</p>
 <h4 >Feedback</h4>
 <p>If you have any feedback for us, please send us an&nbsp;<a class='ecl-link' href='mailto:estat-user-support@ec.europa.eu?subject=Migrant%20integration%20and%20inclusion%20dashboard'>email</a>.</p>"
   dataRetention: "inmemory"   # one of "inmemory", "localstore" or "none"
