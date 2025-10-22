@@ -1,6 +1,6 @@
 # configuration for "Migrant integration and inclusion dashboard" by Eurostat
 # yaml schema v0.9.2
-# date: 2024-10-14
+# date: 2025-10-22
 
 codeList:
 
@@ -195,11 +195,13 @@ codeList:
       label: Sweden
     - code: IS
       label: Iceland
+    - code: LI
+      label: Liechtenstein
     - code: NO
       label: Norway
     - code: CH
       label: Switzerland
-  countryGroups: [AT, IS]
+  countryGroups: [AT, IS]   # code of country at which a new group of countries is created. Each group is sorted within itself.
   tenureOwn: &tenureOwn
     label: "Owner"
     code: "OWN"
@@ -218,7 +220,7 @@ articleLinks:
   education: &articleLinkEducation
     url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_education
   si: &articleLinkSocialInclusion
-    url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_at_risk_of_poverty_and_social_exclusion
+    url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_poverty_and_social_exclusion
   housing: &articleLinkHousing
     url: https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Migrant_integration_statistics_-_housing
   health: &articleLinkHealth
@@ -236,9 +238,9 @@ globals:
   byBirthGroupTitle: "By country of birth"
   texts:
     sharing:
-      text: "Migrant integration and inclusion dashboard"
+      text: "Explore the Migrant integration and inclusion dashboard"
       hashTags: "#Eurostat #Migration"
-      mailSubject: "Migrant integration and inclusion dashboard"
+      mailSubject: "Explore the Migrant integration and inclusion dashboard"
       mailBody: "https://ec.europa.eu/eurostat/cache/dashboard/migrant-integration-inclusion/"
     globalInfo: "<h4 >About this dashboard</h4>
 <p class='ecl-u-type-paragraph'>This migrant integration and inclusion dashboard was developed by Eurostat, the statistical office of the European Union.</p>
@@ -306,7 +308,7 @@ indicatorBase:
           # note 2: must correspond w/ magicStrings.mjs
         - Country of citizenship/birth:
             multiselect: true
-            width: "370px"
+            width: "360px"
             items:
               - *nonEuC
               - *euC
@@ -799,11 +801,11 @@ indicators:
     articleLink: *articleLinkEducation
     dataset:
       citizen:
-        id: TRNG_LFS_12
-        source: https://ec.europa.eu/eurostat/web/products-datasets/-/trng_lfs_12
+        id: TRNG_LFS_20
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/trng_lfs_20
       birth:
-        id: TRNG_LFS_13
-        source: https://ec.europa.eu/eurostat/web/products-datasets/-/trng_lfs_13
+        id: TRNG_LFS_21
+        source: https://ec.europa.eu/eurostat/web/products-datasets/-/trng_lfs_21
     dimensions:
       ui:
         dropdown:
@@ -811,14 +813,14 @@ indicators:
               inherit: false
         range:
           - time:
-            start: 2004
+            start: 2002
             end: 0
-            selected: 2013
+            selected: 2002
       nonUi:
         Age:
         - *25-64
-    infoText: "<p>The participation in adult learning is expressed as the percentage of people who received education or training (formal or non-formal) during the four weeks preceding the labour force survey.&nbsp;It is calculated for persons aged 25–64 years.</p>
-              <p>For information on methodology and data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/trng_lfs_4w0_esms.htm'>metadata</a>.</p>"
+    infoText: "<p>The share of people having participated in learning is calculated for persons aged 25–64 years. It is the share of people who participated in formal or non-formal education and training during the 12 months preceding the survey.</p>
+               <p>For information on methodology and data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/trng_lfs_4w0_esms.htm'>metadata</a>.</p>"
 
   - name: NEET
     nameLong: Young people neither in employment nor in education and training (NEET)
