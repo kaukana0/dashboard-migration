@@ -58,9 +58,9 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
           output.countrySeries.data[0].push(MS.ID_NO_DATA)
           ll.push(MS.ID_NO_DATA)
         } else {
+          output.countrySeries.data[0].push( country )
+
           if(typeof idxGeo !== 'undefined') {
-            output.countrySeries.data[0].push( country )
-    
             coeff.fill(0)
             coeff[byIdx] = by
             coeff[geoDimIdx] = idxGeo
@@ -75,7 +75,8 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
               if(v>output.countrySeries.meta.biggestValue) { output.countrySeries.meta.biggestValue=v }
             }
           } else {
-            console.error("countrySeriesProcessor: idxGeo not found for country ", country)
+            console.warn("countrySeriesProcessor: idxGeo not found for country ", country)
+            ll.push(MS.ID_NO_DATAPOINT_COUNTRYSERIES)
           }
         }
       })

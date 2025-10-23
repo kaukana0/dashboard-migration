@@ -820,7 +820,7 @@ indicators:
         Age:
         - *25-64
     infoText: "<p>The share of people having participated in learning is calculated for persons aged 25–64 years. It is the share of people who participated in formal or non-formal education and training during the 12 months preceding the survey.</p>
-               <p>For information on methodology and data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/trng_lfs_4w0_esms.htm'>metadata</a>.</p>"
+               <p>For information on methodology and data quality, please consult the <a target='_blank' href='https://ec.europa.eu/eurostat/cache/metadata/en/trng_lfs_4w_esms.htm'>metadata</a>.</p>"
 
   - name: NEET
     nameLong: Young people neither in employment nor in education and training (NEET)
