@@ -24,9 +24,8 @@ however, there may be more data available - ie the request might have had some p
 so we gotta filter them here.
 */
 export function process(inputDataFromRequest, inputDataFromCfg, output) {
-  const selectedTime = parseInt(Url.getTime(inputDataFromCfg)[0])    // [from,to]  we only need "from"
-  const selectedGeo = Url.getGeo(inputDataFromCfg)
-
+  const selectedTime = parseInt(Url.getTime(inputDataFromCfg)[0])
+  const selectedGeo = new Set(Url.getGeo(inputDataFromCfg))
   output.timeSeries = {}
   output.timeSeries.data = [output.time.filter(e=>parseInt(e)>=selectedTime)]
 
@@ -41,7 +40,9 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
   const valence = MultiDim.calcOrdinalValence(inputDataFromRequest.size)
 
   let byCode
-  let geoLabel
+  let geoCode
+
+  let collectedGeoCodes = new Set()
 
   for(let geo=0; geo<geoDimMax; geo++) {
 
@@ -50,11 +51,12 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
       // possibly not in data
       if(typeof(by) !== "undefined") {
         byCode = BYCode.replace( Object.keys(inputDataFromRequest.dimension[byDim].category.index)[by] )
-        geoLabel = EUCode.replace( Object.keys(inputDataFromRequest.dimension.geo.category.index)[geo] )
-        if(typeof geoLabel === "undefined") {console.warn("timeSeries processor: something is fishy, a geo is missing in the input data!")}
-        if(selectedGeo.find(e=>e===geoLabel)) {   // filter what isn't selected
+        geoCode = EUCode.replace( Object.keys(inputDataFromRequest.dimension.geo.category.index)[geo] )
+        if(typeof geoCode === "undefined") {console.warn("timeSeries processor: something is fishy, a geo is missing in the input data!")}
+        if(selectedGeo.has(geoCode)) {   // filter what isn't selected
           // combi of by/country is a unique compound key. used as display text by chart tooltip and legend
-          const ll = [geoLabel + ", " + TM.getByLabelShort(byDim, byCode)] 
+          const compoundKey = TM.getByLabelShort(byDim, byCode)
+          const ll = [geoCode + ", " + compoundKey]
           for(let time=0; time<timeDimMax; time++) {
             if(output.time[time]<selectedTime) continue  // filter anything earlier
             let coeff = new Array(inputDataFromRequest.size.length)
@@ -70,10 +72,33 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
             }
           }
           output.timeSeries.data.push(ll)
+          collectedGeoCodes.add(geoCode)
         }
       } else {
         //console.error("timeSeries processor: by not found for orderedBy",orderedBy)
       }
     })
+  }
+
+  addEmptyData(output.timeSeries.data, selectedGeo.difference(collectedGeoCodes), output.timeSeries.data[0].length, !inputDataFromCfg.includes("c_birth"))
+}
+
+// in case nothing came back from server (for a geo/country), although it was requested
+function addEmptyData(target, selectedButMissingInData, numberOfTimeValues, isCitizen) {
+  for (let geoCode of selectedButMissingInData) {
+    if(isCitizen) {
+      target.push( get(geoCode, MS.TXT_BY_LBL_SHORT_CNAT) )
+      target.push( get(geoCode, MS.TXT_BY_LBL_SHORT_CEU) )
+      target.push( get(geoCode, MS.TXT_BY_LBL_SHORT_CNEU) )
+    } else {
+      target.push( get(geoCode, MS.TXT_BY_LBL_SHORT_BNAT) )
+      target.push( get(geoCode, MS.TXT_BY_LBL_SHORT_BEU) )
+      target.push( get(geoCode, MS.TXT_BY_LBL_SHORT_BNEU) )
+    }
+  }
+
+  function get(geoCode, byLabel) {
+    const tmp = Array(numberOfTimeValues).fill(MS.ID_NO_DATA)
+    return [geoCode+", "+byLabel].concat(tmp)
   }
 }

@@ -54,7 +54,7 @@ Note: Throughout the sourcecode and the docu, the 2nd dimension is called "by"-d
 
 ### Alternatives
 
-The current implementatin assumes certain aspects, meaning they're hardcoded.
+The current implementation assumes certain aspects, meaning they're hardcoded.
 Now, these aspects have to either:
 
 a) be modified for particular exceptions

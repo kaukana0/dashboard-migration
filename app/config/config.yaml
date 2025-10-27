@@ -201,7 +201,7 @@ codeList:
       label: Norway
     - code: CH
       label: Switzerland
-  countryGroups: [AT, IS]   # code of country at which a new group of countries is created. Each group is sorted within itself.
+  countryGroups: [AT, IS]   # code of country at which a new group of countries is created. Each group is sorted within itself, by label (not (country-)code).
   tenureOwn: &tenureOwn
     label: "Owner"
     code: "OWN"

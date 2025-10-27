@@ -25,6 +25,7 @@
 - [Accessibility](./adr/adr18.md)
 - [Detail Legend](./adr/adr19.md)
 - [Icons in Menu Line](./adr/adr20.md)
+- [Missing data](./adr/adr21.md)
 
 
 # Technical details

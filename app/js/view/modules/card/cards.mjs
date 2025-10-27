@@ -259,7 +259,6 @@ export function iterate(containerId, callback) {
 
 export function setData(cardId, geoSelections, isInGroupC, data, cb) {
 	Range.setMinMax(cardId, Number(data.time[0]), Number(data.time[data.time.length-1]))
-
 	const card = document.getElementById(cardId)
 	card.switchSrcLink(isInGroupC)
 	card.setData1({
@@ -274,11 +273,11 @@ export function setData(cardId, geoSelections, isInGroupC, data, cb) {
 }
 
 export function updateDetailLegend(cardId, geoSelections, dataSeriesKeys, isInGroupC, bySelectCount) {
-
 	let countries, dots
-
-	if(document.getElementById(cardId).chart1Displayed) {
-		countries = Array.from(geoSelections.keys()),
+	
+	if(document.getElementById(cardId).chart1Displayed || 
+		 document.getElementById(cardId).notAvailableDisplayed) {
+		countries = Array.from(geoSelections.keys())
 		dots = getTextAndColor(dataSeriesKeys, getColorSet(true, geoSelections))
 		detailLegends.get(cardId).show = bySelectCount>=2
 	} else {

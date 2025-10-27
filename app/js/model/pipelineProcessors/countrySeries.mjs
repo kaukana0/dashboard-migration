@@ -75,7 +75,7 @@ export function process(inputDataFromRequest, inputDataFromCfg, output) {
               if(v>output.countrySeries.meta.biggestValue) { output.countrySeries.meta.biggestValue=v }
             }
           } else {
-            console.warn("countrySeriesProcessor: idxGeo not found for country ", country)
+            console.warn("countrySeriesProcessor: country present in config is missing in data from server: ", country)
             ll.push(MS.ID_NO_DATAPOINT_COUNTRYSERIES)
           }
         }

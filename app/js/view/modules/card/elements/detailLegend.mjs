@@ -35,7 +35,7 @@ class Element extends HTMLElement {
       const idx = k.indexOf(",")
       const s = `[country="${k.substring(0,idx)}"]`
       const u = this.shadowRoot.querySelector(s)
-      if(u) { u.innerHTML+=getBlaFragment(v, SHORT2LONG.get(k.substring(idx+2))) }
+      if(u) { u.innerHTML+=getLabelFragment(v, SHORT2LONG.get(k.substring(idx+2))) }
     })
 
     this.#setWidth(val.countries)
@@ -130,7 +130,7 @@ function css() {return `<style>
 </style>`
 }
 
-function getBlaFragment(color, text) {
+function getLabelFragment(color, text) {
   return `
   <span style="display:flex;">
     <span class="dot" style="background-color:${color};"></span>
